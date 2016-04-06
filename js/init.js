@@ -98,6 +98,11 @@
     ML.api('auth', 'saveContextIdByToken', {token: contextIoToken});
   }
 
+  if (localStorage.getItem('sessionId'))
+  {
+    ML.sessionId = localStorage.getItem('sessionId');
+  }
+
   // check the status
   ML.api('auth', 'status', {}, function (data)
   {
@@ -113,6 +118,7 @@
     }
     else
     {
+      localStorage.removeItem('sessionId');
       hasher.setHash('auth/login');
     }
 

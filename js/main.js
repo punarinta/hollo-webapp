@@ -18,6 +18,8 @@ ML.login = function ()
     ML.sessionId = data.sessionId;
     ML.user = data.user;
 
+    localStorage.setItem('sessionId', ML.sessionId);
+
     if (data.user.contextId) hasher.setHash('contacts');
     else hasher.setHash('auth/attach');
   });
@@ -56,7 +58,6 @@ ML.attach = function ()
   },
   function (data)
   {
-    console.log(data);
     if (data.oauth)
     {
       // OAuth procedure

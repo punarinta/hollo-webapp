@@ -10,15 +10,13 @@ var ML =
   api: function (endpoint, method, data, callback)
   {
     var r = new XMLHttpRequest(),
-        root = document.location.href.replace('\/\/app\.', '\/\/api\.');
+        root = document.location.hostname.replace('app\.', 'api\.');
 
-    console.log(root);
-
-    r.open('POST', root + 'api/' + endpoint, true);
+    r.open('POST', 'https://' + root + '/api/' + endpoint, true);
     r.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-    if (ML.user.sessionId)
+    if (ML.sessionId)
     {
-      r.setRequestHeader('Token', ML.user.sessionId.toString());
+      r.setRequestHeader('Token', ML.sessionId.toString());
     }
     r.onload = function()
     {
