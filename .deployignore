@@ -1,0 +1,11 @@
+.git
+.gitignore
+.deployignore
+.idea
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+fabfile.*
+*.md
+nodeploy*
+deploy.tar.gz
