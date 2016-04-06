@@ -8,7 +8,7 @@ ML.login = function ()
     alert('Both username and password are required');
   }
 
-  ML.api('auth', 'login',
+  ML.api('auth', 'logister',
   {
     'identity': user,
     'credential': pass
@@ -22,30 +22,6 @@ ML.login = function ()
 
     if (data.user.contextId) hasher.setHash('contacts');
     else hasher.setHash('auth/attach');
-  });
-};
-
-ML.register = function ()
-{
-  var email = document.querySelector('#page-login .reg-email').value,
-      password = document.querySelector('#page-login .reg-password').value;
-
-  if (!email.length)
-  {
-    alert('Email is required');
-  }
-
-  ML.api('auth', 'register',
-  {
-    'password': password,
-    'email': email
-  },
-  function (data)
-  {
-    ML.sessionId = data.sessionId;
-    ML.user = data.user;
-    localStorage.setItem('sessionId', ML.sessionId);
-    hasher.setHash('auth/attach');
   });
 };
 

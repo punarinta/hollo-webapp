@@ -64,7 +64,6 @@
     };
   });
 
-  document.querySelector('#page-login .register').onclick = ML.register;
   document.querySelector('#page-login .login').onclick = ML.login;
   document.querySelector('#page-login .username').onkeydown = function (e)
   {
