@@ -1,11 +1,11 @@
-ML.login = function ()
+ML.logister = function ()
 {
   var user = document.querySelector('#page-login .username').value,
       pass = document.querySelector('#page-login .password').value;
 
   if (!user.length || !pass.length)
   {
-    alert('Both username and password are required');
+    alert('Both email and password are required');
   }
 
   ML.api('auth', 'logister',
@@ -43,6 +43,7 @@ ML.attach = function ()
     else
     {
       // prefill IMAP forms
+      $('#page-attach .email').prop('disabled', true);
       $('#page-attach .extra-options').show();
       $('#page-attach .server').val(data.server);
       $('#page-attach .port').val(data.port);

@@ -7,6 +7,15 @@
       hasher.setHash('auth/login');
     });
   };
+  document.querySelector('#page-login .username').onkeydown = function (e)
+  {
+    if (e.keyCode == 13) document.querySelector('#page-login .password').focus();
+  };
+  document.querySelector('#page-login .password').onkeydown = function (e)
+  {
+    if (e.keyCode == 13) ML.logister();
+  };
+  document.querySelector('#page-login .login').onclick = ML.logister;
   document.getElementById('btn-contacts').onclick = function () { hasher.setHash('contacts'); };
   document.querySelector('#page-attach .attach').onclick = ML.attach;
   document.querySelector('#page-attach .confirm').onclick = ML.confirmAttach;
@@ -64,16 +73,6 @@
     };
   });
 
-  document.querySelector('#page-login .login').onclick = ML.login;
-  document.querySelector('#page-login .username').onkeydown = function (e)
-  {
-    if (e.keyCode == 13) document.querySelector('#page-login .password').focus();
-  };
-  document.querySelector('#page-login .password').onkeydown = function (e)
-  {
-    if (e.keyCode == 13) ML.login();
-  };
-
   // setup path dispatcher
   crossroads.addRoute('auth/login', ML.showLogin);
   crossroads.addRoute('auth/attach', ML.showAttach);
@@ -103,7 +102,6 @@
   {
     ML.api('email', 'saveContextIdByToken', {token: contextIoToken});
   }
-
 
   // check the status
   ML.api('auth', 'status', {}, function (data)
