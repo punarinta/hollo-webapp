@@ -44,6 +44,7 @@ ML.register = function ()
   {
     ML.sessionId = data.sessionId;
     ML.user = data.user;
+    localStorage.setItem('sessionId', ML.sessionId);
     hasher.setHash('auth/attach');
   });
 };
@@ -52,7 +53,7 @@ ML.attach = function ()
 {
   var email = document.querySelector('#page-attach .email').value;
 
-  ML.api('auth', 'discoverEmail',
+  ML.api('email', 'discover',
   {
     'email': email
   },
@@ -85,7 +86,7 @@ ML.confirmAttach = function ()
       server = document.querySelector('#page-attach .server').value,
       port = document.querySelector('#page-attach .port').value;
 
-  ML.api('auth', 'attachEmail',
+  ML.api('email', 'attach',
   {
     'email': email,
     'username': username,

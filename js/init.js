@@ -92,16 +92,19 @@
   hasher.initialized.add(parseHash);
   hasher.changed.add(parseHash);
 
-  var contextIoToken = ML.getQueryVar('contextio_token');
-  if (contextIoToken)
-  {
-    ML.api('auth', 'saveContextIdByToken', {token: contextIoToken});
-  }
-
   if (localStorage.getItem('sessionId'))
   {
     ML.sessionId = localStorage.getItem('sessionId');
   }
+
+  // NO API CALLS ABOVE THIS LINE
+
+  var contextIoToken = ML.getQueryVar('contextio_token');
+  if (contextIoToken)
+  {
+    ML.api('email', 'saveContextIdByToken', {token: contextIoToken});
+  }
+
 
   // check the status
   ML.api('auth', 'status', {}, function (data)
