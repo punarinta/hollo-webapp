@@ -1,2 +1,6 @@
 .idea
-
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+*.log
+deploy.tar.gz
