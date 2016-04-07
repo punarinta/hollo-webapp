@@ -41,34 +41,40 @@
     });
   };
 
-  $('#composer textarea').on('focus click', function ()
+  function showTags()
   {
-    if (!$('#composer .tags').is(':visible'))
+    var tagsBar = document.querySelector('#composer .tags');
+
+    if (tagsBar.style.display == 'none' || !tagsBar.style.display)
     {
-      $('#composer .tag').removeClass('sel');
+      Array.prototype.forEach.call(document.querySelectorAll('#composer .tag'), function (el) { el.classList.remove('sel'); });
     }
-    $('#composer .tags').show();
-  }).on('keydown', function (e)
+    tagsBar.style.display = 'block';
+  }
+
+  var composerText = document.querySelector('#composer textarea');
+  composerText.onclick = composerText.onfocus = showTags;
+  composerText.onkeydown = function (e)
   {
     if (e.keyCode == 27)
     {
-      $('#composer .tags').hide();
+      document.querySelector('#composer .tags').style.display = 'none';
     }
-  });
+  };
 
   Array.prototype.forEach.call(document.querySelectorAll('#composer .tag'), function(el)
   {
     el.onclick = function ()
     {
-      $('#composer .tag').removeClass('sel');
+      Array.prototype.forEach.call(document.querySelectorAll('#composer .tag'), function (el) { el.classList.remove('sel'); });
       $(this).addClass('sel');
 
       if ($(this).hasClass('new'))
       {
         var tag = prompt('New tag:', 'hollotag'),
-          clone = $('#composer .tag').last().clone();
-        clone[0].innerText = '#' + tag;
-        $('#composer .tags').append(clone);
+            clone = document.querySelector('#composer .tag').cloneNode(false);
+        clone.innerText = '#' + tag;
+        document.querySelector('#composer .tags').appendChild(clone);
       }
     };
   });
