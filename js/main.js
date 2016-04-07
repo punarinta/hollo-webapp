@@ -43,14 +43,14 @@ ML.attach = function ()
     else
     {
       // prefill IMAP forms
-      $('#page-attach .email').prop('disabled', true);
-      $('#page-attach .extra-options').show();
-      $('#page-attach .server').val(data.server);
-      $('#page-attach .port').val(data.port);
-      $('#page-attach .username').val(data.username);
-      $('#page-attach .attach').hide();
-      $('#page-attach .confirm').show();
-      $('#page-attach .password').focus();
+      document.querySelector('#page-attach .email').disabled = true;
+      document.querySelector('#page-attach .extra-options').style.display = 'block';
+      document.querySelector('#page-attach .server').value = data.server;
+      document.querySelector('#page-attach .port').value = data.port;
+      document.querySelector('#page-attach .username').value = data.username;
+      document.querySelector('#page-attach .attach').style.display = 'none';
+      document.querySelector('#page-attach .confirm').style.display = 'block';
+      document.querySelector('#page-attach .password').focus();
     }
   });
 };
@@ -77,24 +77,31 @@ ML.confirmAttach = function ()
   });
 };
 
+ML.hidePages = function ()
+{
+  Array.prototype.forEach.call(document.getElementsByClassName('page'), function (el) { el.style.display = 'none' });
+};
+
 ML.showLogin = function ()
 {
-  $('.page').hide();
-  $('#page-login').show();
+  ML.hidePages();
+  document.getElementById('page-login').style.display = 'block';
 };
 
 ML.showAttach = function ()
 {
-  $('.page, #page-attach .extra-options').hide();
-  $('#page-attach .email').val(ML.user.email);
-  $('#page-attach').show();
+  ML.hidePages();
+  document.querySelector('#page-attach .extra-options').style.display = 'none';
+  document.querySelector('#page-attach .email').value = ML.user.email;
+  document.getElementById('page-attach').style.display = 'block';
 };
 
 ML.showContacts = function ()
 {
-  $('.page').hide();
-  $('#page-contacts ul').html('<ul><li>Loading...</li></ul>');
-  $('#page-contacts').show();
+  var ul = document.querySelector('#page-contacts ul');
+  ML.hidePages();
+  ul.innerHTML ='<ul><li>Loading...</li></ul>';
+  document.getElementById('page-contacts').style.display = 'block';
 
   ML.api('contact', 'find', null, function (data)
   {
@@ -105,22 +112,26 @@ ML.showContacts = function ()
       html += '<li data-email="' + data[i].email + '"><div class="name">' + data[i].name + '</div><div>' + data[i].email + '</div></li>';
     }
 
-    $('#page-contacts ul').html(html);
+    ul.innerHTML = html;
 
-    $('#page-contacts ul li').on('click', function (e)
+    Array.prototype.forEach.call(document.querySelectorAll('#page-contacts ul li'), function (el)
     {
-      var email = $(e.target).closest('li').data('email');
-      hasher.setHash('chat/' + email);
+      el.onclick = function (e)
+      {
+        var email = $(e.target).closest('li').data('email');
+        hasher.setHash('chat/' + email);
+      }
     });
   });
 };
 
 ML.showChat = function(email)
 {
-  $('.page').hide();
-  $('#page-chat .interlocutor').html(email);
-  $('#page-chat ul').html('<ul><li>Loading...</li></ul>');
-  $('#page-chat').show();
+  var ul = document.querySelector('#page-chat ul');
+  ML.hidePages();
+  document.querySelector('#page-chat .interlocutor').innerHTML = email;
+  ul.innerHTML = '<ul><li>Loading...</li></ul>';
+  document.getElementById('page-chat').style.display = 'block';
 
   ML.api('message', 'findByEmail', {email: email}, function (data)
   {
@@ -150,12 +161,19 @@ ML.showChat = function(email)
       html += '<li class="' + whose + '"><div><div class="tag">' + data[i].subject + '</div><br><div class="msg">' + body + '</div><div>' + filesHtml + '</div></div></li>';
     }
 
-    $('#page-chat ul').html(html);
+    ul.innerHTML = html;
 
-    $('#page-chat li .tag').on('click', function ()
+    Array.prototype.forEach.call(document.querySelectorAll('#page-chat li .tag'), function (el)
     {
-      var filter = $(this).text();
-      $('#page-chat .filter').val(filter).trigger('keyup');
+      el.onclick = function ()
+      {
+        var event = document.createEvent('HTMLEvents'),
+            filter = document.querySelector('#page-chat .filter');
+
+        filter.value = el.innerText;
+        event.initEvent('keyup', true, false);
+        filter.dispatchEvent(event);
+      }
     });
   });
 };
