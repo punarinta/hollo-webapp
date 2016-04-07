@@ -118,8 +118,8 @@ ML.showContacts = function ()
     {
       el.onclick = function (e)
       {
-        var email = $(e.target).closest('li').data('email');
-        hasher.setHash('chat/' + email);
+        var li = e.target.nodeName == 'LI' ? e.target : e.target.parentElement;
+        hasher.setHash('chat/' + li.dataset.email);
       }
     });
   });
