@@ -139,7 +139,7 @@ ML.showChat = function(email)
 
     for (var i in data)
     {
-      var filesHtml = '', body = data[i].body.content,
+      var filesHtml = '', body = data[i].body,//.content,
         whose = data[i].from == email ? 'yours' : 'mine';
 
       // preprocess body
