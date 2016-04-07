@@ -4,7 +4,8 @@ var ML =
   user:
   {
     id: null,
-    email: null
+    email: null,
+    contextId: null
   },
 
   api: function (endpoint, method, data, callback)
