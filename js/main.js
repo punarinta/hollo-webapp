@@ -6,6 +6,7 @@ ML.logister = function ()
   if (!user.length || !pass.length)
   {
     alert('Both email and password are required');
+    return;
   }
 
   ML.api('auth', 'logister',
