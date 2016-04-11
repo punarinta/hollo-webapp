@@ -106,7 +106,10 @@
   var contextIoToken = ML.getQueryVar('contextio_token');
   if (contextIoToken)
   {
-    ML.api('email', 'saveContextIdByToken', {token: contextIoToken});
+    ML.api('email', 'saveContextIdByToken', {token: contextIoToken}, function ()
+    {
+      hasher.setHash('contacts');
+    });
   }
 
   // check the status
