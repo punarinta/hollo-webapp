@@ -1,5 +1,7 @@
 (function ()
 {
+  ML.apiRoot = document.location.hostname.replace('app.', 'api.');
+
   document.getElementById('btn-logout').onclick = function ()
   {
     ML.api('auth', 'logout', null, function ()

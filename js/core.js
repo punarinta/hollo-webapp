@@ -8,6 +8,8 @@ var ML =
     contextId: null
   },
 
+  apiRoot: '',
+
   api: function (endpoint, method, data, callback)
   {
     var r = new XMLHttpRequest(),
