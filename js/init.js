@@ -121,7 +121,8 @@
     {
       ML.sessionId = data.sessionId;
       ML.user = data.user;
-      if (hasher.getHash() == '')
+
+      if (document.location.hash == '')
       {
         if (data.user.contextId) hasher.setHash('contacts');
         else hasher.setHash('auth/attach');
