@@ -140,8 +140,8 @@ ML.showChat = function(email)
 
     for (var i in data)
     {
-      var filesHtml = '', body = data[i].body,//.content,
-        whose = data[i].from == email ? 'yours' : 'mine';
+      var filesHtml = '', body = data[i].body,
+          whose = data[i].from == email ? 'yours' : 'mine';
 
       // preprocess body
       var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i;
@@ -154,8 +154,7 @@ ML.showChat = function(email)
         for (var fi in data[i].files)
         {
           var file = data[i].files[fi];
-          filesHtml += '<a target="_blank" class="file" href="/api/file?method=fetch&extId=' + file.extId + '&type='
-            + file.type + '">' + file.name + '</a><br>';
+          filesHtml += '<a class="file" data-id="' + file.extId + '" href="#">' + file.name + '</a><br>';
         }
       }
 
@@ -163,6 +162,18 @@ ML.showChat = function(email)
     }
 
     ul.innerHTML = html;
+
+    Array.prototype.forEach.call(document.querySelectorAll('#page-chat li a'), function (el)
+    {
+      el.onclick = function ()
+      {
+        ML.api('file', 'getFileUrl', {extId: el.dataset.id}, function (url)
+        {
+          window.location = url;
+        });
+        return false;
+      };
+    });
 
     Array.prototype.forEach.call(document.querySelectorAll('#page-chat li .tag'), function (el)
     {
