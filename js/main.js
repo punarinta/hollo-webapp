@@ -110,7 +110,7 @@ ML.showContacts = function ()
 
     for (var i in data)
     {
-      html += '<li data-email="' + data[i].email + '"><div class="name">' + data[i].name + '</div><div>' + data[i].email + '</div></li>';
+      html += '<li data-email="' + data[i].email + '"><div class="name">' + data[i].name + ' (' + data[i].count + ' msg)</div><div>' + data[i].email + '</div></li>';
     }
 
     ul.innerHTML = html;
