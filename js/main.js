@@ -141,7 +141,7 @@ ML.showChat = function(email)
     for (var i in data)
     {
       var filesHtml = '', body = data[i].body,
-          whose = data[i].from == email ? 'yours' : 'mine';
+          whose = data[i].from == ML.user.email ? 'mine' : 'yours';
 
       // preprocess body
       var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i;
