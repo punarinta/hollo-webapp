@@ -17,6 +17,7 @@
   {
     if (e.keyCode == 13) ML.logister();
   };
+  document.querySelector('#page-login .google').onclick = ML.googleStart;
   document.querySelector('#page-login .login').onclick = ML.logister;
   document.getElementById('btn-contacts').onclick = function () { hasher.setHash('contacts'); };
   document.querySelector('#page-attach .attach').onclick = ML.attach;
