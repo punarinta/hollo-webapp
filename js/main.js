@@ -1,4 +1,4 @@
-ML.logister = function ()
+ML.loginImap = function ()
 {
   var user = document.querySelector('#page-login .username').value,
       pass = document.querySelector('#page-login .password').value;
@@ -9,7 +9,7 @@ ML.logister = function ()
     return;
   }
 
-  ML.api('auth', 'logister',
+  ML.api('auth', 'loginImap',
   {
     'identity': user,
     'credential': pass
@@ -18,63 +18,16 @@ ML.logister = function ()
   {
     ML.sessionId = data.sessionId;
     ML.user = data.user;
-
     localStorage.setItem('sessionId', ML.sessionId);
-
-    if (data.user.contextId) hasher.setHash('contacts');
-    else hasher.setHash('auth/attach');
-  });
-};
-
-ML.attach = function ()
-{
-  var email = document.querySelector('#page-attach .email').value;
-
-  ML.api('email', 'discover',
-  {
-    'email': email
-  },
-  function (data)
-  {
-    if (data.oauth)
-    {
-      // OAuth procedure
-      window.location.href = data.url;
-    }
-    else
-    {
-      // prefill IMAP forms
-      document.querySelector('#page-attach .email').disabled = true;
-      document.querySelector('#page-attach .extra-options').style.display = 'block';
-      document.querySelector('#page-attach .server').value = data.server;
-      document.querySelector('#page-attach .port').value = data.port;
-      document.querySelector('#page-attach .username').value = data.username;
-      document.querySelector('#page-attach .attach').style.display = 'none';
-      document.querySelector('#page-attach .confirm').style.display = 'block';
-      document.querySelector('#page-attach .password').focus();
-    }
-  });
-};
-
-ML.confirmAttach = function ()
-{
-  var email = document.querySelector('#page-attach .email').value,
-      username = document.querySelector('#page-attach .username').value,
-      password = document.querySelector('#page-attach .password').value,
-      server = document.querySelector('#page-attach .server').value,
-      port = document.querySelector('#page-attach .port').value;
-
-  ML.api('email', 'attach',
-  {
-    'email': email,
-    'username': username,
-    'password': password,
-    'server': server,
-    'port': port
-  },
-  function ()
-  {
     hasher.setHash('contacts');
+  });
+};
+
+ML.googleStart = function ()
+{
+  ML.api('auth', 'getOAuthToken', {}, function (data)
+  {
+     window.location.href = data;
   });
 };
 
@@ -87,14 +40,6 @@ ML.showLogin = function ()
 {
   ML.hidePages();
   document.getElementById('page-login').style.display = 'block';
-};
-
-ML.showAttach = function ()
-{
-  ML.hidePages();
-  document.querySelector('#page-attach .extra-options').style.display = 'none';
-  document.querySelector('#page-attach .email').value = ML.user.email;
-  document.getElementById('page-attach').style.display = 'block';
 };
 
 ML.showContacts = function ()

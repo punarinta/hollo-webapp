@@ -18,10 +18,8 @@
     if (e.keyCode == 13) ML.logister();
   };
   document.querySelector('#page-login .google').onclick = ML.googleStart;
-  document.querySelector('#page-login .login').onclick = ML.logister;
+  document.querySelector('#page-login .login').onclick = ML.loginImap;
   document.getElementById('btn-contacts').onclick = function () { hasher.setHash('contacts'); };
-  document.querySelector('#page-attach .attach').onclick = ML.attach;
-  document.querySelector('#page-attach .confirm').onclick = ML.confirmAttach;
 
   document.querySelector('#page-contacts .filter').onkeyup = function ()
   {
@@ -84,7 +82,6 @@
 
   // setup path dispatcher
   crossroads.addRoute('auth/login', ML.showLogin);
-  crossroads.addRoute('auth/attach', ML.showAttach);
   crossroads.addRoute('contacts', ML.showContacts);
   crossroads.addRoute('chat/{email}', function (email)
   {
@@ -106,17 +103,33 @@
 
   // NO API CALLS ABOVE THIS LINE
 
-  var contextIoToken = ML.getQueryVar('contextio_token');
-  if (contextIoToken)
+  var oauthCode = ML.getQueryVar('code');
+  if (oauthCode)
   {
-    ML.api('email', 'saveContextIdByToken', {token: contextIoToken}, function ()
+    ML.api('auth', 'processOAuthCode', {code: oauthCode}, function (data)
     {
-      hasher.setHash('contacts');
+      if (data.user)
+      {
+        ML.sessionId = data.sessionId;
+        ML.user = data.user;
+
+        localStorage.setItem('sessionId', ML.sessionId);
+
+        if (document.location.hash == '')
+        {
+          hasher.setHash('contacts');
+        }
+      }
+      else
+      {
+        localStorage.removeItem('sessionId');
+        hasher.setHash('auth/login');
+      }
     });
   }
 
   // check the status
-  ML.api('auth', 'status', {}, function (data)
+  else ML.api('auth', 'status', {}, function (data)
   {
     if (data.user)
     {
@@ -125,8 +138,7 @@
 
       if (document.location.hash == '')
       {
-        if (data.user.contextId) hasher.setHash('contacts');
-        else hasher.setHash('auth/attach');
+        hasher.setHash('contacts');
       }
     }
     else
