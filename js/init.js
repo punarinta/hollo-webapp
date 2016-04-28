@@ -26,8 +26,10 @@
     var filter = this.value.toUpperCase();
     Array.prototype.forEach.call(document.querySelectorAll('#page-contacts li'), function(el)
     {
-      var name = el.getElementsByClassName('name')[0].innerHTML;
-      if (name.toUpperCase().indexOf(filter) != -1) el.style.display = 'list-item';
+      var name = el.getElementsByClassName('name')[0].innerHTML.toUpperCase(),
+          email = el.dataset.email.toUpperCase();
+      
+      if (name.indexOf(filter) != -1 || email.indexOf(filter) != -1) el.style.display = 'list-item';
       else el.style.display = 'none';
     });
   };
