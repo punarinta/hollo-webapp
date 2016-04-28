@@ -40,6 +40,7 @@ ML.showLogin = function ()
 {
   ML.hidePages();
   document.getElementById('page-login').style.display = 'block';
+  document.getElementById('snackbar').style.display = 'none';
 };
 
 ML.showContacts = function ()
@@ -48,6 +49,7 @@ ML.showContacts = function ()
   ML.hidePages();
   ul.innerHTML ='<ul><li>Loading...</li></ul>';
   document.getElementById('page-contacts').style.display = 'block';
+  document.getElementById('snackbar').style.display = 'block';
 
   ML.api('contact', 'find', null, function (data)
   {

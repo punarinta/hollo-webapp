@@ -2,24 +2,20 @@
 {
   ML.apiRoot = document.location.hostname.replace('app.', 'api.');
 
-  document.getElementById('btn-logout').onclick = function ()
+  /*document.getElementById('btn-logout').onclick = function ()
   {
     ML.api('auth', 'logout', null, function ()
     {
       hasher.setHash('auth/login');
     });
-  };
-  document.querySelector('#page-login .username').onkeydown = function (e)
-  {
-    if (e.keyCode == 13) document.querySelector('#page-login .password').focus();
-  };
-  document.querySelector('#page-login .password').onkeydown = function (e)
-  {
-    if (e.keyCode == 13) ML.logister();
-  };
+  };*/
+
+  PP.onKey('#page-login .username', 13, document.querySelector('#page-login .password').focus);
+  PP.onKey('#page-login .password', 13, ML.loginImap);
+
   document.querySelector('#page-login .google').onclick = ML.googleStart;
   document.querySelector('#page-login .login').onclick = ML.loginImap;
-  document.getElementById('btn-contacts').onclick = function () { hasher.setHash('contacts'); };
+  //document.getElementById('btn-contacts').onclick = function () { hasher.setHash('contacts'); };
 
   document.querySelector('#page-contacts .filter').onkeyup = function ()
   {
@@ -28,7 +24,7 @@
     {
       var name = el.getElementsByClassName('name')[0].innerHTML.toUpperCase(),
           email = el.dataset.email.toUpperCase();
-      
+
       if (name.indexOf(filter) != -1 || email.indexOf(filter) != -1) el.style.display = 'list-item';
       else el.style.display = 'none';
     });
