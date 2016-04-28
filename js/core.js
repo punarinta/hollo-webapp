@@ -67,7 +67,7 @@ var ML =
   {
     var date = new Date(ts * 1000),
         year = date.getYear() >= 100 ? date.getYear() - 100 : date.getYear(),
-        month = '0' + date.getMonth(),
+        month = '0' + (date.getMonth() + 1),
         day = '0' + date.getDate(),
         hours = '0' + date.getHours(),
         minutes = '0' + date.getMinutes();
