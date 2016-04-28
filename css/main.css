@@ -1,10 +1,18 @@
 body {font-family: "DejaVu Sans";padding:0;margin:0; background-color: #eaeaea}
 body::-webkit-scrollbar {display: none}
 
-.page {display: none; padding:5px}
+.page {display: none; padding:50px 5px 5px;}
 
 #page-loader {display: block}
-#page-attach .confirm {display: none}
+
+#snackbar {display: none; position: fixed; top: 0; width: 100%; height: 45px;box-shadow: 0 0 7px 0 rgba(80,80,80,.75);background-color: #c3d9ff}
+#snackbar>div {position: fixed; top: 0}
+#snackbar .icon {width: 40px; height: 40px; text-align: center;font-size: 8vw;background: no-repeat center center;top:2px}
+#snackbar .hamburger {left:0;background-image:url('ic_menu_black.svg');}
+#snackbar .name {left:50px;padding-top:13px}
+#snackbar .tags {right:75px;background-image:url('ic_filter_list_black.svg');}
+#snackbar .files {right:35px;background-image:url('ic_attachment_black.svg');}
+#snackbar .more {right:0;background-image:url('ic_more_vert_black.svg');}
 
 #page-contacts ul {list-style-type: none}
 #page-contacts ul li {padding: 5px 8px; cursor: pointer}
