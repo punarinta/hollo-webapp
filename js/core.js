@@ -61,6 +61,18 @@ var ML =
       if (pair[0] == v) { return pair[1]; }
     }
     return null;
+  },
+
+  ts: function (ts)
+  {
+    var date = new Date(ts * 1000),
+        year = date.getYear() >= 100 ? date.getYear() - 100 : date.getYear(),
+        month = '0' + date.getMonth(),
+        day = '0' + date.getDate(),
+        hours = '0' + date.getHours(),
+        minutes = '0' + date.getMinutes();
+
+    return day.substr(-2) + '.' + month.substr(-2) + '.' + year + ' ' + hours.substr(-2) + ':' + minutes.substr(-2);
   }
 };
 
