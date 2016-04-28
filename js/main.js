@@ -49,7 +49,7 @@ ML.showContacts = function ()
   ML.hidePages();
   ul.innerHTML ='<ul><li>Loading...</li></ul>';
   document.getElementById('page-contacts').style.display = 'block';
-  document.getElementById('snackbar').style.display = 'block';
+  // document.getElementById('snackbar').style.display = 'block';
 
   ML.api('contact', 'find', null, function (data)
   {
@@ -77,13 +77,18 @@ ML.showChat = function(email)
 {
   var ul = document.querySelector('#page-chat ul');
   ML.hidePages();
-  document.querySelector('#page-chat .interlocutor').innerHTML = email;
+  document.querySelector('#snackbar .name').innerHTML = '';
   ul.innerHTML = '<ul><li>Loading...</li></ul>';
   document.getElementById('page-chat').style.display = 'block';
+  document.getElementById('snackbar').style.display = 'block';
 
   ML.api('message', 'findByEmail', {email: email}, function (data)
   {
     var html = '';
+
+    document.querySelector('#snackbar .name').innerHTML = data.contact.name;
+
+    data = data.messages;
 
     for (var i in data)
     {
