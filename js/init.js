@@ -85,6 +85,13 @@
   {
     ML.showChat(email);
   });
+  crossroads.addRoute('auth/logout', function ()
+  {
+    ML.api('auth', 'logout', null, function ()
+    {
+      hasher.setHash('auth/login');
+    });
+  });
 
   function parseHash(newHash/*, oldHash*/)
   {
