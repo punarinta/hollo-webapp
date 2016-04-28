@@ -103,7 +103,7 @@ ML.showChat = function(email)
         }
       }
 
-      html += '<li class="' + whose + '"><div><div class="tag">' + data[i].subject + '</div><br><div class="msg">' + body + '</div><div>' + filesHtml + '</div></div></li>';
+      html += '<li class="' + whose + '"><div><div class="tag">' + data[i].subject + '</div><div>' + ML.ts(data[i].ts) + '</div><br><div class="msg">' + body + '</div><div>' + filesHtml + '</div></div></li>';
     }
 
     ul.innerHTML = html;
