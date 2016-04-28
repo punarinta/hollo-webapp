@@ -76,4 +76,13 @@ var ML =
   }
 };
 
-
+var PP =
+{
+  onKey: function (sel, code, callback)
+  {
+    document.querySelector(sel).onkeydown = function (ev)
+    {
+      if (ev.keyCode == code) callback();
+    };
+  }
+};
