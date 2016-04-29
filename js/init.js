@@ -38,12 +38,12 @@
     var menu = document.getElementById('snackbar-menu-more');
     if (this.classList.contains('toggled'))
     {
-      this.className = this.className.replace(/\btoggled\b/, '');
+      this.classList.remove('toggled');
       menu.style.display = 'none';
     }
     else
     {
-      this.className += ' toggled';
+      this.classList.add('toggled');
       menu.style.display = 'block';
     }
   };
@@ -73,9 +73,9 @@
     el.onclick = function ()
     {
       Array.prototype.forEach.call(document.querySelectorAll('#composer .tag'), function (el) { el.classList.remove('sel'); });
-      $(this).addClass('sel');
+      this.classList.add('sel');
 
-      if ($(this).hasClass('new'))
+      if (this.classList.contains('new'))
       {
         var tag = prompt('New tag:', 'hollotag'),
             clone = document.querySelector('#composer .tag').cloneNode(false);
