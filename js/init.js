@@ -21,7 +21,7 @@
       else el.style.display = 'none';
     });
   };
-  document.querySelector('#page-chat .filter').onkeyup = function ()
+  /*document.querySelector('#page-chat .filter').onkeyup = function ()
   {
     var filter = this.value.toUpperCase();
     Array.prototype.forEach.call(document.querySelectorAll('#page-chat li'), function(el)
@@ -30,7 +30,7 @@
       if (name.toUpperCase().indexOf(filter) != -1) el.style.display = 'list-item';
       else el.style.display = 'none';
     });
-  };
+  };*/
 
   // === SNACKBAR ===
   document.querySelector('#snackbar .icon.more').onclick = function ()
