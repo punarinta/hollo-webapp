@@ -34,13 +34,13 @@ ML.googleStart = function ()
 ML.hidePages = function ()
 {
   Array.prototype.forEach.call(document.getElementsByClassName('page'), function (el) { el.style.display = 'none' });
+  document.getElementById('snackbar').style.display = 'none';
 };
 
 ML.showLogin = function ()
 {
   ML.hidePages();
   document.getElementById('page-login').style.display = 'block';
-  document.getElementById('snackbar').style.display = 'none';
 };
 
 ML.showContacts = function ()
@@ -49,7 +49,6 @@ ML.showContacts = function ()
   ML.hidePages();
   ul.innerHTML ='<ul><li>Loading...</li></ul>';
   document.getElementById('page-contacts').style.display = 'block';
-  // document.getElementById('snackbar').style.display = 'block';
 
   ML.api('contact', 'find', null, function (data)
   {
@@ -77,8 +76,8 @@ ML.showChat = function(email)
 {
   var ul = document.querySelector('#page-chat ul');
   ML.hidePages();
-  document.querySelector('#snackbar .name').innerHTML = '';
   ul.innerHTML = '<ul><li>Loading...</li></ul>';
+  document.querySelector('#snackbar .name').innerHTML = '';
   document.getElementById('page-chat').style.display = 'block';
   document.getElementById('snackbar').style.display = 'block';
 
@@ -86,7 +85,7 @@ ML.showChat = function(email)
   {
     var html = '';
 
-    document.querySelector('#snackbar .name').innerHTML = data.contact.name;
+    document.querySelector('#snackbar .name').innerHTML = data.contact.name ? data.contact.name : email;
 
     data = data.messages;
 
