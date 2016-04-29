@@ -127,6 +127,9 @@
 
         localStorage.setItem('sessionId', ML.sessionId);
 
+        // remove '?code=...'
+        window.history.pushState('home', 'Home', '/');
+
         if (document.location.hash == '')
         {
           hasher.setHash('contacts');
