@@ -1,0 +1,18 @@
+{
+  "root": "..",
+  "index": "index.html",
+  "js":
+  [
+    "js/vendy/signals.min.js",
+    "js/vendy/crossroads.min.js",
+    "js/vendy/hasher.min.js",
+    "js/core.js",
+    "js/main.js",
+    "js/init.js"
+  ],
+  "css":
+  [
+    "css/main.css"
+  ],
+  "dist": "../dist"
+}

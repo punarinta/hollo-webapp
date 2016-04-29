@@ -8,4 +8,3 @@
 fabfile.*
 *.md
 nodeploy*
-deploy.tar.gz

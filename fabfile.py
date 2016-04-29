@@ -72,7 +72,8 @@ def pack():
         # Build everything
         # build()
         # Pack
-        local('tar chvzf deploy.tar.gz -X .deployignore . --warning=no-file-changed')
+        local('php tools/release.php')
+        local('tar chvzf deploy.tar.gz -X .deployignore dist --warning=no-file-changed')
         packaged = True
 
 def get_git_commit():
