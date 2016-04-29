@@ -1,93 +1,94 @@
-body {font-family: "DejaVu Sans";padding:0;margin:0; background-color: #eaeaea}
-body::-webkit-scrollbar {display: none}
+body {font-family:"DejaVu Sans";padding:0;margin:0;background-color:#eaeaea}
+body::-webkit-scrollbar {display:none}
 
-.page {display:none; padding:61px 5px 5px}
+.page {display:none;padding:5px}
 
 #page-loader {display:block}
 
-#snackbar {display: none; position: fixed; top: 0; width: 100%; height: 56px;box-shadow: 0 0 7px 0 rgba(80,80,80,.75);background-color: #2aff67}
-#snackbar>div {position: fixed; top: 0}
-#snackbar .icon {width:40px; height: 40px; text-align: center;font-size: 8vw;background: no-repeat center center;top:8px;cursor:pointer;border-radius: 3px}
-#snackbar .icon:hover {background-color: #9013fe}
-#snackbar .hamburger {left:5px;background-image:url('ic_menu_black.svg');}
+#snackbar {display:none;position:fixed;top:0;width:100%;height:56px;box-shadow:0 0 7px 0 rgba(80,80,80,.75);background-color:#2aff67}
+#snackbar>div {position:fixed;top:0}
+#snackbar .icon {width:40px;height:40px;text-align:center;font-size:8vw;background:no-repeat center center;top:8px;cursor:pointer;border-radius:3px}
+#snackbar .icon:hover {background-color:#9013fe}
+#snackbar .hamburger {left:5px;background-image:url('ic_menu_black.svg')}
 #snackbar .name {left:50px;padding-top:19px}
-#snackbar .tags {right:85px;background-image:url('ic_whatshot_black.svg');}
-#snackbar .files {right:42px;background-image:url('ic_attachment_black.svg');}
-#snackbar .more {right:5px;background-image:url('ic_more_vert_black.svg');}
+#snackbar .tags {right:85px;background-image:url('ic_whatshot_black.svg')}
+#snackbar .files {right:42px;background-image:url('ic_attachment_black.svg')}
+#snackbar .more {right:5px;background-image:url('ic_more_vert_black.svg')}
 
-#page-contacts ul {list-style-type: none}
-#page-contacts ul li {padding: 5px 8px; cursor: pointer}
-#page-contacts ul li:nth-child(2n) {background-color: #f4f4f4}
-#page-contacts ul li:nth-child(2n+1) {background-color: #fff}
-#page-contacts ul li:hover {background-color: #c3d9ff}
-#page-contacts ul li div:last-child {font-size: 75%}
+#page-contacts ul {list-style-type:none}
+#page-contacts ul li {padding:5px 8px;cursor:pointer}
+#page-contacts ul li:nth-child(2n) {background-color:#f4f4f4}
+#page-contacts ul li:nth-child(2n+1) {background-color:#fff}
+#page-contacts ul li:hover {background-color:#c3d9ff}
+#page-contacts ul li div:last-child {font-size:75%}
 
-#page-chat ul {list-style-type: none; padding-left:0}
-#page-chat hr {border: 1px dashed #bbb; border-top-width: 0}
-#page-chat ul li {overflow: auto}
-#page-chat ul li > div {overflow: auto; margin: 5px 3px; background-color: #fff; padding: 8px 10px; border-radius: 3px}
-#page-chat ul li .msg {display: inline-block}
-#page-chat ul li.yours > div {float: right}
-#page-chat ul li.mine > div {float: left}
-#page-chat ul li .tag {color: #9013fe; cursor: pointer}
+#page-chat {padding-top:61px}
+#page-chat ul {list-style-type:none;padding-left:0}
+#page-chat hr {border:1px dashed #bbb;border-top-width:0}
+#page-chat ul li {overflow:auto}
+#page-chat ul li > div {overflow:auto;margin:5px 3px;background-color:#fff;padding:8px 10px;border-radius:3px}
+#page-chat ul li .msg {display:inline-block}
+#page-chat ul li.yours > div {float:right}
+#page-chat ul li.mine > div {float:left}
+#page-chat ul li .tag {color:#9013fe;cursor:pointer}
 
-#composer {position: fixed; left:0; bottom: 0; width: 100%; height: 20vh}
-#composer textarea {width: 100%; height: 100%}
+#composer {position:fixed;left:0;bottom:0;width:100%;height:20vh}
+#composer textarea {width:100%;height:100%}
 #composer .tags {display:none}
-#composer .tag {float:left; background: lightgray; padding: 5px 8px; color: #9013fe; margin-right: 2px; cursor: pointer;border: 1px solid transparent}
-#composer .tag.sel {border-color: #001199}
-#composer-pop {height: 20vh}
+#composer .tag {float:left;background:lightgray;padding:5px 8px;color:#9013fe;margin-right:2px;cursor:pointer;border:1px solid transparent}
+#composer .tag.sel {border-color:#001199}
+#composer-pop {height:20vh}
 
 
 .spinner {
-    margin: 100px auto;
-    width: 50px;
-    height: 40px;
-    text-align: center;
-    font-size: 10px;
+    margin:100px auto;
+    width:50px;
+    height:40px;
+    text-align:center;
+    font-size:10px;
 }
 
 .spinner > div {
-    background-color: #333;
-    height: 100%;
-    width: 6px;
-    display: inline-block;
+    background-color:#333;
+    height:100%;
+    width:6px;
+    display:inline-block;
 
-    -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
-    animation: sk-stretchdelay 1.2s infinite ease-in-out;
+    -webkit-animation:sk-stretchdelay 1.2s infinite ease-in-out;
+    animation:sk-stretchdelay 1.2s infinite ease-in-out;
 }
 
 .spinner .rect2 {
-    -webkit-animation-delay: -1.1s;
-    animation-delay: -1.1s;
+    -webkit-animation-delay:-1.1s;
+    animation-delay:-1.1s;
 }
 
 .spinner .rect3 {
-    -webkit-animation-delay: -1.0s;
-    animation-delay: -1.0s;
+    -webkit-animation-delay:-1.0s;
+    animation-delay:-1.0s;
 }
 
 .spinner .rect4 {
-    -webkit-animation-delay: -0.9s;
-    animation-delay: -0.9s;
+    -webkit-animation-delay:-0.9s;
+    animation-delay:-0.9s;
 }
 
 .spinner .rect5 {
-    -webkit-animation-delay: -0.8s;
-    animation-delay: -0.8s;
+    -webkit-animation-delay:-0.8s;
+    animation-delay:-0.8s;
 }
 
 @-webkit-keyframes sk-stretchdelay {
-    0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
-    20% { -webkit-transform: scaleY(1.0) }
+    0%, 40%, 100% { -webkit-transform:scaleY(0.4) }
+    20% { -webkit-transform:scaleY(1.0) }
 }
 
 @keyframes sk-stretchdelay {
     0%, 40%, 100% {
-        transform: scaleY(0.4);
-        -webkit-transform: scaleY(0.4);
-    }  20% {
-           transform: scaleY(1.0);
-           -webkit-transform: scaleY(1.0);
-       }
+        transform:scaleY(0.4);
+        -webkit-transform:scaleY(0.4);
+    } 20% {
+           transform:scaleY(1.0);
+           -webkit-transform:scaleY(1.0);
+    }
 }
