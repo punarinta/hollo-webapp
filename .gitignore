@@ -4,3 +4,4 @@
 *.sublime-workspace
 *.log
 deploy.tar.gz
+node_modules
