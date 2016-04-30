@@ -52,11 +52,12 @@ ML.showContacts = function ()
 
   ML.api('contact', 'find', null, function (data)
   {
-    var html = '';
+    var html = '', name;
 
     for (var i in data)
     {
-      html += '<li data-email="' + data[i].email + '"><div class="name">' + data[i].name + ' (' + data[i].count + ' &#9993;)</div><div>' + data[i].email + '</div></li>';
+      name = data[i].name ? data[i].name : data[i].email;
+      html += '<li data-email="' + data[i].email + '"><div class="name">' + name + ' (' + data[i].count + ' &#9993;)</div><div>' + data[i].email + '</div></li>';
     }
 
     ul.innerHTML = html;
