@@ -186,7 +186,7 @@ ML.showChat = function(email)
     });
 
     // fill files in background
-    var files = [1,2,3];
+    var files = [1,2,3,4,5,6,7];
     html = '';
     for (var i in files)
     {
