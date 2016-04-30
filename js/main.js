@@ -142,6 +142,30 @@ ML.showChat = function(email)
       }
     });
 
-    console.log(ML.uniqueTags(tags))
+    html = '<div class="new tag">+</div>';
+    tags = ML.uniqueTags(tags);
+    for (var i in tags)
+    {
+      if (!tags[i].replace(/[^a-z]/gmi, '').length) continue;
+      html += '<div class="tag">' + tags[i] + '</div>';
+    }
+    document.querySelector('#composer .tags').innerHTML = html;
+
+    Array.prototype.forEach.call(document.querySelectorAll('#composer .tag'), function(el)
+    {
+      el.onclick = function ()
+      {
+        Array.prototype.forEach.call(document.querySelectorAll('#composer .tag'), function (el) { el.classList.remove('sel'); });
+        this.classList.add('sel');
+
+        if (this.classList.contains('new'))
+        {
+          var tag = prompt('New tag:', 'hollotag'),
+            clone = document.querySelector('#composer .tag').cloneNode(false);
+          clone.innerText = '#' + tag;
+          document.querySelector('#composer .tags').appendChild(clone);
+        }
+      };
+    });
   });
 };

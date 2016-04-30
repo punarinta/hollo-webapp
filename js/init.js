@@ -74,23 +74,7 @@
     }
   };
 
-  Array.prototype.forEach.call(document.querySelectorAll('#composer .tag'), function(el)
-  {
-    el.onclick = function ()
-    {
-      Array.prototype.forEach.call(document.querySelectorAll('#composer .tag'), function (el) { el.classList.remove('sel'); });
-      this.classList.add('sel');
-
-      if (this.classList.contains('new'))
-      {
-        var tag = prompt('New tag:', 'hollotag'),
-            clone = document.querySelector('#composer .tag').cloneNode(false);
-        clone.innerText = '#' + tag;
-        document.querySelector('#composer .tags').appendChild(clone);
-      }
-    };
-  });
-
+  
   // PATHS
   crossroads.addRoute('auth/login', ML.showLogin);
   crossroads.addRoute('contacts', ML.showContacts);
