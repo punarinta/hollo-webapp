@@ -75,12 +75,21 @@ var ML =
     return day.substr(-2) + '.' + month.substr(-2) + '.' + year + ' ' + hours.substr(-2) + ':' + minutes.substr(-2);
   },
 
-  uniqueTags: function(arr)
+  uniques: function(arr, sens)
   {
     var a = [];
-    for (var i=0, l=arr.length; i<l; i++)
-      if (a.indexOf(arr[i].toLowerCase()) === -1 && arr[i] !== '')
-        a.push(arr[i].toLowerCase());
+    if (sens)
+    {
+      for (var i=0, l=arr.length; i<l; i++)
+        if (a.indexOf(arr[i]) === -1 && arr[i] !== '')
+          a.push(arr[i]);
+    }
+    else
+    {
+      for (var i=0, l=arr.length; i<l; i++)
+        if (a.indexOf(arr[i].toLowerCase()) === -1 && arr[i] !== '')
+          a.push(arr[i].toLowerCase());
+    }
     return a;
   }
 };

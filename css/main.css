@@ -19,14 +19,13 @@ body::-webkit-scrollbar {display: none}
 .snackbar-menu ul {list-style-type: none; padding: 2px 0; margin: 0}
 .snackbar-menu ul:before
 {
-    border-color: transparent transparent #eaeaea transparent; content: ''; position: absolute; top: -10px;
-    width: 0; height: 0; border-style: solid; border-width: 0 10px 10px; z-index: 9999
+    right: 11px; border-color: transparent transparent #eaeaea transparent; content: ''; position: absolute;
+    top: -10px; width: 0; height: 0; border-style: solid; border-width: 0 10px 10px; z-index: 9999
 }
 .snackbar-menu li {padding: 10px 14px; cursor:  pointer}
 
-#snackbar-menu-tags ul:before {right: 92px}
-#snackbar-menu-files ul:before {right: 49px}
-#snackbar-menu-more ul:before {right: 11px}
+#snackbar-menu-files {right: 41px}
+#snackbar-menu-tags {right: 85px}
 
 #page-contacts ul {list-style-type: none}
 #page-contacts ul li {padding: 5px 8px; cursor: pointer}

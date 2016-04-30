@@ -84,7 +84,7 @@ ML.showChat = function(email)
   ML.api('message', 'findByEmail', {email: email}, function (data)
   {
     var html = '';
-    var tags = [];
+    var tags = [], subjects = [];
 
     document.querySelector('#snackbar .name').innerHTML = data.contact.name ? data.contact.name : email;
 
@@ -96,6 +96,7 @@ ML.showChat = function(email)
           whose = data[i].from == ML.user.email ? 'mine' : 'yours';
 
       tags = tags.concat(data[i].subject.split(' '));
+      subjects.push(data[i].subject);
 
       // preprocess body
       var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i;
@@ -133,17 +134,32 @@ ML.showChat = function(email)
     {
       el.onclick = function ()
       {
-        var event = document.createEvent('HTMLEvents'),
+        console.log('TODO: filter on click');
+        /*var event = document.createEvent('HTMLEvents'),
             filter = document.querySelector('#page-chat .filter');
 
         filter.value = el.innerText;
         event.initEvent('keyup', true, false);
-        filter.dispatchEvent(event);
+        filter.dispatchEvent(event);*/
       }
     });
 
+
+    // fill in subjects
+
+    html = '';
+    subjects = ML.uniques(subjects, true);
+    for (var i in subjects)
+    {
+      html += '<li>' + subjects[i] + '</li>';
+    }
+    document.querySelector('#snackbar-menu-tags ul').innerHTML = html;
+
+    
+    // fill in tags
+    
     html = '<div class="new tag">+</div>';
-    tags = ML.uniqueTags(tags);
+    tags = ML.uniques(tags, false);
     for (var i in tags)
     {
       if (!tags[i].replace(/[^a-z]/gmi, '').length) continue;
