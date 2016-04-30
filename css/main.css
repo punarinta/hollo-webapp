@@ -9,7 +9,7 @@ body::-webkit-scrollbar {display: none}
 #snackbar>div {position: fixed; top: 0}
 #snackbar .icon {width: 40px; height: 40px; text-align: center; background: no-repeat center center; top: 8px; cursor: pointer; border-radius: 50%}
 #snackbar .hamburger {left: 5px; background-image: url('ic_black/menu.svg')}
-#snackbar .name {left: 50px; padding-top: 19px}
+#snackbar .name {left: 50px; padding-top: 20px}
 #snackbar .tags {right: 85px; background-image: url('ic_black/whatshot.svg')}
 #snackbar .files {right: 42px; background-image: url('ic_black/attachment.svg')}
 #snackbar .more {right: 5px; background-image: url('ic_black/more_vert.svg');  transition:  transform .3s; }
