@@ -38,7 +38,9 @@
     el.onclick = function ()
     {
       var type = this.className.replace(/icon|toggled/gi, '').trim(),
-        menu = document.getElementById('snackbar-menu-' + type);
+          menu = document.getElementById('snackbar-menu-' + type);
+
+      if (type == 'back') hasher.setHash('contacts');
       if (!menu) return;
 
       var toggled = this.classList.contains('toggled');
