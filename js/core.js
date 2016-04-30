@@ -73,6 +73,15 @@ var ML =
         minutes = '0' + date.getMinutes();
 
     return day.substr(-2) + '.' + month.substr(-2) + '.' + year + ' ' + hours.substr(-2) + ':' + minutes.substr(-2);
+  },
+
+  uniqueTags: function(arr)
+  {
+    var a = [];
+    for (var i=0, l=arr.length; i<l; i++)
+      if (a.indexOf(arr[i].toLowerCase()) === -1 && arr[i] !== '')
+        a.push(arr[i].toLowerCase());
+    return a;
   }
 };
 

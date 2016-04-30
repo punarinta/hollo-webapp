@@ -84,6 +84,7 @@ ML.showChat = function(email)
   ML.api('message', 'findByEmail', {email: email}, function (data)
   {
     var html = '';
+    var tags = [];
 
     document.querySelector('#snackbar .name').innerHTML = data.contact.name ? data.contact.name : email;
 
@@ -93,6 +94,8 @@ ML.showChat = function(email)
     {
       var filesHtml = '', body = data[i].body,
           whose = data[i].from == ML.user.email ? 'mine' : 'yours';
+
+      tags = tags.concat(data[i].subject.split(' '));
 
       // preprocess body
       var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i;
@@ -138,5 +141,7 @@ ML.showChat = function(email)
         filter.dispatchEvent(event);
       }
     });
+
+    console.log(ML.uniqueTags(tags))
   });
 };
