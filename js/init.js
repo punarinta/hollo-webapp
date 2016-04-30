@@ -33,20 +33,26 @@
   };*/
 
   // === SNACKBAR ===
-  document.querySelector('#snackbar .icon.more').onclick = function ()
+  Array.prototype.forEach.call(document.querySelectorAll('#snackbar .icon'), function(el)
   {
-    var menu = document.getElementById('snackbar-menu-more');
-    if (this.classList.contains('toggled'))
+    el.onclick = function ()
     {
-      this.classList.remove('toggled');
-      menu.style.display = 'none';
+      var type = this.className.replace(/icon|toggled/gi, '').trim(),
+          menu = document.getElementById('snackbar-menu-' + type);
+      if (!menu) return;
+
+      if (this.classList.contains('toggled'))
+      {
+        this.classList.remove('toggled');
+        menu.style.display = 'none';
+      }
+      else
+      {
+        this.classList.add('toggled');
+        menu.style.display = 'block';
+      }
     }
-    else
-    {
-      this.classList.add('toggled');
-      menu.style.display = 'block';
-    }
-  };
+  });
 
   // === COMPOSER ===
   var composerText = document.querySelector('#composer textarea');
