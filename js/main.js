@@ -155,7 +155,7 @@ ML.showChat = function(email)
     }
     document.querySelector('#snackbar-menu-tags ul').innerHTML = html;
 
-    
+
     // fill in tags
     
     html = '<div class="new tag">+</div>';
@@ -177,11 +177,17 @@ ML.showChat = function(email)
         if (this.classList.contains('new'))
         {
           var tag = prompt('New tag:', 'hollotag'),
-            clone = document.querySelector('#composer .tag').cloneNode(false);
+              clone = document.querySelector('#composer .tag').cloneNode(false);
           clone.innerText = '#' + tag;
           document.querySelector('#composer .tags').appendChild(clone);
         }
       };
+    });
+
+    // demo: fill images in 'files'
+    Array.prototype.forEach.call(document.querySelectorAll('#snackbar-menu-files li .img'), function(el)
+    {
+      el.style.backgroundImage = "url('https://ssl.webpack.de/lorempixel.com/300/300/?" + Math.random() + "')";
     });
   });
 };
