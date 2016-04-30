@@ -184,7 +184,16 @@ ML.showChat = function(email)
       };
     });
 
-    // demo: fill images in 'files'
+    // fill files in background
+    var files = [1,2,3];
+    html = '';
+    for (var i in files)
+    {
+      html += '<li><div class="img"></div>'
+          + '<div class="bar"><div></div><div></div><div></div>'
+          +'</div></li>';
+    }
+    document.querySelector('#snackbar-menu-files ul').innerHTML = html;
     Array.prototype.forEach.call(document.querySelectorAll('#snackbar-menu-files li .img'), function(el)
     {
       el.style.backgroundImage = "url('https://ssl.webpack.de/lorempixel.com/300/300/?" + Math.random() + "')";
