@@ -38,15 +38,22 @@
     el.onclick = function ()
     {
       var type = this.className.replace(/icon|toggled/gi, '').trim(),
-          menu = document.getElementById('snackbar-menu-' + type);
+        menu = document.getElementById('snackbar-menu-' + type);
       if (!menu) return;
 
-      if (this.classList.contains('toggled'))
+      var toggled = this.classList.contains('toggled');
+
+      // close all others
+      Array.prototype.forEach.call(document.querySelectorAll('#snackbar .icon'), function(el)
       {
-        this.classList.remove('toggled');
-        menu.style.display = 'none';
-      }
-      else
+        el.classList.remove('toggled');
+      });
+      Array.prototype.forEach.call(document.getElementsByClassName('snackbar-menu'), function(el)
+      {
+        el.style.display = 'none';
+      });
+
+      if (!toggled)
       {
         this.classList.add('toggled');
         menu.style.display = 'block';
