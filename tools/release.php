@@ -8,13 +8,10 @@ $configFile = ($_SERVER['argc'] == 2) ? $_SERVER['argv'][1] : 'config.json';
 $config = json_decode(file_get_contents(__DIR__ . '/' . $configFile), true);
 
 chdir($config['root']);
+$distDir = __DIR__ . '/' . $config['dist'];
 
-if (!file_exists($distDir = __DIR__ . '/' . $config['dist']))
-{
-    mkdir($distDir);
-}
-
-file_put_contents($distDir . '/min.js', '');
+shell_exec("rm -rf $distDir");
+mkdir($distDir);
 
 foreach ($config['js'] as $file)
 {
