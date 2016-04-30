@@ -4,8 +4,7 @@ var ML =
   user:
   {
     id: null,
-    email: null,
-    contextId: null
+    email: null
   },
 
   apiRoot: '',
