@@ -185,19 +185,27 @@ ML.showChat = function(email)
       };
     });
 
-    // fill files in background
-    var files = [1,2,3,4,5,6,7];
-    html = '';
-    for (var i in files)
+    ML.loadFiles(email)
+  });
+  
+  ML.loadFiles = function (email)
+  {
+    var fileList = document.querySelector('#snackbar-menu-files ul');
+    fileList.innerHTML = 'Loading ...';
+    
+    ML.api('file', 'findByEmail', {email: email, withUrl: true}, function (files)
     {
-      html += '<li><div class="img"></div>'
+      var url, html = '';
+      for (var i in files)
+      {
+        if (files[i].type.indexOf('image/') != -1) url = files[i].url;
+        else url = 'https://ssl.webpack.de/lorempixel.com/300/300/?' + Math.random();
+
+        html += '<li><div class="img" style="background-image:url(\''+ url + '\')"></div>'
           + '<div class="bar"><div></div><div></div><div></div>'
           +'</div></li>';
-    }
-    document.querySelector('#snackbar-menu-files ul').innerHTML = html;
-    Array.prototype.forEach.call(document.querySelectorAll('#snackbar-menu-files li .img'), function(el)
-    {
-      el.style.backgroundImage = "url('https://ssl.webpack.de/lorempixel.com/300/300/?" + Math.random() + "')";
-    });
-  });
+      }
+      document.querySelector('#snackbar-menu-files ul').innerHTML = html;
+    })
+  }
 };
