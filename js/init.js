@@ -63,11 +63,24 @@
     }
   });
 
+
   // prevent scrolling of the main screen by files list
-  document.querySelector('#snackbar-menu-files ul').addEventListener('wheel', function(e)
+
+  var tch, filesList = document.querySelector('#snackbar-menu-files ul');
+
+  function scrollListener(e)
   {
-    var r1 = this.getBoundingClientRect(), r2;
-    if (e.wheelDelta > 0)
+    var up = 0, r1 = this.getBoundingClientRect(), r2;
+    if (typeof e.wheelDelta == "undefined")
+    {
+      if (tch.clientY < e.changedTouches[0].clientY) up = 1;
+    }
+    else
+    {
+      if (e.wheelDelta > 0) up = 1;
+    }
+
+    if (up)
     {
       r2 = this.querySelector('li:first-child').getBoundingClientRect();
       if (r1.top < r2.top) e.preventDefault();
@@ -77,7 +90,12 @@
       r2 = this.querySelector('li:last-child').getBoundingClientRect();
       if (r1.bottom > r2.bottom) e.preventDefault();
     }
-  });
+  }
+
+  filesList.addEventListener('touchstart', function(e) { tch = e.touches[0] });
+  filesList.addEventListener('touchmove', scrollListener);
+  filesList.addEventListener('wheel', scrollListener);
+
 
   // === COMPOSER ===
   var composerText = document.querySelector('#composer textarea');
