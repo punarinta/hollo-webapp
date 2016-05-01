@@ -193,13 +193,14 @@ ML.showChat = function(email)
     var fileList = document.querySelector('#snackbar-menu-files ul');
     fileList.innerHTML = 'Loading ...';
     
-    ML.api('file', 'findByEmail', {email: email, withImageUrl: true}, function (files)
+    ML.api('file', 'findByEmail', {email: email, withImageUrl: false /*true*/}, function (files)
     {
+      files = [1,2,3,4,5,6,7]
       var url, html = '';
       for (var i in files)
       {
-        if (files[i].type.indexOf('image/') != -1) url = files[i].url;
-        else url = 'https://ssl.webpack.de/lorempixel.com/300/300/?' + Math.random();
+      //  if (files[i].type.indexOf('image/') != -1) url = files[i].url;
+      /*  else*/ url = 'https://ssl.webpack.de/lorempixel.com/300/300/?' + Math.random();
 
         html += '<li><div class="img" style="background-image:url(\''+ url + '\')"></div>'
           + '<div class="bar"><div></div><div></div><div></div>'
