@@ -63,17 +63,18 @@
     }
   });
 
+  // prevent scrolling of the main screen by files list
   document.querySelector('#snackbar-menu-files ul').addEventListener('wheel', function(e)
   {
     var r1 = this.getBoundingClientRect(), r2;
     if (e.wheelDelta > 0)
     {
-      r2 = document.querySelector('#snackbar-menu-files ul li:first-child').getBoundingClientRect();
+      r2 = this.querySelector('li:first-child').getBoundingClientRect();
       if (r1.top < r2.top) e.preventDefault();
     }
     else
     {
-      r2 = document.querySelector('#snackbar-menu-files ul li:last-child').getBoundingClientRect();
+      r2 = this.querySelector('li:last-child').getBoundingClientRect();
       if (r1.bottom > r2.bottom) e.preventDefault();
     }
   });
