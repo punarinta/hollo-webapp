@@ -193,7 +193,7 @@ ML.showChat = function(email)
     var fileList = document.querySelector('#snackbar-menu-files ul');
     fileList.innerHTML = 'Loading ...';
     
-    ML.api('file', 'findByEmail', {email: email, withUrl: true}, function (files)
+    ML.api('file', 'findByEmail', {email: email, withImageUrl: true}, function (files)
     {
       var url, html = '';
       for (var i in files)
