@@ -1,6 +1,6 @@
 (function ()
 {
-  ML.apiRoot = document.location.hostname.replace('app.', 'api.');
+  ML.apiRoot = document.location.hostname.length ? document.location.hostname.replace('app.', 'api.') : 'api.hollo.email';
 
   // === LOGIN ===
   PP.onKey('#page-login .username', 13, document.querySelector('#page-login .password').focus);

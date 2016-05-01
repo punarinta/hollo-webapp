@@ -11,10 +11,9 @@ var ML =
 
   api: function (endpoint, method, data, callback)
   {
-    var r = new XMLHttpRequest(),
-        root = document.location.hostname.replace('app\.', 'api\.');
+    var r = new XMLHttpRequest();
 
-    r.open('POST', 'https://' + root + '/api/' + endpoint, true);
+    r.open('POST', 'https://' + ML.apiRoot + '/api/' + endpoint, true);
     r.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
     if (ML.sessionId)
     {
