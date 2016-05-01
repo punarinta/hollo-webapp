@@ -42,6 +42,13 @@ body::-webkit-scrollbar {display: none}
 #snackbar-menu-files li .bar > div:nth-child(2) {background-image: url('ic_black/file_download.svg')}
 #snackbar-menu-files li .bar > div:nth-child(3) {background-image: url('ic_black/share.svg')}
 
+@media (min-width: 600px)
+{
+    #snackbar-menu-files li { max-width: 31%; height: 39vw; flex: 1 0 31%; }
+    #snackbar-menu-files li .img {height: 31vw;}
+    #snackbar-menu-files li .bar {height: 8vw;}
+}
+
 #page-contacts ul {list-style-type: none}
 #page-contacts ul li {padding: 5px 8px; cursor: pointer}
 #page-contacts ul li:nth-child(2n) {background-color: #f4f4f4}
