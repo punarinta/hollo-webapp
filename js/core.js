@@ -8,6 +8,7 @@ var ML =
   },
 
   apiRoot: '',
+  isWeb: true,
 
   api: function (endpoint, method, data, callback)
   {
