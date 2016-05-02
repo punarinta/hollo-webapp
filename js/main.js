@@ -87,7 +87,10 @@ ML.showChat = function(email)
     var html = '';
     var tags = [], subjects = [];
 
-    document.querySelector('#snackbar .name').innerHTML = data.contact.name ? data.contact.name : email;
+    ML.contact = data.contact;
+    ML.contact.email = email;
+
+    document.querySelector('#snackbar .name').innerHTML = ML.contact.name ? ML.contact.name : email;
 
     data = data.messages;
 

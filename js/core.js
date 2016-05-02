@@ -1,14 +1,15 @@
 var ML =
 {
+  apiRoot: document.location.hostname.replace('app.', 'api.'),
+  isWeb: true,
+
   sessionId: null,
+  contact: null,
   user:
   {
     id: null,
     email: null
   },
-
-  apiRoot: document.location.hostname.replace('app.', 'api.'),
-  isWeb: true,
 
   api: function (endpoint, method, data, callback)
   {
