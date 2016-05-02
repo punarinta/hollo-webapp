@@ -7,7 +7,7 @@ var ML =
     email: null
   },
 
-  apiRoot: '',
+  apiRoot: document.location.hostname.replace('app.', 'api.'),
   isWeb: true,
 
   api: function (endpoint, method, data, callback)
@@ -90,6 +90,11 @@ var ML =
           a.push(arr[i].toLowerCase());
     }
     return a;
+  },
+
+  sessionSave: function ()
+  {
+    localStorage.setItem('sessionId', ML.sessionId);
   }
 };
 

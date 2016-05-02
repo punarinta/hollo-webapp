@@ -157,8 +157,7 @@
         {
           ML.sessionId = data.sessionId;
           ML.user = data.user;
-
-          localStorage.setItem('sessionId', ML.sessionId);
+          ML.sessionSave();
 
           // remove '?code=...'
           window.history.pushState('home', 'Home', '/');
@@ -199,18 +198,21 @@
     });
   }
 
-  console.log(localStorage.getItem('foobar'));
-  localStorage.setItem('foobar', 42);
-
-  if (document.location.hostname.length)
+  if (ML.isWeb)
   {
-    ML.apiRoot = document.location.hostname.replace('app.', 'api.');
     onDeviceReady();
   }
   else
   {
-    ML.isWeb = false;
-    ML.apiRoot = 'api.hollo.email';
-    document.addEventListener('deviceready', onDeviceReady, false);
+    document.addEventListener('deviceready', function ()
+    {
+      // extract session
+      ML_cordova.readFile('sessionId', function (data)
+      {
+        // console.log('session from file:', data);
+        if (data && data.length) ML.sessionId = data;
+        onDeviceReady();
+      });
+    }, false);
   }
 })();

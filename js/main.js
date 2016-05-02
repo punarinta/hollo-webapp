@@ -18,7 +18,7 @@ ML.loginImap = function ()
   {
     ML.sessionId = data.sessionId;
     ML.user = data.user;
-    localStorage.setItem('sessionId', ML.sessionId);
+    ML.sessionSave();
     hasher.setHash('contacts');
   });
 };
