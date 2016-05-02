@@ -25,7 +25,7 @@ ML.loginImap = function ()
 
 ML.googleStart = function ()
 {
-  ML.api('auth', 'getOAuthToken', {}, function (data)
+  ML.api('auth', 'getOAuthToken', {redirectUrl: document.location.origin + '/'}, function (data)
   {
      window.location.href = data;
   });
