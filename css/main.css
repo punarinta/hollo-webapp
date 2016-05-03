@@ -69,10 +69,21 @@ body::-webkit-scrollbar {display: none}
 #page-contacts .tabs div:first-child span {border-width: 0 0 2px;border-style: solid;}
 
 #page-contacts ul {list-style-type: none;margin-top:176px;padding: 0}
-#page-contacts ul li {padding: 5px 8px; cursor: pointer; transition: margin .5s, background-color .5s, color .5s}
-#page-contacts ul li:hover {background-color: #c3d9ff}
-#page-contacts ul li div:last-child {font-size: 75%}
-#page-contacts ul li.swiped {margin-left: -30px;background-color: #4b54ff; color:#fff}
+#page-contacts ul li .ava {float: left;padding: 14px 16px;margin-right: 5px}
+#page-contacts ul li img {border-radius: 50%; border-image:0;width:48px;height: 48px;background: #c3d9ff}
+#page-contacts ul li .name {font-size: 150%; padding-top: 16px}
+#page-contacts ul li .email {font-size: 75%; color: grey}
+#page-contacts ul li.swiped {margin-left: -50px;}
+#page-contacts ul li
+{
+    overflow: hidden; height:80px; white-space: nowrap; display: flex; padding-left: 10px;
+    transition: margin .5s
+}
+#page-contacts ul li.swiped:after
+{
+    content:'Mute'; padding: 32px 40px 0 40px; text-transform: uppercase;
+    color:#fff; margin-left: 15px; background-color: #4b54ff;
+}
 
 #page-chat {padding-top: 61px}
 #page-chat ul {list-style-type: none; padding-left: 0; margin-top: 0}
