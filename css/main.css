@@ -66,6 +66,7 @@ body::-webkit-scrollbar {display: none}
 #page-contacts .search input:focus {outline: none}
 #page-contacts .tabs {height:48px; display: flex}
 #page-contacts .tabs div {flex: 1 0 0;text-align: center; padding-top: 14px; color: #4b54ff}
+#page-contacts .tabs div:first-child span {border-width: 0 0 2px;border-style: solid;}
 
 #page-contacts ul {list-style-type: none;margin-top:176px;padding: 0}
 #page-contacts ul li {padding: 5px 8px; cursor: pointer; transition: margin .5s, background-color .5s, color .5s}
