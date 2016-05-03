@@ -1,4 +1,4 @@
-body {font-family: 'DejaVu Sans', sans-serif; padding: 0; margin: 0; background-color: #eaeaea}
+body {font-family: 'DejaVu Sans', sans-serif; padding: 0; margin: 0; background-color: #f5f5f5}
 body::-webkit-scrollbar {display: none}
 
 .page {display: none; padding: 5px}
@@ -49,13 +49,29 @@ body::-webkit-scrollbar {display: none}
     #snackbar-menu-files li .bar {height: 8vw;}
 }
 
-#page-contacts ul {list-style-type: none}
-#page-contacts ul li {padding: 5px 8px; cursor: pointer; transition: margin .5s, background-color .5s;}
-#page-contacts ul li:nth-child(2n) {background-color: #f4f4f4}
-#page-contacts ul li:nth-child(2n+1) {background-color: #fff}
+#page-contacts {padding:0}
+#page-contacts .head {position: fixed;width: 100%;top:0;left:0;height: 176px}
+#page-contacts .head {height:128px; background-color: #4b54ff}
+#page-contacts .head .ava {float: left;padding: 14px 16px}
+#page-contacts .head img {border-radius: 50%; border-image:0}
+#page-contacts .head .name {font-size: 170%; padding-top: 16px}
+#page-contacts .head .email {font-size: 70%;}
+#page-contacts .accounts {overflow: hidden;height:80px;white-space: nowrap;display: flex;color:#fff}
+#page-contacts .search {}
+#page-contacts .search input
+{
+    height:48px; border:0; width:100%; background:transparent url('ic_white/find.png') no-repeat 30px 16px;
+    color:#fff; font-size: 140%; padding: 0 0 0 80px;
+}
+#page-contacts .search input:focus {outline: none}
+#page-contacts .tabs {height:48px; display: flex}
+#page-contacts .tabs div {flex: 1 0 0;text-align: center; padding-top: 14px; color: #4b54ff}
+
+#page-contacts ul {list-style-type: none;margin-top:176px;padding: 0}
+#page-contacts ul li {padding: 5px 8px; cursor: pointer; transition: margin .5s, background-color .5s, color .5s}
 #page-contacts ul li:hover {background-color: #c3d9ff}
 #page-contacts ul li div:last-child {font-size: 75%}
-#page-contacts ul li.swiped {margin-left: -30px;background-color: #c7b12a}
+#page-contacts ul li.swiped {margin-left: -30px;background-color: #4b54ff; color:#fff}
 
 #page-chat {padding-top: 61px}
 #page-chat ul {list-style-type: none; padding-left: 0; margin-top: 0}

@@ -45,10 +45,16 @@ ML.showLogin = function ()
 
 ML.showContacts = function ()
 {
-  var ul = document.querySelector('#page-contacts ul');
+  var ul = document.querySelector('#page-contacts ul'),
+      page = document.getElementById('page-contacts');
+  
   ML.hidePages();
   ul.innerHTML ='<li>Loading...</li>';
-  document.getElementById('page-contacts').style.display = 'block';
+
+  page.querySelector('.head .ava img').src = 'https://secure.gravatar.com/avatar/35e642e2f767527cc3154d44e77c8cb1';
+  page.querySelector('.head .name').innerHTML = ML.user.name;
+  page.querySelector('.head .email').innerHTML = ML.user.email;
+  page.style.display = 'block';
 
   ML.api('contact', 'find', null, function (data)
   {

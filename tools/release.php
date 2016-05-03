@@ -43,6 +43,7 @@ file_put_contents($distDir . '/index.html', $html);
 echo "Copying assets...\n";
 shell_exec("cp favicon.ico $distDir/favicon.ico");
 shell_exec("cp -R css/ic_black $distDir/ic_black");
+shell_exec("cp -R css/ic_white $distDir/ic_white");
 
 echo "Cleaning up...\n";
 unlink("$distDir/temp.js");
