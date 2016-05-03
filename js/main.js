@@ -64,6 +64,11 @@ ML.showContacts = function ()
 
     Array.prototype.forEach.call(document.querySelectorAll('#page-contacts ul li'), function (el)
     {
+      ML.swipedetect(el, function (x)
+      {
+        if (x == 'left') el.classList.add('swiped');
+        else el.classList.remove('swiped');
+      });
       el.onclick = function (e)
       {
         var li = e.target.nodeName == 'LI' ? e.target : e.target.parentElement;

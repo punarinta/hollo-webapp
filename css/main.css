@@ -50,11 +50,12 @@ body::-webkit-scrollbar {display: none}
 }
 
 #page-contacts ul {list-style-type: none}
-#page-contacts ul li {padding: 5px 8px; cursor: pointer}
+#page-contacts ul li {padding: 5px 8px; cursor: pointer; transition: margin .5s;}
 #page-contacts ul li:nth-child(2n) {background-color: #f4f4f4}
 #page-contacts ul li:nth-child(2n+1) {background-color: #fff}
 #page-contacts ul li:hover {background-color: #c3d9ff}
 #page-contacts ul li div:last-child {font-size: 75%}
+#page-contacts ul li.swiped {margin-left: -30px;background-color: #c7b12a}
 
 #page-chat {padding-top: 61px}
 #page-chat ul {list-style-type: none; padding-left: 0; margin-top: 0}
