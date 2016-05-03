@@ -35,6 +35,10 @@ ML.hidePages = function ()
 {
   Array.prototype.forEach.call(document.getElementsByClassName('page'), function (el) { el.style.display = 'none' });
   document.getElementById('snackbar').style.display = 'none';
+  Array.prototype.forEach.call(document.getElementsByClassName('snackbar-menu'), function(el)
+  {
+    el.style.display = 'none';
+  });
 };
 
 ML.showLogin = function ()
