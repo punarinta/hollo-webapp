@@ -106,6 +106,7 @@ ML.showChat = function(email)
       var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i;
       body = body.replace(/(?:\r\n|\r|\n)/g, '<br />');
       body = body.replace(exp,"<a href='$1'>$1</a>");
+      body = body.replace(/ -- /g," — ");
 
       if (data[i].files)
       {
