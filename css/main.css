@@ -50,7 +50,7 @@ body::-webkit-scrollbar {display: none}
 }
 
 #page-contacts ul {list-style-type: none}
-#page-contacts ul li {padding: 5px 8px; cursor: pointer; transition: margin .5s;}
+#page-contacts ul li {padding: 5px 8px; cursor: pointer; transition: margin .5s, background-color .5s;}
 #page-contacts ul li:nth-child(2n) {background-color: #f4f4f4}
 #page-contacts ul li:nth-child(2n+1) {background-color: #fff}
 #page-contacts ul li:hover {background-color: #c3d9ff}

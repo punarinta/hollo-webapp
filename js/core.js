@@ -115,7 +115,7 @@ var ML =
       startX = touchobj.pageX;
       startY = touchobj.pageY;
       startTime = new Date().getTime(); // record time when finger first makes contact with surface
-      e.preventDefault()
+      // e.preventDefault()
     }, false);
 
     touchsurface.addEventListener('touchmove', function(e)
@@ -145,7 +145,7 @@ var ML =
         }
       }
       handleswipe(swipedir);
-      e.preventDefault()
+      // e.preventDefault()
     }, false)
   }
 };
