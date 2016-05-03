@@ -97,7 +97,7 @@
 
   // === COMPOSER ===
   var composerText = document.querySelector('#composer textarea');
-  composerText.onclick = composerText.onfocus = function ()
+  composerText.onclick = function ()
   {
     var tagsBar = document.querySelector('#composer .tags');
 
@@ -106,13 +106,14 @@
       Array.prototype.forEach.call(document.querySelectorAll('#composer .tag'), function (el) { el.classList.remove('sel'); });
     }
     tagsBar.style.display = 'block';
+    composerText.classList.add('focused');
   };
-  composerText.onkeydown = function (e)
+
+  document.querySelector('#page-chat').onclick = function (e)
   {
-    if (e.keyCode == 27)
-    {
-      document.querySelector('#composer .tags').style.display = 'none';
-    }
+    if (e.target.classList.contains('tag') || e.target.classList.contains('tags') || e.target.tagName.toLowerCase() == 'textarea') return;
+    document.querySelector('#composer .tags').style.display = 'none';
+    composerText.classList.remove('focused');
   };
 
 

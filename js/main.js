@@ -183,8 +183,11 @@ ML.showChat = function(email)
         {
           var tag = prompt('New tag:', 'hollotag'),
               clone = document.querySelector('#composer .tag').cloneNode(false);
-          clone.innerText = '#' + tag;
-          document.querySelector('#composer .tags').appendChild(clone);
+          if (tag && tag.length)
+          {
+            clone.innerText = '#' + tag;
+            document.querySelector('#composer .tags').appendChild(clone);
+          }
         }
       };
     });
