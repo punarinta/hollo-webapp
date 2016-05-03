@@ -1,8 +1,6 @@
 var ML =
 {
   apiRoot: document.location.hostname.replace('app.', 'api.'),
-  isWeb: true,
-
   sessionId: null,
   contact: null,
   user:
@@ -91,11 +89,6 @@ var ML =
           a.push(arr[i].toLowerCase());
     }
     return a;
-  },
-
-  sessionSave: function ()
-  {
-    localStorage.setItem('sessionId', ML.sessionId);
   }
 };
 
