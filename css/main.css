@@ -65,8 +65,8 @@ body::-webkit-scrollbar {display: none}
 #page-chat ul li.mine > div {float: left; margin-right: 15px}
 #page-chat ul li .tag {color: #9013fe; cursor: pointer}
 
-#composer textarea.focused {height: 30vh}
-#composer textarea {margin:0;position: fixed; left: -1px; bottom: -1px; width: 100vw; height: 50px; transition: all .4s; padding: 5px; font-size: 150%}
+#composer textarea.focused {height: 30vh; padding: 5px; font-size: 120%}
+#composer textarea {margin:0;position: fixed; left: -1px; bottom: -1px; width: 100vw; height: 40px; transition: all .4s; padding: 20px  0 0 20px; font-size: 150%}
 #composer .tags {display: none; position: fixed; left: 0; bottom: 0; width: 100%; height:31px;overflow: auto}
 #composer .tag {float: left; background: lightgray; padding: 5px 8px; color: #9013fe; margin-right: 2px; cursor: pointer; border: 1px solid transparent}
 #composer .tag.sel {border-color: #001199}
