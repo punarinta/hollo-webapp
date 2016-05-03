@@ -52,7 +52,7 @@ ML.showContacts = function ()
   ul.innerHTML ='<li>Loading...</li>';
 
   page.querySelector('.head .ava img').src = 'https://secure.gravatar.com/avatar/35e642e2f767527cc3154d44e77c8cb1';
-  page.querySelector('.head .name').innerHTML = ML.user.name;
+  page.querySelector('.head .name').innerHTML = ML.user.name || ML.user.email;
   page.querySelector('.head .email').innerHTML = ML.user.email;
   page.style.display = 'block';
 
@@ -77,13 +77,12 @@ ML.showContacts = function ()
     {
       ML.swipedetect(el, function (x)
       {
-        if (x == 'left') el.classList.add('swiped');
+        if (x == 'right') el.classList.add('swiped');
         else el.classList.remove('swiped');
       });
       el.onclick = function (e)
       {
-        var li = e.target.nodeName == 'LI' ? e.target : e.target.parentElement;
-        hasher.setHash('chat/' + li.dataset.email);
+        hasher.setHash('chat/' + PP.par(e.target, 'li').dataset.email);
       }
     });
   });

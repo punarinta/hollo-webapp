@@ -10,6 +10,12 @@
   document.querySelector('#page-contacts .filter').onkeyup = function ()
   {
     var filter = this.value.toUpperCase();
+
+    if (filter == 'LOGOUT')
+    {
+      hasher.setHash('auth/logout');
+    }
+
     Array.prototype.forEach.call(document.querySelectorAll('#page-contacts li'), function(el)
     {
       var name = el.getElementsByClassName('name')[0].innerHTML.toUpperCase(),

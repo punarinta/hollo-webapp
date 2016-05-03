@@ -158,5 +158,14 @@ var PP =
     {
       if (ev.keyCode == code) callback();
     };
+  },
+  par: function (x, type)
+  {
+    while (x.nodeName.toLocaleLowerCase() != type)
+    {
+      if (x == document) break;
+      x = x.parentElement;
+    }
+    return x;
   }
 };
