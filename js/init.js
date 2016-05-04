@@ -174,6 +174,16 @@
     ML.sessionId = localStorage.getItem('sessionId');
   }
 
+  if (ML.getQueryVar('preload'))
+  {
+    var i, im, f = ['/gfx/ava.png'];
+    for (i in f)
+    {
+      im = new Image();
+      im.src = f[i];
+    }
+  }
+
   // NO API CALLS ABOVE THIS LINE
 
   var oauthCode = ML.getQueryVar('code');
