@@ -71,7 +71,7 @@ ML.showContacts = function (full)
     {
       name = data[i].name ? data[i].name : data[i].email;
 
-      var ava = 'https://robohash.org/' + Math.random() + '?size=48x48';
+      var ava = i < 25 ? ('https://robohash.org/' + Math.random() + '?size=48x48') : '';
 
       html += '<li data-email="' + data[i].email + '">';
       html += '<div class="ava"><img height="48" src="' + ava + '"></div><div><div class="name">' + name + '</div><div class="email">' + data[i].email + '</div></div>';
