@@ -8,6 +8,9 @@
     <link rel="shortcut icon" href="favicon.ico" />
     <!-- DEV -->
     <meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src  'self' 'unsafe-inline' *; img-src * data:">
+    <link rel="stylesheet" type="text/css" href="/css/core.css" />
+    <link rel="stylesheet" type="text/css" href="/css/login.css" />
+    <link rel="stylesheet" type="text/css" href="/css/snackbar.css" />
     <link rel="stylesheet" type="text/css" href="/css/main.css" />
     <!-- END -->
     <!-- CSS -->
@@ -25,17 +28,17 @@
 </div>
 
 <div class="page" id="page-login">
-    <div>
-        Login to your email: <br>
-        <br>
-        <button class="google">Google</button>
-        <br><br>
+    <img class="logo" src="/gfx/logo.svg">
+    <div class="text">sign in</div>
+    <button class="google">Google</button>
+    <div class="text">or</div>
+    <div class="input">
         <input class="username" type="email" autofocus placeholder="Email">
-        <br>
-        <input class="password" type="password" placeholder="Password">
-        <br>
-        <button class="login">Login</button>
     </div>
+    <div class="input">
+        <input class="password" type="password" placeholder="Password">
+    </div>
+    <button class="login">Login</button>
 </div>
 
 <div id="snackbar">

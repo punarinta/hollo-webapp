@@ -12,6 +12,9 @@
   ],
   "css":
   [
+    "css/core.css",
+    "css/login.css",
+    "css/snackbar.css",
     "css/main.css"
   ],
   "dist": "../dist"

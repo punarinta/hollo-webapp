@@ -1,0 +1,43 @@
+#snackbar {display: none; position: fixed; top: 0; width: 100%; height: 56px; box-shadow: 0 0 7px 0 rgba(80,80,80,.75); background-color: #2aff67/*#eaeaea*/}
+#snackbar > div {position: fixed; top: 0}
+#snackbar .icon {width: 40px; height: 40px; text-align: center; background: no-repeat center center; top: 8px; cursor: pointer; border-radius: 50%}
+#snackbar .back {left: 5px; background-image: url('ic_black/arrow_back.svg')}
+#snackbar .name {left: 50px; padding-top: 20px}
+#snackbar .tags {right: 85px; background-image: url('ic_black/whatshot.svg')}
+#snackbar .files {right: 42px; background-image: url('ic_black/attachment.svg')}
+#snackbar .more {right: 5px; background-image: url('ic_black/more_vert.svg'); transition: transform .3s; }
+#snackbar .more.toggled {transform: rotate(90deg)}
+#snackbar .toggled {background-color: #86feab}
+
+.snackbar-menu {position: fixed; right: 3px; top: 65px; display: none; background-color: #2aff67; box-shadow: 0 2px 6px 0 rgba(80,80,80,.75); }
+.snackbar-menu ul {list-style-type: none; padding: 2px 0; margin: 0}
+.snackbar-menu:before
+{
+    right: 11px; border-color: transparent transparent #2aff67 transparent; content: ''; position: absolute;
+    top: -10px; width: 0; height: 0; border-style: solid; border-width: 0 10px 10px; z-index: 9999
+}
+.snackbar-menu li {padding: 10px 14px; cursor: pointer}
+
+#snackbar-menu-tags {right: 85px}
+
+#snackbar-menu-files:before {right: 51px;}
+#snackbar-menu-files ul {height:100%;margin: 0 1%;display:flex;flex-flow: row wrap;justify-content: center;overflow: auto }
+#snackbar-menu-files {right: 0; width: 100%; bottom:0;z-index:10;padding-top: 1vh;}
+#snackbar-menu-files li
+{
+    margin: 1vw;max-width: 47%; height: 60vw; background-color: #c3d9ff;
+    border-radius: 4px; padding: 0;flex: 1 0 47%;
+}
+#snackbar-menu-files li .img {height: 47vw; background-size: cover;}
+#snackbar-menu-files li .bar {width:100%; height: 13vw;background-color: #fff;border-radius: 0 0 4px 4px; display: flex}
+#snackbar-menu-files li .bar > div {flex: 1;background: no-repeat center center;opacity: .6}
+#snackbar-menu-files li .bar > div:nth-child(1) {background-image: url('ic_black/star.svg')}
+#snackbar-menu-files li .bar > div:nth-child(2) {background-image: url('ic_black/file_download.svg')}
+#snackbar-menu-files li .bar > div:nth-child(3) {background-image: url('ic_black/share.svg')}
+
+@media (min-width: 600px)
+{
+    #snackbar-menu-files li { max-width: 31%; height: 39vw; flex: 1 0 31%; }
+    #snackbar-menu-files li .img {height: 31vw;}
+    #snackbar-menu-files li .bar {height: 8vw;}
+}
