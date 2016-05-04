@@ -16,6 +16,9 @@ ML.loginImap = function ()
   },
   function (data)
   {
+    // memorize login
+    localStorage.setItem('imapLogin', user);
+
     ML.sessionId = data.sessionId;
     ML.user = data.user;
     localStorage.setItem('sessionId', ML.sessionId);

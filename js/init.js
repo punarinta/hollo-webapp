@@ -5,6 +5,10 @@
   PP.onKey('#page-login .password', 13, ML.loginImap);
   document.querySelector('#page-login .google').onclick = ML.googleStart;
   document.querySelector('#page-login .login').onclick = ML.loginImap;
+  if (localStorage.getItem('imapLogin'))
+  {
+    document.querySelector('#page-login .username').value = localStorage.getItem('imapLogin');
+  }
 
   // === FILTERS ===
   document.querySelector('#page-contacts .filter').onkeyup = function ()
