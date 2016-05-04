@@ -1,10 +1,14 @@
 #page-login {background: #4b54ff; color: #fff; height: 100vh}
 #page-login .logo {display: block; margin: 15vh auto;}
 #page-login button {width: 73%; margin: auto; display: block; border: 0; border-radius: 2px; height: 40px; cursor: pointer}
-#page-login .google {color: rgba(0, 0, 0, .5); background: #fff}
+#page-login .google {color: rgba(0, 0, 0, .5); background: #fff url('/gfx/super-g.png') no-repeat 13px 11px }
 #page-login .text {text-align: center; margin: 20px 0; font-size: 24px}
 #page-login .login {background: rgba(0, 0, 0, .1);}
 #page-login .login.active {background: #fff; color: #4b54ff}
 #page-login .login:hover {background: #fff; color: #4b54ff}
 #page-login .input {margin: 20px 0}
-#page-login input {width: 73%; margin: auto; display: block; border: 0; border-radius: 2px;background: transparent;text-align: center; color: #fff}
+#page-login input
+{
+    width: 73%; margin: auto; display: block; border: 0; border-radius: 2px;
+    background: transparent;text-align: center; color: #fff; outline: 0;
+}
