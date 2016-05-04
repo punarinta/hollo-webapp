@@ -66,6 +66,25 @@
       }
     }
   });
+  
+  // === hollo'd / muted ===
+  var btnHolloed = document.getElementById('show-holloed'),
+      btnMuted = document.getElementById('show-muted');
+  
+  btnHolloed.onclick = function ()
+  {
+    btnHolloed.classList.add('sel');
+    btnMuted.classList.remove('sel');
+    ML.state.muted = 0;
+    ML.showContacts(0);
+  };
+  btnMuted.onclick = function ()
+  {
+    btnMuted.classList.add('sel');
+    btnHolloed.classList.remove('sel');
+    ML.state.muted = 1;
+    ML.showContacts(0);
+  };
 
 
   // prevent scrolling of the main screen by files list
@@ -125,7 +144,7 @@
 
   // PATHS
   crossroads.addRoute('auth/login', ML.showLogin);
-  crossroads.addRoute('contacts', ML.showContacts);
+  crossroads.addRoute('contacts', function() {ML.showContacts(1)});
   crossroads.addRoute('chat/{email}', function (email)
   {
     ML.showChat(email);

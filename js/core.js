@@ -8,6 +8,10 @@ var ML =
     id: null,
     email: null
   },
+  state:
+  {
+    muted: 0
+  },
 
   api: function (endpoint, method, data, callback)
   {

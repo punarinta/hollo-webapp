@@ -47,20 +47,23 @@ ML.showLogin = function ()
   document.getElementById('page-login').style.display = 'block';
 };
 
-ML.showContacts = function ()
+ML.showContacts = function (full)
 {
   var ul = document.querySelector('#page-contacts ul'),
       page = document.getElementById('page-contacts');
-  
-  ML.hidePages();
-  ul.innerHTML ='<li>Loading...</li>';
 
-  page.querySelector('.head .ava img').src = 'https://secure.gravatar.com/avatar/35e642e2f767527cc3154d44e77c8cb1';
-  page.querySelector('.head .name').innerHTML = ML.user.name || ML.user.email;
-  page.querySelector('.head .email').innerHTML = ML.user.email;
-  page.style.display = 'block';
+  if (full)
+  {
+    ML.hidePages();
+    ul.innerHTML ='<li>Loading...</li>';
 
-  ML.api('contact', 'find', null, function (data)
+    page.querySelector('.head .ava img').src = 'https://secure.gravatar.com/avatar/35e642e2f767527cc3154d44e77c8cb1';
+    page.querySelector('.head .name').innerHTML = ML.user.name || ML.user.email;
+    page.querySelector('.head .email').innerHTML = ML.user.email;
+    page.style.display = 'block';
+  }
+
+  ML.api('contact', 'find', {filters: [{mode:'muted', value:ML.state.muted}]}, function (data)
   {
     var html = '', name;
 

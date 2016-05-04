@@ -66,7 +66,8 @@ body::-webkit-scrollbar {display: none}
 #page-contacts .search input:focus {outline: none}
 #page-contacts .tabs {height:48px; display: flex}
 #page-contacts .tabs div {flex: 1 0 0;text-align: center; padding-top: 14px; color: #4b54ff;background: #f5f5f5;box-shadow: 0 5px 20px 0 rgba(240,240,240,.8);}
-#page-contacts .tabs div:first-child span {border-width: 0 0 2px;border-style: solid;}
+#page-contacts .tabs div span {border: 0 solid}
+#page-contacts .tabs div.sel span {border-width:0 0 2px}
 
 #page-contacts ul {list-style-type: none;margin-top:176px;padding: 0}
 #page-contacts ul li .ava {float: left;padding: 14px 16px;margin-right: 5px}
