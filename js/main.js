@@ -57,7 +57,7 @@ ML.showContacts = function (full)
     ML.hidePages();
     ul.innerHTML ='<li>Loading...</li>';
 
-    page.querySelector('.head .ava img').src = 'https://secure.gravatar.com/avatar/35e642e2f767527cc3154d44e77c8cb1';
+    page.querySelector('.head .ava img').src = ML.user.ava || '/gfx/ava.png';
     page.querySelector('.head .name').innerHTML = ML.user.name || ML.user.email;
     page.querySelector('.head .email').innerHTML = ML.user.email;
     page.style.display = 'block';
