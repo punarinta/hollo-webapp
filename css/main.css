@@ -78,7 +78,7 @@ body::-webkit-scrollbar {display: none}
 #page-contacts ul li
 {
     overflow: hidden; height:80px; white-space: nowrap; display: flex; padding-left: 10px;
-    transition: all .4s
+    transition: all .4s; margin-right: 10px
 }
 #page-contacts ul li.swiped:before
 {
