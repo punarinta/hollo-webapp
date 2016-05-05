@@ -31,9 +31,8 @@
 #snackbar-menu-files li .img {height: 47vw; background-size: cover;}
 #snackbar-menu-files li .bar {width:100%; height: 13vw;background-color: #fff;border-radius: 0 0 4px 4px; display: flex}
 #snackbar-menu-files li .bar > div {flex: 1;background: no-repeat center center;opacity: .6}
-#snackbar-menu-files li .bar > div:nth-child(1) {background-image: url('ic_black/star.svg')}
-#snackbar-menu-files li .bar > div:nth-child(2) {background-image: url('ic_black/file_download.svg')}
-#snackbar-menu-files li .bar > div:nth-child(3) {background-image: url('ic_black/share.svg')}
+#snackbar-menu-files li .bar > div:nth-child(1) {background-image: url('ic_black/file_download.svg')}
+#snackbar-menu-files li .bar > div:nth-child(2) {background-image: url('ic_black/share.svg')}
 
 @media (min-width: 600px)
 {

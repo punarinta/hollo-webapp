@@ -133,20 +133,13 @@
   var composerText = document.querySelector('#composer textarea');
   composerText.onclick = function ()
   {
-    var tagsBar = document.querySelector('#composer .tags');
-
-    if (tagsBar.style.display == 'none' || !tagsBar.style.display)
-    {
-      Array.prototype.forEach.call(document.querySelectorAll('#composer .tag'), function (el) { el.classList.remove('sel'); });
-    }
-    tagsBar.style.display = 'block';
     composerText.classList.add('focused');
   };
 
   document.querySelector('#page-chat').onclick = function (e)
   {
-    if (e.target.classList.contains('tag') || e.target.classList.contains('tags') || e.target.tagName.toLowerCase() == 'textarea') return;
-    document.querySelector('#composer .tags').style.display = 'none';
+    // 'ndf' for 'no defocus'
+    if (e.target.classList.contains('ndf') || e.target.tagName.toLowerCase() == 'textarea') return;
     composerText.classList.remove('focused');
   };
 

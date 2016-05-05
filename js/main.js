@@ -185,38 +185,6 @@ ML.showChat = function(email)
     }
     document.querySelector('#snackbar-menu-tags ul').innerHTML = html;
 
-
-    // fill in tags
-    
-    html = '<div class="new tag">+</div>';
-    tags = ML.uniques(tags, false);
-    for (var i in tags)
-    {
-      if (!tags[i].replace(/[^a-z]/gmi, '').length) continue;
-      html += '<div class="tag">' + tags[i] + '</div>';
-    }
-    document.querySelector('#composer .tags').innerHTML = html;
-
-    Array.prototype.forEach.call(document.querySelectorAll('#composer .tag'), function(el)
-    {
-      el.onclick = function ()
-      {
-        Array.prototype.forEach.call(document.querySelectorAll('#composer .tag'), function (el) { el.classList.remove('sel'); });
-        this.classList.add('sel');
-
-        if (this.classList.contains('new'))
-        {
-          var tag = prompt('New tag:', 'hollotag'),
-              clone = document.querySelector('#composer .tag').cloneNode(false);
-          if (tag && tag.length)
-          {
-            clone.innerText = '#' + tag;
-            document.querySelector('#composer .tags').appendChild(clone);
-          }
-        }
-      };
-    });
-
     ML.loadFiles(email)
   });
   
@@ -235,7 +203,7 @@ ML.showChat = function(email)
       /*  else*/ url = 'https://ssl.webpack.de/lorempixel.com/300/300/?' + Math.random();
 
         html += '<li><div class="img" style="background-image:url(\''+ url + '\')"></div>'
-          + '<div class="bar"><div></div><div></div><div></div>'
+          + '<div class="bar"><div></div><div></div>'
           +'</div></li>';
       }
       document.querySelector('#snackbar-menu-files ul').innerHTML = html;
