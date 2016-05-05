@@ -115,7 +115,21 @@ ML.showChat = function(email)
     ML.contact = data.contact;
     ML.contact.email = email;
 
-    document.querySelector('#snackbar .name').innerHTML = ML.contact.name ? ML.contact.name : email;
+    var name = ML.contact.name;
+    if (name)
+    {
+      name = name.split(' ');
+      if (name.length > 1)
+      {
+        name = name[0] + ' ' + name[1].charAt(0);
+      }
+    }
+    else
+    {
+      name = email.split('@')[0];
+    }
+
+    document.querySelector('#snackbar .name').innerHTML = name;
 
     data = data.messages;
 
