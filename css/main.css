@@ -3,7 +3,7 @@
 #page-contacts .head {height:128px; background-color: #4b54ff}
 #page-contacts .head .ava {float: left;padding: 15px 16px 15px 20px}
 #page-contacts .head img {border-radius: 50%; border-image:0}
-#page-contacts .head .name {font-size: 27px; padding-top: 18px; font-weight: 700}
+#page-contacts .head .name {font-size: 27px; padding-top: 19px; font-weight: 700}
 #page-contacts .head .email {font-size: 12px}
 #page-contacts .accounts {overflow: hidden;height:80px;white-space: nowrap;display: flex;color:#fff}
 #page-contacts .search input
