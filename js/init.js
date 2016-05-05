@@ -1,14 +1,19 @@
 (function ()
 {
   // === LOGIN ===
+  var btnLogin = document.querySelector('#page-login .login');
   PP.onKey('#page-login .username', 13, document.querySelector('#page-login .password').focus);
-  PP.onKey('#page-login .password', 13, ML.loginImap);
   document.querySelector('#page-login .google').onclick = ML.googleStart;
-  document.querySelector('#page-login .login').onclick = ML.loginImap;
+  btnLogin.onclick = ML.loginImap;
   if (localStorage.getItem('imapLogin'))
   {
     document.querySelector('#page-login .username').value = localStorage.getItem('imapLogin');
   }
+  document.querySelector('#page-login .password').onkeyup = function (e)
+  {
+    btnLogin.disabled = !this.value.length;
+    if (e.keyCode == 13) ML.loginImap();
+  };
 
   // === FILTERS ===
   document.querySelector('#page-contacts .filter').onkeyup = function ()
