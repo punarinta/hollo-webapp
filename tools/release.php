@@ -41,10 +41,11 @@ $html = str_replace('<!-- JS -->', '<script src="/' . $random . '.js"></script>'
 file_put_contents($distDir . '/index.html', $html);
 
 echo "Copying assets...\n";
-shell_exec("cp favicon.ico $distDir/favicon.ico");
-shell_exec("cp -R css/ic_black $distDir/ic_black");
-shell_exec("cp -R css/ic_white $distDir/ic_white");
-shell_exec("cp -R gfx $distDir/gfx");
+foreach ($config['shell'] as $sh)
+{
+    echo "$sh\n";
+    shell_exec(str_replace('$distDir', $distDir, $sh));
+}
 
 echo "Cleaning up...\n";
 unlink("$distDir/temp.js");

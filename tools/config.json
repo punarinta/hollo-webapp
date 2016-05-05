@@ -17,5 +17,12 @@
     "css/snackbar.css",
     "css/main.css"
   ],
-  "dist": "../dist"
+  "dist": "../dist",
+  "shell":
+  [
+    "cp favicon.ico $distDir/favicon.ico",
+    "cp -R css/ic_black $distDir/ic_black",
+    "cp -R css/ic_white $distDir/ic_white",
+    "cp -R gfx $distDir/gfx"
+  ]
 }
