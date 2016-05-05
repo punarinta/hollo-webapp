@@ -1,4 +1,4 @@
-#page-login {background: #4b54ff; color: #fff; height: 100vh}
+#page-login {background: #4b54ff; color: #fff; height: 100vh; font-weight: 500}
 #page-login .logo {display: block; margin: 15vh auto 14vh}
 #page-login button {width: 73%; margin: auto; display: block; border: 0; border-radius: 2px; height: 40px; cursor: pointer; outline:0}
 #page-login .google {color: rgba(0, 0, 0, .5); background: #fff url('/gfx/super-g.png') no-repeat 13px 11px}

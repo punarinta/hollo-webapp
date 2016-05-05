@@ -8,10 +8,10 @@
     font-family: 'Edmondsans';
     font-style: normal;
     font-weight: 500;
-    src: local('Edmondsans Medium'), local('Edmondsans-Medium'), url(/gfx/Edmondsans-Regular.woff) format('woff');
+    src: local('Edmondsans Medium'), local('Edmondsans-Medium'), url(/gfx/Edmondsans-Medium.woff) format('woff');
 }
 @font-face {
-    font-family: 'Roboto';
+    font-family: 'Edmondsans';
     font-style: normal;
     font-weight: 700;
     src: local('Edmondsans Bold'), local('Edmondsans-Bold'), url(/gfx/Edmondsans-Bold.woff) format('woff');
