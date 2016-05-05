@@ -43,7 +43,7 @@
 #page-chat ul li.mine > div {float: left; margin-right: 15px}
 #page-chat ul li .tag {color: #9013fe; cursor: pointer}
 
-#page-chat .emoji {position: absolute;right:5px;bottom:calc(30vh + 15px);color:red;font-size: 200%}
+#page-chat .emoji {position: fixed; right:5px;bottom:calc(30vh + 15px);color:red;font-size: 200%}
 
 #composer textarea.focused {height: 30vh; padding: 5px; font-size: 120%}
 #composer textarea {margin:0;position: fixed; left: -1px; bottom: -1px; width: 100vw; height: 40px; transition: all .4s; padding: 20px  0 0 20px; font-size: 150%}
