@@ -1,15 +1,15 @@
 #page-contacts {padding:0}
 #page-contacts .head {position: fixed;width: 100%;top:0;left:0;height: 176px}
 #page-contacts .head {height:128px; background-color: #4b54ff}
-#page-contacts .head .ava {float: left;padding: 15px 16px 15px 20px}
+#page-contacts .head .ava {float: left;padding: 15px 16px 15px 24px}
 #page-contacts .head img {border-radius: 50%; border-image:0}
 #page-contacts .head .name {font-size: 27px; padding-top: 19px; font-weight: 700}
 #page-contacts .head .email {font-size: 12px}
 #page-contacts .accounts {overflow: hidden;height:80px;white-space: nowrap;display: flex;color:#fff}
 #page-contacts .search input
 {
-    height:48px; border:0; width:100%; background:transparent url('ic_white/find.png') no-repeat 30px 15px;
-    color:#fff; font-size: 14px; padding: 0 0 0 80px;
+    height:48px; border:0; width:100%; background:transparent url('ic_white/find.png') no-repeat 40px 15px;
+    color:#fff; font-size: 14px; padding: 0 0 0 89px;
 }
 #page-contacts .search input:focus {outline: none}
 #page-contacts .tabs {height:48px; display: flex; font-weight: 500; margin: 0 54px}
@@ -18,8 +18,8 @@
 #page-contacts .tabs div.sel span {border-width:0 0 2px}
 
 #page-contacts ul {list-style-type: none;margin-top:176px;padding: 0}
-#page-contacts ul li .ava {float: left;padding: 14px; margin-right: 5px}
-#page-contacts ul li img {border-radius: 50%; border-image:0;width:48px;height: 48px;background: #c3d9ff; border: 3px transparent solid}
+#page-contacts ul li .ava {float: left;padding: 14px; margin-right: 3px}
+#page-contacts ul li img {border-radius: 50%; border-image:0;width:42px; height:42px;background: #c3d9ff; border: 3px transparent solid}
 #page-contacts ul li img.unread {border-color:#5634ff}
 #page-contacts ul li .name {font-size: 150%; padding-top: 21px; font-weight: 500}
 #page-contacts ul li .email {font-size: 14px; color: grey}
