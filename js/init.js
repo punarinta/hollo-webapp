@@ -27,7 +27,7 @@
         break;
 
       case 'VERSION':
-        alert(__DATE__);
+        this.value = __DATE__;
         break;
     }
 
