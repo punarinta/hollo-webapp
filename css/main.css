@@ -22,7 +22,7 @@
 #page-contacts ul li img {border-radius: 50%; border-image:0;width:48px;height: 48px;background: #c3d9ff; border: 3px transparent solid}
 #page-contacts ul li img.unread {border-color:#5634ff}
 #page-contacts ul li .name {font-size: 150%; padding-top: 21px; font-weight: 500}
-#page-contacts ul li .email {font-size: 75%; color: grey}
+#page-contacts ul li .email {font-size: 14px; color: grey}
 #page-contacts ul li.swiped {margin-left: 110px}
 #page-contacts ul li
 {
