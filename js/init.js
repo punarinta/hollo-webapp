@@ -20,9 +20,15 @@
   {
     var filter = this.value.toUpperCase();
 
-    if (filter == 'LOGOUT')
+    switch (filter)
     {
-      hasher.setHash('auth/logout');
+      case 'LOGOUT':
+        hasher.setHash('auth/logout');
+        break;
+
+      case 'VERSION':
+        alert(__DATE__);
+        break;
     }
 
     Array.prototype.forEach.call(document.querySelectorAll('#page-contacts li'), function(el)

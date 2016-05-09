@@ -36,7 +36,7 @@ $html = preg_replace($search, $replace, $html);
 
 $html = strtr($html, ['> ' => '>', ' <' => '<']);
 $html = str_replace('<!-- CSS -->', '<link rel="stylesheet" type="text/css" href="/' . $random . '.css" />', $html);
-$html = str_replace('<!-- JS -->', '<script src="/' . $random . '.js"></script>', $html);
+$html = str_replace('<!-- JS -->', '<script>var __DATE__ = "' . date('r') . '";</script><script src="/' . $random . '.js"></script>', $html);
 
 file_put_contents($distDir . '/index.html', $html);
 
