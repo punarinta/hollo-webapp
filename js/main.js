@@ -61,7 +61,7 @@ ML.showContacts = function (full)
     ul.innerHTML ='<li>Loading...</li>';
 
     page.querySelector('.head .ava img').src = ML.user.ava || '/gfx/ava.png';
-    page.querySelector('.head .name').innerHTML = ML.user.name || ML.user.email;
+    page.querySelector('.head .name').innerHTML = ML.user.name || ML.user.email.split('@')[0];
     page.querySelector('.head .email').innerHTML = ML.user.email;
     page.style.display = 'block';
   }
