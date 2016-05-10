@@ -30,15 +30,33 @@
         this.value = __DATE__;
         break;
     }
+    
+    var any = 0;
 
     Array.prototype.forEach.call(document.querySelectorAll('#page-contacts li'), function(el)
     {
       var name = el.getElementsByClassName('name')[0].innerHTML.toUpperCase(),
-        email = el.dataset.email.toUpperCase();
+          email = el.dataset.email.toUpperCase();
 
-      if (name.indexOf(filter) != -1 || email.indexOf(filter) != -1) el.style.display = 'list-item';
+      if (email == 'new') return;
+
+      if (name.indexOf(filter) != -1 || email.indexOf(filter) != -1) { el.style.display = 'list-item'; any = 1 }
       else el.style.display = 'none';
     });
+
+    var ny = document.querySelector('#page-contacts ul li.new'),
+        r = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if (!any && r.test(this.value))
+    {
+      ny.style.display = 'block';
+      ny.getElementsByClassName('name')[0].innerHTML = this.value;
+    }
+    else
+    {
+      ny.style.display = 'none';
+      ny.getElementsByClassName('name')[0].innerHTML = '';
+    }
   };
   /*document.querySelector('#page-chat .filter').onkeyup = function ()
    {

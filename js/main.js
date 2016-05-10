@@ -82,6 +82,8 @@ ML.showContacts = function (full)
       html += '</li>';
     }
 
+    html += '<li data-email="new" class="new"><div class="ava"><img height="48" class="unread"></div><div><div class="name"></div><div class="email"></div></div></li>';
+
     ul.innerHTML = html;
 
     Array.prototype.forEach.call(document.querySelectorAll('#page-contacts ul li'), function (el)
@@ -93,7 +95,8 @@ ML.showContacts = function (full)
       });
       el.onclick = function (e)
       {
-        hasher.setHash('chat/' + PP.par(e.target, 'li').dataset.email);
+        var email = PP.par(e.target, 'li').dataset.email;
+        if (email != 'new') hasher.setHash('chat/' + email);
       }
     });
   });
