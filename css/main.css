@@ -48,8 +48,12 @@
 #page-chat ul li.mine > div {float: left; margin-right: 15px}
 #page-chat ul li .tag {color: #9013fe; cursor: pointer}
 
-#page-chat .emoji {position: fixed; right:5px;bottom:calc(30vh + 15px);color:red;font-size: 200%}
-
-#composer textarea.focused {height: 30vh; padding: 5px; font-size: 120%}
-#composer textarea {margin:0;position: fixed; left: -1px; bottom: -1px; width: 100vw; height: 40px; transition: all .4s; padding: 20px  0 0 20px; font-size: 150%}
-#composer-pop {height: 30vh}
+#composer .emojis {position: fixed; right:5px;bottom:61px; font-size: 48px}
+#composer .emojis div {color:red; cursor: pointer}
+#composer {height: 45px}
+#composer textarea
+{
+    outline:0;border:0;border-top:1px solid #ccc;margin:0;position: fixed; left: 0; bottom: 0;
+    width: 100vw; height: 40px; transition: all .4s; padding: 20px 0 0 20px; font-size: 18px;
+    max-height: 30vh;
+}

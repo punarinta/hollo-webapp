@@ -160,6 +160,48 @@
     composerText.classList.add('focused');
   };
 
+  var emos =
+  {
+    ghost: '👻',
+    dog: '🐕',
+    cat: '🐈'
+  };
+
+  composerText.onkeyup = function (e)
+  {
+    if (e.keyCode == '32')
+    {
+      var that = this, w = this.value.trim().split(' ').slice(-1)[0].toLowerCase();
+      if (typeof emos[w] != 'undefined')
+      {
+        var em = document.createElement('div');
+        em.innerText = emos[w];
+        em.style.color = 'red';
+        em.dataset.w = w;
+        setTimeout(function(o)
+        {
+          o.parentNode.removeChild(o);
+        }, 5000, em);
+        em.onclick = function ()
+        {
+          // replace the last occurrence of a word with an emoji
+          var pat = new RegExp('(\\b' + this.dataset.w + '\\b)(?!.*\\b\\1\\b)', 'i');
+          that.value = that.value.replace(pat, this.innerText);
+          that.focus();
+        };
+        document.querySelector('#page-chat .emojis').appendChild(em);
+      }
+    }
+  };
+
+  autosize(composerText);
+  composerText.addEventListener('autosize:resized', function(e)
+  {
+    var h = parseInt(e.target.style.height, 10), cmp = document.getElementById('composer');
+    cmp.style.height = (h + 5) + 'px';
+    cmp.querySelector('.emojis').style.bottom = (h + 21) + 'px';
+  });
+
   document.querySelector('#page-chat').onclick = function (e)
   {
     // 'ndf' for 'no defocus'

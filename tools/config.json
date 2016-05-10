@@ -6,6 +6,7 @@
     "js/vendy/signals.min.js",
     "js/vendy/crossroads.min.js",
     "js/vendy/hasher.min.js",
+    "js/vendy/autosize.min.js",
     "js/core.js",
     "js/main.js",
     "js/init.js"
