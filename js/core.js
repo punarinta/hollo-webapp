@@ -12,6 +12,7 @@ var ML =
   {
     muted: 0
   },
+  _loaded: [],
 
   api: function (endpoint, method, data, callback)
   {
@@ -155,10 +156,12 @@ var ML =
 
   load: function (fn)
   {
-     var f = document.createElement('script');
-     f.setAttribute('type', 'text/javascript');
-     f.setAttribute('src', fn + '.js');
-     document.getElementsByTagName('head')[0].appendChild(f)
+    if (typeof ML._loaded[fn] != 'undefined') return;
+    ML._loaded[fn] = 1;
+    var f = document.createElement('script');
+    f.setAttribute('type', 'text/javascript');
+    f.setAttribute('src', fn + '.js');
+    document.getElementsByTagName('head')[0].appendChild(f)
   }
 };
 
