@@ -160,22 +160,15 @@
     composerText.classList.add('focused');
   };
 
-  var emos =
-  {
-    ghost: '👻',
-    dog: '🐕',
-    cat: '🐈'
-  };
-
   composerText.onkeyup = function (e)
   {
     if (e.keyCode == '32')
     {
       var that = this, w = this.value.trim().split(' ').slice(-1)[0].toLowerCase();
-      if (typeof emos[w] != 'undefined')
+      if (typeof EMJ[w] != 'undefined')
       {
         var em = document.createElement('div');
-        em.innerText = emos[w];
+        em.innerText = EMJ[w];
         em.style.color = 'red';
         em.dataset.w = w;
         setTimeout(function(o)

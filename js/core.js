@@ -151,6 +151,14 @@ var ML =
       handleswipe(swipedir);
       // e.preventDefault()
     }, false)
+  },
+
+  load: function (fn)
+  {
+     var f = document.createElement('script');
+     f.setAttribute('type', 'text/javascript');
+     f.setAttribute('src', fn + '.js');
+     document.getElementsByTagName('head')[0].appendChild(f)
   }
 };
 

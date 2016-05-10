@@ -111,6 +111,8 @@ ML.showChat = function(email)
   document.getElementById('snackbar').style.display = 'block';
   document.getElementById('page-chat').style.display = 'block';
 
+  ML.load('modules/emojis');
+
   ML.api('message', 'findByEmail', {email: email}, function (data)
   {
     var html = '';
