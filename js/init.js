@@ -173,13 +173,14 @@
         em.dataset.w = w;
         setTimeout(function(o)
         {
-          o.parentNode.removeChild(o);
+          if (o.parentNode) o.parentNode.removeChild(o);
         }, 5000, em);
         em.onclick = function ()
         {
           // replace the last occurrence of a word with an emoji
           var pat = new RegExp('(\\b' + this.dataset.w + '\\b)(?!.*\\b\\1\\b)', 'i');
           that.value = that.value.replace(pat, this.innerText);
+          em.parentNode.removeChild(em);
           that.focus();
         };
         document.querySelector('#page-chat .emojis').appendChild(em);
