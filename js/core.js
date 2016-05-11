@@ -68,6 +68,7 @@ var ML =
 
   ts: function (ts)
   {
+    var td = new Date(), pfx;
     var date = new Date(ts * 1000),
         year = date.getYear() >= 100 ? date.getYear() - 100 : date.getYear(),
         month = '0' + (date.getMonth() + 1),
@@ -75,7 +76,10 @@ var ML =
         hours = '0' + date.getHours(),
         minutes = '0' + date.getMinutes();
 
-    return day.substr(-2) + '.' + month.substr(-2) + '.' + year + ' ' + hours.substr(-2) + ':' + minutes.substr(-2);
+    if (td.getTime() - date.getTime() < 24*3600 && td.getDate() == date.getDate()) pfx = 'today';
+    else pfx = day.substr(-2) + '.' + month.substr(-2) + '.' + year;
+
+    return pfx + ' ' + hours.substr(-2) + ':' + minutes.substr(-2);
   },
 
   uniques: function(arr, sens)

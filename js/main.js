@@ -163,7 +163,20 @@ ML.showChat = function(email)
         }
       }
 
-      html += '<li class="' + whose + '"><div><div class="tag">' + data[i].subject + '</div><div>' + ML.ts(data[i].ts) + '</div><br><div class="msg">' + body + '</div><div>' + filesHtml + '</div></div></li>';
+      var subj = data[i].subject.charAt(0).toUpperCase() + data[i].subject.slice(1);
+
+      // '<div>' + filesHtml + '</div>' +
+
+      html +=
+        '<li class="' + whose + '">' +
+        '<div>' +
+          '<div class="white">' +
+            '<div class="cap">' + subj + '</div>' +
+            '<div class="msg">' + body + '</div>' +
+          '</div>' +
+          '<div class="foot"><img src="gfx/ava.png"><div>' + ML.ts(data[i].ts) + '</div></div>' +
+        '</div>' +
+        '</li>';
     }
 
     ul.innerHTML = html;
@@ -180,7 +193,7 @@ ML.showChat = function(email)
       };
     });
 
-    Array.prototype.forEach.call(document.querySelectorAll('#page-chat li .tag'), function (el)
+    Array.prototype.forEach.call(document.querySelectorAll('#page-chat li .cap'), function (el)
     {
       el.onclick = function ()
       {
