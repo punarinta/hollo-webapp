@@ -20,7 +20,8 @@
     "css/core",
     "css/login",
     "css/snackbar",
-    "css/main"
+    "css/contacts",
+    "css/chat"
   ],
   "dist": "../dist",
   "shell":
