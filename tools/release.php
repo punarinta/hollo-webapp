@@ -12,19 +12,25 @@ $distDir = __DIR__ . '/' . $config['dist'];
 
 shell_exec("rm -rf $distDir");
 mkdir($distDir);
+mkdir("$distDir/modules");
 
 $random = uniqid();
 
 foreach ($config['js'] as $file)
 {
-    echo "File '$file'...\n";
-    shell_exec("yui-compressor $file -o $distDir/temp.js");
+    echo "Script '$file.js'...\n";
+    shell_exec("yui-compressor $file.js -o $distDir/temp.js");
     file_put_contents("$distDir/$random.js", file_get_contents("$distDir/temp.js"), FILE_APPEND);
+}
+foreach ($config['mods'] as $file)
+{
+    echo "Module '$file.js'...\n";
+    shell_exec("yui-compressor modules/$file.js -o $distDir/modules/$file.js");
 }
 foreach ($config['css'] as $file)
 {
-    echo "File '$file'...\n";
-    shell_exec("yui-compressor $file -o $distDir/temp.css");
+    echo "Style '$file.css'...\n";
+    shell_exec("yui-compressor $file.css -o $distDir/temp.css");
     file_put_contents("$distDir/$random.css", file_get_contents("$distDir/temp.css"), FILE_APPEND);
 }
 
