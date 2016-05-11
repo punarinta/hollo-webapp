@@ -199,7 +199,7 @@
     cmp.querySelector('.head').style.bottom = (h + 21) + 'px';
   });
 
-  document.querySelector('#page-chat').onclick = function (e)
+  document.onclick = function (e)
   {
     // 'ndf' for 'no defocus'
     if (e.target.classList.contains('ndf')) return;
