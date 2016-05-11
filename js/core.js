@@ -46,9 +46,9 @@ var ML =
         alert(r);
       }
     };
-    r.onerror = function()
+    r.onerror = function(e)
     {
-      console.log('cannot connect to server');
+      console.log('Cannot connect to server:', e.error);
     };
     r.send(JSON.stringify({ 'method': method, 'data': data }));
   },
