@@ -69,3 +69,14 @@
     width: 100vw; height: 40px; transition: all .4s; padding: 20px 0 0 20px; font-size: 18px;
     max-height: 30vh;
 }
+#composer .head
+{
+    display: none;height: 32px;position: fixed;bottom:61px;left:0;background: #fff;width:100%;
+    border-top: 1px solid #ccc; color: #5634ff
+}
+#composer .head > * {display: inline-block}
+#composer .head .icon {padding:6px 0 0 10px}
+#composer .head .cap {font-size: 12px}
+#composer .head .picker {}
+#composer .head .files {}
+#composer.focused .head {display: block}

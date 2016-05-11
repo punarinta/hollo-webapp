@@ -154,17 +154,19 @@
 
 
   // === COMPOSER ===
-  var composerText = document.querySelector('#composer textarea');
-  composerText.onclick = function ()
+  var cmp = document.getElementById('composer'),
+      cmpText = cmp.querySelector('textarea');
+
+  cmpText.onclick = function ()
   {
-    composerText.classList.add('focused');
+    cmp.classList.add('focused');
   };
 
-  composerText.onkeyup = function (e)
+  cmpText.onkeyup = function (e)
   {
-    if (e.keyCode == '32')
+    if (/[^a-zA-Z0-9-_]/.test(this.value.slice(-1)) && e.keyCode > 32)
     {
-      var that = this, w = this.value.trim().split(' ').slice(-1)[0].toLowerCase();
+      var that = this, w = this.value.trim().split(' ').slice(-1)[0].toLowerCase().replace(/[_\W]+/g, '');
       if (typeof EMJ[w] != 'undefined')
       {
         var em = document.createElement('div');
@@ -188,23 +190,24 @@
     }
   };
 
-  autosize(composerText);
-  composerText.addEventListener('autosize:resized', function(e)
+  autosize(cmpText);
+  cmpText.addEventListener('autosize:resized', function(e)
   {
-    var h = parseInt(e.target.style.height, 10), cmp = document.getElementById('composer');
+    var h = parseInt(e.target.style.height, 10);
     cmp.style.height = (h + 5) + 'px';
     cmp.querySelector('.emojis').style.bottom = (h + 21) + 'px';
+    cmp.querySelector('.head').style.bottom = (h + 21) + 'px';
   });
 
   document.querySelector('#page-chat').onclick = function (e)
   {
     // 'ndf' for 'no defocus'
-    if (e.target.classList.contains('ndf') || e.target.tagName.toLowerCase() == 'textarea') return;
-    composerText.classList.remove('focused');
+    if (e.target.classList.contains('ndf')) return;
+    cmp.classList.remove('focused');
   };
 
 
-  // PATHS
+  // === PATHS ===
   crossroads.addRoute('auth/login', ML.showLogin);
   crossroads.addRoute('contacts', function() {ML.showContacts(1)});
   crossroads.addRoute('chat/{email}', function (email)
