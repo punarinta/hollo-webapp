@@ -15,7 +15,7 @@
 
 #composer .emojis {position: fixed; right:5px;bottom:61px; font-size: 48px}
 #composer .emojis div {color:red; cursor: pointer}
-#composer {height: 45px}
+#composer {height: 60px}
 #composer textarea
 {
     outline:0;border:0;border-top:1px solid #ccc;margin:0;position: fixed; left: 0; bottom: 0;
