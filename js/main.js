@@ -82,7 +82,7 @@ ML.showContacts = function (full)
       html += '</li>';
     }
 
-    html += '<li data-email="new" class="new"><div class="ava"><img height="48" class="unread"></div><div><div class="name"></div><div class="email"></div></div></li>';
+    html += '<li data-email="new" class="new"><div class="ava"><img class="unread"></div><div><div class="name"></div><div class="email"></div></div></li>';
 
     ul.innerHTML = html;
 
