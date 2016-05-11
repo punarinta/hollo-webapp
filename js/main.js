@@ -165,6 +165,8 @@ ML.showChat = function(email)
 
       var subj = data[i].subject.charAt(0).toUpperCase() + data[i].subject.slice(1);
 
+      if (!subj.length) subj = '—';
+
       // '<div>' + filesHtml + '</div>' +
 
       html +=
