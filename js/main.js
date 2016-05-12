@@ -115,7 +115,7 @@ ML.showChat = function(email)
 
   ML.api('message', 'findByEmail', {email: email}, function (data)
   {
-    var html = '';
+    var html = '', subj;
     var tags = [], subjects = [];
 
     ML.contact = data.contact;
@@ -163,7 +163,7 @@ ML.showChat = function(email)
         }
       }
 
-      var subj = data[i].subject.charAt(0).toUpperCase() + data[i].subject.slice(1);
+      subj = data[i].subject.charAt(0).toUpperCase() + data[i].subject.slice(1);
 
       if (!subj.length) subj = '—';
 
@@ -182,6 +182,8 @@ ML.showChat = function(email)
     }
 
     ul.innerHTML = html;
+
+    document.querySelector('#composer .cap').innerText = subj;
 
     Array.prototype.forEach.call(document.querySelectorAll('#page-chat li a'), function (el)
     {
