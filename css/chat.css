@@ -36,4 +36,10 @@
 #composer .head .picker, #composer .head .files {width: 32px; max-width: 32px; flex: 1 1 0; cursor: pointer}
 #composer .head .picker {background: url('/gfx/color/updown.svg') no-repeat 11px 7px}
 #composer .head .files {background: url('/gfx/color/clip.svg') no-repeat 5px 10px}
+#composer .send
+{
+    background: url('/gfx/color/send.svg') no-repeat;width: 21px;height:18px; position:fixed; right:12px;
+    bottom:19px; z-index:1;cursor: pointer; display: none
+}
 #composer.focused .head {display: flex}
+#composer.focused .send {display: block}

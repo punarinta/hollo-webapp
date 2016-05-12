@@ -197,6 +197,7 @@
     cmp.style.height = (h + 21) + 'px';
     cmp.querySelector('.emojis').style.bottom = (h + 21) + 'px';
     cmp.querySelector('.head').style.bottom = (h + 21) + 'px';
+    cmp.querySelector('.send').style.bottom = h/2 + 'px';
   });
 
   document.onclick = function (e)
