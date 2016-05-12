@@ -16,7 +16,7 @@
 #page-chat ul li.yours > div {float: right; margin-left: 15px}
 #page-chat ul li.mine > div {float: left; margin-right: 15px}
 
-#composer .emojis {position: fixed; right:5px;bottom:61px; font-size: 48px}
+#composer .emojis {position: fixed; right:5px; font-size: 48px}
 #composer .emojis div {color:red; cursor: pointer}
 #composer {height: 60px}
 #composer textarea

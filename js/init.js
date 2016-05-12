@@ -164,7 +164,7 @@
 
   cmpText.onkeyup = function (e)
   {
-    if (/[^a-zA-Z0-9-_]/.test(this.value.slice(-1)) && e.keyCode > 32)
+    if (/[^a-zA-Z0-9-_]/.test(this.value.slice(-1)) && e.keyCode > 31)
     {
       var that = this, w = this.value.trim().split(' ').slice(-1)[0].toLowerCase().replace(/[_\W]+/g, '');
       if (typeof EMJ[w] != 'undefined')
@@ -195,7 +195,7 @@
   {
     var h = parseInt(e.target.style.height, 10);
     cmp.style.height = (h + 21) + 'px';
-    cmp.querySelector('.emojis').style.bottom = (h + 21) + 'px';
+    cmp.querySelector('.emojis').style.bottom = (h + 53) + 'px';
     cmp.querySelector('.head').style.bottom = (h + 21) + 'px';
     cmp.querySelector('.send').style.bottom = h/2 + 'px';
   });
