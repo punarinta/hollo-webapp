@@ -21,6 +21,7 @@ body {font-family: 'Edmondsans', sans-serif; padding: 0; margin: 0; background-c
 body::-webkit-scrollbar {display: none}
 
 .page {display: none; padding: 5px}
+.page * {outline:0}
 
 #page-loader {display: block}
 

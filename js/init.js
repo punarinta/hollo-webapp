@@ -171,7 +171,6 @@
       {
         var em = document.createElement('div');
         em.innerText = EMJ[w];
-        em.style.color = 'red';
         em.dataset.w = w;
         setTimeout(function(o)
         {
@@ -200,6 +199,11 @@
     cmp.querySelector('.send').style.bottom = h/2 + 'px';
   });
 
+  Array.prototype.forEach.call(cmp.querySelectorAll('*'), function(el)
+  {
+    el.classList.add('ndf');
+  });
+
   document.onclick = function (e)
   {
     // 'ndf' for 'no defocus'
@@ -210,7 +214,7 @@
   cmp.querySelector('.send').onclick = function ()
   {
     // send a message
-    var msg = cmpText.value, msgId = null, subj = null;
+    var msg = cmpText.value, subj = cmp.querySelector('.cap').innerText, msgId = null;
 
     if (!msg.length)
     {

@@ -1,6 +1,6 @@
 #page-login {background: #4b54ff; color: #fff; height: 100vh; font-weight: 500}
 #page-login .logo {display: block; margin: 15vh auto 14vh}
-#page-login button {width: 73%; margin: auto; display: block; border: 0; border-radius: 2px; height: 40px; cursor: pointer; outline:0}
+#page-login button {width: 73%; margin: auto; display: block; border: 0; border-radius: 2px; height: 40px; cursor: pointer}
 #page-login .google {color: rgba(0, 0, 0, .5); background: #fff url('/gfx/super-g.png') no-repeat 13px 11px}
 #page-login .text {text-align: center; margin: 20px 0; font-size: 24px}
 #page-login .login {background: #fff; color: #4b54ff}
@@ -8,5 +8,5 @@
 #page-login input
 {
     width: 73%; margin: auto; display: block; border: 0; border-radius: 2px;
-    background: transparent;text-align: center; color: #fff; outline: 0; padding: 10px 0
+    background: transparent;text-align: center; color: #fff; padding: 10px 0
 }

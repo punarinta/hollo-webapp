@@ -17,13 +17,12 @@
 #page-chat ul li.mine > div {float: left; margin-right: 15px}
 
 #composer .emojis {position: fixed; right:5px; font-size: 48px}
-#composer .emojis div {color:red; cursor: pointer}
+#composer .emojis div {color:#5634ff; cursor: pointer}
 #composer {height: 60px}
 #composer textarea
 {
-    outline:0;border:0;border-top:1px solid #ccc;margin:0;position: fixed; left: 0; bottom: 0;
+    border:0;border-top:1px solid #ccc;margin:0;position: fixed; left: 0; bottom: 0; max-height: 30vh;
     width: 100vw; height: 40px; transition: all .4s; padding: 20px 0 0 20px; font-size: 18px;
-    max-height: 30vh;
 }
 #composer .head
 {
@@ -33,6 +32,7 @@
 #composer .head > * {height:32px}
 #composer .head .icon {background: url('/gfx/color/subj.svg') no-repeat 9px 8px;width:32px}
 #composer .head .cap {margin-top: 10px;font-size: 12px; flex: 4 1 0}
+#composer .head .cap br {display: none}
 #composer .head .picker, #composer .head .files {width: 32px; max-width: 32px; flex: 1 1 0; cursor: pointer}
 #composer .head .picker {background: url('/gfx/color/updown.svg') no-repeat 11px 7px}
 #composer .head .files {background: url('/gfx/color/clip.svg') no-repeat 5px 10px}
