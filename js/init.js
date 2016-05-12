@@ -207,10 +207,38 @@
     cmp.classList.remove('focused');
   };
 
+  cmp.querySelector('.send').onclick = function ()
+  {
+    // send a message
+    var msg = cmpText.value, msgId = null, subj = null;
+
+    if (!msg.length)
+    {
+      alert('You didn\'t input any message');
+      return;
+    }
+
+    // try to find last message id
+    var lis = document.querySelectorAll('#page-chat li:last-child');
+    if (lis.length)
+    {
+      msgId = lis[0].dataset.id;
+    }
+
+    console.log('body:', msg);
+    console.log('subject:', subj);
+    console.log('messageId:', msgId);
+
+    ML.api('message', 'send', {body: msg, messageId:msgId, subject: subj}, function (json)
+    {
+      console.log('result:', json);
+    });
+  };
+
 
   // === PATHS ===
   crossroads.addRoute('auth/login', ML.showLogin);
-  crossroads.addRoute('contacts', function() {ML.showContacts(1)});
+  crossroads.addRoute('contacts', function () { ML.showContacts(1) });
   crossroads.addRoute('chat/{email}', function (email)
   {
     ML.showChat(email);

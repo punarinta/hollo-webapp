@@ -170,7 +170,7 @@ ML.showChat = function(email)
       // '<div>' + filesHtml + '</div>' +
 
       html +=
-        '<li class="' + whose + '">' +
+        '<li data-id="' + data[i].id + '" class="' + whose + '">' +
         '<div>' +
           '<div class="white">' +
             '<div class="cap">' + subj + '</div>' +
