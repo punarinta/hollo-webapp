@@ -20,7 +20,7 @@
 #page-contacts ul {list-style-type: none;margin-top:176px;padding: 0}
 #page-contacts ul li.new {display: none}
 #page-contacts ul li.new .name {padding-top:26px}
-#page-contacts ul li.new img {background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AUKBxw6WPlMXAAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAAxSURBVCjPY/z69SsDNhCVyvKfgYGBYdnsP4zY5JkYyAQjQSOjf9TP//S1cTQeaaARAGowEHmXXrc6AAAAAElFTkSuQmCC) no-repeat center}
+#page-contacts ul li.new img {background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AUKBxw6WPlMXAAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAAxSURBVCjPY/z69SsDNhCVyvKfgYGBYdnsP4zY5JkYyAQjQSOjf9TP//S1cTQeaaARAGowEHmXXrc6AAAAAElFTkSuQmCC) no-repeat center;display: block}
 
 #page-contacts ul li .ava {float: left;padding: 14px; margin-right: 3px}
 #page-contacts ul li img {border-radius: 50%; border-image:0;width:42px; height:42px;background: #c3d9ff; border: 3px transparent solid}

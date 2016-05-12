@@ -194,7 +194,7 @@
   cmpText.addEventListener('autosize:resized', function(e)
   {
     var h = parseInt(e.target.style.height, 10);
-    cmp.style.height = (h + 5) + 'px';
+    cmp.style.height = (h + 21) + 'px';
     cmp.querySelector('.emojis').style.bottom = (h + 21) + 'px';
     cmp.querySelector('.head').style.bottom = (h + 21) + 'px';
   });
