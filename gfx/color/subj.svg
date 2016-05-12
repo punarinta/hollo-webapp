@@ -1,18 +1,16 @@
-<svg width="16px" height="24px" viewBox="0 0 16 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="12px" height="16px" viewBox="0 0 12 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <defs>
-        <rect id="path-1" x="0" y="0" width="16" height="24" rx="2"></rect>
-        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="16" height="24" fill="white">
+        <rect id="path-1" x="0" y="0" width="12" height="16" rx="2"></rect>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="12" height="16" fill="white">
             <use xlink:href="#path-1"></use>
         </mask>
     </defs>
     <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="conversation-top" transform="translate(-232.000000, -40.000000)">
-            <g id="icon-subject">
-                <g transform="translate(216.000000, 28.000000)">
-                    <g transform="translate(16.000000, 12.000000)">
-                        <use id="Combined-Shape" stroke="#5634ff" mask="url(#mask-2)" stroke-width="2" xlink:href="#path-1"></use>
-                        <path d="M7.992,18.224 C10.728,18.224 12.344,16.576 12.344,14.64 C12.344,12.928 11.4,12.016 9.96,11.424 L8.408,10.768 C7.4,10.368 6.552,10.064 6.552,9.216 C6.552,8.432 7.224,7.968 8.264,7.968 C9.24,7.968 10.024,8.32 10.776,8.944 L11.976,7.456 C11.016,6.48 9.64,5.936 8.264,5.936 C5.864,5.936 4.168,7.424 4.168,9.36 C4.168,11.088 5.368,12.048 6.568,12.544 L8.152,13.216 C9.208,13.664 9.928,13.936 9.928,14.816 C9.928,15.648 9.272,16.176 8.04,16.176 C7,16.176 5.88,15.648 5.032,14.864 L3.672,16.496 C4.824,17.6 6.408,18.224 7.992,18.224 L7.992,18.224 Z" id="S" fill="#5634ff"></path>
-                    </g>
+        <g id="subject-bar" transform="translate(-10.000000, -8.000000)">
+            <g id="icon-subject-color">
+                <g id="subject" transform="translate(10.000000, 8.000000)">
+                    <use id="Combined-Shape" stroke="#5634FF" mask="url(#mask-2)" stroke-width="2" xlink:href="#path-1"></use>
+                    <path d="M5.88,12.192 C7.704,12.192 8.78133333,11.0933333 8.78133333,9.80266667 C8.78133333,8.66133333 8.152,8.05333333 7.192,7.65866667 L6.15733333,7.22133333 C5.48533333,6.95466667 4.92,6.752 4.92,6.18666667 C4.92,5.664 5.368,5.35466667 6.06133333,5.35466667 C6.712,5.35466667 7.23466667,5.58933333 7.736,6.00533333 L8.536,5.01333333 C7.896,4.36266667 6.97866667,4 6.06133333,4 C4.46133333,4 3.33066667,4.992 3.33066667,6.28266667 C3.33066667,7.43466667 4.13066667,8.07466667 4.93066667,8.40533333 L5.98666667,8.85333333 C6.69066667,9.152 7.17066667,9.33333333 7.17066667,9.92 C7.17066667,10.4746667 6.73333333,10.8266667 5.912,10.8266667 C5.21866667,10.8266667 4.472,10.4746667 3.90666667,9.952 L3,11.04 C3.768,11.776 4.824,12.192 5.88,12.192 L5.88,12.192 Z" id="S" fill="#5634FF"></path>
                 </g>
             </g>
         </g>
