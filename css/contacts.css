@@ -8,7 +8,7 @@
 #page-contacts .accounts {overflow: hidden;height:80px;white-space: nowrap;display: flex;color:#fff}
 #page-contacts .search input
 {
-    height:48px; border:0; width:100%; background:transparent url('ic_white/find.png') no-repeat 40px 15px;
+    height:48px; border:0; width:100%; background:transparent url('/gfx/white/search.svg') no-repeat 40px 15px;
     color:#fff; font-size: 14px; padding: 0 0 0 89px;
 }
 #page-contacts .search input:focus {outline: none}

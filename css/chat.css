@@ -4,8 +4,11 @@
 #page-chat ul li > div {overflow: auto; margin: 5px 3px; min-width: 200px}
 #page-chat ul li .white {background-color: #fff; padding: 10px 12px 16px; border-radius: 3px}
 #page-chat ul li .msg {display: inline-block; font-size: 14px}
-#page-chat ul li .cap {color: #9013fe; cursor: pointer; font: 12px monospace;margin-bottom: 7px}
-#page-chat ul li .cap:before {content: 'Ⓢ '; margin-top: -1px}
+#page-chat ul li .cap
+{
+    color: #5634ff; cursor: pointer; font: 12px monospace;margin-bottom: 7px;
+    background: url('/gfx/color/subj.svg') no-repeat 0 -5px; padding-left: 24px;
+}
 #page-chat ul li .foot div {float:left; margin:4px 0 0 28px; font-size: 10px;color: rgba(0,0,0,.3)}
 #page-chat ul li .foot img {float:left; position: relative;width: 32px; height: 32px; border-radius: 50%; top:-9px; left:16px}
 #page-chat ul li.yours .foot img {float:right; left:-16px}
@@ -28,9 +31,9 @@
     border-top: 1px solid #ccc; color: #5634ff; flex-wrap: nowrap
 }
 #composer .head > * {height:32px}
-#composer .head .icon {background: url('/gfx/msg-subj.svg') no-repeat 11px 8px;width:32px;background-size: 39%}
+#composer .head .icon {background: url('/gfx/color/subj.svg') no-repeat 9px 7px;width:32px;background-size:39%}
 #composer .head .cap {margin-top: 10px;font-size: 12px; flex: 4 1 0}
 #composer .head .picker, #composer .head .files {width: 32px; max-width: 32px; flex: 1 1 0; cursor: pointer}
-#composer .head .picker {background: url('/gfx/msg-updown.svg') no-repeat 11px 7px;background-size: 39%}
-#composer .head .files {background: url('/gfx/msg-clip.svg') no-repeat 1px 9px}
+#composer .head .picker {background: url('/gfx/color/updown.svg') no-repeat 11px 7px}
+#composer .head .files {background: url('/gfx/color/clip.svg') no-repeat 5px 10px}
 #composer.focused .head {display: flex}
