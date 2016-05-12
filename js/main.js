@@ -5,7 +5,7 @@ ML.loginImap = function ()
 
   if (!user.length || !pass.length)
   {
-    alert('Both email and password are required');
+    ML.mbox('Both email and password are required');
     return;
   }
 

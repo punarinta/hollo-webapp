@@ -9,12 +9,12 @@
 #snackbar .more.toggled {transform: rotate(90deg)}
 #snackbar .toggled {background-color: #86feab}
 
-.snackbar-menu {z-index: 100; position: fixed; right: 3px; top: 65px; display: none; background-color: #2aff67; box-shadow: 0 2px 6px 0 rgba(80,80,80,.75); }
+.snackbar-menu {z-index: 10; position: fixed; right: 3px; top: 65px; display: none; background-color: #2aff67; box-shadow: 0 2px 6px 0 rgba(80,80,80,.75); }
 .snackbar-menu ul {list-style-type: none; padding: 2px 0; margin: 0}
 .snackbar-menu:before
 {
     right: 11px; border-color: transparent transparent #2aff67 transparent; content: ''; position: absolute;
-    top: -10px; width: 0; height: 0; border-style: solid; border-width: 0 10px 10px; z-index: 9999
+    top: -10px; width: 0; height: 0; border-style: solid; border-width: 0 10px 10px; z-index: 10
 }
 .snackbar-menu li {padding: 10px 14px; cursor: pointer}
 

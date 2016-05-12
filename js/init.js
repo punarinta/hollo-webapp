@@ -151,7 +151,16 @@
   filesList.addEventListener('touchstart', function(e) { tch = e.touches[0] });
   filesList.addEventListener('touchmove', scrollListener);
   filesList.addEventListener('wheel', scrollListener);
-
+  
+  
+  // === MESSAGE BOX ===
+  var mbox = document.getElementById('mbox');
+  mbox.querySelector('.btn.ok').onclick = function ()
+  {
+    mbox.style.display = 'none';
+    ML._mbox(0);
+  };
+  
 
   // === COMPOSER ===
   var cmp = document.getElementById('composer'),
@@ -218,7 +227,7 @@
 
     if (!msg.length)
     {
-      alert('You didn\'t input any message');
+      ML.mbox('You didn\'t input any message');
       return;
     }
 

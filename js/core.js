@@ -13,6 +13,7 @@ var ML =
     muted: 0
   },
   _loaded: [],
+  _mbox : function () {},
 
   api: function (endpoint, method, data, callback)
   {
@@ -37,13 +38,13 @@ var ML =
         else
         {
           console.log('Status: ', this.status);
-          alert(json.errMsg);
+          ML.mbox(json.errMsg);
         }
       }
       else
       {
         console.log('Malformed server response:', r);
-        alert(r);
+        ML.mbox(r);
       }
     };
     r.onerror = function(e)
@@ -166,6 +167,15 @@ var ML =
     f.setAttribute('type', 'text/javascript');
     f.setAttribute('src', fn + '.js');
     document.querySelector('head').appendChild(f)
+  },
+  
+  mbox: function (msg, mode, callback)
+  {
+    var mbox = document.getElementById('mbox');
+    mbox.querySelector('.btn.ok').style.display = 'block';
+    mbox.style.display = 'flex';
+    mbox.querySelector('.body').innerHTML = msg;
+    if (callback) ML._mbox = callback;
   }
 };
 
