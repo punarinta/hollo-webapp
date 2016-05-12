@@ -255,6 +255,7 @@
   cmp.querySelector('.picker').onclick = function ()
   {
     cmp.querySelector('.subjects').classList.toggle('opened');
+    cmpText.focus();
   };
 
 

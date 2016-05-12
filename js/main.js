@@ -213,7 +213,6 @@ ML.showChat = function(email)
 
 
     // fill in subjects
-
     html = '';
     subjects = ML.uniques(subjects, true);
     for (var i in subjects)
@@ -222,6 +221,18 @@ ML.showChat = function(email)
     }
     document.querySelector('#snackbar-menu-tags ul').innerHTML = html;
     document.querySelector('#composer .subjects').innerHTML = html;
+    
+    // connect subject picker
+    Array.prototype.forEach.call(document.querySelectorAll('#composer .subjects li'), function (el)
+    {
+      el.classList.add('ndf');
+      el.onclick = function ()
+      {
+        document.querySelector('#composer .cap').innerText = this.innerText;
+        document.querySelector('#composer textarea').focus();
+        document.querySelector('#composer .subjects').classList.remove('opened');
+      }
+    });
 
     ML.loadFiles(email)
   });
