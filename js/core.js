@@ -68,8 +68,8 @@ var ML =
 
   ts: function (ts)
   {
-    var td = new Date(), pfx;
-    var date = new Date(ts * 1000),
+    var td = new Date(), pfx,
+        date = new Date(ts * 1000),
         year = date.getYear() >= 100 ? date.getYear() - 100 : date.getYear(),
         month = '0' + (date.getMonth() + 1),
         day = '0' + date.getDate(),
@@ -84,16 +84,16 @@ var ML =
 
   uniques: function(arr, sens)
   {
-    var a = [];
+    var i=0, a = [], l=arr.length;
     if (sens)
     {
-      for (var i=0, l=arr.length; i<l; i++)
+      for (; i<l; i++)
         if (a.indexOf(arr[i]) === -1 && arr[i] !== '')
           a.push(arr[i]);
     }
     else
     {
-      for (var i=0, l=arr.length; i<l; i++)
+      for (; i<l; i++)
         if (a.indexOf(arr[i].toLowerCase()) === -1 && arr[i] !== '')
           a.push(arr[i].toLowerCase());
     }
@@ -165,7 +165,7 @@ var ML =
     var f = document.createElement('script');
     f.setAttribute('type', 'text/javascript');
     f.setAttribute('src', fn + '.js');
-    document.getElementsByTagName('head')[0].appendChild(f)
+    document.querySelector('head').appendChild(f)
   }
 };
 
@@ -181,7 +181,7 @@ var PP =
   // find first parent of the specified type
   par: function (x, type)
   {
-    while (x.nodeName.toLocaleLowerCase() != type)
+    while (x.nodeName.toLowerCase() != type)
     {
       if (x == document) break;
       x = x.parentElement;
