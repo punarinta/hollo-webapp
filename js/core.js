@@ -178,6 +178,7 @@ var PP =
       if (ev.keyCode == code) callback();
     };
   },
+  // find first parent of the specified type
   par: function (x, type)
   {
     while (x.nodeName.toLocaleLowerCase() != type)
