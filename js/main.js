@@ -221,6 +221,7 @@ ML.showChat = function(email)
       html += '<li>' + subjects[i] + '</li>';
     }
     document.querySelector('#snackbar-menu-tags ul').innerHTML = html;
+    document.querySelector('#composer .subjects').innerHTML = html;
 
     ML.loadFiles(email)
   });

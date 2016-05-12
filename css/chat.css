@@ -21,13 +21,13 @@
 #composer {height: 60px}
 #composer textarea
 {
-    border:0;border-top:1px solid #ccc;margin:0;position: fixed; left: 0; bottom: 0; max-height: 30vh;
+    border:0;border-top:1px solid #ddd;margin:0;position: fixed; left: 0; bottom: 0; max-height: 30vh;
     width: 100vw; height: 40px; transition: all .4s; padding: 20px 0 0 20px; font-size: 18px;
 }
 #composer .head
 {
     display: none; height: 32px;position: fixed;bottom:61px;left:0;background: #fff;width:100%;
-    border-top: 1px solid #ccc; color: #5634ff; flex-wrap: nowrap
+    border-top: 1px solid #ddd; color: #5634ff; flex-wrap: nowrap
 }
 #composer .head > * {height:32px}
 #composer .head .icon {background: url('/gfx/color/subj.svg') no-repeat 9px 8px;width:32px}
@@ -41,5 +41,13 @@
     background: url('/gfx/color/send.svg') no-repeat;width: 21px;height:18px; position:fixed; right:12px;
     bottom:19px; z-index:1;cursor: pointer; display: none
 }
+#composer .subjects
+{
+    display: none; position: fixed; left: 0; bottom: 94px; background: #fff; width: 100%;
+    font-size: 12px; color: #5634ff; margin: 0; border-top: 1px solid #ddd;
+}
+#composer .subjects li {padding: 8px 10px;cursor: pointer}
+
 #composer.focused .head {display: flex}
 #composer.focused .send {display: block}
+#composer.focused .subjects.opened {display: block}
