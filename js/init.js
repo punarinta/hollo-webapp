@@ -286,8 +286,6 @@
           break;
       }
     }
-
-    //crossroads.parse(e.state.route)
   };
 
   if (localStorage.getItem('sessionId'))
