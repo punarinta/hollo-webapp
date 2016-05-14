@@ -165,7 +165,7 @@ var ML =
     ML._loaded[fn] = 1;
     var f = document.createElement('script');
     f.setAttribute('type', 'text/javascript');
-    f.setAttribute('src', fn + '.js');
+    f.setAttribute('src', '/' + fn + '.js');
     document.querySelector('head').appendChild(f)
   },
   
@@ -176,6 +176,13 @@ var ML =
     mbox.style.display = 'flex';
     mbox.querySelector('.body').innerHTML = msg;
     if (callback) ML._mbox = callback;
+  },
+  
+  go: function (r)
+  {
+    history.pushState({route:r}, '', '/' + r);
+    history.pushState({route:r}, '', '/' + r);
+    history.go(-1)
   }
 };
 

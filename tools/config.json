@@ -3,9 +3,6 @@
   "index": "index.html",
   "js":
   [
-    "js/vendy/signals.min",
-    "js/vendy/crossroads.min",
-    "js/vendy/hasher.min",
     "js/vendy/autosize.min",
     "js/core",
     "js/main",

@@ -23,7 +23,7 @@
     switch (filter)
     {
       case 'LOGOUT':
-        hasher.setHash('auth/logout');
+        ML.go('auth/logout');
         break;
 
       case 'VERSION':
@@ -77,7 +77,7 @@
       var type = this.className.replace(/icon|toggled/gi, '').trim(),
         menu = document.getElementById('snackbar-menu-' + type);
 
-      if (type == 'back') hasher.setHash('contacts');
+      if (type == 'back') ML.go('contacts');
       if (!menu) return;
 
       var toggled = this.classList.contains('toggled');
@@ -259,28 +259,36 @@
   };
 
 
-  // === PATHS ===
-  crossroads.addRoute('auth/login', ML.showLogin);
-  crossroads.addRoute('contacts', function () { ML.showContacts(1) });
-  crossroads.addRoute('chat/{email}', function (email)
+  // === ROUTER ===
+  window.onpopstate = function (e)
   {
-    ML.showChat(email);
-  });
-  crossroads.addRoute('auth/logout', function ()
-  {
-    ML.api('auth', 'logout', null, function ()
+    var r = e.state.route, rs = r.split('/');
+    console.log('Route: ' + e.state.route);
+    if (rs[0] == 'chat')
     {
-      hasher.setHash('auth/login');
-    });
-  });
+      ML.showChat(rs[1]);
+    }
+    else
+    {
+      switch (r)
+      {
+        case 'contacts':
+          ML.showContacts(1);
+          break;
+        case 'auth/login':
+          ML.showLogin();
+          break;
+        case 'auth/logout':
+          ML.api('auth', 'logout', null, function ()
+          {
+            ML.go('auth/login');
+          });
+          break;
+      }
+    }
 
-  function parseHash(newHash/*, oldHash*/)
-  {
-    crossroads.parse(newHash);
-  }
-
-  hasher.initialized.add(parseHash);
-  hasher.changed.add(parseHash);
+    //crossroads.parse(e.state.route)
+  };
 
   if (localStorage.getItem('sessionId'))
   {
@@ -311,18 +319,12 @@
 
         localStorage.setItem('sessionId', ML.sessionId);
 
-        // remove '?code=...'
-        window.history.pushState('home', 'Home', '/');
-
-        if (document.location.hash == '')
-        {
-          hasher.setHash('contacts');
-        }
+        ML.go('contacts')
       }
       else
       {
         localStorage.removeItem('sessionId');
-        hasher.setHash('auth/login');
+        ML.go('auth/login');
       }
     });
   }
@@ -337,15 +339,13 @@
 
       if (document.location.hash == '')
       {
-        hasher.setHash('contacts');
+        ML.go('contacts')
       }
     }
     else
     {
       localStorage.removeItem('sessionId');
-      hasher.setHash('auth/login');
+      ML.go('auth/login')
     }
-
-    hasher.init();
   });
 })();

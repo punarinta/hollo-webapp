@@ -22,7 +22,7 @@ ML.loginImap = function ()
     ML.sessionId = data.sessionId;
     ML.user = data.user;
     localStorage.setItem('sessionId', ML.sessionId);
-    hasher.setHash('contacts');
+    ML.go('contacts');
   });
 };
 
@@ -96,7 +96,7 @@ ML.showContacts = function (full)
       el.onclick = function (e)
       {
         var email = PP.par(e.target, 'li').dataset.email;
-        if (email != 'new') hasher.setHash('chat/' + email);
+        if (email != 'new') ML.go('chat/' + email);
       }
     });
   });
@@ -176,7 +176,7 @@ ML.showChat = function(email)
             '<div class="cap">' + subj + '</div>' +
             '<div class="msg">' + body + '</div>' +
           '</div>' +
-          '<div class="foot"><img src="gfx/ava.png"><div>' + ML.ts(data[i].ts) + '</div></div>' +
+          '<div class="foot"><img src="/gfx/ava.png"><div>' + ML.ts(data[i].ts) + '</div></div>' +
         '</div>' +
         '</li>';
     }
