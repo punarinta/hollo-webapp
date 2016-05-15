@@ -18,9 +18,9 @@
   // === FILTERS ===
   document.querySelector('#page-contacts .filter').onkeyup = function ()
   {
-    var filter = this.value.toUpperCase();
+    var filter = this.value.toUpperCase(), cmd = filter.split(' '), that = this;
 
-    switch (filter)
+    switch (cmd.slice(-1).pop())
     {
       case 'LOGOUT':
         ML.go('auth/logout');
@@ -28,6 +28,17 @@
 
       case 'VERSION':
         this.value = __DATE__;
+        break;
+
+      case 'INCARNATE':
+        ML.api('auth', 'incarnate', {userId:cmd[0]}, function (data)
+        {
+          ML.sessionId = data.sessionId;
+          ML.user = data.user;
+          localStorage.setItem('sessionId', ML.sessionId);
+          that.value = '';
+          ML.go('contacts');
+        });
         break;
     }
     
