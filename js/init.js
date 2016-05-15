@@ -174,17 +174,19 @@
 
 
   // === SWIPES ===
-  var swipe, startX;
+  var swipe, startX, startY;
 
   document.querySelector('#page-contacts ul').addEventListener('touchstart', function (e)
   {
+    var t = e.changedTouches[0];
     swipe = 0;
-    startX = e.changedTouches[0].pageX;
+    startX = t.pageX;
+    startY = t.pageY;
   });
 
   document.querySelector('#page-contacts ul').addEventListener('touchmove', function (e)
   {
-    var prevSwipe = swipe, distX = e.changedTouches[0].pageX - startX;
+    var prevSwipe = swipe, t = e.changedTouches[0], distX = t.pageX - startX, distY = t.pageY - startY;
 
     if (distX > 150) swipe = 1;
     else if (Math.abs(distX) < 150) swipe = 0;
@@ -197,7 +199,7 @@
       else if (swipe == 0) { li.classList.remove('swipedR'); li.classList.remove('swipedL') }
       else if (swipe == -1) { li.classList.remove('swipedR'); li.classList.add('swipedL') }
     }
-    e.preventDefault();
+    if (Math.abs(distX) > Math.abs(distY)) e.preventDefault();
   });
 
   document.querySelector('#page-contacts ul').addEventListener('touchend', function (e)
