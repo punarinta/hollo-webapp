@@ -198,7 +198,12 @@
       {
         ML.api('contact', 'mute', {id:id}, function ()
         {
-          li.parentNode.removeChild(li);
+          setTimeout(function (e)
+          {
+            e.parentNode.removeChild(li);
+          }, 800, li);
+          li.style.height = 0;
+          li.style.opacity = 0;
         });
       }
       else
