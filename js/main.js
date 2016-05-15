@@ -233,6 +233,12 @@ ML.showChat = function(email)
       }
     });
 
+    // scrolling hack
+    setTimeout(function (ul)
+    {
+      ul.scrollIntoView(false);
+    },100,ul);
+
     ML.loadFiles(email)
   });
   
