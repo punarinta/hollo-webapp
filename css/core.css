@@ -23,7 +23,7 @@ body::-webkit-scrollbar {display: none}
 .page {display: none; padding: 5px}
 .page * {outline:0}
 
-#page-loader {display: block}
+#page-loader {background: #4b54ff;display:flex;justify-content:center;align-items:center;height: 100vh;flex-direction: column}
 
 #mbox { top:0;display: none;z-index: 100;width: 100vw;height: 100vh;background: rgba(0,0,0,.5);position: fixed;  }
 #mbox > div { background: rgba(255,255,255,.8); display:flex; flex-direction: column; margin: 5%; width:90%;align-self: center}
@@ -32,7 +32,7 @@ body::-webkit-scrollbar {display: none}
 #mbox .foot {border-top: 1px solid #ddd}
 
 .spinner {
-    margin: 100px auto;
+    margin: 80px auto 30px;
     width: 50px;
     height: 40px;
     text-align: center;
@@ -40,7 +40,7 @@ body::-webkit-scrollbar {display: none}
 }
 
 .spinner > div {
-    background-color: #333;
+    background-color: #fff;
     height: 100%;
     width: 6px;
     display: inline-block;
