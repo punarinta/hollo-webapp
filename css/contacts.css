@@ -26,14 +26,20 @@
 #page-contacts ul li img.unread {border-color:#5634ff}
 #page-contacts ul li .name {font-size: 150%; padding-top: 21px; font-weight: 500}
 #page-contacts ul li .email {font-size: 14px; color: grey}
-#page-contacts ul li.swiped {margin-left: 110px}
+#page-contacts ul li.swipedR {margin-left: 110px}
+#page-contacts ul li.swipedL {margin-left: -110px}
 #page-contacts ul li
 {
     overflow: hidden; height:80px; white-space: nowrap; display: flex; padding-left: 10px;
     transition: all .4s; margin-right: 10px; cursor: pointer;
 }
-#page-contacts ul li.swiped:before
+#page-contacts ul li.swipedR:before
 {
     content:'Mute'; padding: 32px 36px; text-transform: uppercase;
     color:#fff; background-color: #4b54ff; margin-left: -120px;position:absolute
+}
+#page-contacts ul li.swipedL:after
+{
+    content:'Read'; padding: 32px 36px; text-transform: uppercase;
+    color:#fff; background-color: #4b54ff; margin-left: 120px;position:absolute
 }

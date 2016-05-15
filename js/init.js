@@ -160,6 +160,43 @@
     mbox.style.display = 'none';
     ML._mbox(0);
   };
+
+
+  // === SWIPES ===
+  var swipe, startX;
+
+  document.querySelector('#page-contacts ul').addEventListener('touchstart', function (e)
+  {
+    swipe = 0;
+    startX = e.changedTouches[0].pageX;
+  });
+
+  document.querySelector('#page-contacts ul').addEventListener('touchmove', function (e)
+  {
+    var prevSwipe = swipe, distX = e.changedTouches[0].pageX - startX;
+
+    if (distX > 150) swipe = 1;
+    else if (Math.abs(distX) < 150) swipe = 0;
+    else if (distX < -150) swipe = -1;
+
+    if (swipe != prevSwipe)
+    {
+      var li = PP.par(e.target, 'li');
+      if (swipe == 1) { li.classList.remove('swipedL'); li.classList.add('swipedR') }
+      else if (swipe == 0) { li.classList.remove('swipedR'); li.classList.remove('swipedL') }
+      else if (swipe == -1) { li.classList.remove('swipedR'); li.classList.add('swipedL') }
+    }
+  });
+
+  document.querySelector('#page-contacts ul').onclick = function (e)
+  {
+    var email = PP.par(e.target, 'li').dataset.email;
+    if (email != 'new') ML.go('chat/' + email);
+    else
+    {
+      // TODO: new contact chat
+    }
+  };
   
 
   // === COMPOSER ===

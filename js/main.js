@@ -96,20 +96,6 @@ ML.showContacts = function (full)
         if (s) s.setAttribute('src', d.thumbnailUrl);
       });
     }
-
-    Array.prototype.forEach.call(document.querySelectorAll('#page-contacts ul li'), function (el)
-    {
-      ML.swipedetect(el, function (x)
-      {
-        if (x == 'right') el.classList.add('swiped');
-        else el.classList.remove('swiped');
-      });
-      el.onclick = function (e)
-      {
-        var email = PP.par(e.target, 'li').dataset.email;
-        if (email != 'new') ML.go('chat/' + email);
-      }
-    });
   });
 };
 
