@@ -186,6 +186,7 @@
       else if (swipe == 0) { li.classList.remove('swipedR'); li.classList.remove('swipedL') }
       else if (swipe == -1) { li.classList.remove('swipedR'); li.classList.add('swipedL') }
     }
+    e.preventDefault();
   });
 
   document.querySelector('#page-contacts ul').onclick = function (e)
