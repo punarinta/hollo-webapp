@@ -189,6 +189,18 @@
     e.preventDefault();
   });
 
+  document.querySelector('#page-contacts ul').addEventListener('touchend', function (e)
+  {
+    if (swipe)
+    {
+      var li = PP.par(e.target, 'li'), email = li.dataset.email;
+      if (swipe == 1) console.log('mute: ' + email);
+      else console.log('read: ' + email);
+      li.classList.remove('swipedR');
+      li.classList.remove('swipedL');
+    }
+  });
+
   document.querySelector('#page-contacts ul').onclick = function (e)
   {
     var email = PP.par(e.target, 'li').dataset.email;
