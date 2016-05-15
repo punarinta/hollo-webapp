@@ -3,6 +3,7 @@
   "index": "index.html",
   "js":
   [
+    "js/vendy/md5",
     "js/vendy/autosize.min",
     "js/core",
     "js/main",

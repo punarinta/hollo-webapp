@@ -168,6 +168,42 @@ var ML =
     f.setAttribute('src', '/' + fn + '.js');
     document.querySelector('head').appendChild(f)
   },
+
+  _grava: {},
+
+  gravaCb: function (json)
+  {
+    if (!json.entry.length) return;
+    var h = json.entry[0].hash, s = document.getElementById('grava-' + h);
+    if (s) s.parentNode.removeChild(s);
+    
+    ML._grava[h].data = json.entry[0];
+
+    if (typeof ML._grava[h].cb == 'function') ML._grava[h].cb(json.entry[0])
+  },
+
+  grava: function (m, cb)
+  {
+    var f = document.createElement('script'), h = md5(m);
+
+    if (typeof ML._grava[h] != 'undefined')
+    {
+      if (typeof ML._grava[h].cb == 'function') ML._grava[h].cb(ML._grava[h].data);
+      return
+    }
+
+    f.setAttribute('type', 'text/javascript');
+    f.setAttribute('src', 'https://en.gravatar.com/' + h + '.json?callback=ML.gravaCb');
+    f.setAttribute('id', 'grava-' + h);
+    ML._grava[h] =
+    {
+      cb: cb,
+      data: null
+    };
+    document.querySelector('head').appendChild(f);
+
+    return h;
+  },
   
   mbox: function (msg, mode, callback)
   {

@@ -74,12 +74,19 @@ ML.showContacts = function (full)
     {
       name = data[i].name ? data[i].name : data[i].email;
 
-      var ava = i < 25 ? ('https://robohash.org/' + Math.random() + '?size=48x48') : '',
-        unread = data[i].read ? '' : ' class="unread"';
+      var unread = data[i].read ? '' : ' class="unread"';
+      
+      var hash = ML.grava(data[i].email, function (d)
+      {
+        var s = document.getElementById('img-gr-' + d.hash);
+        s.setAttribute('src', d.thumbnailUrl);
+      });
 
-      html += '<li data-email="' + data[i].email + '">';
-      html += '<div class="ava"><img height="48" ' + unread + 'src="' + ava + '"></div><div><div class="name">' + name + '</div><div class="email">' + data[i].email + '</div></div>';
-      html += '</li>';
+      html +=
+        '<li data-email="' + data[i].email + '">' +
+          '<div class="ava"><img id="img-gr-' + hash + '" height="48" ' + unread + '></div>' +
+          '<div><div class="name">' + name + '</div><div class="email">' + data[i].email + '</div></div>' +
+        '</li>';
     }
 
     html += '<li data-email="new" class="new"><div class="ava"><img class="unread"></div><div><div class="name"></div><div class="email"></div></div></li>';
@@ -100,6 +107,10 @@ ML.showContacts = function (full)
       }
     });
   });
+
+  /*ML.grava('cheaterx@yandex.ru', function (x) {
+    console.log('=====', x)
+  })*/
 };
 
 ML.showChat = function(email)
