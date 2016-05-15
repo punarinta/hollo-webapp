@@ -23,7 +23,11 @@
 
 #page-contacts ul li .ava {float: left;padding: 14px; margin-right: 3px;min-width: 48px}
 #page-contacts ul li .hujava {width: 100%}
-#page-contacts ul li img {border-radius: 50%; border-image:0;width:42px; height:42px;background: #c3d9ff; border: 3px transparent solid}
+#page-contacts ul li img
+{
+    border-radius: 50%; border-image:0;width:42px; height:42px;background: #c3d9ff;
+    border: 3px transparent solid; transition: border-color .5s; transition-delay: .5s;
+}
 #page-contacts ul li img.unread {border-color:#5634ff}
 #page-contacts ul li .name {font-size: 150%; padding-top: 21px; font-weight: 500}
 #page-contacts ul li .email {font-size: 14px; color: grey}
