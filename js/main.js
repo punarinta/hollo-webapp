@@ -78,8 +78,9 @@ ML.showContacts = function (full)
       
       var hash = ML.grava(data[i].email, function (d)
       {
+        if (!d) return;
         var s = document.getElementById('img-gr-' + d.hash);
-        s.setAttribute('src', d.thumbnailUrl);
+        if (s) s.setAttribute('src', d.thumbnailUrl);
       });
 
       html +=
