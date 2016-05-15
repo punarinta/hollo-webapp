@@ -196,7 +196,7 @@
       var li = PP.par(e.target, 'li'), id = li.dataset.id;
       if (swipe == 1)
       {
-        ML.api('contact', 'mute', {id:id}, function ()
+        ML.api('contact', 'update', {id:id, muted:!ML.state.muted}, function ()
         {
           setTimeout(function (e)
           {
@@ -208,9 +208,11 @@
       }
       else
       {
-        ML.api('contact', 'read', {id:id}, function ()
+        ML.api('contact', 'update', {id:id, read:li.querySelector('img').classList.contains('unread')}, function ()
         {
-          li.querySelector('img').classList.remove('unread');
+          var cl = li.querySelector('img').classList;
+          cl.toggle('unread');
+          li.querySelector('.post').innerHTML = 'mark as<br>' + (cl.contains('unread')?'':'un') + 'read';
         });
       }
       li.classList.remove('swipedR');
