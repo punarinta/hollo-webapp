@@ -193,9 +193,21 @@
   {
     if (swipe)
     {
-      var li = PP.par(e.target, 'li'), email = li.dataset.email;
-      if (swipe == 1) console.log('mute: ' + email);
-      else console.log('read: ' + email);
+      var li = PP.par(e.target, 'li'), id = li.dataset.id;
+      if (swipe == 1)
+      {
+        ML.api('contact', 'mute', {id:id}, function ()
+        {
+          li.parentNode.removeChild(li);
+        });
+      }
+      else
+      {
+        ML.api('contact', 'read', {id:id}, function ()
+        {
+          li.querySelector('img').classList.remove('unread');
+        });
+      }
       li.classList.remove('swipedR');
       li.classList.remove('swipedL');
     }
