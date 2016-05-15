@@ -75,17 +75,10 @@ ML.showContacts = function (full)
       name = data[i].name ? data[i].name : data[i].email;
 
       var unread = data[i].read ? '' : ' class="unread"';
-      
-      var hash = ML.grava(data[i].email, function (d)
-      {
-        if (!d) return;
-        var s = document.getElementById('img-gr-' + d.hash);
-        if (s) s.setAttribute('src', d.thumbnailUrl);
-      });
 
       html +=
         '<li data-email="' + data[i].email + '">' +
-          '<div class="ava"><img id="img-gr-' + hash + '" height="48" ' + unread + '></div>' +
+          '<div class="ava"><img id="img-gr-' + md5(data[i].email) + '" height="48" ' + unread + '></div>' +
           '<div><div class="name">' + name + '</div><div class="email">' + data[i].email + '</div></div>' +
         '</li>';
     }
@@ -93,6 +86,16 @@ ML.showContacts = function (full)
     html += '<li data-email="new" class="new"><div class="ava"><img class="unread"></div><div><div class="name"></div><div class="email"></div></div></li>';
 
     ul.innerHTML = html;
+
+    for (var i in data)
+    {
+      ML.grava(data[i].email, function (d)
+      {
+        if (!d) return;
+        var s = document.getElementById('img-gr-' + d.hash);
+        if (s) s.setAttribute('src', d.thumbnailUrl);
+      });
+    }
 
     Array.prototype.forEach.call(document.querySelectorAll('#page-contacts ul li'), function (el)
     {
