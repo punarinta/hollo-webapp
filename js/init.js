@@ -335,10 +335,9 @@
       ML.sessionId = data.sessionId;
       ML.user = data.user;
 
-      if (document.location.hash == '')
-      {
-        ML.go('contacts')
-      }
+      var p = document.location.pathname;
+      if (p == '/') ML.go('contacts');
+      else ML.go(p.substring(1))
     }
     else
     {
