@@ -78,8 +78,10 @@ ML.showContacts = function (full)
 
       html +=
         '<li data-email="' + data[i].email + '">' +
+          '<div class="pre">MUTE</div>' +
           '<div class="ava"><img src="/gfx/ava.png" id="img-gr-' + md5(data[i].email) + '" height="48" ' + unread + '></div>' +
-          '<div><div class="name">' + name + '</div><div class="email">' + data[i].email + '</div></div>' +
+          '<div class="hujava"><div class="name">' + name + '</div><div class="email">' + data[i].email + '</div></div>' +
+          '<div class="post">READ</div>' +
         '</li>';
     }
 
