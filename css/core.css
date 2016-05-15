@@ -20,6 +20,8 @@
 body {font-family: 'Edmondsans', sans-serif; padding: 0; margin: 0; background-color: #f5f5f5}
 body::-webkit-scrollbar {display: none}
 
+img[src=""] {content:url("data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==")}
+
 .page {display: none; padding: 5px}
 .page * {outline:0}
 
