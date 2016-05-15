@@ -51,7 +51,7 @@
 
       if (email == 'new') return;
 
-      if (name.indexOf(filter) != -1 || email.indexOf(filter) != -1) { el.style.display = 'list-item'; any = 1 }
+      if (name.indexOf(filter) != -1 || email.indexOf(filter) != -1) { el.style.display = 'flex'; any = 1 }
       else el.style.display = 'none';
     });
 
