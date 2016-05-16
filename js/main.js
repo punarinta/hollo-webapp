@@ -150,6 +150,8 @@ ML.showChat = function(email)
       tags = tags.concat(data[i].subject.split(' '));
       subjects.push(data[i].subject);
 
+      if (!body) body = '[HTML content]';
+
       // preprocess body
       var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i;
       body = body.replace(/(?:\r\n|\r|\n)/g, '<br />');
