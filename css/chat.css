@@ -9,10 +9,14 @@
     color: #5634ff; cursor: pointer; font: 12px monospace;margin-bottom: 7px;
     background: url('/gfx/color/subj.svg') no-repeat; padding: 2px 0 0 24px;
 }
-#page-chat ul li .foot div {float:left; margin:4px 0 0 28px; font-size: 10px;color: rgba(0,0,0,.3)}
-#page-chat ul li .foot img {float:left; position: relative;width: 32px; height: 32px; border-radius: 50%; top:-9px; left:16px}
-#page-chat ul li.yours .foot img {float:right; left:-16px}
-#page-chat ul li.yours .foot div {float:right; margin-right: 28px}
+#page-chat ul li .foot .ts {float:left; margin:6px 0 0 25px; font-size: 10px;color: rgba(0,0,0,.3)}
+#page-chat ul li .foot .ava
+{
+    float:left; position: relative;width: 32px; height: 32px; border-radius: 50%; top:-9px; left:16px;
+    background: #ccc; display:flex;justify-content:center;align-items:center;color:#fff;font:15px sans-serif;font-weight: bold
+}
+#page-chat ul li.yours .foot .ava {float:right; left:-16px}
+#page-chat ul li.yours .foot .ts {float:right; margin-right: 25px}
 #page-chat ul li.yours > div {float: right; margin-left: 15px}
 #page-chat ul li.mine > div {float: left; margin-right: 15px}
 

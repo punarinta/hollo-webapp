@@ -141,7 +141,9 @@ ML.showChat = function(email)
     for (var i in data)
     {
       var filesHtml = '', body = data[i].body,
-          whose = data[i].from == ML.user.email ? 'mine' : 'yours';
+          whose = data[i].from.email == ML.user.email ? 'mine' : 'yours';
+
+      var sName = data[i].from.name ? data[i].from.name : data[i].from.email;
 
       tags = tags.concat(data[i].subject.split(' '));
       subjects.push(data[i].subject);
@@ -166,7 +168,8 @@ ML.showChat = function(email)
 
       if (!subj.length) subj = '—';
 
-      // '<div>' + filesHtml + '</div>' +
+      var nc = sName.split(' ');
+      nc = nc.length == 1 ? nc[0].charAt(0) : (nc[0].charAt(0) + nc[1].charAt(0));
 
       html +=
         '<li data-id="' + data[i].id + '" class="' + whose + '">' +
@@ -175,7 +178,7 @@ ML.showChat = function(email)
             '<div class="cap">' + subj + '</div>' +
             '<div class="msg">' + body + '</div>' +
           '</div>' +
-          '<div class="foot"><img src="/gfx/ava.png"><div>' + ML.ts(data[i].ts) + '</div></div>' +
+          '<div class="foot"><div class="ava">' + nc + '</div><div class="ts">' + ML.ts(data[i].ts) + '</div></div>' +
         '</div>' +
         '</li>';
     }
