@@ -110,7 +110,27 @@
       }
     }
   });
-  
+
+  document.querySelector('#snackbar-menu-more .mute').onclick = function ()
+  {
+    var t = this;
+    ML.api('contact', 'update', {id:ML.contact.id, muted:!ML.contact.muted}, function ()
+    {
+      ML.contact.muted = !ML.contact.muted;
+      t.innerText = ML.contact.muted ? 'Unmute' : 'Mute';
+    });
+  };
+
+  document.querySelector('#snackbar-menu-more .unread').onclick = function ()
+  {
+    ML.api('contact', 'update', {id:ML.contact.id, read:0}, function ()
+    {
+      document.querySelector('#snackbar .icon.more').classList.remove('toggled');
+      document.getElementById('snackbar-menu-more').style.display = 'none';
+    });
+  };
+
+
   // === hollo'd / muted ===
   var btnHolloed = document.getElementById('show-holloed'),
       btnMuted = document.getElementById('show-muted');

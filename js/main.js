@@ -233,6 +233,8 @@ ML.showChat = function(email)
       }
     });
 
+    document.querySelector('#snackbar-menu-more .mute').innerText = ML.contact.muted ? 'Unmute' : 'Mute';
+
     // scrolling hack
     setTimeout(function (ul)
     {
