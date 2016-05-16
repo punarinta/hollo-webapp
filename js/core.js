@@ -13,7 +13,8 @@ var ML =
     muted: 0
   },
   _loaded: [],
-  _mbox : function () {},
+  _mbox : null,
+  _grava: {},
 
   api: function (endpoint, method, data, callback)
   {
@@ -21,11 +22,13 @@ var ML =
 
     r.open('POST', 'https://' + ML.apiRoot + '/api/' + endpoint, true);
     r.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+
     if (ML.sessionId)
     {
       r.setRequestHeader('Token', ML.sessionId.toString());
     }
-    r.onload = function()
+    
+    r.onload = function ()
     {
       var r = this.response.toString();
       if (/^[\],:{}\s]*$/.test(r.replace(/\\["\\\/bfnrtu]/g, '@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').replace(/(?:^|:|,)(?:\s*\[)+/g, '')))
@@ -56,13 +59,13 @@ var ML =
 
   getQueryVar: function (v)
   {
-    var query = window.location.search.substring(1),
-        i, vars = query.split('&');
+    var q = window.location.search.substring(1),
+        i, p, vs = q.split('&');
 
-    for (i = 0; i < vars.length; i++)
+    for (i = 0; i < vs.length; i++)
     {
-      var pair = vars[i].split('=');
-      if (pair[0] == v) { return pair[1]; }
+      p = vs[i].split('=');
+      if (p[0] == v) return p[1];
     }
     return null;
   },
@@ -77,15 +80,15 @@ var ML =
         hours = '0' + date.getHours(),
         minutes = '0' + date.getMinutes();
 
-    if (td.getTime() - date.getTime() < 24*3600 && td.getDate() == date.getDate()) pfx = 'today';
+    if (td.getTime() - date.getTime() < 24 * 3600 && td.getDate() == date.getDate()) pfx = 'today';
     else pfx = day.substr(-2) + '.' + month.substr(-2) + '.' + year;
 
     return pfx + ' ' + hours.substr(-2) + ':' + minutes.substr(-2);
   },
 
-  uniques: function(arr, sens)
+  uniques: function (arr, sens)
   {
-    var i=0, a = [], l=arr.length;
+    var i = 0, a = [], l = arr.length;
     if (sens)
     {
       for (; i<l; i++)
@@ -111,8 +114,6 @@ var ML =
     document.querySelector('head').appendChild(f)
   },
 
-  _grava: {},
-
   gravaCb: function (json)
   {
     if (!json.entry.length) return;
@@ -131,7 +132,7 @@ var ML =
     if (typeof ML._grava[h] != 'undefined')
     {
       if (typeof ML._grava[h].cb == 'function') ML._grava[h].cb(ML._grava[h].data);
-      return
+      return h
     }
 
     f.setAttribute('type', 'text/javascript');
@@ -147,13 +148,13 @@ var ML =
     return h;
   },
   
-  mbox: function (msg, mode, callback)
+  mbox: function (msg, mode, cb)
   {
-    var mbox = document.getElementById('mbox');
-    mbox.querySelector('.btn.ok').style.display = 'block';
-    mbox.style.display = 'flex';
-    mbox.querySelector('.body').innerHTML = msg;
-    if (callback) ML._mbox = callback;
+    var m = document.getElementById('mbox');
+    m.querySelector('.btn.ok').style.display = 'block';
+    m.style.display = 'flex';
+    m.querySelector('.body').innerHTML = msg;
+    ML._mbox = cb || function () {};
   },
   
   go: function (r)
@@ -166,11 +167,11 @@ var ML =
 
 var PP =
 {
-  onKey: function (sel, code, callback)
+  onKey: function (x, code, cb)
   {
-    document.querySelector(sel).onkeydown = function (ev)
+    document.querySelector(x).onkeydown = function (e)
     {
-      if (ev.keyCode == code) callback();
+      if (e.keyCode == code) cb();
     };
   },
   // find first parent of the specified type

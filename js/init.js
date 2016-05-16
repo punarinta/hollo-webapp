@@ -86,7 +86,7 @@
     el.onclick = function ()
     {
       var type = this.className.replace(/icon|toggled/gi, '').trim(),
-        menu = document.getElementById('snackbar-menu-' + type);
+          menu = document.getElementById('snackbar-menu-' + type);
 
       if (type == 'back') ML.go('contacts');
       if (!menu) return;
