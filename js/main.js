@@ -89,7 +89,7 @@ ML.showContacts = function (full)
 
     ul.innerHTML = html;
 
-    for (var i in data)
+    for (i in data)
     {
       ML.grava(data[i].email, function (d)
       {
@@ -140,10 +140,12 @@ ML.showChat = function(email)
 
     for (var i in data)
     {
-      var filesHtml = '', body = data[i].body,
-          whose = data[i].from.email == ML.user.email ? 'mine' : 'yours';
+      if (!data[i].from.id) data[i].from = ML.user;
 
-      var sName = data[i].from.name ? data[i].from.name : data[i].from.email;
+      var filesHtml = '',
+          body = data[i].body,
+          whose = data[i].from.email == ML.user.email ? 'mine' : 'yours',
+          sName = data[i].from.name ? data[i].from.name : data[i].from.email;
 
       tags = tags.concat(data[i].subject.split(' '));
       subjects.push(data[i].subject);
@@ -217,7 +219,7 @@ ML.showChat = function(email)
     // fill in subjects
     html = '';
     subjects = ML.uniques(subjects, true);
-    for (var i in subjects)
+    for (i in subjects)
     {
       html += '<li>' + subjects[i] + '</li>';
     }
