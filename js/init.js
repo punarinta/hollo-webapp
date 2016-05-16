@@ -208,9 +208,9 @@
   {
     var prevSwipe = swipe, t = e.changedTouches[0], distX = t.pageX - startX, distY = t.pageY - startY;
 
-    if (distX > 150) swipe = 1;
-    else if (Math.abs(distX) < 150) swipe = 0;
-    else if (distX < -150) swipe = -1;
+    if (distX > 50) swipe = 1;
+    else if (Math.abs(distX) < 50) swipe = 0;
+    else if (distX < -50) swipe = -1;
 
     if (swipe != prevSwipe)
     {
