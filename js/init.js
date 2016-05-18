@@ -240,7 +240,7 @@
       var li = PP.par(e.target, 'li'), id = li.dataset.id;
       if (swipe == 1)
       {
-        ML.api('contact', 'update', {id:id, muted:!ML.state.muted}, function ()
+        ML.api('contact', 'update', {id:id, muted:!ML.state.muted - 0}, function ()
         {
           setTimeout(function (e)
           {
@@ -252,7 +252,7 @@
       }
       else
       {
-        ML.api('contact', 'update', {id:id, read:li.querySelector('img').classList.contains('unread')}, function ()
+        ML.api('contact', 'update', {id:id, read:li.querySelector('img').classList.contains('unread') - 0}, function ()
         {
           var cl = li.querySelector('img').classList;
           cl.toggle('unread');
