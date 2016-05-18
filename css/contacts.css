@@ -27,28 +27,28 @@
 #page-contacts ul li.new .name {padding-top:26px}
 #page-contacts ul li.new img {background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AUKBxw6WPlMXAAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAAxSURBVCjPY/z69SsDNhCVyvKfgYGBYdnsP4zY5JkYyAQjQSOjf9TP//S1cTQeaaARAGowEHmXXrc6AAAAAElFTkSuQmCC) no-repeat center;display: block}
 
-#page-contacts ul li .ava {float: left;padding: 14px; margin-right: 3px;min-width: 48px}
-#page-contacts ul li .hujava {width: 100%}
-#page-contacts ul li img
+#page-contacts ul .ava {float: left;padding: 14px; margin-right: 3px;min-width: 48px}
+#page-contacts ul .hujava {width: 100%}
+#page-contacts ul img
 {
     border-radius: 50%; border-image:0;width:42px; height:42px;background: #c3d9ff;
     border: 3px transparent solid; transition: border-color .5s; transition-delay: .5s;
 }
-#page-contacts ul li img.unread {border-color:#5634ff}
-#page-contacts ul li .name {font-size: 150%; padding-top: 21px; font-weight: 500}
-#page-contacts ul li .email {font-size: 14px; color: grey}
+#page-contacts ul img.unread {border-color:#5634ff}
+#page-contacts ul .name {font-size: 150%; padding-top: 21px; font-weight: 500}
+#page-contacts ul .email {font-size: 14px; color: grey}
 #page-contacts ul li.swipedL {margin-left: -100px}
 #page-contacts ul li
 {
     overflow: hidden; height:80px; white-space: nowrap; display: flex; padding-left: 10px;
     transition: margin .4s, height .8s ease-in, opacity .8s ease-in; cursor: pointer;
 }
-#page-contacts ul li .pre, #page-contacts ul li .post
+#page-contacts ul .pre, #page-contacts ul .post
 {
     display: flex; color:#fff; background-color: #4b54ff; min-width:100px;text-align: center;z-index: 1;
     justify-content:center;align-items:center; transition: margin .4s; font-size: 14px;font-weight: 500;
 }
-#page-contacts ul li .pre {margin-left: -110px}
-#page-contacts ul li .post {margin-right: -100px}
+#page-contacts ul .pre {margin-left: -110px}
+#page-contacts ul .post {margin-right: -100px}
 #page-contacts ul li.swipedR .pre {margin-left: -10px}
 #page-contacts ul li.swipedL .post {margin-right: 0}
