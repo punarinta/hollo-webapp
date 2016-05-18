@@ -423,14 +423,15 @@
         return function (e)
         {
           // Render thumbnail.
-          var span = document.createElement('span');
+          var span = document.createElement('span'), t = document.querySelector('#composer textarea');
           span.innerHTML = '<img src="' + e.target.result + '" title="' + encodeURI(theFile.name) + '"/>';
 
           document.getElementById('uploaded').insertBefore(span, null);
 
           console.log('FileReader event:', e);
           ML._upl.push(e.target.result);
-          document.querySelector('#composer textarea').dispatchEvent(new Event('autosize:update'));
+          t.dispatchEvent(new Event('autosize:update'));
+          t.dispatchEvent(new Event('autosize:resized'));
         };
       })(f);
 
