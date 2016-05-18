@@ -103,6 +103,7 @@ ML.showContacts = function (full)
     // that's a first load, so keep it clean
     ul.innerHTML = '<li data-email="new" class="new"><div class="ava"><img class="unread"></div><div><div class="name"></div><div class="email"></div></div></li>';
     ML.addContacts(data);
+    if (data.length == 25) ML.state.moreContacts = 1;
   });
 };
 

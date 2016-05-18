@@ -12,7 +12,7 @@ var ML =
   {
     muted: 0,
     contactsOffset: 0,
-    contactsBusy : 0
+    moreContacts : 0
   },
   _loaded: [],
   _mbox : null,
@@ -43,7 +43,7 @@ var ML =
         else
         {
           console.log('Status: ', this.status);
-          ML.mbox(json.errMsg);
+          if (this.status != 401) ML.mbox(json.errMsg);
         }
       }
       else

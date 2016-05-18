@@ -267,9 +267,9 @@
   document.onscroll = function ()
   {
     var el = document.querySelector('#page-contacts ul li:last-child');
-    if (el && el.getBoundingClientRect().bottom < screen.height + 50 && !ML.state.contactsBusy)
+    if (el && el.getBoundingClientRect().bottom < screen.height + 50 && ML.state.moreContacts)
     {
-      ML.state.contactsBusy = 1;
+      ML.state.moreContacts = 0;
       ML.state.contactsOffset += 25;
 
       console.log('Contacts fetch at offset ' + ML.state.contactsOffset);
@@ -277,7 +277,7 @@
       ML.api('contact', 'find', {pageStart:ML.state.contactsOffset, pageLength:25, filters: [{mode:'muted', value:ML.state.muted}]}, function (data)
       {
         ML.addContacts(data);
-        ML.state.contactsBusy = 0;
+        if (data.length == 25) ML.state.moreContacts = 1;
       });
     }
   };
