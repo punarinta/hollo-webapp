@@ -4,7 +4,7 @@
   "js":
   [
     "js/vendy/md5",
-    "js/vendy/autosize.min",
+    "js/autosize",
     "js/core",
     "js/main",
     "js/init"
