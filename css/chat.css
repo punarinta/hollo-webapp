@@ -57,5 +57,5 @@
 #composer.focused .subjects.opened {display: block}
 
 #upload {opacity: 0;cursor: pointer; line-height: 34px;}
-#uploaded {position: fixed; left: 4px; bottom: 0; width: 100vw; background: #fff}
+#uploaded {position: fixed; left: 4px; bottom: 0; width: 100vw; background: #fff; white-space: nowrap}
 #uploaded img {height: 72px; border-radius: 2px; margin: 2px}
