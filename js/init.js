@@ -266,8 +266,11 @@
 
   document.onscroll = function ()
   {
+    if (!ML.state.moreContacts) return;
+
     var el = document.querySelector('#page-contacts ul li:last-child');
-    if (el && el.getBoundingClientRect().bottom < screen.height + 50 && ML.state.moreContacts)
+    
+    if (el && el.getBoundingClientRect().bottom < screen.height + 50)
     {
       ML.state.moreContacts = 0;
       ML.state.contactsOffset += 25;
