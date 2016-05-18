@@ -344,14 +344,17 @@
   };
 
   autosize(cmpText);
-  cmpText.addEventListener('autosize:resized', function(e)
+
+  cmpText.addEventListener('autosize:resized', function (e)
   {
-    var h = parseInt(e.target.style.height, 10);
+    var h = parseInt(e.target.style.height, 10), f = ML._upl.length ? 78 : 0;
+
     cmp.style.height = (h + 21) + 'px';
-    cmp.querySelector('.emojis').style.bottom = (h + 53) + 'px';
-    cmp.querySelector('.head').style.bottom = (h + 21) + 'px';
-    cmp.querySelector('.send').style.bottom = h/2 + 'px';
-    cmp.querySelector('.subjects').style.bottom = (h + 54) + 'px';
+    cmp.querySelector('.emojis').style.bottom = f + (h + 53) + 'px';
+    cmp.querySelector('.head').style.bottom = f + (h + 21) + 'px';
+    cmp.querySelector('.send').style.bottom = (f + h)/2 + 'px';
+    cmp.querySelector('.subjects').style.bottom = f + (h + 54) + 'px';
+    cmpText.style.bottom = f + 'px';
   });
 
   Array.prototype.forEach.call(cmp.querySelectorAll('*'), function(el)
@@ -398,6 +401,42 @@
   {
     cmp.querySelector('.subjects').classList.toggle('opened');
     cmpText.focus();
+  };
+
+  cmp.querySelector('#upload').onchange = function (e)
+  {
+    var files = e.target.files;
+
+    for (var i = 0, f; f = files[i]; i++)
+    {
+      // Only process image files.
+      if (!f.type.match('image.*'))
+      {
+        continue;
+      }
+
+      var reader = new FileReader();
+
+      // Closure to capture the file information.
+      reader.onload = (function (theFile)
+      {
+        return function (e)
+        {
+          // Render thumbnail.
+          var span = document.createElement('span');
+          span.innerHTML = '<img src="' + e.target.result + '" title="' + encodeURI(theFile.name) + '"/>';
+
+          document.getElementById('uploaded').insertBefore(span, null);
+
+          console.log('FileReader event:', e);
+          ML._upl.push(e.target.result);
+          document.querySelector('#composer textarea').dispatchEvent(new Event('autosize:update'));
+        };
+      })(f);
+
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(f);
+    }
   };
 
 

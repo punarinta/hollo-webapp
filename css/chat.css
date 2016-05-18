@@ -55,3 +55,7 @@
 #composer.focused .head {display: flex}
 #composer.focused .send {display: block}
 #composer.focused .subjects.opened {display: block}
+
+#upload {opacity: 0;cursor: pointer; line-height: 34px;}
+#uploaded {position: fixed; left: 4px; bottom: 0; width: 100vw; background: #fff}
+#uploaded img {height: 72px; border-radius: 2px; margin: 2px}

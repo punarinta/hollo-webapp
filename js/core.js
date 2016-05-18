@@ -14,6 +14,7 @@ var ML =
     contactsOffset: 0,
     moreContacts : 0
   },
+  _upl: [],
   _loaded: [],
   _mbox : null,
   _grava: {},
