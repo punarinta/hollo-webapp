@@ -202,7 +202,7 @@ ML.showChat = function (email, id)
 
     ul.innerHTML = html;
 
-    document.querySelector('#composer .cap').innerText = subj;
+    document.querySelector('#composer .cap').innerText = subj || 'New topic';
 
     Array.prototype.forEach.call(document.querySelectorAll('#page-chat li a'), function (el)
     {
@@ -238,6 +238,7 @@ ML.showChat = function (email, id)
     {
       html += '<li>' + subjects[i] + '</li>';
     }
+    html = html || '<li>New topic</li>'
     document.querySelector('#snackbar-menu-tags ul').innerHTML = html;
     document.querySelector('#composer .subjects').innerHTML = html;
     
