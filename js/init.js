@@ -267,18 +267,18 @@
   // === CONTACT LIST ===
   conts.onclick = function (e)
   {
-    var email = PP.par(e.target, 'li').dataset.email;
-    if (email != 'new') ML.go('chat/' + email);
+    var ds = PP.par(e.target, 'li').dataset, email = ds.email;
+    if (email != 'new') ML.go('chat/' + email, ds.id);
     else
     {
       var f = document.querySelector('#page-contacts .filter');
       email = f.value;
 
-      ML.api('contact', 'add', {email:email}, function ()
+      ML.api('contact', 'add', {email:email}, function (data)
       {
         f.value = '';
         f.dispatchEvent(new Event('keyup'));
-        ML.go('chat/' + email);
+        ML.go('chat/' + email, data.id);
       });
     }
   };
@@ -409,7 +409,7 @@
     console.log('Route: ' + e.state.route);
     if (rs[0] == 'chat')
     {
-      ML.showChat(rs[1]);
+      ML.showChat(rs[1], e.state.data);
     }
     else
     {

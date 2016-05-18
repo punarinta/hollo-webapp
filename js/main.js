@@ -107,7 +107,7 @@ ML.showContacts = function (full)
   });
 };
 
-ML.showChat = function (email)
+ML.showChat = function (email, id)
 {
   var ul = document.querySelector('#page-chat ul');
   ML.hidePages();
@@ -118,7 +118,7 @@ ML.showChat = function (email)
 
   ML.load('modules/emojis');
 
-  ML.api('message', 'findByEmail', {email: email}, function (data)
+  ML.api('message', 'findByReference', {email: email, id: id}, function (data)
   {
     var html = '', subj;
     var tags = [], subjects = [];

@@ -168,10 +168,10 @@ var ML =
     ML._mbox = cb || function () {};
   },
   
-  go: function (r)
+  go: function (r, d)
   {
-    history.pushState({route:r}, '', '/' + r);
-    history.pushState({route:r}, '', '/' + r);
+    for (var i = 2; i--;)
+      history.pushState({route: r, data: d}, '', '/' + r);
     history.go(-1)
   }
 };
