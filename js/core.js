@@ -57,7 +57,7 @@ var ML =
       console.log('Cannot connect to server:', e.error);
     };
 
-    if (typeof data.pageStart != 'undefined')
+    if (data && typeof data.pageStart != 'undefined')
     {
       ps = data.pageStart;
       pl = data.pageLength;
