@@ -16,9 +16,12 @@
   };
 
   // === FILTERS ===
-  document.querySelector('#page-contacts .filter').onkeyup = function ()
+  var head = document.querySelector('#page-contacts .head');
+  head.querySelector('.filter').onkeyup = function ()
   {
     var filter = this.value.toUpperCase(), cmd = filter.split(' '), that = this;
+
+    head.classList.toggle('mode2', !!filter.length);
 
     switch (cmd.slice(-1).pop())
     {
@@ -69,6 +72,14 @@
       ny.getElementsByClassName('name')[0].innerHTML = '';
     }
   };
+
+  head.querySelector('.clear').onclick = function ()
+  {
+    var f = head.querySelector('.filter');
+    f.value = '';
+    f.dispatchEvent(new Event('keyup'));
+  };
+  
   /*document.querySelector('#page-chat .filter').onkeyup = function ()
    {
    var filter = this.value.toUpperCase();
