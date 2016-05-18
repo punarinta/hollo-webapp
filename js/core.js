@@ -11,7 +11,8 @@ var ML =
   state:
   {
     muted: 0,
-    contactsOffset: 0
+    contactsOffset: 0,
+    contactsBusy : 0
   },
   _loaded: [],
   _mbox : null,

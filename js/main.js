@@ -50,6 +50,38 @@ ML.showLogin = function ()
   document.getElementById('page-login').style.display = 'block';
 };
 
+ML.addContacts = function (data)
+{
+  var html = '', name;
+
+  for (var i in data)
+  {
+    name = data[i].name ? data[i].name : data[i].email;
+
+    var unread = data[i].read ? '' : ' class="unread"';
+
+    html +=
+      '<li data-email="' + data[i].email + '" data-id="' + data[i].id + '">' +
+      '<div class="pre">' + (ML.state.muted?'un':'') + 'mute</div>' +
+      '<div class="ava"><img src="/gfx/ava.png" id="img-gr-' + md5(data[i].email) + '" height="48" ' + unread + '></div>' +
+      '<div class="hujava"><div class="name">' + name + '</div><div class="email">' + data[i].email + '</div></div>' +
+      '<div class="post">mark as<br>' + (unread?'':'un') + 'read</div>' +
+      '</li>';
+  }
+
+  document.querySelector('#page-contacts ul').innerHTML += html;
+
+  for (i in data)
+  {
+    ML.grava(data[i].email, function (d)
+    {
+      if (!d) return;
+      var s = document.getElementById('img-gr-' + d.hash);
+      if (s) s.setAttribute('src', d.thumbnailUrl);
+    });
+  }
+};
+
 ML.showContacts = function (full)
 {
   var ul = document.querySelector('#page-contacts ul'),
@@ -58,7 +90,7 @@ ML.showContacts = function (full)
   if (full)
   {
     ML.hidePages();
-    ul.innerHTML ='<li>Loading...</li>';
+    ul.innerHTML = '<li>Loading...</li>';
 
     page.querySelector('.head .ava img').src = ML.user.ava || '/gfx/ava.png';
     page.querySelector('.head .name').innerHTML = ML.user.name || ML.user.email.split('@')[0];
@@ -66,42 +98,15 @@ ML.showContacts = function (full)
     page.style.display = 'block';
   }
 
-  ML.api('contact', 'find', {filters: [{mode:'muted', value:ML.state.muted}]}, function (data)
+  ML.api('contact', 'find', {pageStart:ML.state.contactsOffset, pageLength:25, filters: [{mode:'muted', value:ML.state.muted}]}, function (data)
   {
-    var html = '', name;
-
-    for (var i in data)
-    {
-      name = data[i].name ? data[i].name : data[i].email;
-
-      var unread = data[i].read ? '' : ' class="unread"';
-
-      html +=
-        '<li data-email="' + data[i].email + '" data-id="' + data[i].id + '">' +
-          '<div class="pre">' + (ML.state.muted?'un':'') + 'mute</div>' +
-          '<div class="ava"><img src="/gfx/ava.png" id="img-gr-' + md5(data[i].email) + '" height="48" ' + unread + '></div>' +
-          '<div class="hujava"><div class="name">' + name + '</div><div class="email">' + data[i].email + '</div></div>' +
-          '<div class="post">mark as<br>' + (unread?'':'un') + 'read</div>' +
-        '</li>';
-    }
-
-    html += '<li data-email="new" class="new"><div class="ava"><img class="unread"></div><div><div class="name"></div><div class="email"></div></div></li>';
-
-    ul.innerHTML = html;
-
-    for (i in data)
-    {
-      ML.grava(data[i].email, function (d)
-      {
-        if (!d) return;
-        var s = document.getElementById('img-gr-' + d.hash);
-        if (s) s.setAttribute('src', d.thumbnailUrl);
-      });
-    }
+    // that's a first load, so keep it clean
+    ul.innerHTML = '<li data-email="new" class="new"><div class="ava"><img class="unread"></div><div><div class="name"></div><div class="email"></div></div></li>';
+    ML.addContacts(data);
   });
 };
 
-ML.showChat = function(email)
+ML.showChat = function (email)
 {
   var ul = document.querySelector('#page-chat ul');
   ML.hidePages();

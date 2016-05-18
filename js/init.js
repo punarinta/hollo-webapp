@@ -194,9 +194,9 @@
 
 
   // === SWIPES ===
-  var swipe, startX, startY;
+  var swipe, startX, startY, conts = document.querySelector('#page-contacts ul');
 
-  document.querySelector('#page-contacts ul').addEventListener('touchstart', function (e)
+  conts.addEventListener('touchstart', function (e)
   {
     var t = e.changedTouches[0];
     swipe = 0;
@@ -204,7 +204,7 @@
     startY = t.pageY;
   });
 
-  document.querySelector('#page-contacts ul').addEventListener('touchmove', function (e)
+  conts.addEventListener('touchmove', function (e)
   {
     var prevSwipe = swipe, t = e.changedTouches[0], distX = t.pageX - startX, distY = t.pageY - startY;
 
@@ -222,7 +222,7 @@
     if (Math.abs(distX) > Math.abs(distY)) e.preventDefault();
   });
 
-  document.querySelector('#page-contacts ul').addEventListener('touchend', function (e)
+  conts.addEventListener('touchend', function (e)
   {
     if (swipe)
     {
@@ -253,13 +253,32 @@
     }
   });
 
-  document.querySelector('#page-contacts ul').onclick = function (e)
+  // === CONTACT LIST ===
+  conts.onclick = function (e)
   {
     var email = PP.par(e.target, 'li').dataset.email;
     if (email != 'new') ML.go('chat/' + email);
     else
     {
       // TODO: new contact chat
+    }
+  };
+
+  document.onscroll = function ()
+  {
+    var el = document.querySelector('#page-contacts ul li:last-child');
+    if (el && el.getBoundingClientRect().bottom < screen.height + 50 && !ML.state.contactsBusy)
+    {
+      ML.state.contactsBusy = 1;
+      ML.state.contactsOffset += 25;
+
+      console.log('Contacts fetch at offset ' + ML.state.contactsOffset);
+
+      ML.api('contact', 'find', {pageStart:ML.state.contactsOffset, pageLength:25, filters: [{mode:'muted', value:ML.state.muted}]}, function (data)
+      {
+        ML.addContacts(data);
+        ML.state.contactsBusy = 0;
+      });
     }
   };
   
