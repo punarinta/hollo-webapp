@@ -10,7 +10,8 @@ var ML =
   },
   state:
   {
-    muted: 0
+    muted: 0,
+    contactsOffset: 0
   },
   _loaded: [],
   _mbox : null,
@@ -55,7 +56,7 @@ var ML =
       console.log('Cannot connect to server:', e.error);
     };
 
-    if (data.pageStart)
+    if (typeof data.pageStart != 'undefined')
     {
       ps = data.pageStart;
       pl = data.pageLength;
