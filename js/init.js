@@ -260,7 +260,15 @@
     if (email != 'new') ML.go('chat/' + email);
     else
     {
-      // TODO: new contact chat
+      var f = document.querySelector('#page-contacts .filter');
+      email = f.value;
+
+      ML.api('contact', 'add', {email:email}, function ()
+      {
+        f.value = '';
+        f.dispatchEvent(new Event('keyup'));
+        ML.go('chat/' + email);
+      });
     }
   };
 
@@ -269,7 +277,7 @@
     if (!ML.state.moreContacts) return;
 
     var el = document.querySelector('#page-contacts ul li:last-child');
-    
+
     if (el && el.getBoundingClientRect().bottom < screen.height + 50)
     {
       ML.state.moreContacts = 0;
