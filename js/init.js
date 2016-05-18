@@ -73,12 +73,7 @@
     }
   };
 
-  head.querySelector('.clear').onclick = function ()
-  {
-    var f = head.querySelector('.filter');
-    f.value = '';
-    f.dispatchEvent(new Event('keyup'));
-  };
+  head.querySelector('.clear').onclick = ML.resetContactFilter;
   
   /*document.querySelector('#page-chat .filter').onkeyup = function ()
    {
@@ -267,17 +262,21 @@
   // === CONTACT LIST ===
   conts.onclick = function (e)
   {
-    var ds = PP.par(e.target, 'li').dataset, email = ds.email;
-    if (email != 'new') ML.go('chat/' + email, ds.id);
+    var ds = PP.par(e.target, 'li').dataset,
+        email = ds.email;
+
+    ML.resetContactFilter();
+
+    if (email != 'new')
+    {
+      ML.go('chat/' + email, ds.id);
+    }
     else
     {
-      var f = document.querySelector('#page-contacts .filter');
-      email = f.value;
+      email = document.querySelector('#page-contacts .filter').value;
 
       ML.api('contact', 'add', {email:email}, function (data)
       {
-        f.value = '';
-        f.dispatchEvent(new Event('keyup'));
         ML.go('chat/' + email, data.id);
       });
     }

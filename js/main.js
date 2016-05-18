@@ -107,6 +107,13 @@ ML.showContacts = function (full)
   });
 };
 
+ML.resetContactFilter = function ()
+{
+  var f = document.querySelector('#page-contacts .head .filter');
+  f.value = '';
+  f.dispatchEvent(new Event('keyup'));
+};
+
 ML.showChat = function (email, id)
 {
   var ul = document.querySelector('#page-chat ul');
