@@ -18,7 +18,7 @@ var ML =
 
   api: function (endpoint, method, data, callback)
   {
-    var r = new XMLHttpRequest();
+    var r = new XMLHttpRequest(), ps = null, pl;
 
     r.open('POST', 'https://' + ML.apiRoot + '/api/' + endpoint, true);
     r.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
@@ -54,7 +54,14 @@ var ML =
     {
       console.log('Cannot connect to server:', e.error);
     };
-    r.send(JSON.stringify({ 'method': method, 'data': data }));
+
+    if (data.pageStart)
+    {
+      ps = data.pageStart;
+      pl = data.pageLength;
+    }
+
+    r.send(JSON.stringify({ 'method': method, 'data': data, 'pageStart': ps, 'pageLength': pl }));
   },
 
   getQueryVar: function (v)
@@ -120,9 +127,11 @@ var ML =
     var h = json.entry[0].hash, s = document.getElementById('grava-' + h);
     if (s) s.parentNode.removeChild(s);
 
-    ML._grava[h].data = json.entry[0];
-
-    if (typeof ML._grava[h].cb == 'function') ML._grava[h].cb(json.entry[0])
+    if (typeof ML._grava[h] != 'undefined')
+    {
+      ML._grava[h].data = json.entry[0];
+      if (typeof ML._grava[h].cb == 'function') ML._grava[h].cb(json.entry[0])
+    }
   },
 
   grava: function (m, cb)
