@@ -13,7 +13,7 @@
 #page-msgs ul li .files > div
 {
     width: 72px; height: 72px; text-transform: uppercase; margin-right: 3px; color: #fff; border-radius: 2px;
-    font: 15px sans-serif; display:flex;justify-content:center;align-items:center; cursor: pointer;
+    font: 15px sans-serif; display:flex;justify-content:center;align-items:center; cursor: pointer; background-size: cover !important;
 }
 #page-msgs ul li .foot .ts {float:left; margin:6px 0 0 25px; font-size: 10px;color: rgba(0,0,0,.3)}
 #page-msgs ul li .foot .ava

@@ -40,10 +40,22 @@ MS.add = function (data, pos)
       
       for (var fi in data[i].files)
       {
-        var file = data[i].files[fi],
-            mime = file.type.split('/')[1];
+        var file = data[i].files[fi];
 
-        filesHtml += '<div data-id="' + file.extId + '" style="background: ' + ML.colorHash(file.type) + '">' + mime + '</div>';
+        if (file.type.indexOf('image/') != -1)
+        {
+          (function (f)
+          {
+            ML.api('file', 'getFileUrl', {extId:file.extId}, function (url)
+            {
+              var image = document.getElementById('img-file-' + f.extId);
+              image.innerHTML = '';
+              image.style.backgroundImage = 'url(' + url + ')';
+            })
+          })(file);
+        }
+
+        filesHtml += '<div id="img-file-' + file.extId + '" data-id="' + file.extId + '" style="background:' + ML.colorHash(file.type) + '">' + file.type.split('/')[1] + '</div>';
       }
     }
 
