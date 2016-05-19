@@ -171,7 +171,7 @@ MS.show = function (email, id)
     document.querySelector('#snackbar-menu-more .mute').innerText = MS.contact.muted ? 'Unmute' : 'Mute';
 
     ul.innerHTML = '';
-    MS.add(data.messages, 'bottom');
+    MS.add(data.messages, 'top');
 
     ML.loadFiles(email)
   });
@@ -290,7 +290,7 @@ MS.show = function (email, id)
     }
 
     // try to find last message id
-    var lis = document.querySelectorAll('#page-msgs li:last-child');
+    var lis = document.querySelectorAll('#page-msgs > ul li:last-child');
     if (lis.length)
     {
       msgId = lis[0].dataset.id;
@@ -299,6 +299,27 @@ MS.show = function (email, id)
     console.log('body:', msg);
     console.log('subject:', subj);
     console.log('messageId:', msgId);
+
+    // push data to the bottom
+    var m =
+    {
+      body: msg,
+      subject: subj,
+      from: AU.user,
+      ts: new Date().getTime() / 1000,
+      id: 0, // ?,
+      files: null
+    };
+
+    if (MS._upl.length)
+    {
+      for (var i in MS._upl)
+      {
+        console.log('File attached: ' + MS._upl[i]);
+      }
+    }
+
+    MS.add([m], 'bottom');
 
     ML.api('message', 'send', {body: msg, messageId:msgId, subject: subj}, function (json)
     {
