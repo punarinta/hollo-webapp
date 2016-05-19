@@ -414,21 +414,20 @@
       {
         continue;
       }
-
       var reader = new FileReader();
 
       // Closure to capture the file information.
-      reader.onload = (function (theFile)
+      reader.onload = (function (f)
       {
         return function (e)
         {
           // Render thumbnail.
           var span = document.createElement('span'), t = document.querySelector('#composer textarea');
-          span.innerHTML = '<img src="' + e.target.result + '" title="' + encodeURI(theFile.name) + '"/>';
+          span.innerHTML = '<img src="' + e.target.result + '" title="' + encodeURI(f.name) + '"/>';
 
           document.getElementById('uploaded').insertBefore(span, null);
 
-          console.log('FileReader event:', e);
+          console.log('File read:', f, e);
           ML._upl.push(e.target.result);
           t.dispatchEvent(new Event('autosize:update'));
           t.dispatchEvent(new Event('autosize:resized'));

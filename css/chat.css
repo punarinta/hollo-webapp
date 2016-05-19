@@ -13,7 +13,7 @@
 #page-chat ul li .foot .ava
 {
     float:left; position: relative;width: 32px; height: 32px; border-radius: 50%; top:-9px; left:16px;
-    background: #ccc; display:flex;justify-content:center;align-items:center;color:#fff;font:15px sans-serif;font-weight: bold
+    display:flex;justify-content:center;align-items:center;color:#fff;font:15px sans-serif;font-weight: bold
 }
 #page-chat ul li.yours .foot .ava {float:right; left:-16px}
 #page-chat ul li.yours .foot .ts {float:right; margin-right: 25px}

@@ -185,8 +185,12 @@ ML.showChat = function (email, id)
 
       if (!subj.length) subj = '—';
 
-      var nc = sName.split(' ');
+      var nc = sName.split(' '),
+          ncc = parseInt(md5(data[i].from.email).substr(0, 6), 16),
+          b = ncc & 0xFF, g = (ncc >> 8) & 0xFF, r = ncc >> 16;
+
       nc = nc.length == 1 ? nc[0].charAt(0) : (nc[0].charAt(0) + nc[1].charAt(0));
+      ncc = [(r >> 1) + 80, (g >> 1) + 80, (b >> 1) + 80].join(',');
 
       html +=
         '<li data-id="' + data[i].id + '" class="' + whose + '">' +
@@ -195,7 +199,7 @@ ML.showChat = function (email, id)
             '<div class="cap">' + subj + '</div>' +
             '<div class="msg">' + body + '</div>' +
           '</div>' +
-          '<div class="foot"><div class="ava">' + nc + '</div><div class="ts">' + ML.ts(data[i].ts) + '</div></div>' +
+          '<div class="foot"><div class="ava" style="background:rgb(' + ncc + ')">' + nc + '</div><div class="ts">' + ML.ts(data[i].ts) + '</div></div>' +
         '</div>' +
         '</li>';
     }
