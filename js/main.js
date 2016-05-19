@@ -117,6 +117,14 @@ ML.showContacts = function (full)
   });
 };
 
+ML.addMessages = function (data, pos)
+{
+  var html = '';
+
+  if (pos == 'top') document.querySelector('#page-chat ul').innerHTML = html + document.querySelector('#page-chat ul').innerHTML;
+  else document.querySelector('#page-chat ul').innerHTML += html;
+};
+
 ML.resetContactFilter = function ()
 {
   var f = document.querySelector('#page-contacts .head .filter');
