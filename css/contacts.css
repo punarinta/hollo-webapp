@@ -25,16 +25,17 @@
 #page-contacts ul {list-style-type: none;margin-top:176px;padding: 0}
 #page-contacts ul li.new {display: none}
 #page-contacts ul li.new .name {padding-top:26px}
-#page-contacts ul li.new img {background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AUKBxw6WPlMXAAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAAxSURBVCjPY/z69SsDNhCVyvKfgYGBYdnsP4zY5JkYyAQjQSOjf9TP//S1cTQeaaARAGowEHmXXrc6AAAAAElFTkSuQmCC) no-repeat center;display: block}
+#page-contacts ul li.new .img {background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AUKBxw6WPlMXAAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAAxSURBVCjPY/z69SsDNhCVyvKfgYGBYdnsP4zY5JkYyAQjQSOjf9TP//S1cTQeaaARAGowEHmXXrc6AAAAAElFTkSuQmCC) no-repeat center;display: block}
 
 #page-contacts ul .ava {float: left;padding: 14px; margin-right: 3px;min-width: 48px}
 #page-contacts ul .hujava {width: 100%}
-#page-contacts ul img
+#page-contacts ul .img
 {
-    border-radius: 50%; border-image:0;width:42px; height:42px;background: #c3d9ff;
-    border: 3px transparent solid; transition: border-color .5s; transition-delay: .5s;
+    border-radius: 50%; width:42px; height:42px;display:flex;justify-content:center;align-items:center;
+    border: 3px #f5f5f5 solid; transition: border-color .5s; transition-delay: .5s;
+    color:#fff;text-transform: uppercase;font:18px sans-serif
 }
-#page-contacts ul img.unread {border-color:#5634ff}
+#page-contacts ul .img.unread {border-color:#5634ff}
 #page-contacts ul .name {font-size: 150%; padding-top: 21px; font-weight: 500}
 #page-contacts ul .email {font-size: 14px; color: grey}
 #page-contacts ul li.swipedL {margin-left: -100px}

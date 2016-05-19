@@ -247,9 +247,9 @@
       }
       else
       {
-        ML.api('contact', 'update', {id:id, read:li.querySelector('img').classList.contains('unread') - 0}, function ()
+        ML.api('contact', 'update', {id:id, read:li.querySelector('.img').classList.contains('unread') - 0}, function ()
         {
-          var cl = li.querySelector('img').classList;
+          var cl = li.querySelector('.img').classList;
           cl.toggle('unread');
           li.querySelector('.post').innerHTML = 'mark as<br>' + (cl.contains('unread')?'':'un') + 'read';
         });

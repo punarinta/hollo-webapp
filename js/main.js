@@ -58,12 +58,18 @@ ML.addContacts = function (data)
   {
     name = data[i].name ? data[i].name : data[i].email;
 
-    var unread = data[i].read ? '' : ' class="unread"';
+    var unread = data[i].read ? '' : ' unread',
+        nc = name.split(' '),
+        ncc = parseInt(md5(data[i].email).substr(0, 6), 16),
+        b = ncc & 0xFF, g = (ncc >> 8) & 0xFF, r = ncc >> 16;
+
+    nc = nc.length == 1 ? nc[0].charAt(0) : (nc[0].charAt(0) + nc[1].charAt(0));
+    ncc = [(r >> 1) + 96, (g >> 1) + 96, (b >> 1) + 96].join(',');
 
     html +=
       '<li data-email="' + data[i].email + '" data-id="' + data[i].id + '">' +
       '<div class="pre">' + (ML.state.muted?'un':'') + 'mute</div>' +
-      '<div class="ava"><img src="/gfx/ava.png" id="img-gr-' + md5(data[i].email) + '" height="48" ' + unread + '></div>' +
+      '<div class="ava"><div class="img' + unread + '" id="img-gr-' + md5(data[i].email) + '" style="background:rgb(' + ncc + ')">' + nc + '</div></div>' +
       '<div class="hujava"><div class="name">' + name + '</div><div class="email">' + data[i].email + '</div></div>' +
       '<div class="post">mark as<br>' + (unread?'':'un') + 'read</div>' +
       '</li>';
@@ -77,7 +83,11 @@ ML.addContacts = function (data)
     {
       if (!d) return;
       var s = document.getElementById('img-gr-' + d.hash);
-      if (s) s.setAttribute('src', d.thumbnailUrl);
+      if (s)
+      {
+        s.style.backgroundImage = 'url(' + d.thumbnailUrl + ')';
+        s.innerHTML = '';
+      }
     });
   }
 };
@@ -190,7 +200,7 @@ ML.showChat = function (email, id)
           b = ncc & 0xFF, g = (ncc >> 8) & 0xFF, r = ncc >> 16;
 
       nc = nc.length == 1 ? nc[0].charAt(0) : (nc[0].charAt(0) + nc[1].charAt(0));
-      ncc = [(r >> 1) + 80, (g >> 1) + 80, (b >> 1) + 80].join(',');
+      ncc = [(r >> 1) + 96, (g >> 1) + 96, (b >> 1) + 96].join(',');
 
       html +=
         '<li data-id="' + data[i].id + '" class="' + whose + '">' +
