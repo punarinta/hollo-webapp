@@ -18,7 +18,7 @@ MS.add = function (data, pos)
   {
     if (!data[i].from.id) data[i].from = AU.user;
 
-    var filesHtml = '',
+    var filesHtml = 0,
       body = data[i].body,
       whose = data[i].from.email == AU.user.email ? 'mine' : 'yours',
       sName = data[i].from.name ? data[i].from.name : data[i].from.email;
@@ -36,11 +36,14 @@ MS.add = function (data, pos)
 
     if (data[i].files)
     {
-      filesHtml += '<hr>';
+      filesHtml = '';
+      
       for (var fi in data[i].files)
       {
-        var file = data[i].files[fi];
-        filesHtml += '<a class="file" data-id="' + file.extId + '" href="#">' + file.name + '</a><br>';
+        var file = data[i].files[fi],
+            mime = file.type.split('/')[1];
+
+        filesHtml += '<div data-id="' + file.extId + '" style="background: ' + ML.colorHash(file.type) + '">' + mime + '</div>';
       }
     }
 
@@ -61,6 +64,7 @@ MS.add = function (data, pos)
       '<div class="white">' +
       '<div class="cap">' + subj + '</div>' +
       '<div class="msg">' + body + '</div>' +
+      (filesHtml ? '<div class="files">' + filesHtml + '</div>': '') +
       '</div>' +
       '<div class="foot"><div class="ava" style="background:rgb(' + ncc + ')">' + nc + '</div><div class="ts">' + ML.ts(data[i].ts) + '</div></div>' +
       '</div>' +
@@ -183,12 +187,7 @@ MS.show = function (email, id)
         }
         else
         {
-          var ncc = parseInt(md5(files[i].type).substr(0, 6), 16),
-              b = ncc & 0xFF, g = (ncc >> 8) & 0xFF, r = ncc >> 16;
-
-          ncc = [(r >> 1) + 96, (g >> 1) + 96, (b >> 1) + 96].join(',');
-
-          div = '<div class="img" style="background:rgb(' + ncc + ')">' + files[i].type.split('/')[1] + '</div>'
+          div = '<div class="img" style="background:' + ML.colorHash(files[i].type) + '">' + files[i].type.split('/')[1] + '</div>'
         }
 
         html += '<li>' + div + '<div class="bar"><div></div><div></div></div></li>'

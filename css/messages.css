@@ -9,6 +9,12 @@
     color: #5634ff; cursor: pointer; font: 12px monospace;margin-bottom: 7px;
     background: url('/gfx/color/subj.svg') no-repeat; padding: 2px 0 0 24px;
 }
+#page-msgs ul li .files {display: flex; margin-top: 10px}
+#page-msgs ul li .files > div
+{
+    width: 72px; height: 72px; text-transform: uppercase; margin-right: 3px; color: #fff; border-radius: 2px;
+    font: 15px sans-serif; display:flex;justify-content:center;align-items:center; cursor: pointer;
+}
 #page-msgs ul li .foot .ts {float:left; margin:6px 0 0 25px; font-size: 10px;color: rgba(0,0,0,.3)}
 #page-msgs ul li .foot .ava
 {
