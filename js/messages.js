@@ -1,7 +1,8 @@
 var MS =
 {
   contact: null,
-  _upl: []
+  _upl: [],
+  subjects: []
 };
 
 MS.add = function (data, pos)
@@ -94,10 +95,16 @@ MS.add = function (data, pos)
   subjects = ML.uniques(subjects, true);
   for (i in subjects)
   {
+    // check if subject was already added before
+    if (MS.subjects.indexOf(subjects[i]) != -1)
+    {
+      continue;
+    }
+
+    MS.subjects.push(subjects[i]);
+
     html += '<li>' + subjects[i] + '</li>';
   }
-
-  html = html || '<li>New topic</li>';
 
   document.querySelector('#snackbar-menu-tags ul').innerHTML += html;
   cmp.querySelector('.subjects').innerHTML += html;
