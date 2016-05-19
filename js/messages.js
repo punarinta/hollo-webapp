@@ -80,10 +80,11 @@ MS.add = function (data, pos)
   {
     html += '<li>' + subjects[i] + '</li>';
   }
-  
+
   html = html || '<li>New topic</li>';
-  document.querySelector('#snackbar-menu-tags ul').innerHTML = html;
-  cmp.querySelector('.subjects').innerHTML = html;
+  
+  document.querySelector('#snackbar-menu-tags ul').innerHTML += html;
+  cmp.querySelector('.subjects').innerHTML += html;
 
   // connect subject picker
   Array.prototype.forEach.call(cmp.querySelectorAll('.subjects li'), function (el)
