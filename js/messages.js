@@ -154,6 +154,7 @@ MS.show = function (email, id)
     document.querySelector('#snackbar .name').innerHTML = name;
     document.querySelector('#snackbar-menu-more .mute').innerText = MS.contact.muted ? 'Unmute' : 'Mute';
 
+    ul.innerHTML = '';
     MS.add(data.messages, 'bottom');
 
     ML.loadFiles(email)
