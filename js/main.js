@@ -85,7 +85,7 @@ ML.addContacts = function (data)
       var s = document.getElementById('img-gr-' + d.hash);
       if (s)
       {
-        s.style.backgroundImage = 'url(' + d.thumbnailUrl + ')';
+        s.style.backgroundImage = 'url(' + d.thumbnailUrl + '?s=48)';
         s.innerHTML = '';
       }
     });
@@ -111,7 +111,7 @@ ML.showContacts = function (full)
   ML.api('contact', 'find', {pageStart:ML.state.contactsOffset, pageLength:25, filters: [{mode:'muted', value:ML.state.muted}]}, function (data)
   {
     // that's a first load, so keep it clean
-    ul.innerHTML = '<li data-email="new" class="new"><div class="ava"><img class="unread"></div><div><div class="name"></div><div class="email"></div></div></li>';
+    ul.innerHTML = '<li data-email="new" class="new"><div class="ava"> <div class="new img unread"></div> </div><div><div class="name"></div><div class="email"></div></div></li>';
     ML.addContacts(data);
     if (data.length == 25) ML.state.moreContacts = 1;
   });

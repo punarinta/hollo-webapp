@@ -33,7 +33,7 @@
 {
     border-radius: 50%; width:42px; height:42px;display:flex;justify-content:center;align-items:center;
     border: 3px #f5f5f5 solid; transition: border-color .5s; transition-delay: .5s;
-    color:#fff;text-transform: uppercase;font:18px sans-serif
+    color:#fff;text-transform: uppercase;font:18px sans-serif;background-size: cover;
 }
 #page-contacts ul .img.unread {border-color:#5634ff}
 #page-contacts ul .name {font-size: 150%; padding-top: 21px; font-weight: 500}
