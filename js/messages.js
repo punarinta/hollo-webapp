@@ -166,7 +166,7 @@ MS.show = function (email, id)
 
     ML.api('file', 'findByEmail', {email: email, withImageUrl: true}, function (files)
     {
-      var url, html = '', im, div, mime;
+      var url, html = '', im, div;
 
       for (var i in files)
       {
@@ -187,15 +187,13 @@ MS.show = function (email, id)
 
           ncc = [(r >> 1) + 96, (g >> 1) + 96, (b >> 1) + 96].join(',');
 
-          mime = files[i].type.split('/')[1];
-          div = '<div class="img" style="background:rgb(' + ncc + ')">' + mime + '</div>'
+          div = '<div class="img" style="background:rgb(' + ncc + ')">' + files[i].type.split('/')[1] + '</div>'
         }
 
-        html += '<li>' + div
-             + '<div class="bar"><div></div><div></div>'
-             + '</div></li>';
+        html += '<li>' + div + '<div class="bar"><div></div><div></div></div></li>'
       }
-      document.querySelector('#snackbar-menu-files ul').innerHTML = html;
+
+      fileList.innerHTML = html;
     })
   }
 };
