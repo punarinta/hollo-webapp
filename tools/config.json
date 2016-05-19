@@ -6,10 +6,10 @@
     "js/vendy/md5",
     "js/autosize",
     "js/core",
-    "js/main",
+    "js/auth",
     "js/contacts",
     "js/messages",
-    "js/init"
+    "js/main"
   ],
   "mods":
   [

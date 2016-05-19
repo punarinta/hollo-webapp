@@ -16,11 +16,11 @@ MS.add = function (data, pos)
 
   for (var i in data)
   {
-    if (!data[i].from.id) data[i].from = ML.user;
+    if (!data[i].from.id) data[i].from = AU.user;
 
     var filesHtml = '',
       body = data[i].body,
-      whose = data[i].from.email == ML.user.email ? 'mine' : 'yours',
+      whose = data[i].from.email == AU.user.email ? 'mine' : 'yours',
       sName = data[i].from.name ? data[i].from.name : data[i].from.email;
 
     tags = tags.concat(data[i].subject.split(' '));
@@ -82,7 +82,7 @@ MS.add = function (data, pos)
   }
 
   html = html || '<li>New topic</li>';
-  
+
   document.querySelector('#snackbar-menu-tags ul').innerHTML += html;
   cmp.querySelector('.subjects').innerHTML += html;
 
@@ -181,3 +181,142 @@ MS.show = function (email, id)
     })
   }
 };
+
+// === INIT ===
+
+(function ()
+{
+  var cmp = document.getElementById('composer'),
+      cmpText = cmp.querySelector('textarea');
+
+  cmpText.onclick = function ()
+  {
+    cmp.classList.add('focused');
+  };
+
+  cmpText.onkeyup = function (e)
+  {
+    // left trim the contents
+    this.value = this.value.replace(/^\s+/, '');
+
+    if (/[^a-zA-Z0-9-_]/.test(this.value.slice(-1)) && e.keyCode > 31)
+    {
+      var that = this, w = this.value.trim().split(' ').slice(-1)[0].toLowerCase().replace(/[_\W]+/g, '');
+      if (typeof EMJ[w] != 'undefined')
+      {
+        var em = document.createElement('div');
+        em.innerText = EMJ[w];
+        em.dataset.w = w;
+        setTimeout(function(o)
+        {
+          if (o.parentNode) o.parentNode.removeChild(o);
+        }, 5000, em);
+        em.onclick = function ()
+        {
+          // replace the last occurrence of a word with an emoji
+          var pat = new RegExp('(\\b' + this.dataset.w + '\\b)(?!.*\\b\\1\\b)', 'i');
+          that.value = that.value.replace(pat, this.innerText);
+          em.parentNode.removeChild(em);
+          that.focus();
+        };
+        document.querySelector('#page-msgs .emojis').appendChild(em);
+      }
+    }
+  };
+
+  autosize(cmpText);
+
+  cmpText.addEventListener('autosize:resized', function (e)
+  {
+    var h = parseInt(e.target.style.height, 10), f = MS._upl.length ? 78 : 0;
+
+    cmp.style.height = (h + 21) + 'px';
+    cmp.querySelector('.emojis').style.bottom = f + (h + 53) + 'px';
+    cmp.querySelector('.head').style.bottom = f + (h + 21) + 'px';
+    cmp.querySelector('.send').style.bottom = (f + h)/2 + 'px';
+    cmp.querySelector('.subjects').style.bottom = f + (h + 54) + 'px';
+    cmpText.style.bottom = f + 'px';
+  });
+
+  Array.prototype.forEach.call(cmp.querySelectorAll('*'), function(el)
+  {
+    el.classList.add('ndf');
+  });
+
+  document.onclick = function (e)
+  {
+    // 'ndf' for 'no defocus'
+    if (e.target.classList.contains('ndf')) return;
+    cmp.classList.remove('focused');
+  };
+
+  cmp.querySelector('.send').onclick = function ()
+  {
+    // send a message
+    var msg = cmpText.value, subj = cmp.querySelector('.cap').innerText, msgId = null;
+
+    if (!msg.length)
+    {
+      ML.mbox('You didn\'t input any message');
+      return;
+    }
+
+    // try to find last message id
+    var lis = document.querySelectorAll('#page-msgs li:last-child');
+    if (lis.length)
+    {
+      msgId = lis[0].dataset.id;
+    }
+
+    console.log('body:', msg);
+    console.log('subject:', subj);
+    console.log('messageId:', msgId);
+
+    ML.api('message', 'send', {body: msg, messageId:msgId, subject: subj}, function (json)
+    {
+      console.log('result:', json);
+    });
+  };
+
+  cmp.querySelector('.picker').onclick = function ()
+  {
+    cmp.querySelector('.subjects').classList.toggle('opened');
+    cmpText.focus();
+  };
+
+  cmp.querySelector('#upload').onchange = function (e)
+  {
+    var files = e.target.files;
+
+    for (var i = 0, f; f = files[i]; i++)
+    {
+      // Only process image files.
+      if (!f.type.match('image.*'))
+      {
+        continue;
+      }
+      var reader = new FileReader();
+
+      // Closure to capture the file information.
+      reader.onload = (function (f)
+      {
+        return function (e)
+        {
+          // Render thumbnail.
+          var span = document.createElement('span');
+          span.innerHTML = '<img src="' + e.target.result + '" title="' + encodeURI(f.name) + '"/>';
+
+          document.getElementById('uploaded').insertBefore(span, null);
+
+          console.log('File read:', f, e);
+          MS._upl.push(e.target.result);
+          cmpText.dispatchEvent(new Event('autosize:update'));
+          cmpText.dispatchEvent(new Event('autosize:resized'));
+        };
+      })(f);
+
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(f);
+    }
+  };
+})();

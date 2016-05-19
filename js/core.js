@@ -1,12 +1,6 @@
 var ML =
 {
   apiRoot: document.location.hostname.replace('app.', 'api.'),
-  sessionId: null,
-  user:
-  {
-    id: null,
-    email: null
-  },
   state:
   {
     muted: 0
@@ -22,9 +16,9 @@ var ML =
     r.open('POST', 'https://' + ML.apiRoot + '/api/' + endpoint, true);
     r.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 
-    if (ML.sessionId)
+    if (AU.sessionId)
     {
-      r.setRequestHeader('Token', ML.sessionId.toString());
+      r.setRequestHeader('Token', AU.sessionId.toString());
     }
     
     r.onload = function ()
