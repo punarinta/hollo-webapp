@@ -2,7 +2,6 @@ var ML =
 {
   apiRoot: document.location.hostname.replace('app.', 'api.'),
   sessionId: null,
-  contact: null,
   user:
   {
     id: null,
@@ -10,11 +9,8 @@ var ML =
   },
   state:
   {
-    muted: 0,
-    contactsOffset: 0,
-    moreContacts : 0
+    muted: 0
   },
-  _upl: [],
   _loaded: [],
   _mbox : null,
   _grava: {},

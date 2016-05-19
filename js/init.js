@@ -120,16 +120,16 @@
   document.querySelector('#snackbar-menu-more .mute').onclick = function ()
   {
     var t = this;
-    ML.api('contact', 'update', {id:ML.contact.id, muted:!ML.contact.muted}, function ()
+    ML.api('contact', 'update', {id:MS.contact.id, muted:!MS.contact.muted}, function ()
     {
-      ML.contact.muted = !ML.contact.muted;
-      t.innerText = ML.contact.muted ? 'Unmute' : 'Mute';
+      MS.contact.muted = !MS.contact.muted;
+      t.innerText = MS.contact.muted ? 'Unmute' : 'Mute';
     });
   };
 
   document.querySelector('#snackbar-menu-more .unread').onclick = function ()
   {
-    ML.api('contact', 'update', {id:ML.contact.id, read:0}, function ()
+    ML.api('contact', 'update', {id:MS.contact.id, read:0}, function ()
     {
       document.querySelector('#snackbar .icon.more').classList.remove('toggled');
       document.getElementById('snackbar-menu-more').style.display = 'none';
@@ -284,21 +284,21 @@
 
   document.onscroll = function ()
   {
-    if (!ML.state.moreContacts) return;
+    if (!CO.more) return;
 
     var el = document.querySelector('#page-contacts ul li:last-child');
 
     if (el && el.getBoundingClientRect().bottom < screen.height + 50)
     {
-      ML.state.moreContacts = 0;
-      ML.state.contactsOffset += 25;
+      CO.more = 0;
+      CO.offset += 25;
 
-      console.log('Contacts fetch at offset ' + ML.state.contactsOffset);
+      console.log('Contacts fetch at offset ' + CO.offset);
 
-      ML.api('contact', 'find', {pageStart:ML.state.contactsOffset, pageLength:25, filters: [{mode:'muted', value:ML.state.muted}]}, function (data)
+      ML.api('contact', 'find', { pageStart: CO.offset, pageLength: 25, filters: [{mode:'muted', value:ML.state.muted}] }, function (data)
       {
         CO.add(data);
-        if (data.length == 25) ML.state.moreContacts = 1;
+        if (data.length == 25) CO.more = 1;
       });
     }
   };
@@ -347,7 +347,7 @@
 
   cmpText.addEventListener('autosize:resized', function (e)
   {
-    var h = parseInt(e.target.style.height, 10), f = ML._upl.length ? 78 : 0;
+    var h = parseInt(e.target.style.height, 10), f = MS._upl.length ? 78 : 0;
 
     cmp.style.height = (h + 21) + 'px';
     cmp.querySelector('.emojis').style.bottom = f + (h + 53) + 'px';
@@ -428,7 +428,7 @@
           document.getElementById('uploaded').insertBefore(span, null);
 
           console.log('File read:', f, e);
-          ML._upl.push(e.target.result);
+          MS._upl.push(e.target.result);
           t.dispatchEvent(new Event('autosize:update'));
           t.dispatchEvent(new Event('autosize:resized'));
         };

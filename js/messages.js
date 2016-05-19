@@ -1,5 +1,7 @@
 var MS =
 {
+  contact: null,
+  _upl: []
 };
 
 MS.add = function (data, pos)
@@ -26,10 +28,10 @@ MS.show = function (email, id)
     var html = '', subj;
     var tags = [], subjects = [];
 
-    ML.contact = data.contact;
-    ML.contact.email = email;
+    MS.contact = data.contact;
+    MS.contact.email = email;
 
-    var name = ML.contact.name;
+    var name = MS.contact.name;
     if (name)
     {
       name = name.split(' ');
@@ -154,7 +156,7 @@ MS.show = function (email, id)
       }
     });
 
-    document.querySelector('#snackbar-menu-more .mute').innerText = ML.contact.muted ? 'Unmute' : 'Mute';
+    document.querySelector('#snackbar-menu-more .mute').innerText = MS.contact.muted ? 'Unmute' : 'Mute';
 
     // scrolling hack
     setTimeout(function (ul)

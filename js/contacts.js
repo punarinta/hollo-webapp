@@ -1,5 +1,7 @@
 var CO =
 {
+    offset: 0,
+    more : 0
 };
 
 CO.resetFilter = function ()
@@ -67,11 +69,11 @@ CO.show = function (full)
     page.style.display = 'block';
   }
 
-  ML.api('contact', 'find', {pageStart:ML.state.contactsOffset, pageLength:25, filters: [{mode:'muted', value:ML.state.muted}]}, function (data)
+  ML.api('contact', 'find', {pageStart:CO.offset, pageLength:25, filters: [{mode:'muted', value:ML.state.muted}]}, function (data)
   {
     // that's a first load, so keep it clean
     ul.innerHTML = '<li data-email="new" class="new"><div class="ava"> <div class="new img unread"></div> </div><div><div class="name"></div><div class="email"></div></div></li>';
     CO.add(data);
-    if (data.length == 25) ML.state.moreContacts = 1;
+    if (data.length == 25) CO.more = 1;
   });
 };
