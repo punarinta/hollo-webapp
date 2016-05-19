@@ -210,7 +210,7 @@ ML.hidePages = function ()
           CO.show(1);
           break;
         case 'auth/login':
-          ML.showLogin();
+          AU.showLogin();
           break;
         case 'auth/logout':
           ML.api('auth', 'logout', null, function ()

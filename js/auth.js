@@ -15,7 +15,7 @@ AU.loginImap = function ()
 
   if (!user.length || !pass.length)
   {
-    ML.mbox('Both email and password are required');
+    ML.mbox('Input both email and password');
     return;
   }
 
@@ -51,23 +51,30 @@ AU.showLogin = function ()
 };
 
 
+// === INIT ===
+
 (function ()
 {
-  var btnLogin = document.querySelector('#page-login .login');
+  var page = document.getElementById('page-login'),
+      btnLogin = page.querySelector('.login');
 
-  PP.onKey('#page-login .username', 13, document.querySelector('#page-login .password').focus);
-  document.querySelector('#page-login .google').onclick = AU.googleStart;
+  page.querySelector('.username').onkeydown = function (e)
+  {
+    // tab-assist
+    if (e.keyCode == 13) page.querySelector('.password').focus();
+  };
+  
+  page.querySelector('.google').onclick = AU.googleStart;
   btnLogin.onclick = AU.loginImap;
 
   if (localStorage.getItem('imapLogin'))
   {
-    document.querySelector('#page-login .username').value = localStorage.getItem('imapLogin');
+    page.querySelector('.username').value = localStorage.getItem('imapLogin');
   }
 
-  document.querySelector('#page-login .password').onkeyup = function (e)
+  page.querySelector('.password').onkeyup = function (e)
   {
     btnLogin.disabled = !this.value.length;
     if (e.keyCode == 13) AU.loginImap();
   };
-
 })();

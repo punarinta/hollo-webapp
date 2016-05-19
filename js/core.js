@@ -73,8 +73,8 @@ var ML =
   ts: function (ts)
   {
     var td = new Date(), pfx,
-        date = new Date(ts * 1000),
-        year = date.getYear() >= 100 ? date.getYear() - 100 : date.getYear(),
+        date = new Date(ts * 1000), gy = date.getYear(),
+        year = gy >= 100 ? gy - 100 : gy,
         month = '0' + (date.getMonth() + 1),
         day = '0' + date.getDate(),
         hours = '0' + date.getHours(),
@@ -117,7 +117,10 @@ var ML =
   gravaCb: function (json)
   {
     if (!json.entry.length) return;
-    var h = json.entry[0].hash, s = document.getElementById('grava-' + h);
+
+    var h = json.entry[0].hash,
+        s = document.getElementById('grava-' + h);
+
     if (s) s.parentNode.removeChild(s);
 
     if (typeof ML._grava[h] != 'undefined')
@@ -163,19 +166,13 @@ var ML =
   {
     for (var i = 2; i--;)
       history.pushState({route: r, data: d}, '', '/' + r);
+
     history.go(-1)
   }
 };
 
 var PP =
 {
-  onKey: function (x, code, cb)
-  {
-    document.querySelector(x).onkeydown = function (e)
-    {
-      if (e.keyCode == code) cb();
-    };
-  },
   // find first parent of the specified type
   par: function (x, type)
   {
