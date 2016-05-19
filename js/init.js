@@ -136,6 +136,19 @@
     });
   };
 
+  document.querySelector('#snackbar-menu-more .delete').onclick = function ()
+  {
+    // TODO: confirmation box
+    ML.mbox('Not implemented yet')
+    /*ML.api('contact', 'delete', {id: MS.contact.id}, function ()
+    {
+      ML.go('contacts')
+    });*/
+
+    document.querySelector('#snackbar .icon.more').classList.remove('toggled');
+    document.getElementById('snackbar-menu-more').style.display = 'none';
+  };
+
 
   // === hollo'd / muted ===
   var btnHolloed = document.getElementById('show-holloed'),
