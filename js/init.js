@@ -73,9 +73,9 @@
     }
   };
 
-  head.querySelector('.clear').onclick = ML.resetContactFilter;
+  head.querySelector('.clear').onclick = CO.resetFilter;
   
-  /*document.querySelector('#page-chat .filter').onkeyup = function ()
+  /*document.querySelector('#page-msgs .filter').onkeyup = function ()
    {
    var filter = this.value.toUpperCase();
    Array.prototype.forEach.call(document.querySelectorAll('#page-chat li'), function(el)
@@ -146,14 +146,14 @@
     btnHolloed.classList.add('sel');
     btnMuted.classList.remove('sel');
     ML.state.muted = 0;
-    ML.showContacts(0);
+    CO.show(0);
   };
   btnMuted.onclick = function ()
   {
     btnMuted.classList.add('sel');
     btnHolloed.classList.remove('sel');
     ML.state.muted = 1;
-    ML.showContacts(0);
+    CO.show(0);
   };
 
 
@@ -265,7 +265,7 @@
     var ds = PP.par(e.target, 'li').dataset,
         email = ds.email;
 
-    ML.resetContactFilter();
+    CO.resetFilter();
 
     if (email != 'new')
     {
@@ -297,7 +297,7 @@
 
       ML.api('contact', 'find', {pageStart:ML.state.contactsOffset, pageLength:25, filters: [{mode:'muted', value:ML.state.muted}]}, function (data)
       {
-        ML.addContacts(data);
+        CO.add(data);
         if (data.length == 25) ML.state.moreContacts = 1;
       });
     }
@@ -338,7 +338,7 @@
           em.parentNode.removeChild(em);
           that.focus();
         };
-        document.querySelector('#page-chat .emojis').appendChild(em);
+        document.querySelector('#page-msgs .emojis').appendChild(em);
       }
     }
   };
@@ -381,7 +381,7 @@
     }
 
     // try to find last message id
-    var lis = document.querySelectorAll('#page-chat li:last-child');
+    var lis = document.querySelectorAll('#page-msgs li:last-child');
     if (lis.length)
     {
       msgId = lis[0].dataset.id;
@@ -447,14 +447,14 @@
     console.log('Route: ' + e.state.route);
     if (rs[0] == 'chat')
     {
-      ML.showChat(rs[1], e.state.data);
+      MS.show(rs[1], e.state.data);
     }
     else
     {
       switch (r)
       {
         case 'contacts':
-          ML.showContacts(1);
+          CO.show(1);
           break;
         case 'auth/login':
           ML.showLogin();

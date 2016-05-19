@@ -7,6 +7,8 @@
     "js/autosize",
     "js/core",
     "js/main",
+    "js/contacts",
+    "js/messages",
     "js/init"
   ],
   "mods":
@@ -19,7 +21,7 @@
     "css/login",
     "css/snackbar",
     "css/contacts",
-    "css/chat"
+    "css/messages"
   ],
   "dist": "../dist",
   "shell":
