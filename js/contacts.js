@@ -55,8 +55,8 @@ CO.add = function (data)
 
 CO.show = function (full)
 {
-  var ul = document.querySelector('#page-contacts ul'),
-    page = document.getElementById('page-contacts');
+  var page = document.getElementById('page-contacts'),
+      ul = page.querySelector('ul');
 
   if (full)
   {
@@ -72,8 +72,13 @@ CO.show = function (full)
   ML.api('contact', 'find', {pageStart:CO.offset, pageLength:25, filters: [{mode:'muted', value:ML.state.muted}]}, function (data)
   {
     // that's a first load, so keep it clean
-    ul.innerHTML = '<li data-email="new" class="new"><div class="ava"> <div class="new img unread"></div> </div><div><div class="name"></div><div class="email"></div></div></li>';
+    ul.innerHTML = '<li data-email="new" class="new"><div class="ava"><div class="new img unread"></div></div><div><div class="name"></div><div class="email"></div></div></li>';
+
     CO.add(data);
-    if (data.length == 25) CO.more = 1;
+
+    if (data.length == 25)
+    {
+      CO.more = 1;
+    }
   });
 };
