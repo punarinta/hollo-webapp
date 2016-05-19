@@ -45,6 +45,12 @@ MS.add = function (data, pos)
 
         if (file.type.indexOf('image/') != -1)
         {
+          if (file.data)
+          {
+            filesHtml += '<div id="img-file-' + file.extId + '" data-id="' + file.extId + '" style="background:url(' + file.data + ')"></div>';
+            continue;
+          }
+
           (function (f)
           {
             ML.api('file', 'getFileUrl', {extId:file.extId}, function (url)
@@ -315,14 +321,22 @@ MS.show = function (email, id)
       from: AU.user,
       ts: new Date().getTime() / 1000,
       id: 0, // ?,
-      files: null
+      files: []
     };
 
     if (MS._upl.length)
     {
       for (var i in MS._upl)
       {
-        console.log('File attached: ' + MS._upl[i]);
+        m.files.push(
+        {
+          name: '—',
+          type: 'image/png',
+          size: 0,
+          extId: 'foobar',
+          data: MS._upl[i]
+        });
+        // console.log('File attached: ' + MS._upl[i]);
       }
     }
 
@@ -331,6 +345,13 @@ MS.show = function (email, id)
     ML.api('message', 'send', {body: msg, messageId:msgId, subject: subj}, function (json)
     {
       console.log('result:', json);
+
+      // reset composer
+      MS._upl = [];
+      cmpText.value = '';
+      document.getElementById('uploaded').innerHTML = '';
+      cmpText.dispatchEvent(new Event('autosize:update'));
+      cmpText.dispatchEvent(new Event('autosize:resized'));
     });
   };
 
