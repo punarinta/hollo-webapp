@@ -65,7 +65,9 @@ CO.show = function (full)
     page.style.display = 'block';
   }
 
-  ML.api('contact', 'find', {pageStart:0, pageLength:25, filters: [{mode:'muted', value:ML.state.muted}]}, function (data)
+  CO.offset = 0;
+
+  ML.api('contact', 'find', {pageStart:CO.offset, pageLength:25, filters: [{mode:'muted', value:ML.state.muted}]}, function (data)
   {
     // that's a first load, so keep it clean
     ul.innerHTML = '<li data-email="new" class="new"><div class="ava"><div class="new img unread"></div></div><div><div class="name"></div><div class="email"></div></div></li>';
