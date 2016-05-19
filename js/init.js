@@ -87,7 +87,10 @@
    };*/
 
   // === SNACKBAR ===
-  Array.prototype.forEach.call(document.querySelectorAll('#snackbar .icon'), function(el)
+  var snackbar = document.getElementById('snackbar'),
+      snackdrop = document.getElementById('snackbar-menu-more');
+
+  Array.prototype.forEach.call(snackbar.querySelectorAll('.icon'), function(el)
   {
     el.onclick = function ()
     {
@@ -100,7 +103,7 @@
       var toggled = this.classList.contains('toggled');
 
       // close all others
-      Array.prototype.forEach.call(document.querySelectorAll('#snackbar .icon'), function(el)
+      Array.prototype.forEach.call(snackbar.querySelectorAll('.icon'), function(el)
       {
         el.classList.remove('toggled');
       });
@@ -117,7 +120,7 @@
     }
   });
 
-  document.querySelector('#snackbar-menu-more .mute').onclick = function ()
+  snackdrop.querySelector('.mute').onclick = function ()
   {
     var t = this;
     ML.api('contact', 'update', {id:MS.contact.id, muted:!MS.contact.muted}, function ()
@@ -127,26 +130,26 @@
     });
   };
 
-  document.querySelector('#snackbar-menu-more .unread').onclick = function ()
+  snackdrop.querySelector('.unread').onclick = function ()
   {
     ML.api('contact', 'update', {id:MS.contact.id, read:0}, function ()
     {
-      document.querySelector('#snackbar .icon.more').classList.remove('toggled');
-      document.getElementById('snackbar-menu-more').style.display = 'none';
+      snackbar.querySelector('.icon.more').classList.remove('toggled');
+      snackdrop.style.display = 'none';
     });
   };
 
-  document.querySelector('#snackbar-menu-more .delete').onclick = function ()
+  snackdrop.querySelector('.delete').onclick = function ()
   {
     // TODO: confirmation box
-    ML.mbox('Not implemented yet')
+    ML.mbox('Not implemented yet');
     /*ML.api('contact', 'delete', {id: MS.contact.id}, function ()
     {
       ML.go('contacts')
     });*/
 
-    document.querySelector('#snackbar .icon.more').classList.remove('toggled');
-    document.getElementById('snackbar-menu-more').style.display = 'none';
+    snackbar.querySelector('.icon.more').classList.remove('toggled');
+    snackdrop.style.display = 'none';
   };
 
 
