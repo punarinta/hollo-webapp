@@ -24,6 +24,7 @@ ML.hidePages = function ()
     switch (cmd.slice(-1).pop())
     {
       case 'LOGOUT':
+        this.value = '';
         ML.go('auth/logout');
         break;
 
@@ -32,6 +33,7 @@ ML.hidePages = function ()
         break;
 
       case 'INCARNATE':
+        this.value = '';
         ML.api('auth', 'incarnate', {userId:cmd[0]}, function (data)
         {
           AU.sessionId = data.sessionId;
