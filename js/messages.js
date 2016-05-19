@@ -164,16 +164,34 @@ MS.show = function (email, id)
     var fileList = document.querySelector('#snackbar-menu-files ul');
     fileList.innerHTML = 'Loading ...';
 
-    ML.api('file', 'findByEmail', {email: email, withImageUrl: false /*true*/}, function (files)
+    ML.api('file', 'findByEmail', {email: email, withImageUrl: true}, function (files)
     {
-      files = [1,2,3,4,5,6,7];
-      var url, html = '';
+      var url, html = '', im, div, mime;
+
       for (var i in files)
       {
-        //  if (files[i].type.indexOf('image/') != -1) url = files[i].url;
-        /*  else*/ url = 'https://ssl.webpack.de/lorempixel.com/300/300/?' + Math.random();
+        if (files[i].type.indexOf('image/') != -1)
+        {
+          url = files[i].url;
+          
+          // preload
+          im = new Image();
+          im.src = url;
+          
+          div = '<div class="img" style="background-image:url('+ url + ')"></div>'
+        }
+        else
+        {
+          var ncc = parseInt(md5(files[i].type).substr(0, 6), 16),
+              b = ncc & 0xFF, g = (ncc >> 8) & 0xFF, r = ncc >> 16;
 
-        html += '<li><div class="img" style="background-image:url('+ url + ')"></div>'
+          ncc = [(r >> 1) + 96, (g >> 1) + 96, (b >> 1) + 96].join(',');
+
+          mime = files[i].type.split('/')[1];
+          div = '<div class="img" style="background:rgb(' + ncc + ')">' + mime + '</div>'
+        }
+
+        html += '<li>' + div
              + '<div class="bar"><div></div><div></div>'
              + '</div></li>';
       }
