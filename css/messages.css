@@ -11,6 +11,7 @@
 }
 #page-msgs ul li .files {display: flex; margin-top: 10px}
 #page-msgs ul li .files > div { margin-right: 3px }
+#page-msgs ul li .files > div.full { width: 80vw; height: 50vw }
 #page-msgs ul li .foot .ts {float:left; margin:6px 0 0 25px; font-size: 10px;color: rgba(0,0,0,.3)}
 #page-msgs ul li .foot .ava
 {
@@ -60,4 +61,4 @@
 
 #upload {opacity: 0;cursor: pointer; line-height: 34px;}
 #uploaded { position: fixed; left: 4px; bottom: 0; width: 100vw; background: #fff; white-space: nowrap; display: flex}
-#uploaded div {margin: 2px;}
+#uploaded div {margin: 3px 2px}

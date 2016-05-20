@@ -47,7 +47,7 @@ MS.add = function (data, pos)
         {
           if (file.data)
           {
-            filesHtml += '<div class="file-icon" id="img-file-' + file.extId + '" data-id="' + file.extId + '" style="background:url(' + file.data + ')"></div>';
+            filesHtml += '<div class="file-icon ' + (data[i].files.length == 1 ? ' full' : '') + '" id="img-file-' + file.extId + '" data-id="' + file.extId + '" style="background:url(' + file.data + ')"></div>';
             continue;
           }
 
