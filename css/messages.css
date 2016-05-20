@@ -10,11 +10,7 @@
     background: url('/gfx/color/subj.svg') no-repeat; padding: 2px 0 0 24px;
 }
 #page-msgs ul li .files {display: flex; margin-top: 10px}
-#page-msgs ul li .files > div
-{
-    width: 72px; height: 72px; text-transform: uppercase; margin-right: 3px; color: #fff; border-radius: 2px;
-    font: 15px sans-serif; display:flex;justify-content:center;align-items:center; cursor: pointer; background-size: cover !important;
-}
+#page-msgs ul li .files > div { margin-right: 3px }
 #page-msgs ul li .foot .ts {float:left; margin:6px 0 0 25px; font-size: 10px;color: rgba(0,0,0,.3)}
 #page-msgs ul li .foot .ava
 {
@@ -63,5 +59,5 @@
 #composer.focused .subjects.opened {display: block}
 
 #upload {opacity: 0;cursor: pointer; line-height: 34px;}
-#uploaded {position: fixed; left: 4px; bottom: 0; width: 100vw; background: #fff; white-space: nowrap}
-#uploaded img {height: 72px; border-radius: 2px; margin: 2px}
+#uploaded { position: fixed; left: 4px; bottom: 0; width: 100vw; background: #fff; white-space: nowrap; display: flex}
+#uploaded div {margin: 2px;}

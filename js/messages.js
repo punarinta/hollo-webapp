@@ -43,11 +43,11 @@ MS.add = function (data, pos)
       {
         var file = data[i].files[fi];
 
-        if (file.type.indexOf('image/') != -1)
+        if (file.type.match('image.*'))
         {
           if (file.data)
           {
-            filesHtml += '<div id="img-file-' + file.extId + '" data-id="' + file.extId + '" style="background:url(' + file.data + ')"></div>';
+            filesHtml += '<div class="file-icon" id="img-file-' + file.extId + '" data-id="' + file.extId + '" style="background:url(' + file.data + ')"></div>';
             continue;
           }
 
@@ -62,7 +62,8 @@ MS.add = function (data, pos)
           })(file);
         }
 
-        filesHtml += '<div id="img-file-' + file.extId + '" data-id="' + file.extId + '" style="background:' + ML.colorHash(file.type) + '">' + file.type.split('/')[1] + '</div>';
+        filesHtml += '<div class="file-icon" id="img-file-' + file.extId + '" data-id="' + file.extId +
+          '" style="background:' + ML.colorHash(file.type) + '">' + file.type.split('/')[1] + '</div>';
       }
     }
 
@@ -200,7 +201,7 @@ MS.show = function (email, id)
 
       for (var i in files)
       {
-        if (files[i].type.indexOf('image/') != -1)
+        if (files[i].type.match('image.*'))
         {
           url = files[i].url;
           
@@ -367,11 +368,6 @@ MS.show = function (email, id)
 
     for (var i = 0, f; f = files[i]; i++)
     {
-      // Only process image files.
-      if (!f.type.match('image.*'))
-      {
-        continue;
-      }
       var reader = new FileReader();
 
       // Closure to capture the file information.
@@ -379,13 +375,24 @@ MS.show = function (email, id)
       {
         return function (e)
         {
-          // Render thumbnail.
-          var span = document.createElement('span');
-          span.innerHTML = '<img src="' + e.target.result + '" title="' + encodeURI(f.name) + '"/>';
-
-          document.getElementById('uploaded').insertBefore(span, null);
-
           console.log('File read:', f, e);
+
+          // Render thumbnail.
+          var div = document.createElement('div');
+          div.classList.add('file-icon');
+
+          if (f.type.match('image.*'))
+          {
+            div.style.background = 'url(' + e.target.result + ')'
+          }
+          else
+          {
+            div.style.background = ML.colorHash(f.type);
+            div.innerHTML = f.type.split('/')[1]
+          }
+
+          document.getElementById('uploaded').insertBefore(div, null);
+
           MS._upl.push(
           {
             name: f.name,

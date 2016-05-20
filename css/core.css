@@ -23,6 +23,12 @@ body::-webkit-scrollbar {display: none}
 .page {display: none; padding: 5px}
 .page * {outline:0}
 
+.file-icon
+{
+    height: 72px; width: 72px; border-radius: 2px; background-size: cover !important; text-transform: uppercase;
+    font: 15px sans-serif; display:flex;justify-content:center;align-items:center; cursor: pointer; color: #fff;
+}
+
 #page-loader {background: #4b54ff;display:flex;justify-content:center;align-items:center;height: 100vh;flex-direction: column}
 
 #mbox { top:0;display: none;z-index: 100;width: 100vw;height: 100vh;background: rgba(0,0,0,.5);position: fixed;  }
