@@ -67,7 +67,7 @@ MS.add = function (data, pos)
       }
     }
 
-    subj = data[i].subject.charAt(0).toUpperCase() + data[i].subject.slice(1);
+    subj = data[i].subject;
 
     if (!subj.length) subj = '—';
 
