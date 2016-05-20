@@ -361,6 +361,25 @@ MS.show = function (email, id)
     cmpText.focus();
   };
 
+  document.getElementById('uploaded').onclick = function (e)
+  {
+    if (!e.target.classList.contains('file-icon')) return;
+
+    for (var i in MS._upl)
+    {
+      if (MS._upl[i].hash == e.target.dataset.hash)
+      {
+        ML.demo(MS._upl[i].data);
+        break;
+      }
+    }
+  };
+  
+  document.querySelector('#demo .close').onclick = function ()
+  {
+    ML.demo(0)
+  };
+
   cmp.querySelector('#upload').onchange = function (e)
   {
     var files = e.target.files;
@@ -374,15 +393,17 @@ MS.show = function (email, id)
       {
         return function (e)
         {
+          var b64 = e.target.result;
           console.log('File read:', f, e);
 
           // Render thumbnail.
           var div = document.createElement('div');
           div.classList.add('file-icon');
+          div.dataset.hash = md5(b64);
 
           if (f.type.match('image.*'))
           {
-            div.style.background = 'url(' + e.target.result + ')'
+            div.style.background = 'url(' + b64 + ')'
           }
           else
           {
@@ -397,7 +418,8 @@ MS.show = function (email, id)
             name: f.name,
             mime: f.type,
             size: f.size,
-            data: e.target.result
+            data: b64,
+            hash: md5(b64)
           });
           cmpText.dispatchEvent(new Event('autosize:update'));
           cmpText.dispatchEvent(new Event('autosize:resized'));

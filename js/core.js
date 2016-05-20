@@ -169,6 +169,13 @@ var ML =
     ML._mbox = cb || function () {};
   },
   
+  demo: function (data, mode)
+  {
+    var box = document.getElementById('demo');
+    box.style.display = data ? 'flex' : 'none';
+    box.querySelector('.img').style.backgroundImage = 'url(' + data + ')';
+  },
+  
   go: function (r, d)
   {
     for (var i = 2; i--;)
