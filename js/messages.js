@@ -62,8 +62,10 @@ MS.add = function (data, pos)
           })(file);
         }
 
-        filesHtml += '<div class="file-icon" id="img-file-' + file.extId + '" data-id="' + file.extId +
-          '" style="background:' + ML.colorHash(file.type) + '">' + file.type.split('/')[1] + '</div>';
+        filesHtml += '<div class="file-icon" id="img-file-'
+          + file.extId + '" data-id="' + file.extId
+          + '" style="background:' + ML.colorHash(file.type)
+          + '">' + file.type.split('/')[1] + '</div>';
       }
     }
 
@@ -71,12 +73,9 @@ MS.add = function (data, pos)
 
     if (!subj.length) subj = '—';
 
-    var nc = sName.split(' '),
-      ncc = parseInt(md5(data[i].from.email).substr(0, 6), 16),
-      b = ncc & 0xFF, g = (ncc >> 8) & 0xFF, r = ncc >> 16;
+    var nc = sName.split(' ');
 
     nc = nc.length == 1 ? nc[0].charAt(0) : (nc[0].charAt(0) + nc[1].charAt(0));
-    ncc = [(r >> 1) + 96, (g >> 1) + 96, (b >> 1) + 96].join(',');
 
     html +=
       '<li data-id="' + data[i].id + '" class="' + whose + '">' +
@@ -86,7 +85,7 @@ MS.add = function (data, pos)
       '<div class="msg">' + body + '</div>' +
       (filesHtml ? '<div class="files">' + filesHtml + '</div>': '') +
       '</div>' +
-      '<div class="foot"><div class="ava" style="background:rgb(' + ncc + ')">' + nc + '</div><div class="ts">' + ML.ts(data[i].ts) + '</div></div>' +
+      '<div class="foot"><div class="ava" style="background:' + ML.colorHash(data[i].from.email) + '">' + nc + '</div><div class="ts">' + ML.ts(data[i].ts) + '</div></div>' +
       '</div>' +
       '</li>';
   }
