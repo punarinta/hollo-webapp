@@ -155,8 +155,15 @@ var ML =
   
   mbox: function (msg, mode, cb)
   {
+    /*
+    Modes:
+    0 - OK
+    1 - OK, Cancel
+     */
+    
     var m = document.getElementById('mbox');
-    m.querySelector('.btn.ok').style.display = 'block';
+    m.querySelector('.ok').style.display = 'block';
+    m.querySelector('.cancel').style.display = mode ? 'block' : 'none';
     m.style.display = 'flex';
     m.querySelector('.body').innerHTML = msg;
     ML._mbox = cb || function () {};

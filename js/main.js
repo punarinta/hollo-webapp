@@ -141,12 +141,20 @@ ML.hidePages = function ()
 
   snackdrop.querySelector('.delete').onclick = function ()
   {
-    // TODO: confirmation box
-    ML.mbox('Not implemented yet');
-    /*ML.api('contact', 'delete', {id: MS.contact.id}, function ()
-     {
-     ML.go('contacts')
-     });*/
+    ML.mbox('Are you sure?', 1, function (code)
+    {
+      if (code)
+      {
+        ML.mbox('feature disabled until release');
+
+        // TODO: uncomment before release
+        
+        /*ML.api('contact', 'delete', {id: MS.contact.id}, function ()
+        {
+          ML.go('contacts')
+        });*/
+      }
+    });
 
     snackbar.querySelector('.icon.more').classList.remove('toggled');
     snackdrop.style.display = 'none';
@@ -188,11 +196,15 @@ ML.hidePages = function ()
 
   // === MESSAGE BOX ===
   var mbox = document.getElementById('mbox');
-  mbox.querySelector('.btn.ok').onclick = function ()
+
+  Array.prototype.forEach.call(mbox.querySelectorAll('.btn'), function (el)
   {
-    mbox.style.display = 'none';
-    ML._mbox(0);
-  };
+    el.onclick = function ()
+    {
+      mbox.style.display = 'none';
+      ML._mbox(el.dataset.code);
+    }
+  });
 
 
   // === ROUTER ===
