@@ -326,17 +326,17 @@ MS.show = function (email, id)
 
     if (MS._upl.length)
     {
-      for (var i in MS._upl)
+      for (var i = 0, u; u = MS._upl[i]; i++)
       {
         m.files.push(
         {
-          name: '—',
-          type: 'image/png',
-          size: 0,
+          name: u.name,
+          type: u.mime,
+          size: u.size,
           extId: 'foobar',
-          data: MS._upl[i]
+          data: u.data
         });
-        // console.log('File attached: ' + MS._upl[i]);
+        console.log('File attached: ', MS._upl[i]);
       }
     }
 
@@ -386,7 +386,13 @@ MS.show = function (email, id)
           document.getElementById('uploaded').insertBefore(span, null);
 
           console.log('File read:', f, e);
-          MS._upl.push(e.target.result);
+          MS._upl.push(
+          {
+            name: f.name,
+            mime: f.type,
+            size: f.size,
+            data: e.target.result
+          });
           cmpText.dispatchEvent(new Event('autosize:update'));
           cmpText.dispatchEvent(new Event('autosize:resized'));
         };
