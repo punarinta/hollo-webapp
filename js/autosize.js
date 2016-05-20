@@ -31,7 +31,8 @@
 
 			if (style.boxSizing === 'content-box')
 			{
-				heightOffset = -(parseFloat(style.paddingTop) + parseFloat(style.paddingBottom));
+        // NB the minus sign
+				heightOffset = -parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
 			}
 			else
 			{
@@ -82,7 +83,8 @@
 
 			var endHeight = ta.scrollHeight + heightOffset;
 
-			if (ta.scrollHeight === 0) {
+			if (ta.scrollHeight === 0)
+			{
 				// If the scrollHeight is 0, then the element probably has display:none or is detached from the DOM.
 				ta.style.height = originalHeight;
 				return;
@@ -98,59 +100,50 @@
 			document.body.scrollTop = bodyTop;
 		}
 
-		function update() {
+		function update()
+    {
 			var startHeight = ta.style.height;
 
 			resize();
 
 			var style = window.getComputedStyle(ta, null);
 
-			if (style.height !== ta.style.height) {
-				if (overflowY !== 'visible') {
+			if (style.height !== ta.style.height)
+      {
+				if (overflowY !== 'visible')
+        {
 					changeOverflow('visible');
 				}
-			} else {
-				if (overflowY !== 'hidden') {
+			}
+      else
+      {
+				if (overflowY !== 'hidden')
+        {
 					changeOverflow('hidden');
 				}
 			}
 
-			if (startHeight !== ta.style.height) {
+			if (startHeight !== ta.style.height)
+      {
 				var evt = new Event('autosize:resized');
 				ta.dispatchEvent(evt);
 			}
 		}
 
-		var pageResize = function pageResize() {
-			if (ta.clientWidth !== clientWidth) {
+		var pageResize = function pageResize()
+    {
+			if (ta.clientWidth !== clientWidth)
+      {
 				update();
 			}
 		};
-
-		var destroy = (function (style) {
-			window.removeEventListener('resize', pageResize, false);
-			ta.removeEventListener('input', update, false);
-			ta.removeEventListener('keyup', update, false);
-			ta.removeEventListener('autosize:destroy', destroy, false);
-			ta.removeEventListener('autosize:update', update, false);
-
-			Object.keys(style).forEach(function (key) {
-				ta.style[key] = style[key];
-			});
-		}).bind(ta, {
-			height: ta.style.height,
-			resize: ta.style.resize,
-			overflowY: ta.style.overflowY,
-			overflowX: ta.style.overflowX,
-			wordWrap: ta.style.wordWrap });
-
-		ta.addEventListener('autosize:destroy', destroy, false);
 
 		window.addEventListener('resize', pageResize, false);
 		ta.addEventListener('input', update, false);
 		ta.addEventListener('autosize:update', update, false);
 
-		if (setOverflowX) {
+		if (setOverflowX)
+    {
 			ta.style.overflowX = 'hidden';
 			ta.style.wordWrap = 'break-word';
 		}
@@ -158,13 +151,8 @@
 		init();
 	}
 
-	function destroy(ta) {
-		if (!(ta && ta.nodeName && ta.nodeName === 'TEXTAREA')) return;
-		var evt = new Event('autosize:destroy');
-		ta.dispatchEvent(evt);
-	}
-
-	function update(ta) {
+	function update(ta)
+  {
 		if (!(ta && ta.nodeName && ta.nodeName === 'TEXTAREA')) return;
 		var evt = new Event('autosize:update');
 		ta.dispatchEvent(evt);
