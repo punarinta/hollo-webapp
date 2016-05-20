@@ -152,15 +152,15 @@ CO.show = function (full)
     var ds = PP.par(e.target, 'li').dataset,
       email = ds.email;
 
-    CO.resetFilter();
-
     if (email != 'new')
     {
+      CO.resetFilter();
       ML.go('chat/' + email, ds.id);
     }
     else
     {
       email = document.querySelector('#page-contacts .filter').value;
+      CO.resetFilter();
 
       ML.api('contact', 'add', {email:email}, function (data)
       {
