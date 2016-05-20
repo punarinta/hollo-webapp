@@ -361,6 +361,9 @@ MS.show = function (email, id)
     cmpText.focus();
   };
 
+
+  // === FILE DEMO BOX ===
+
   document.getElementById('uploaded').onclick = function (e)
   {
     if (!e.target.classList.contains('file-icon')) return;
@@ -374,11 +377,21 @@ MS.show = function (email, id)
       }
     }
   };
-  
+
+  document.querySelector('#page-msgs ul').onclick = function (e)
+  {
+    if (!e.target.classList.contains('file-icon')) return;
+
+    ML.mbox('To see a demo of file preview attach a file in the message composer below and click on a file icon there.')
+  };
+
   document.querySelector('#demo .close').onclick = function ()
   {
     ML.demo(0)
   };
+
+
+  // === FILE UPLOADER ===
 
   cmp.querySelector('#upload').onchange = function (e)
   {
