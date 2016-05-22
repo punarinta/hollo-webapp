@@ -21,7 +21,7 @@ MS.add = function (data, pos)
 
     var filesHtml = 0,
       body = data[i].body,
-      whose = data[i].from.email == AU.user.email ? 'mine' : 'yours',
+      whose = data[i].from.email == AU.user.email ? 'yours' : 'mine',
       sName = data[i].from.name ? data[i].from.name : data[i].from.email;
 
     tags = tags.concat(data[i].subject.split(' '));
@@ -182,6 +182,11 @@ MS.show = function (email, id)
 
     document.querySelector('#snackbar .name').innerHTML = name;
     document.querySelector('#snackbar-menu-more .mute').innerText = MS.contact.muted ? 'Unmute' : 'Mute';
+
+    // reset subject lists
+    MS.subjects = [];
+    document.querySelector('#snackbar-menu-tags ul').innerHTML = '';
+    page.querySelector('.subjects').innerHTML = '';
 
     ul.innerHTML = '';
     MS.add(data.messages, 'top');
@@ -411,7 +416,7 @@ MS.show = function (email, id)
 
           // Render thumbnail.
           var div = document.createElement('div');
-          div.classList.add('file-icon');
+          div.className = 'ndf file-icon';
           div.dataset.hash = md5(b64);
 
           if (f.type.match('image.*'))

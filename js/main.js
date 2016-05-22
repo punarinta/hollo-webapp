@@ -6,6 +6,7 @@ ML.hidePages = function ()
   {
     el.style.display = 'none'
   });
+  ML.demo(0)
 };
 
 // === INIT ===
@@ -232,6 +233,8 @@ ML.hidePages = function ()
             ML.go('auth/login');
           });
           break;
+        case 'demo':
+          ML.go('contacts');
       }
     }
   };
