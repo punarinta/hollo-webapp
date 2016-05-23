@@ -203,7 +203,7 @@ ML.hidePages = function ()
     el.onclick = function ()
     {
       mbox.style.display = 'none';
-      ML._mbox(el.dataset.code);
+      ML._mbox(el.dataset.code - 0);
     }
   });
 
