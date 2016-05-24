@@ -377,7 +377,7 @@ MS.show = function (email, id)
     {
       if (MS._upl[i].hash == e.target.dataset.hash)
       {
-        ML.demo(MS._upl[i].data);
+        ML.demo(MS._upl[i].data, 0, MS._upl[i].mime);
         break;
       }
     }

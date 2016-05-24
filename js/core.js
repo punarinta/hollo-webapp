@@ -169,8 +169,9 @@ var ML =
     ML._mbox = cb || function () {};
   },
   
-  demo: function (data, mode)
+  demo: function (data, mode, mime)
   {
+    if (mime && mime.split('/')[0] != 'image') return;
     var box = document.getElementById('demo');
     box.style.display = data ? 'flex' : 'none';
     box.querySelector('.img').style.backgroundImage = 'url(' + data + ')';
