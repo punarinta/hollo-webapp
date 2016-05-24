@@ -39,7 +39,7 @@ body::-webkit-scrollbar {display: none}
 
 #demo { top:0;display: none;z-index: 100;width: 100vw;height: 100vh;background: rgba(0,0,0,.5);position: fixed }
 #demo > div { background: rgba(0,0,0,.3); display:flex; flex-direction: column; margin: 5%; width:90%;align-self: center}
-#demo .img {width:100%;background-size: contain; height: 50vh;background: no-repeat center}
+#demo .img {width:100%;background-size: contain !important; height: 50vh;background: no-repeat center}
 #demo .head {display: flex; justify-content: flex-end;margin: 5px}
 #demo .close {background: url('/gfx/white/clear.svg') no-repeat; width:20px; height: 20px; cursor: pointer}
 
