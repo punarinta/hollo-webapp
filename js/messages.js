@@ -247,25 +247,35 @@ MS.show = function (email, id)
 
     if (/[^a-zA-Z0-9-_]/.test(this.value.slice(-1)) && e.keyCode > 31)
     {
-      var that = this, w = this.value.trim().split(' ').slice(-1)[0].toLowerCase().replace(/[_\W]+/g, '');
+      var that = this, i = 0, w = this.value.trim().split(' ').slice(-1)[0].toLowerCase().replace(/[_\W]+/g, '');
       if (typeof EMJ[w] != 'undefined')
       {
-        var em = document.createElement('div');
-        em.innerText = EMJ[w];
-        em.dataset.w = w;
-        setTimeout(function(o)
+        for (; i < EMJ[w].length; i++)
         {
-          if (o.parentNode) o.parentNode.removeChild(o);
-        }, 5000, em);
-        em.onclick = function ()
-        {
-          // replace the last occurrence of a word with an emoji
-          var pat = new RegExp('(\\b' + this.dataset.w + '\\b)(?!.*\\b\\1\\b)', 'i');
-          that.value = that.value.replace(pat, this.innerText);
-          em.parentNode.removeChild(em);
-          that.focus();
-        };
-        document.querySelector('#page-msgs .emojis').appendChild(em);
+          var em = document.createElement('div');
+          em.innerText = EMJ[w][i];
+          em.dataset.w = w;
+          em.classList.add('emj-' + w);
+          setTimeout(function(o)
+          {
+            if (o.parentNode) o.parentNode.removeChild(o);
+          }, 5000, em);
+          (function(em)
+          {
+            em.onclick = function ()
+            {
+              // replace the last occurrence of a word with an emoji
+              var pat = new RegExp('(\\b' + this.dataset.w + '\\b)(?!.*\\b\\1\\b)', 'i');
+              that.value = that.value.replace(pat, this.innerText);
+              Array.prototype.forEach.call(document.querySelectorAll('.emj-' + w), function(el)
+              {
+                el.parentNode.removeChild(el);
+              });
+              that.focus();
+            };
+          })(em);
+          document.querySelector('#page-msgs .emojis').appendChild(em);
+        }
       }
     }
   };
