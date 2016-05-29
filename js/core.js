@@ -33,19 +33,19 @@ var ML =
         }
         else
         {
-          console.log('Status: ', this.status);
+          console.log('Status:', this.status);
           if (this.status != 401) ML.mbox(json.errMsg);
         }
       }
       else
       {
-        console.log('Malformed server response:', r);
+        console.log('Not JSON:', r);
         ML.mbox(r);
       }
     };
     r.onerror = function(e)
     {
-      console.log('Cannot connect to server:', e.error);
+      console.log('onerror()', e.error);
     };
 
     if (data && typeof data.pageStart != 'undefined')

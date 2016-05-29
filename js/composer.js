@@ -131,7 +131,7 @@
 
     ML.api('message', 'send', {body: msg, messageId:msgId, subject: subj}, function (json)
     {
-      console.log('result:', json);
+      console.log('send()', json);
 
       // reset composer
       MS._upl = [];

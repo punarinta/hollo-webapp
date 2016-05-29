@@ -225,7 +225,9 @@ ML.hidePages = function ()
   window.onpopstate = function (e)
   {
     var r = e.state.route, rs = r.split('/');
-    console.log('Route: ' + e.state.route);
+
+    // console.log('Route: ' + e.state.route);
+
     if (rs[0] == 'chat')
     {
       MS.show(rs[1], e.state.data);
