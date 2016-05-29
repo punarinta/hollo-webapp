@@ -223,7 +223,7 @@ MS.show = function (email, id)
           im = new Image();
           im.src = url;
           
-          div = '<div class="img" style="background-image:url('+ url + ')"></div>'
+          div = '<div class="img" data-url="' + url + '" data-mime="' + files[i].type + '" style="background-image:url(' + url + ')"></div>'
         }
         else
         {

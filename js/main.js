@@ -194,6 +194,13 @@ ML.hidePages = function ()
   filesList.addEventListener('touchmove', scrollListener);
   filesList.addEventListener('wheel', scrollListener);
 
+  filesList.onclick = function (e)
+  {
+    if (!e.target.classList.contains('img')) return;
+
+    ML.demo(e.target.dataset.url, e.target.dataset.mime)
+  };
+
 
   // === MESSAGE BOX ===
   var mbox = document.getElementById('mbox');
