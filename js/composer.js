@@ -32,7 +32,7 @@
           }, 5000, em);
           (function(em)
           {
-            em.onclick = function ()
+            em.onclick = function (e)
             {
               // replace the last occurrence of a word with an emoji
               var pat = new RegExp('(\\b' + this.dataset.w + '\\b)(?!.*\\b\\1\\b)', 'i');
@@ -42,6 +42,7 @@
                 el.parentNode.removeChild(el);
               });
               that.focus();
+              e.stopPropagation();
             };
           })(em);
           document.querySelector('#page-msgs .emojis').appendChild(em);
