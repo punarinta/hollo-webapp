@@ -223,7 +223,7 @@ MS.show = function (email, id)
         html += '<li>' + div + '<div class="bar"><div></div><div></div></div></li>'
       }
 
-      fileList.innerHTML = html;
+      fileList.innerHTML = html.length ? html : 'No files in this chat';
     })
   }
 };
