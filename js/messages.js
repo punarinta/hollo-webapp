@@ -21,7 +21,8 @@ MS.add = function (data, pos)
 
     var filesHtml = 0,
       body = data[i].body,
-      whose = data[i].from.email == AU.user.email ? 'yours' : 'mine',
+      mine = data[i].from.email == AU.user.email,
+      whose = mine ? 'mine' : 'yours',
       sName = data[i].from.name ? data[i].from.name : data[i].from.email;
 
     tags = tags.concat(data[i].subject.split(' '));
@@ -83,9 +84,17 @@ MS.add = function (data, pos)
 
     if (!subj.length) subj = '—';
 
-    var nc = sName.split(' ');
+    var nc = sName.split(' '), ava = ML.colorHash(data[i].from.email);
 
-    nc = nc.length == 1 ? nc[0].charAt(0) : (nc[0].charAt(0) + nc[1].charAt(0));
+    if (mine)
+    {
+      ava = AU.user.ava ? 'url(\'' + AU.user.ava + '\')' : ava;
+      nc = '';
+    }
+    else
+    {
+      nc = nc.length == 1 ? nc[0].charAt(0) : (nc[0].charAt(0) + nc[1].charAt(0));
+    }
 
     html +=
       '<li data-id="' + data[i].id + '" class="' + whose + '">' +
@@ -95,7 +104,7 @@ MS.add = function (data, pos)
       '<div class="msg">' + body + '</div>' +
       (filesHtml ? '<div class="files">' + filesHtml + '</div>': '') +
       '</div>' +
-      '<div class="foot"><div class="ava" style="background:' + ML.colorHash(data[i].from.email) + '">' + nc + '</div><div class="ts">' + ML.ts(data[i].ts) + '</div></div>' +
+      '<div class="foot"><div class="ava' + (mine ? ' full' : '') + '" style="background:' + ava + '">' + nc + '</div><div class="ts">' + ML.ts(data[i].ts) + '</div></div>' +
       '</div>' +
       '</li>';
   }

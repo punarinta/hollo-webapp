@@ -18,10 +18,11 @@
     float:left; position: relative;width: 32px; height: 32px; border-radius: 50%; top:-9px; left:16px;
     display:flex;justify-content:center;align-items:center;color:#fff;font:15px sans-serif
 }
-#page-msgs ul li.yours .foot .ava {float:right; left:-16px}
-#page-msgs ul li.yours .foot .ts {float:right; margin-right: 25px}
-#page-msgs ul li.yours > div {float: right; margin-left: 15px}
-#page-msgs ul li.mine > div {float: left; margin-right: 15px}
+#page-msgs ul li.yours .foot .ava {float:left; left:16px}
+#page-msgs ul li.mine .foot .ava.full {background-size: cover !important;}
+#page-msgs ul li.yours .foot .ts {float:left; margin-right: 25px}
+#page-msgs ul li.mine > div {float: right; margin-left: 15px}
+#page-msgs ul li.yours > div {float: left; margin-right: 15px}
 
 #composer .emojis {position: fixed; right:5px; font-size: 48px}
 #composer .emojis div {color:#5634ff; cursor: pointer}
