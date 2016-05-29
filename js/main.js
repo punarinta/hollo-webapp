@@ -215,7 +215,7 @@ ML.hidePages = function ()
   });
 
   // === DEMO BOX ===
-  document.querySelector('#demo .close').onclick = function ()
+  document.getElementById('demo').querySelector('.close').onclick = function ()
   {
     ML.demo(0)
   };

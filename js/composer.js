@@ -159,10 +159,18 @@
     {
       if (MS._upl[i].hash == e.target.dataset.hash)
       {
-        ML.demo(MS._upl[i].data, MS._upl[i].mime);
+        ML.state.currentDemo = MS._upl[i].hash;
+        ML.demo(MS._upl[i].data, MS._upl[i].mime, 1);
         break;
       }
     }
+  };
+
+  document.querySelector('#demo .delete').onclick = function ()
+  {
+    var el = cmp.querySelector('.hash-' + ML.state.currentDemo);
+    el.parentNode.removeChild(el);
+    ML.demo(0);
   };
 
 
@@ -186,7 +194,7 @@
 
           // Render thumbnail.
           var div = document.createElement('div');
-          div.className = 'ndf file-icon';
+          div.className = 'ndf file-icon hash-' + md5(b64);
           div.dataset.hash = md5(b64);
 
           if (f.type.match('image.*'))

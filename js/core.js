@@ -3,7 +3,8 @@ var ML =
   apiRoot: document.location.hostname.replace('app.', 'api.'),
   state:
   {
-    muted: 0
+    muted: 0,
+    currentDemo: null
   },
   _loaded: [],
   _mbox : null,
@@ -169,11 +170,12 @@ var ML =
     ML._mbox = cb || function () {};
   },
   
-  demo: function (data, mime)
+  demo: function (data, mime, canDelete)
   {
     if (mime && mime.split('/')[0] != 'image') return;
     var box = document.getElementById('demo');
     box.style.display = data ? 'flex' : 'none';
+    box.querySelector('.bar').style.display = canDelete ? 'flex' : 'none';
     box.querySelector('.img').style.backgroundImage = 'url(' + data + ')';
   },
   
