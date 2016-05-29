@@ -88,7 +88,7 @@ MS.add = function (data, pos)
 
     if (mine)
     {
-      ava = AU.user.ava ? 'url(\'' + AU.user.ava + '\')' : ava;
+      ava = AU.user.ava ? '#fff url(\'' + AU.user.ava + '\')' : ava;
       nc = '';
     }
     else
