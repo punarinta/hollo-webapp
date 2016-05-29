@@ -9,6 +9,7 @@
     "js/auth",
     "js/contacts",
     "js/messages",
+    "js/composer",
     "js/main"
   ],
   "mods":

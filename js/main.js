@@ -214,6 +214,12 @@ ML.hidePages = function ()
     }
   });
 
+  // === DEMO BOX ===
+  document.querySelector('#demo .close').onclick = function ()
+  {
+    ML.demo(0)
+  };
+
 
   // === ROUTER ===
   window.onpopstate = function (e)
