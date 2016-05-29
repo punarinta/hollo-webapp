@@ -12,15 +12,15 @@
 #page-msgs ul li .files {display: flex; margin-top: 10px}
 #page-msgs ul li .files > div { margin-right: 3px }
 #page-msgs ul li .files > div.full { width: 80vw; height: 50vw }
-#page-msgs ul li .foot .ts {float:left; margin:6px 0 0 25px; font-size: 10px;color: rgba(0,0,0,.3)}
+#page-msgs ul li .foot .ts {float:right; margin:6px 25px 0; font-size: 10px;color: rgba(0,0,0,.3)}
 #page-msgs ul li .foot .ava
 {
-    float:left; position: relative;width: 32px; height: 32px; border-radius: 50%; top:-9px; left:16px;
+    float:right; position: relative;width: 32px; height: 32px; border-radius: 50%; top:-9px; left:-16px;
     display:flex;justify-content:center;align-items:center;color:#fff;font:15px sans-serif
 }
 #page-msgs ul li.yours .foot .ava {float:left; left:16px}
-#page-msgs ul li.mine .foot .ava.full {background-size: cover !important;}
 #page-msgs ul li.yours .foot .ts {float:left; margin-right: 25px}
+#page-msgs ul li.mine .foot .ava.full {background-size: cover !important;}
 #page-msgs ul li.mine > div {float: right; margin-left: 15px}
 #page-msgs ul li.yours > div {float: left; margin-right: 15px}
 
