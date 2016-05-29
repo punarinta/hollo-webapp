@@ -306,6 +306,8 @@ MS.show = function (email, id)
     cmp.classList.remove('focused');
   };
 
+  // === POSTING ===
+
   cmp.querySelector('.send').onclick = function ()
   {
     // send a message
@@ -367,6 +369,9 @@ MS.show = function (email, id)
       document.getElementById('uploaded').innerHTML = '';
       cmpText.dispatchEvent(new Event('autosize:update'));
       cmpText.dispatchEvent(new Event('autosize:resized'));
+
+      // close topic picker
+      cmp.querySelector('.subjects').classList.remove('opened');
     });
   };
 
