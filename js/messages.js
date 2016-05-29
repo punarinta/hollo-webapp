@@ -57,6 +57,8 @@ MS.add = function (data, pos)
             {
               var image = document.getElementById('img-file-' + f.extId);
               image.innerHTML = '';
+              image.dataset.url = url;
+              image.dataset.mime = f.type;
               image.style.backgroundImage = 'url(' + url + ')';
             })
           })(file);
@@ -392,7 +394,7 @@ MS.show = function (email, id)
     {
       if (MS._upl[i].hash == e.target.dataset.hash)
       {
-        ML.demo(MS._upl[i].data, 0, MS._upl[i].mime);
+        ML.demo(MS._upl[i].data, MS._upl[i].mime);
         break;
       }
     }
@@ -401,8 +403,8 @@ MS.show = function (email, id)
   document.querySelector('#page-msgs ul').onclick = function (e)
   {
     if (!e.target.classList.contains('file-icon')) return;
-
-    ML.mbox('To see a demo of file preview attach a file in the message composer below and click on a file icon there.')
+    
+    ML.demo(e.target.dataset.url, e.target.dataset.mime)
   };
 
   document.querySelector('#demo .close').onclick = function ()

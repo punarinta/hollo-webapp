@@ -169,7 +169,7 @@ var ML =
     ML._mbox = cb || function () {};
   },
   
-  demo: function (data, mode, mime)
+  demo: function (data, mime)
   {
     if (mime && mime.split('/')[0] != 'image') return;
     var box = document.getElementById('demo');
