@@ -20,12 +20,14 @@
       var that = this, i = 0, w = this.value.trim().split(' ').slice(-1)[0].toLowerCase().replace(/[_\W]+/g, '');
       if (typeof EMJ[w] != 'undefined')
       {
+        var emBox = document.createElement('div');
+        
         for (; i < EMJ[w].length; i++)
         {
           var em = document.createElement('div');
           em.innerText = EMJ[w][i];
           em.dataset.w = w;
-          em.classList.add('emj-' + w);
+          em.className = 'emoji emj-' + w;
           setTimeout(function(o)
           {
             if (o.parentNode) o.parentNode.removeChild(o);
@@ -45,8 +47,11 @@
               e.stopPropagation();
             };
           })(em);
-          document.querySelector('#page-msgs .emojis').appendChild(em);
+          emBox.appendChild(em);
         }
+        
+        // add box to emojibox
+        document.querySelector('#page-msgs .emojis').appendChild(emBox);
       }
     }
   };

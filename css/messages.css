@@ -25,7 +25,7 @@
 #page-msgs ul li.yours > div {float: left; margin-right: 15px}
 
 #composer .emojis {position: fixed; right:5px; font-size: 48px}
-#composer .emojis div {color:#5634ff; cursor: pointer}
+#composer .emojis .emoji {color:#5634ff; cursor: pointer; display: inline-block}
 #composer {height: 60px}
 #composer textarea
 {
