@@ -1,5 +1,12 @@
 // === INIT ===
 
+MS.cmpResize = function ()
+{
+  var cmpText = document.querySelector('#composer textarea');
+  cmpText.dispatchEvent(new Event('autosize:update'));
+  cmpText.dispatchEvent(new Event('autosize:resized'));
+};
+
 (function ()
 {
   var cmp = document.getElementById('composer'),
@@ -150,8 +157,7 @@
       MS._upl = [];
       cmpText.value = '';
       document.getElementById('uploaded').innerHTML = '';
-      cmpText.dispatchEvent(new Event('autosize:update'));
-      cmpText.dispatchEvent(new Event('autosize:resized'));
+      MS.cmpResize();
 
       // close topic picker
       cmp.querySelector('.subjects').classList.remove('opened');
@@ -183,7 +189,18 @@
   {
     var el = cmp.querySelector('.hash-' + ML.state.currentDemo);
     el.parentNode.removeChild(el);
+
+    // remove deleted file from _upl array
+    for (var i in MS._upl)
+    {
+      if (MS._upl[i].hash == ML.state.currentDemo)
+      {
+        MS._upl = ML.unpush(MS._upl, i)
+      }
+    }
+
     ML.demo(0);
+    MS.cmpResize();
   };
 
 
@@ -230,8 +247,8 @@
             data: b64,
             hash: md5(b64)
           });
-          cmpText.dispatchEvent(new Event('autosize:update'));
-          cmpText.dispatchEvent(new Event('autosize:resized'));
+
+          MS.cmpResize();
         };
       })(f);
 

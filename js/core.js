@@ -211,6 +211,13 @@ var ML =
     ncc = [(r >> 1) + 96, (g >> 1) + 96, (b >> 1) + 96].join(',');
     
     return 'rgb(' + ncc + ')';
+  },
+
+  unpush: function (array, index)
+  {
+    var rest = array.slice(index + 1 || array.length);
+    this.length = index < 0 ? array.length + index : index;
+    return array.push.apply(array, rest);
   }
 };
 
