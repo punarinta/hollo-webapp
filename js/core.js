@@ -172,11 +172,29 @@ var ML =
   
   demo: function (data, mime, canDelete)
   {
-    if (mime && mime.split('/')[0] != 'image') return;
-    var box = document.getElementById('demo');
-    box.style.display = data ? 'flex' : 'none';
+    var box = document.getElementById('demo'),
+        viewer = box.querySelector('.img');
+
     box.querySelector('.bar').style.display = canDelete ? 'flex' : 'none';
-    box.querySelector('.img').style.backgroundImage = 'url(' + data + ')';
+
+    console.log(data, mime, canDelete);
+
+    if (mime)
+    {
+      if (mime.split('/')[0] == 'image')
+      {
+        viewer.style.background = 'transparent url(' + data + ') no-repeat center';
+        viewer.innerHTML = '';
+      }
+      else
+      {
+        viewer.style.background = ML.colorHash(mime);
+        viewer.innerHTML = mime.split('/')[1];
+        data = 1;
+      }
+    }
+
+    box.style.display = data ? 'flex' : 'none';
   },
   
   go: function (r, d)

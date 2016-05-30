@@ -75,7 +75,7 @@ MS.add = function (data, pos)
 
         filesHtml += '<div class="file-icon" id="img-file-'
           + file.extId + '" data-id="' + file.extId
-          + '" style="background:' + ML.colorHash(file.type)
+          + '" data-mime="' + file.type + '" style="background:' + ML.colorHash(file.type)
           + '">' + file.type.split('/')[1] + '</div>';
       }
     }
