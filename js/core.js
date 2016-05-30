@@ -177,8 +177,6 @@ var ML =
 
     box.querySelector('.bar').style.display = canDelete ? 'flex' : 'none';
 
-    console.log(data, mime, canDelete);
-
     if (mime)
     {
       if (mime.split('/')[0] == 'image')
