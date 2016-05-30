@@ -157,6 +157,7 @@ MS.cmpResize = function ()
       MS._upl = [];
       cmpText.value = '';
       document.getElementById('uploaded').innerHTML = '';
+      cmp.classList.remove('focused');
       MS.cmpResize();
 
       // close topic picker
