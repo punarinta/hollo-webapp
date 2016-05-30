@@ -101,9 +101,13 @@ CO.show = function (full)
   {
     var prevSwipe = swipe, t = e.changedTouches[0], distX = t.pageX - startX, distY = t.pageY - startY;
 
-    if (distX > 50) swipe = 1;
-    else if (Math.abs(distX) < 50) swipe = 0;
-    else if (distX < -50) swipe = -1;
+    if (Math.abs(distX) > Math.abs(distY))
+    {
+      if (distX > 50) swipe = 1;
+      else if (Math.abs(distX) < 50) swipe = 0;
+      else if (distX < -50) swipe = -1;
+      e.preventDefault();
+    }
 
     if (swipe != prevSwipe)
     {
@@ -112,7 +116,6 @@ CO.show = function (full)
       else if (swipe == 0) { li.classList.remove('swipedR'); li.classList.remove('swipedL') }
       else if (swipe == -1) { li.classList.remove('swipedR'); li.classList.add('swipedL') }
     }
-    if (Math.abs(distX) > Math.abs(distY)) e.preventDefault();
   });
 
   conts.addEventListener('touchend', function (e)
