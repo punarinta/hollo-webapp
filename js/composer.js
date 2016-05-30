@@ -70,7 +70,7 @@
     cmpText.style.bottom = f + 'px';
   });
 
-  Array.prototype.forEach.call(cmp.querySelectorAll('*'), function(el)
+  Array.prototype.forEach.call(cmp.querySelectorAll('*'), function (el)
   {
     el.classList.add('ndf');
   });
@@ -87,7 +87,7 @@
   cmp.querySelector('.send').onclick = function ()
   {
     // send a message
-    var msg = cmpText.value, subj = cmp.querySelector('.cap').innerText, msgId = null;
+    var msg = cmpText.value, subj = cmp.querySelector('.cap').innerText, msgId = null, to = [];
 
     if (!msg.length)
     {
@@ -95,11 +95,18 @@
       return;
     }
 
-    // try to find last message id
-    var lis = document.querySelectorAll('#page-msgs > ul li:last-child');
-    if (lis.length)
+    // try to find last message with real id
+    Array.prototype.forEach.call(document.querySelectorAll('#page-msgs > ul li'), function (el)
     {
-      msgId = lis[0].dataset.id;
+      msgId = (el.dataset.id - 0) || msgId
+    });
+
+    if (!msgId)
+    {
+      // collect emails for a new chat
+
+      // TODO: support multiple emails
+      to = [{email: MS.contact.email}]
     }
 
     console.log('body:', msg);
@@ -135,7 +142,7 @@
 
     MS.add([m], 'bottom');
 
-    ML.api('message', 'send', {body: msg, messageId: msgId, subject: subj, files: m.files}, function (json)
+    ML.api('message', 'send', {body: msg, messageId: msgId, subject: subj, files: m.files, to: to}, function (json)
     {
       console.log('send()', json);
 
