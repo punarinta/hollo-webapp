@@ -1,7 +1,7 @@
 #snackbar
 {
     display: none; position: fixed; top: 0; width: 100%; height: 56px; box-shadow: 0 0 7px 0 rgba(80,80,80,.75);
-    background-color: /*#2aff67*//*#eaeaea*/ rgba(255,255,255,.7); z-index: 10
+    background-color: /*#2aff67*//*#eaeaea*/ rgba(255,255,255,.8); z-index: 10
 }
 #snackbar > div {position: fixed; top: 0}
 #snackbar .icon {width: 40px; height: 40px; text-align: center; background: no-repeat center center; top: 8px; cursor: pointer; border-radius: 50%}
