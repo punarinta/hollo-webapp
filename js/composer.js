@@ -126,7 +126,7 @@
           name: u.name,
           type: u.mime,
           size: u.size,
-          extId: 'foobar',
+          extId: 'x',
           data: u.data
         });
         console.log('File attached: ', MS._upl[i]);
@@ -135,7 +135,7 @@
 
     MS.add([m], 'bottom');
 
-    ML.api('message', 'send', {body: msg, messageId:msgId, subject: subj}, function (json)
+    ML.api('message', 'send', {body: msg, messageId: msgId, subject: subj, files: m.files}, function (json)
     {
       console.log('send()', json);
 
