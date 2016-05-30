@@ -98,7 +98,7 @@ ML.hidePages = function ()
       var type = this.className.replace(/icon|toggled/gi, '').trim(),
         menu = document.getElementById('snackbar-menu-' + type);
 
-      if (type == 'back') ML.go('contacts');
+      if (type == 'back') ML.go('contacts', 1);
       if (!menu) return;
 
       var toggled = this.classList.contains('toggled');
@@ -237,7 +237,7 @@ ML.hidePages = function ()
       switch (r)
       {
         case 'contacts':
-          CO.show(1);
+          CO.show(e.state.data || 7);
           break;
         case 'auth/login':
           AU.showLogin();

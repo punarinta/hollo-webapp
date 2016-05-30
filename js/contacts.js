@@ -49,36 +49,42 @@ CO.add = function (data)
   }
 };
 
-CO.show = function (full)
+CO.show = function (mode)
 {
   var page = document.getElementById('page-contacts'),
       ul = page.querySelector('ul');
 
-  if (full)
+  if (mode & 1)
   {
     ML.hidePages();
-    ul.innerHTML = '<li>Loading...</li>';
-
-    page.querySelector('.head .ava img').src = AU.user.ava || '/gfx/ava.png';
-    page.querySelector('.head .name').innerHTML = AU.user.name || AU.user.email.split('@')[0];
-    page.querySelector('.head .email').innerHTML = AU.user.email;
     page.style.display = 'block';
   }
 
-  CO.offset = 0;
-
-  ML.api('contact', 'find', {pageStart:CO.offset, pageLength:25, filters: [{mode:'muted', value:ML.state.muted}]}, function (data)
+  if (mode & 2)
   {
-    // that's a first load, so keep it clean
-    ul.innerHTML = '<li data-email="new" class="new"><div class="ava"><div class="new img unread"></div></div><div><div class="name"></div><div class="email"></div></div></li>';
+    ul.innerHTML = '<li>Loading...</li>';
+    page.querySelector('.head .ava img').src = AU.user.ava || '/gfx/ava.png';
+    page.querySelector('.head .name').innerHTML = AU.user.name || AU.user.email.split('@')[0];
+    page.querySelector('.head .email').innerHTML = AU.user.email;
+  }
 
-    CO.add(data);
+  if (mode & 4)
+  {
+    CO.offset = 0;
 
-    if (data.length == 25)
+    ML.api('contact', 'find', {pageStart:CO.offset, pageLength:25, filters: [{mode:'muted', value:ML.state.muted}]}, function (data)
     {
-      CO.more = 1;
-    }
-  });
+      // that's a first load, so keep it clean
+      ul.innerHTML = '<li data-email="new" class="new"><div class="ava"><div class="new img unread"></div></div><div><div class="name"></div><div class="email"></div></div></li>';
+
+      CO.add(data);
+
+      if (data.length == 25)
+      {
+        CO.more = 1;
+      }
+    });
+  }
 };
 
 
@@ -203,7 +209,7 @@ CO.show = function (full)
     btnHolloed.classList.add('sel');
     btnMuted.classList.remove('sel');
     ML.state.muted = 0;
-    CO.show(0);
+    CO.show(4);
   };
   
   btnMuted.onclick = function ()
@@ -211,6 +217,6 @@ CO.show = function (full)
     btnMuted.classList.add('sel');
     btnHolloed.classList.remove('sel');
     ML.state.muted = 1;
-    CO.show(0);
+    CO.show(4);
   };
 })();
