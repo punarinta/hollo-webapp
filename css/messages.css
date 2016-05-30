@@ -1,7 +1,7 @@
 #page-msgs
 {
     padding-top: 61px; font-family: 'DejaVu Sans', sans-serif; background-size: cover;
-    background: url('/gfx/bg2.jpg') no-repeat fixed;min-height: 100vh
+    background: url('/gfx/bg1.jpg') fixed;min-height: 100vh
 }
 #page-msgs ul {list-style-type: none; padding: 0 0 50px 0; margin: 0}
 #page-msgs ul li {overflow: auto}
