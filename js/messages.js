@@ -173,10 +173,7 @@ MS.xname = function (contact)
   if (name)
   {
     name = name.split(' ');
-    if (name.length > 1)
-    {
-      return name[0] + ' ' + name[1].charAt(0);
-    }
+    return name.length > 1 ? (name[0] + ' ' + name[1].charAt(0)) : name[0];
   }
   else
   {
