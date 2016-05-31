@@ -168,6 +168,8 @@ var ML =
     m.style.display = 'flex';
     m.querySelector('.body').innerHTML = msg;
     ML._mbox = cb || function () {};
+
+    return m;
   },
   
   demo: function (data, mime, canDelete)

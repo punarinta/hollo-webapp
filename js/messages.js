@@ -167,6 +167,23 @@ MS.add = function (data, pos)
   }, 100, ul);
 };
 
+MS.xname = function (contact)
+{
+  var name = contact.name;
+  if (name)
+  {
+    name = name.split(' ');
+    if (name.length > 1)
+    {
+      return name[0] + ' ' + name[1].charAt(0);
+    }
+  }
+  else
+  {
+    return contact.email.split('@')[0];
+  }
+};
+
 MS.show = function (email, id)
 {
   var page = document.getElementById('page-msgs'),
@@ -185,21 +202,7 @@ MS.show = function (email, id)
     MS.contact = data.contact;
     MS.contact.email = email;
 
-    var name = MS.contact.name;
-    if (name)
-    {
-      name = name.split(' ');
-      if (name.length > 1)
-      {
-        name = name[0] + ' ' + name[1].charAt(0);
-      }
-    }
-    else
-    {
-      name = email.split('@')[0];
-    }
-
-    document.querySelector('#snackbar .name').innerHTML = name;
+    document.querySelector('#snackbar .name').innerHTML = MS.xname(MS.contact);
     document.querySelector('#snackbar-menu-more .mute').innerText = MS.contact.muted ? 'Unmute' : 'Mute';
 
     // reset subject lists

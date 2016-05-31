@@ -131,13 +131,33 @@ ML.hidePages = function ()
     });
   };
 
+  var closeSnackbar = function ()
+  {
+    snackbar.querySelector('.icon.more').classList.remove('toggled');
+    snackdrop.style.display = 'none';
+  };
+
   snackdrop.querySelector('.unread').onclick = function ()
   {
-    ML.api('contact', 'update', {id:MS.contact.id, read:0}, function ()
+    ML.api('contact', 'update', {id:MS.contact.id, read:0}, closeSnackbar);
+  };
+
+  snackdrop.querySelector('.rename').onclick = function ()
+  {
+    var mbox = ML.mbox('<input value="' + MS.contact.name + '"/>', 1, function (ret)
     {
-      snackbar.querySelector('.icon.more').classList.remove('toggled');
-      snackdrop.style.display = 'none';
+      if (ret)
+      {
+        var name = mbox.querySelector('input').value;
+        ML.api('contact', 'update', { id: MS.contact.id, name: name }, function ()
+        {
+          MS.contact.name = name;
+          snackbar.querySelector('.name').innerText = MS.xname(MS.contact)
+        });
+      }
     });
+
+    closeSnackbar();
   };
 
   snackdrop.querySelector('.delete').onclick = function ()
@@ -157,8 +177,7 @@ ML.hidePages = function ()
       }
     });
 
-    snackbar.querySelector('.icon.more').classList.remove('toggled');
-    snackdrop.style.display = 'none';
+    closeSnackbar();
   };
 
 
