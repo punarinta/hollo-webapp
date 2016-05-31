@@ -1,141 +1,126 @@
 /*
  * Blowfish.js from Dojo Toolkit 1.8.1
- * Cut of by Sladex (xslade@gmail.com)
- *
- * Usage:
- * blowfish.encrypt(String 'subj to encrypt', String 'key', Object {cipherMode: 0});
  *
  * http://sladex.org/blowfish.js/ext/blowfish.js
- *
  */
 
-(function(){
+(function()
+{
+  var crypto = {}, p = '=', tab = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/', base64 =
+  {
+    encode: function(ba)
+    {
+      // summary:
+      //		Encode an array of bytes as a base64-encoded string
+      var s = [], l = ba.length, rm = l%3, x = l - rm, t;
 
-  var crypto = {};
-
-  crypto.cipherModes = {
-    // summary:
-    //		Enumeration for various cipher modes.
-    ECB:0, CBC:1, PCBC:2, CFB:3, OFB:4, CTR:5
-  };
-
-  var base64 = {};
-  var p="=";
-  var tab="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-
-  base64.encode = function(/* byte[] */ba){
-    // summary:
-    //		Encode an array of bytes as a base64-encoded string
-    var s=[], l=ba.length;
-    var rm=l%3;
-    var x=l-rm;
-    for (var i=0; i<x;){
-      var t=ba[i++]<<16|ba[i++]<<8|ba[i++];
-      s.push(tab.charAt((t>>>18)&0x3f));
-      s.push(tab.charAt((t>>>12)&0x3f));
-      s.push(tab.charAt((t>>>6)&0x3f));
-      s.push(tab.charAt(t&0x3f));
-    }
-    //	deal with trailers, based on patch from Peter Wood.
-    switch(rm){
-      case 2:{
-        var t=ba[i++]<<16|ba[i++]<<8;
-        s.push(tab.charAt((t>>>18)&0x3f));
-        s.push(tab.charAt((t>>>12)&0x3f));
-        s.push(tab.charAt((t>>>6)&0x3f));
-        s.push(p);
-        break;
+      for (var i = 0; i<x;)
+      {
+        t = ba[i++]<<16 | ba[i++]<<8 | ba[i++];
+        s.push(tab.charAt((t>>>18) & 0x3f));
+        s.push(tab.charAt((t>>>12) & 0x3f));
+        s.push(tab.charAt((t>>>6) & 0x3f));
+        s.push(tab.charAt(t & 0x3f));
       }
-      case 1:{
-        var t=ba[i++]<<16;
-        s.push(tab.charAt((t>>>18)&0x3f));
-        s.push(tab.charAt((t>>>12)&0x3f));
-        s.push(p);
-        s.push(p);
-        break;
+      //	deal with trailers, based on patch from Peter Wood.
+      switch (rm)
+      {
+        case 2:
+        {
+          t = ba[i++]<<16|ba[i++]<<8;
+          s.push(tab.charAt((t>>>18)&0x3f));
+          s.push(tab.charAt((t>>>12)&0x3f));
+          s.push(tab.charAt((t>>>6)&0x3f));
+          s.push(p);
+          break;
+        }
+        case 1:
+        {
+          t = ba[i++]<<16;
+          s.push(tab.charAt((t>>>18)&0x3f));
+          s.push(tab.charAt((t>>>12)&0x3f));
+          s.push(p);
+          s.push(p);
+          break;
+        }
       }
-    }
-    return s.join("");	//	string
-  };
+      return s.join('');	//	string
+    },
 
-  base64.decode = function(/* string */str){
-    // summary:
-    //		Convert a base64-encoded string to an array of bytes
-    var s=str.split(""), out=[];
-    var l=s.length;
-    while(s[--l]==p){ }	//	strip off trailing padding
-    for (var i=0; i<l;){
-      var t=tab.indexOf(s[i++])<<18;
-      if(i<=l){ t|=tab.indexOf(s[i++])<<12 }
-      if(i<=l){ t|=tab.indexOf(s[i++])<<6 }
-      if(i<=l){ t|=tab.indexOf(s[i++]) }
-      out.push((t>>>16)&0xff);
-      out.push((t>>>8)&0xff);
-      out.push(t&0xff);
-    }
-    //	strip off any null bytes
-    while(out[out.length-1]==0){ out.pop(); }
-    return out;	//	byte[]
-  };
+    decode: function(str)
+    {
+      // summary:
+      //		Convert a base64-encoded string to an array of bytes
+      var s = str.split(''), out = [], l = s.length;
 
+      while (s[--l] == p) {}	//	strip off trailing padding
 
-
-  /* dojo-release-1.8.1/dojo/_base/lang.js.uncompressed.js */
-
-  var lang = {};
-  lang.isString = function(it){
-    // summary:
-    //		Return true if it is a String
-    // it: anything
-    //		Item to test.
-    return (typeof it == "string" || it instanceof String); // Boolean
-  };
-
-
-
-  /* dojo-release-1.8.1/dojo/_base/array.js.uncompressed.js */
-
-  var arrayUtil = {};
-  arrayUtil.map = function(arr, callback, thisObject, Ctr){
-    // summary:
-    //		applies callback to each element of arr and returns
-    //		an Array with the results
-    // arr: Array|String
-    //		the array to iterate on. If a string, operates on
-    //		individual characters.
-    // callback: Function|String
-    //		a function is invoked with three arguments, (item, index,
-    //		array),	 and returns a value
-    // thisObject: Object?
-    //		may be used to scope the call to callback
-    // returns: Array
-    // description:
-    //		This function corresponds to the JavaScript 1.6 Array.map() method, with one difference: when
-    //		run over sparse arrays, this implementation passes the "holes" in the sparse array to
-    //		the callback function with a value of undefined. JavaScript 1.6's map skips the holes in the sparse array.
-    //		For more details, see:
-    //		https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Objects/Array/map
-    // example:
-    //	| // returns [2, 3, 4, 5]
-    //	| array.map([1, 2, 3, 4], function(item){ return item+1 });
-
-    // TODO: why do we have a non-standard signature here? do we need "Ctr"?
-    var i = 0, l = arr && arr.length || 0, out = new (Ctr || Array)(l);
-    if(l && typeof arr == "string") arr = arr.split("");
-    if(typeof callback == "string") callback = cache[callback] || buildFn(callback);
-    if(thisObject){
-      for(; i < l; ++i){
-        out[i] = callback.call(thisObject, arr[i], i, arr);
+      for (var i = 0; i < l;)
+      {
+        var t=tab.indexOf(s[i++])<<18;
+        if (i<=l) { t|=tab.indexOf(s[i++])<<12 }
+        if (i<=l) { t|=tab.indexOf(s[i++])<<6 }
+        if (i<=l) { t|=tab.indexOf(s[i++]) }
+        out.push((t>>>16)&0xff);
+        out.push((t>>>8)&0xff);
+        out.push(t&0xff);
       }
-    }else{
-      for(; i < l; ++i){
-        out[i] = callback(arr[i], i, arr);
-      }
+      //	strip off any null bytes
+      while (out[out.length-1]==0) { out.pop() }
+      return out;
     }
-    return out; // Array
   };
 
 
+  var arrayUtil =
+  {
+    map: function (arr, callback, thisObject, Ctr)
+    {
+      // summary:
+      //		applies callback to each element of arr and returns
+      //		an Array with the results
+      // arr: Array|String
+      //		the array to iterate on. If a string, operates on
+      //		individual characters.
+      // callback: Function|String
+      //		a function is invoked with three arguments, (item, index,
+      //		array),	 and returns a value
+      // thisObject: Object?
+      //		may be used to scope the call to callback
+      // returns: Array
+      // description:
+      //		This function corresponds to the JavaScript 1.6 Array.map() method, with one difference: when
+      //		run over sparse arrays, this implementation passes the "holes" in the sparse array to
+      //		the callback function with a value of undefined. JavaScript 1.6's map skips the holes in the sparse array.
+      //		For more details, see:
+      //		https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Objects/Array/map
+      // example:
+      //	| // returns [2, 3, 4, 5]
+      //	| array.map([1, 2, 3, 4], function(item){ return item+1 });
+
+      // TODO: why do we have a non-standard signature here? do we need "Ctr"?
+      var i = 0, l = arr && arr.length || 0, out = new (Ctr || Array)(l);
+
+      if (l && typeof arr == 'string') arr = arr.split('');
+
+      if (thisObject)
+      {
+        for (; i < l; ++i)
+        {
+          out[i] = callback.call(thisObject, arr[i], i, arr);
+        }
+      }
+      else
+      {
+        for (; i < l; ++i)
+        {
+          out[i] = callback(arr[i], i, arr);
+        }
+      }
+
+      return out; // Array
+    }
+  };
 
   /* dojo-release-1.8.1/dojox/encoding/crypto/Blowfish.js.uncompressed.js */
 
@@ -144,10 +129,11 @@
    *	Unsigned math based on Paul Johnstone and Peter Wood patches.
    *	2005-12-08
    */
-  crypto.Blowfish = new function(){
+  crypto.Blowfish = new function()
+  {
     // summary:
     //		Object for doing Blowfish encryption/decryption.
-    var POW8=256, POW16=65536, POW24=16777216,
+    var POW8 = 256, POW16 = 65536, POW24 = 16777216,
       iv = null,	//	CBC mode initialization vector
       boxes = {
       p:[
@@ -294,14 +280,14 @@
     };
 ////////////////////////////////////////////////////////////////////////////
 //	fixes based on patch submitted by Peter Wood (#5791)
-  /*  function add(x,y){
-      return (((x>>0x10)+(y>>0x10)+(((x&0xffff)+(y&0xffff))>>0x10))<<0x10)|(((x&0xffff)+(y&0xffff))&0xffff);
-    }*/
-    function xor(x,y){
+
+    function xor(x,y)
+    {
       return (((x>>0x10)^(y>>0x10))<<0x10)|(((x&0xffff)^(y&0xffff))&0xffff);
     }
 
-    function $(v, box){
+    function $(v, box)
+    {
       var d=box.s3[v&0xff]; v>>=8;
       var c=box.s2[v&0xff]; v>>=8;
       var b=box.s1[v&0xff]; v>>=8;
@@ -312,10 +298,11 @@
       return (((r>>0x10)+(d>>0x10)+(((r&0xffff)+(d&0xffff))>>0x10))<<0x10)|(((r&0xffff)+(d&0xffff))&0xffff);
     }
 ////////////////////////////////////////////////////////////////////////////
-    function eb(o, box){
+    function eb(o, box)
+    {
       //	TODO: see if this can't be made more efficient
-      var l=o.left;
-      var r=o.right;
+      var l = o.left, r = o.right;
+
       l=xor(l,box.p[0]);
       r=xor(r,xor($(l,box),box.p[1]));
       l=xor(l,xor($(r,box),box.p[2]));
@@ -337,9 +324,10 @@
       o.left=xor(r,box.p[17]);
     }
 
-    function db(o, box){
-      var l=o.left;
-      var r=o.right;
+    function db(o, box)
+    {
+      var l = o.left, r = o.right;
+
       l=xor(l,box.p[17]);
       r=xor(r,xor($(l,box),box.p[16]));
       l=xor(l,xor($(r,box),box.p[15]));
@@ -363,20 +351,25 @@
 
     //	Note that we aren't caching contexts here; it might take a little longer
     //	but we should be more secure this way.
-    function init(key){
-      var k=key;
-      if(lang.isString(k)){
-        k = arrayUtil.map(k.split(""), function(item){
+    function init(key)
+    {
+      var k = key;
+
+      if ((typeof k == 'string' || k instanceof String))
+      {
+        k = arrayUtil.map(k.split(''), function(item)
+        {
           return item.charCodeAt(0) & 0xff;
         });
       }
 
       //	init the boxes
-      var pos=0, data=0, res={ left:0, right:0 }, i, j, l;
-      var box = {
-        p: arrayUtil.map(boxes.p.slice(0), function(item){
-          var l=k.length, j;
-          for(j=0; j<4; j++){ data=(data*POW8)|k[pos++ % l]; }
+      var pos = 0, data = 0, res = { left:0, right:0 }, i, j, l, box =
+      {
+        p: arrayUtil.map(boxes.p.slice(0), function (item)
+        {
+          var l = k.length, j;
+          for (j=0; j<4; j++) { data=(data*POW8)|k[pos++ % l] }
           return (((item>>0x10)^(data>>0x10))<<0x10)|(((item&0xffff)^(data&0xffff))&0xffff);
         }),
         s0:boxes.s0.slice(0),
@@ -386,14 +379,19 @@
       };
 
       //	encrypt p and the s boxes
-      for(i=0, l=box.p.length; i<l;){
+      for (i = 0, l = box.p.length; i<l;)
+      {
         eb(res, box);
-        box.p[i++]=res.left, box.p[i++]=res.right;
+        box.p[i++] = res.left;
+        box.p[i++] = res.right;
       }
-      for(i=0; i<4; i++){
-        for(j=0, l=box["s"+i].length; j<l;){
+      for (i = 0; i<4; i++)
+      {
+        for (j = 0, l = box['s'+i].length; j<l;)
+        {
           eb(res, box);
-          box["s"+i][j++]=res.left, box["s"+i][j++]=res.right;
+          box['s'+i][j++] = res.left;
+          box['s'+i][j++] = res.right;
         }
       }
       return box;
@@ -403,31 +401,31 @@
 //	PUBLIC FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////
 
-    this.setIV=function(/* string */data){
+    this.setIV = function (data)
+    {
       // summary:
-      //		sets the initialization vector to data (as interpreted as inputType)
-      var ba=base64.decode(data);
+      // sets the initialization vector to data (as interpreted as inputType)
+      var ba = base64.decode(data);
 
       //	make it a pair of words now
-      iv={};
+      iv = {};
       iv.left=ba[0]*POW24|ba[1]*POW16|ba[2]*POW8|ba[3];
       iv.right=ba[4]*POW24|ba[5]*POW16|ba[6]*POW8|ba[7];
     };
 
-    this.encrypt = function(/* string */plaintext, /* string */key, /* object? */ao){
+    this.encrypt = function (plaintext, key)
+    {
       // summary:
-      //		encrypts plaintext using key; allows user to specify output type and cipher mode via keyword object "ao"
-      var mode=crypto.cipherModes.ECB;
-      if (ao){
-        if (ao.cipherMode) mode=ao.cipherMode;
-      }
+      // encrypts plaintext using key; allows user to specify output type and cipher mode via keyword object "ao"
 
       var bx = init(key), padding = 8-(plaintext.length&7);
       for (var i=0; i<padding; i++){ plaintext+=String.fromCharCode(padding); }
 
-      var cipher=[], count=plaintext.length >> 3, pos=0, o={}, isCBC=(mode==crypto.cipherModes.CBC);
-      var vector={left:iv.left||null, right:iv.right||null};
-      for(var i=0; i<count; i++){
+      var cipher=[], count=plaintext.length >> 3, pos=0, o={},
+        vector={left:iv.left||null, right:iv.right||null};
+      
+      for (i=0; i<count; i++)
+      {
         o.left=plaintext.charCodeAt(pos)*POW24
           |plaintext.charCodeAt(pos+1)*POW16
           |plaintext.charCodeAt(pos+2)*POW8
@@ -437,17 +435,13 @@
           |plaintext.charCodeAt(pos+6)*POW8
           |plaintext.charCodeAt(pos+7);
 
-        if(isCBC){
-          o.left=(((o.left>>0x10)^(vector.left>>0x10))<<0x10)|(((o.left&0xffff)^(vector.left&0xffff))&0xffff);
-          o.right=(((o.right>>0x10)^(vector.right>>0x10))<<0x10)|(((o.right&0xffff)^(vector.right&0xffff))&0xffff);
-        }
+        o.left=(((o.left>>0x10)^(vector.left>>0x10))<<0x10)|(((o.left&0xffff)^(vector.left&0xffff))&0xffff);
+        o.right=(((o.right>>0x10)^(vector.right>>0x10))<<0x10)|(((o.right&0xffff)^(vector.right&0xffff))&0xffff);
 
         eb(o, bx);	//	encrypt the block
 
-        if(isCBC){
-          vector.left=o.left;
-          vector.right=o.right;
-        }
+        vector.left=o.left;
+        vector.right=o.right;
 
         cipher.push((o.left>>24)&0xff);
         cipher.push((o.left>>16)&0xff);
@@ -463,36 +457,24 @@
       return base64.encode(cipher);
     };
 
-    this.decrypt = function(/* string */ciphertext, /* string */key, /* object? */ao){
+    this.decrypt = function (ciphertext, key)
+    {
+      var bx = init(key), pt=[], c=base64.decode(ciphertext), count=c.length >> 3, pos=0, o={},
+        vector={left:iv.left||null, right:iv.right||null};
 
-      var mode=crypto.cipherModes.ECB;
-      if (ao){
-        if (ao.cipherMode) mode=ao.cipherMode;
-      }
-      var bx = init(key);
-      var pt=[];
-
-      var c=base64.decode(ciphertext);
-
-      var count=c.length >> 3, pos=0, o={}, isCBC=(mode==crypto.cipherModes.CBC);
-      var vector={left:iv.left||null, right:iv.right||null};
-      for(var i=0; i<count; i++){
+      for (var i=0; i<count; i++)
+      {
         o.left=c[pos]*POW24|c[pos+1]*POW16|c[pos+2]*POW8|c[pos+3];
         o.right=c[pos+4]*POW24|c[pos+5]*POW16|c[pos+6]*POW8|c[pos+7];
 
-        if(isCBC){
-          var left=o.left;
-          var right=o.right;
-        }
+        var left=o.left, right=o.right;
 
         db(o, bx);	//	decrypt the block
 
-        if(isCBC){
-          o.left=(((o.left>>0x10)^(vector.left>>0x10))<<0x10)|(((o.left&0xffff)^(vector.left&0xffff))&0xffff);
-          o.right=(((o.right>>0x10)^(vector.right>>0x10))<<0x10)|(((o.right&0xffff)^(vector.right&0xffff))&0xffff);
-          vector.left=left;
-          vector.right=right;
-        }
+        o.left=(((o.left>>0x10)^(vector.left>>0x10))<<0x10)|(((o.left&0xffff)^(vector.left&0xffff))&0xffff);
+        o.right=(((o.right>>0x10)^(vector.right>>0x10))<<0x10)|(((o.right&0xffff)^(vector.right&0xffff))&0xffff);
+        vector.left=left;
+        vector.right=right;
 
         pt.push((o.left>>24)&0xff);
         pt.push((o.left>>16)&0xff);
@@ -506,18 +488,20 @@
       }
 
       //	check for padding, and remove.
-      if(pt[pt.length-1]==pt[pt.length-2]||pt[pt.length-1]==0x01){
+      if (pt[pt.length-1]==pt[pt.length-2]||pt[pt.length-1]==0x01)
+      {
         var n=pt[pt.length-1];
         pt.splice(pt.length-n, n);
       }
 
       //	convert to string
-      return arrayUtil.map(pt, function(item){
+      return arrayUtil.map(pt, function(item)
+      {
         return String.fromCharCode(item);
-      }).join("");	//	string
+      }).join('');
     };
 
-    this.setIV("AAAAAAAAAAA=");
+    this.setIV('AAAAAAAAAAA=');
   }();
 
   window['blowfish'] = crypto.Blowfish;
