@@ -1,7 +1,8 @@
 var CO =
 {
-    offset: 0,
-    more : 0
+  offset: 0,
+  more : 0,
+  loaded: 0
 };
 
 CO.resetFilter = function ()
@@ -54,6 +55,8 @@ CO.show = function (mode)
   var page = document.getElementById('page-contacts'),
       ul = page.querySelector('ul');
 
+  mode = (CO.loaded == 7) ? mode : 7;
+
   if (mode & 1)
   {
     ML.hidePages();
@@ -85,6 +88,8 @@ CO.show = function (mode)
       }
     });
   }
+
+  CO.loaded |= mode;
 };
 
 
