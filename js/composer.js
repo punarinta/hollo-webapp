@@ -67,7 +67,7 @@ MS.cmpResize = function ()
 
   cmpText.addEventListener('autosize:resized', function (e)
   {
-    var h = parseInt(e.target.style.height, 10), f = MS._upl.length ? 78 : 0;
+    var h = Math.min(parseInt(e.target.style.height, 10), window.innerHeight * .3), f = MS._upl.length ? 78 : 0;
 
     cmp.style.height = (h + 21) + 'px';
     cmp.querySelector('.emojis').style.bottom = f + (h + 53) + 'px';
