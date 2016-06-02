@@ -119,11 +119,12 @@ CO.show = function (mode)
 
   conts.addEventListener('touchmove', function (e)
   {
-    var t = e.changedTouches[0], distX = t.pageX - startX, distY = t.pageY - startY;
+    var t = e.changedTouches[0], distX = t.pageX - startX;
 
     if (swipe)
     {
-      item.style.left = distX + 'px';
+      // item.style.left = distX + 'px';
+      item.style.transform = 'translateX(' + distX + 'px)';
       e.preventDefault();
 
       if (distX > threshold) action = 1;
@@ -132,11 +133,13 @@ CO.show = function (mode)
     }
     else
     {
+      var distY = t.pageY - startY;
+
       if (Math.abs(distY) > 16)
       {
         blockSwipe = 1;
       }
-      if (Math.abs(distX) > 16 && !blockSwipe)
+      else if (Math.abs(distX) > 16 && !blockSwipe)
       {
         swipe = 1;
         shadow.style.display = 'block';
@@ -161,6 +164,7 @@ CO.show = function (mode)
         item.style.position = 'static';
         shadow.style.display = 'none';
         shadow.style.opacity = 0;
+        item.style.transform = 'translateX(0)';
       }, 400, item, shadow);
 
       item.classList.add('travel');
@@ -170,7 +174,7 @@ CO.show = function (mode)
       switch (action)
       {
         case 1:
-          item.style.left = vw + 'px';
+          item.style.transform = 'translateX(' + vw + 'px)';
 
           /*ML.api('contact', 'update', {id: id, muted: !ML.state.muted - 0}, function ()
           {
@@ -184,7 +188,7 @@ CO.show = function (mode)
           break;
 
         case -1:
-          item.style.left = -vw + 'px';
+          item.style.transform = 'translateX(-' + vw + 'px)';
 
           /*ML.api('contact', 'update', {id: id, read: item.querySelector('.img').classList.contains('unread') - 0}, function ()
           {
@@ -195,7 +199,7 @@ CO.show = function (mode)
           break;
 
         default:
-          item.style.left = 0;
+          item.style.transform = 'translateX(0)';
       }
 
       console.log('Swiped:', action);

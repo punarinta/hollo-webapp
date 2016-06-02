@@ -56,4 +56,4 @@
 #page-contacts ul .shadow div { display:flex;justify-content:center;align-items:center;height:100%;width:80px; font-size: 15px; text-align: center }
 #page-contacts ul .shadow div:first-child { float: left}
 #page-contacts ul .shadow div:last-child { float: right}
-#page-contacts ul li.travel {transition: left .4s ease-in}
+#page-contacts ul li.travel {transition: all .4s ease-in}
