@@ -22,7 +22,7 @@
 #page-contacts .tabs div span {border: 0 solid}
 #page-contacts .tabs div.sel span {border-width:0 0 2px}
 
-#page-contacts ul {list-style-type: none;margin-top:176px;padding: 0}
+#page-contacts ul {list-style-type: none;margin-top:176px;padding: 0; overflow-x: hidden}
 #page-contacts ul li.new {display: none}
 #page-contacts ul li.new .name {padding-top:26px}
 #page-contacts ul li.new .img {background: transparent url('/gfx/color/plus.svg') no-repeat center;display: block}
@@ -38,11 +38,11 @@
 #page-contacts ul .img.unread {border-color:#5634ff}
 #page-contacts ul .name {font-size: 150%; padding-top: 21px; font-weight: 500}
 #page-contacts ul .email {font-size: 14px; color: grey}
-#page-contacts ul li.swipedL {margin-left: -100px}
+
 #page-contacts ul li
 {
-    overflow: hidden; height:80px; white-space: nowrap; display: flex; padding-left: 10px;
-    transition: margin .4s, height .8s ease-in, opacity .8s ease-in; cursor: pointer;
+    overflow: hidden; height:80px; white-space: nowrap; display: flex; padding-left: 10px; width: 100vw;
+    transition: height .8s ease-in, opacity .8s ease-in; cursor: pointer; z-index: 2; background: #fff;
 }
 #page-contacts ul .pre, #page-contacts ul .post
 {
@@ -51,5 +51,6 @@
 }
 #page-contacts ul .pre {margin-left: -110px}
 #page-contacts ul .post {margin-right: -100px}
-#page-contacts ul li.swipedR .pre {margin-left: -10px}
-#page-contacts ul li.swipedL .post {margin-right: 0}
+
+#page-contacts ul .shadow {height: 80px;display:none;background: #0001f7; color: #fff }
+#page-contacts ul li.travel {transition: left .3s ease-in}

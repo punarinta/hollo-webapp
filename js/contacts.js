@@ -30,7 +30,8 @@ CO.add = function (data)
       '<div class="ava"><div class="img' + unread + '" id="img-gr-' + md5(data[i].email) + '" style="background:' + ML.colorHash(data[i].email) + '">' + nc + '</div></div>' +
       '<div class="hujava"><div class="name">' + name + '</div><div class="email">' + data[i].email + '</div></div>' +
       '<div class="post">mark as<br>' + (unread?'':'un') + 'read</div>' +
-      '</li>';
+      '</li>' +
+      '<div class="shadow shad-' + data[i].id + '">BLABLABLA</div>';
   }
 
   document.querySelector('#page-contacts ul').innerHTML += html;
@@ -98,65 +99,92 @@ CO.show = function (mode)
 (function ()
 {
   // === SWIPES ===
-  var swipe, startX, startY, conts = document.querySelector('#page-contacts ul');
+  var item, shadow, startX, swipe = 0, action = 0,
+    conts = document.querySelector('#page-contacts ul'),
+    vw = window.innerWidth, threshold = vw * .3;
 
   conts.addEventListener('touchstart', function (e)
   {
     var t = e.changedTouches[0];
-    swipe = 0;
     startX = t.pageX;
-    startY = t.pageY;
+    item = PP.par(e.target, 'li');
+    shadow = conts.querySelector('.shad-' + item.dataset.id);
   });
 
   conts.addEventListener('touchmove', function (e)
   {
-    var prevSwipe = swipe, t = e.changedTouches[0], distX = t.pageX - startX, distY = t.pageY - startY;
+    var t = e.changedTouches[0], distX = t.pageX - startX;
 
-    if (Math.abs(distX) > Math.abs(distY))
+    if (swipe)
     {
-      if (distX > 50) swipe = 1;
-      else if (Math.abs(distX) < 50) swipe = 0;
-      else if (distX < -50) swipe = -1;
+      item.style.left = distX + 'px';
       e.preventDefault();
-    }
 
-    if (swipe != prevSwipe)
+      if (distX > threshold) action = 1;
+      else if (Math.abs(distX) < threshold) action = 0;
+      else if (distX < -threshold) action = -1;
+    }
+    else
     {
-      var li = PP.par(e.target, 'li');
-      if (swipe == 1) { li.classList.remove('swipedL'); li.classList.add('swipedR') }
-      else if (swipe == 0) { li.classList.remove('swipedR'); li.classList.remove('swipedL') }
-      else if (swipe == -1) { li.classList.remove('swipedR'); li.classList.add('swipedL') }
+      if (Math.abs(distX) > 32)
+      {
+        swipe = 1;
+        shadow.style.display = 'block';
+        item.style.position = 'absolute';
+      }
     }
   });
 
-  conts.addEventListener('touchend', function (e)
+  conts.addEventListener('touchend', function ()
   {
     if (swipe)
     {
-      var li = PP.par(e.target, 'li'), id = li.dataset.id;
-      if (swipe == 1)
+      swipe = 0;
+
+      // animate back
+      setTimeout(function (item, shadow)
       {
-        ML.api('contact', 'update', {id:id, muted:!ML.state.muted - 0}, function ()
-        {
-          setTimeout(function (e)
+        item.classList.remove('travel');
+        item.style.position = 'static';
+        shadow.style.display = 'none';
+      }, 300, item, shadow);
+
+      item.classList.add('travel');
+
+      var id = item.dataset.id;
+
+      switch (action)
+      {
+        case 1:
+          item.style.left = vw + 'px';
+
+          /*ML.api('contact', 'update', {id: id, muted: !ML.state.muted - 0}, function ()
           {
-            e.parentNode.removeChild(li);
-          }, 800, li);
-          li.style.height = 0;
-          li.style.opacity = 0;
-        });
+            setTimeout(function (e)
+            {
+              e.parentNode.removeChild(e);
+            }, 800, item);
+            item.style.height = 0;
+            item.style.opacity = 0;
+          });*/
+          break;
+
+        case -1:
+          item.style.left = -vw + 'px';
+
+          /*ML.api('contact', 'update', {id: id, read: item.querySelector('.img').classList.contains('unread') - 0}, function ()
+          {
+            var cl = item.querySelector('.img').classList;
+            cl.toggle('unread');
+            item.querySelector('.post').innerHTML = 'mark as<br>' + (cl.contains('unread')?'':'un') + 'read';
+          });*/
+          break;
+
+        default:
+          item.style.left = 0;
       }
-      else
-      {
-        ML.api('contact', 'update', {id:id, read:li.querySelector('.img').classList.contains('unread') - 0}, function ()
-        {
-          var cl = li.querySelector('.img').classList;
-          cl.toggle('unread');
-          li.querySelector('.post').innerHTML = 'mark as<br>' + (cl.contains('unread')?'':'un') + 'read';
-        });
-      }
-      li.classList.remove('swipedR');
-      li.classList.remove('swipedL');
+
+      console.log('Swiped:', action);
     }
   });
 
