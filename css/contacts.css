@@ -11,6 +11,8 @@
     height:48px; border:0; width:100%; background: url('/gfx/color/search.svg') no-repeat 40px 15px;
     color:#0001f7; font-size: 14px; padding: 0 0 0 89px;
 }
+#page-contacts .search input::-webkit-input-placeholder { color: #0001f7 }
+#page-contacts .search input::-moz-placeholder { color: #0001f7 }
 #page-contacts .head .clear {width: 20px;height:20px;background: url('/gfx/white/clear.svg');position: fixed; top:94px;right: 10px;display:none;cursor: pointer}
 #page-contacts .head.mode2 .clear {display:block}
 #page-contacts .head.mode2 .accounts {display:none}
@@ -19,7 +21,7 @@
 #page-contacts .tabs {height:48px; display: flex; font-weight: 500; background: #fff; z-index: 10}
 #page-contacts .tabs div {border-bottom: 1px #f5f5f5 solid; flex: 1 0 0;text-align: center; padding-top: 14px; color: #0001f7; cursor: pointer}
 #page-contacts .tabs div span {border: 0 solid}
-#page-contacts .tabs div.sel span {border-width:0 0 2px}
+#page-contacts .tabs div.sel span {border-width:0 0 2px; font-weight: 600}
 
 #page-contacts ul {list-style-type: none;margin-top:176px;padding: 0; overflow-x: hidden}
 #page-contacts ul li.new {display: none}
