@@ -1,6 +1,5 @@
 #page-contacts {padding:0}
-#page-contacts .head {position: fixed;width: 100%;top:0;left:0;height: 176px}
-#page-contacts .head {height:128px; background:#fff; color:#0001f7}
+#page-contacts .head { height:128px; background:#fff; color:#0001f7; position: fixed; width: 100%;top:0;left:0;z-index: 10}
 #page-contacts .head .ava {float: left;padding: 15px 16px 15px 24px}
 #page-contacts .head img {border-radius: 50%; border-image:0}
 #page-contacts .head .name {font-size: 27px; padding-top: 16px; font-weight: 500}
@@ -17,7 +16,7 @@
 #page-contacts .head.mode2 .accounts {display:none}
 #page-contacts .head.mode2 .hint {display: flex}
 
-#page-contacts .tabs {height:48px; display: flex; font-weight: 500; background: #fff}
+#page-contacts .tabs {height:48px; display: flex; font-weight: 500; background: #fff; z-index: 10}
 #page-contacts .tabs div {border-bottom: 1px #f5f5f5 solid; flex: 1 0 0;text-align: center; padding-top: 14px; color: #0001f7;/*box-shadow: 0 5px 20px 0 rgba(240,240,240,.8);*/cursor: pointer}
 #page-contacts .tabs div span {border: 0 solid}
 #page-contacts .tabs div.sel span {border-width:0 0 2px}
@@ -42,7 +41,7 @@
 #page-contacts ul li
 {
     overflow: hidden; height:80px; white-space: nowrap; display: flex; padding-left: 10px; width: 100vw;
-    transition: height .8s ease-in, opacity .8s ease-in; cursor: pointer; z-index: 2; background: #fff;
+    transition: height .8s ease-in, opacity .8s ease-in; cursor: pointer; background: #fff;
 }
 
 #page-contacts ul .shadow {height: 80px;display:none;background: #0001f7; color: #fff }
