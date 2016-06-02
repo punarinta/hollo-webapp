@@ -6,7 +6,7 @@
 #snackbar > div {position: fixed; top: 0}
 #snackbar .icon {width: 40px; height: 40px; text-align: center; background: no-repeat center center; top: 8px; cursor: pointer; border-radius: 50%}
 #snackbar .back {left: 5px; background-image: url('/gfx/color/arrow-back.svg')}
-#snackbar .name {left: 50px; padding-top: 13px; font-weight: 300; font-size: 27px}
+#snackbar .name {left: 50px; padding-top: 12px; font-weight: 300; font-size: 27px}
 #snackbar .tags {right: 85px; background-image: url('/gfx/color/subjs.svg')}
 #snackbar .files {right: 42px; background-image: url('/gfx/color/clip.svg')}
 #snackbar .more {right: 5px; background-image: url('/gfx/color/more-vert.svg'); transition: transform .3s; }
