@@ -1,23 +1,35 @@
 @font-face {
-    font-family: 'Edmondsans';
+    font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
-    src: local('Edmondsans'), local('Edmondsans-Regular'), url(/gfx/Edmondsans-Regular.woff) format('woff');
+    src: local('Roboto'), local('Roboto-Regular'), url(/gfx/Roboto-Regular.woff) format('woff');
 }
 @font-face {
-    font-family: 'Edmondsans';
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Work Sans Light'), local('Work-Sans-300'), url(/gfx/WorkSans-Light.woff) format('woff');
+}
+@font-face {
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Work Sans'), local('Work-Sans-regular'), url(/gfx/WorkSans-Regular.woff) format('woff');
+}
+@font-face {
+    font-family: 'Work Sans';
     font-style: normal;
     font-weight: 500;
-    src: local('Edmondsans Medium'), local('Edmondsans-Medium'), url(/gfx/Edmondsans-Medium.woff) format('woff');
+    src: local('Work Sans Medium'), local('Work-Sans-500'), url(/gfx/WorkSans-Medium.woff) format('woff');
 }
 @font-face {
-    font-family: 'Edmondsans';
+    font-family: 'Work Sans';
     font-style: normal;
-    font-weight: 700;
-    src: local('Edmondsans Bold'), local('Edmondsans-Bold'), url(/gfx/Edmondsans-Bold.woff) format('woff');
+    font-weight: 600;
+    src: local('Work Sans SemiBold'), local('Work-Sans-600'), url(/gfx/WorkSans-SemiBold.woff) format('woff');
 }
 
-body {font-family: 'Edmondsans', sans-serif; padding: 0; margin: 0; background-color: #f5f5f5}
+body {font-family: 'Work Sans', sans-serif; padding: 0; margin: 0; background-color: #f5f5f5}
 body::-webkit-scrollbar {display: none}
 
 .page {display: none; padding: 5px}
