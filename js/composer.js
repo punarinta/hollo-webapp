@@ -19,9 +19,6 @@ MS.cmpResize = function ()
 
   cmpText.onkeyup = function (e)
   {
-    // left trim the contents
-    this.value = this.value.replace(/^\s+/, '');
-
     if (/[^a-zA-Z0-9-_]/.test(this.value.slice(-1)) && e.keyCode > 31)
     {
       var that = this, i = 0, w = this.value.trim().split(' ').slice(-1)[0].toLowerCase().replace(/[_\W]+/g, '');
