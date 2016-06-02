@@ -53,4 +53,7 @@
 #page-contacts ul .post {margin-right: -100px}
 
 #page-contacts ul .shadow {height: 80px;display:none;background: #0001f7; color: #fff }
-#page-contacts ul li.travel {transition: left .3s ease-in}
+#page-contacts ul .shadow div { display:flex;justify-content:center;align-items:center;height:100%;width:80px; font-size: 15px; text-align: center }
+#page-contacts ul .shadow div:first-child { float: left}
+#page-contacts ul .shadow div:last-child { float: right}
+#page-contacts ul li.travel {transition: left .4s ease-in}

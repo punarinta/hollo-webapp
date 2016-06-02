@@ -31,7 +31,7 @@ CO.add = function (data)
       '<div class="hujava"><div class="name">' + name + '</div><div class="email">' + data[i].email + '</div></div>' +
       '<div class="post">mark as<br>' + (unread?'':'un') + 'read</div>' +
       '</li>' +
-      '<div class="shadow shad-' + data[i].id + '">BLABLABLA</div>';
+      '<div class="shadow shad-' + data[i].id + '"><div>mute</div><div>mark<br>as read</div></div>';
   }
 
   document.querySelector('#page-contacts ul').innerHTML += html;
@@ -99,7 +99,7 @@ CO.show = function (mode)
 (function ()
 {
   // === SWIPES ===
-  var item, shadow, startX, swipe = 0, action = 0,
+  var item, shadow, startX, startY, swipe = 0, action = 0, blockSwipe = 0,
     conts = document.querySelector('#page-contacts ul'),
     vw = window.innerWidth, threshold = vw * .3;
 
@@ -107,13 +107,19 @@ CO.show = function (mode)
   {
     var t = e.changedTouches[0];
     startX = t.pageX;
+    startY = t.pageY;
     item = PP.par(e.target, 'li');
     shadow = conts.querySelector('.shad-' + item.dataset.id);
+
+    if (item.tagName != 'LI')
+    {
+      blockSwipe = 1;
+    }
   });
 
   conts.addEventListener('touchmove', function (e)
   {
-    var t = e.changedTouches[0], distX = t.pageX - startX;
+    var t = e.changedTouches[0], distX = t.pageX - startX, distY = t.pageY - startY;
 
     if (swipe)
     {
@@ -126,17 +132,24 @@ CO.show = function (mode)
     }
     else
     {
-      if (Math.abs(distX) > 32)
+      if (Math.abs(distY) > 16)
+      {
+        blockSwipe = 1;
+      }
+      if (Math.abs(distX) > 16 && !blockSwipe)
       {
         swipe = 1;
         shadow.style.display = 'block';
         item.style.position = 'absolute';
+        shadow.style.opacity = 1;
       }
     }
   });
 
   conts.addEventListener('touchend', function ()
   {
+    blockSwipe = 0;
+
     if (swipe)
     {
       swipe = 0;
@@ -147,7 +160,8 @@ CO.show = function (mode)
         item.classList.remove('travel');
         item.style.position = 'static';
         shadow.style.display = 'none';
-      }, 300, item, shadow);
+        shadow.style.opacity = 0;
+      }, 400, item, shadow);
 
       item.classList.add('travel');
 
