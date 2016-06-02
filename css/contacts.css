@@ -17,13 +17,13 @@
 #page-contacts .head.mode2 .hint {display: flex}
 
 #page-contacts .tabs {height:48px; display: flex; font-weight: 500; background: #fff; z-index: 10}
-#page-contacts .tabs div {border-bottom: 1px #f5f5f5 solid; flex: 1 0 0;text-align: center; padding-top: 14px; color: #0001f7;/*box-shadow: 0 5px 20px 0 rgba(240,240,240,.8);*/cursor: pointer}
+#page-contacts .tabs div {border-bottom: 1px #f5f5f5 solid; flex: 1 0 0;text-align: center; padding-top: 14px; color: #0001f7; cursor: pointer}
 #page-contacts .tabs div span {border: 0 solid}
 #page-contacts .tabs div.sel span {border-width:0 0 2px}
 
 #page-contacts ul {list-style-type: none;margin-top:176px;padding: 0; overflow-x: hidden}
 #page-contacts ul li.new {display: none}
-#page-contacts ul li.new .name {padding-top:26px; color: #0001f7}
+#page-contacts ul li.new .name {padding-top:23px; color: #0001f7}
 #page-contacts ul li.new .img {background: transparent url('/gfx/color/plus.svg') no-repeat center;display: block}
 
 #page-contacts ul .ava {float: left;padding: 14px; margin-right: 3px;min-width: 48px}
