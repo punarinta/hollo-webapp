@@ -1,30 +1,30 @@
 #page-contacts {padding:0}
 #page-contacts .head {position: fixed;width: 100%;top:0;left:0;height: 176px}
-#page-contacts .head {height:128px; background-color: #4b54ff}
+#page-contacts .head {height:128px; background:#fff; color:#0001f7}
 #page-contacts .head .ava {float: left;padding: 15px 16px 15px 24px}
 #page-contacts .head img {border-radius: 50%; border-image:0}
-#page-contacts .head .name {font-size: 27px; padding-top: 19px; font-weight: 700}
+#page-contacts .head .name {font-size: 27px; padding-top: 16px; font-weight: 500}
 #page-contacts .head .email {font-size: 12px}
-#page-contacts .accounts {overflow: hidden;height:80px;white-space: nowrap;display: flex;color:#fff}
-#page-contacts .hint {height:80px;display:none;color:#fff;justify-content:center;align-items:center;font-size: 14px;text-align: center}
+#page-contacts .accounts {overflow: hidden;height:80px;white-space: nowrap;display: flex}
+#page-contacts .hint {height:80px;display:none;justify-content:center;align-items:center;font-size: 14px;text-align: center}
 #page-contacts .search input
 {
-    height:48px; border:0; width:100%; background: url('/gfx/white/search.svg') no-repeat 40px 15px;
-    color:#fff; font-size: 14px; padding: 0 0 0 89px;
+    height:48px; border:0; width:100%; background: url('/gfx/color/search.svg') no-repeat 40px 15px;
+    color:#0001f7; font-size: 14px; padding: 0 0 0 89px;
 }
 #page-contacts .head .clear {width: 20px;height:20px;background: url('/gfx/white/clear.svg');position: fixed; top:94px;right: 10px;display:none;cursor: pointer}
 #page-contacts .head.mode2 .clear {display:block}
 #page-contacts .head.mode2 .accounts {display:none}
 #page-contacts .head.mode2 .hint {display: flex}
 
-#page-contacts .tabs {height:48px; display: flex; font-weight: 500}
-#page-contacts .tabs div {flex: 1 0 0;text-align: center; padding-top: 14px; color: #4b54ff;background: #f5f5f5;box-shadow: 0 5px 20px 0 rgba(240,240,240,.8);cursor: pointer}
+#page-contacts .tabs {height:48px; display: flex; font-weight: 500; background: #fff}
+#page-contacts .tabs div {border-bottom: 1px #f5f5f5 solid; flex: 1 0 0;text-align: center; padding-top: 14px; color: #0001f7;/*box-shadow: 0 5px 20px 0 rgba(240,240,240,.8);*/cursor: pointer}
 #page-contacts .tabs div span {border: 0 solid}
 #page-contacts .tabs div.sel span {border-width:0 0 2px}
 
 #page-contacts ul {list-style-type: none;margin-top:176px;padding: 0; overflow-x: hidden}
 #page-contacts ul li.new {display: none}
-#page-contacts ul li.new .name {padding-top:26px}
+#page-contacts ul li.new .name {padding-top:26px; color: #0001f7}
 #page-contacts ul li.new .img {background: transparent url('/gfx/color/plus.svg') no-repeat center;display: block}
 
 #page-contacts ul .ava {float: left;padding: 14px; margin-right: 3px;min-width: 48px}
@@ -32,25 +32,18 @@
 #page-contacts ul .img
 {
     border-radius: 50%; width:42px; height:42px;display:flex;justify-content:center;align-items:center;
-    border: 3px #f5f5f5 solid; transition: border-color .5s; transition-delay: .5s;
+    border: 3px transparent solid; transition: border-color .5s; transition-delay: .5s;
     color:#fff;text-transform: uppercase;font:18px sans-serif;background-size: cover;
 }
-#page-contacts ul .img.unread {border-color:#5634ff}
-#page-contacts ul .name {font-size: 150%; padding-top: 21px; font-weight: 500}
-#page-contacts ul .email {font-size: 14px; color: grey}
+#page-contacts ul .img.unread {border-color:#0001f7}
+#page-contacts ul .name {font-size: 24px; padding-top: 14px; font-weight: 300}
+#page-contacts ul .email {color: #333; font: 15px Roboto}
 
 #page-contacts ul li
 {
     overflow: hidden; height:80px; white-space: nowrap; display: flex; padding-left: 10px; width: 100vw;
     transition: height .8s ease-in, opacity .8s ease-in; cursor: pointer; z-index: 2; background: #fff;
 }
-#page-contacts ul .pre, #page-contacts ul .post
-{
-    display: flex; color:#fff; background-color: #4b54ff; min-width:100px;text-align: center;z-index: 1;
-    justify-content:center;align-items:center; transition: margin .4s; font-size: 14px;font-weight: 500;
-}
-#page-contacts ul .pre {margin-left: -110px}
-#page-contacts ul .post {margin-right: -100px}
 
 #page-contacts ul .shadow {height: 80px;display:none;background: #0001f7; color: #fff }
 #page-contacts ul .shadow div { display:flex;justify-content:center;align-items:center;height:100%;width:80px; font-size: 15px; text-align: center }

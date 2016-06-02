@@ -41,7 +41,7 @@ body::-webkit-scrollbar {display: none}
     font: 15px sans-serif; display:flex;justify-content:center;align-items:center; cursor: pointer; color: #fff;
 }
 
-#page-loader {background: #4b54ff;display:flex;justify-content:center;align-items:center;height: 100vh;flex-direction: column}
+#page-loader {background: #0001f7;display:flex;justify-content:center;align-items:center;height: 100vh;flex-direction: column}
 
 #mbox { top:0;display: none;z-index: 100;width: 100vw;height: 100vh;background: rgba(0,0,0,.5);position: fixed }
 #mbox > div { background: #fff; display:flex; flex-direction: column; margin: 5%; width:90%;align-self: center}

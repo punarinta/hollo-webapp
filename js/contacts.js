@@ -26,12 +26,10 @@ CO.add = function (data)
 
     html +=
       '<li data-email="' + data[i].email + '" data-id="' + data[i].id + '">' +
-      '<div class="pre">' + (ML.state.muted?'un':'') + 'mute</div>' +
       '<div class="ava"><div class="img' + unread + '" id="img-gr-' + md5(data[i].email) + '" style="background:' + ML.colorHash(data[i].email) + '">' + nc + '</div></div>' +
       '<div class="hujava"><div class="name">' + name + '</div><div class="email">' + data[i].email + '</div></div>' +
-      '<div class="post">mark as<br>' + (unread?'':'un') + 'read</div>' +
       '</li>' +
-      '<div class="shadow shad-' + data[i].id + '"><div>mute</div><div>mark<br>as read</div></div>';
+      '<div class="shadow shad-' + data[i].id + '"><div>' + (ML.state.muted?'un':'') + 'mute</div><div>mark<br>as ' + (unread?'':'un') + 'read</div></div>';
   }
 
   document.querySelector('#page-contacts ul').innerHTML += html;
@@ -79,7 +77,7 @@ CO.show = function (mode)
     ML.api('contact', 'find', {pageStart:CO.offset, pageLength:25, filters: [{mode:'muted', value:ML.state.muted}]}, function (data)
     {
       // that's a first load, so keep it clean
-      ul.innerHTML = '<li data-email="new" class="new"><div class="ava"><div class="new img unread"></div></div><div><div class="name"></div><div class="email"></div></div></li>';
+      ul.innerHTML = '<li data-email="new" class="new"><div class="ava"><div class="new img"></div></div><div><div class="name"></div><div class="email"></div></div></li>';
 
       CO.add(data);
 
