@@ -51,7 +51,7 @@ ML.hidePages = function ()
     Array.prototype.forEach.call(document.querySelectorAll('#page-contacts li'), function(el)
     {
       var name = el.getElementsByClassName('name')[0].innerHTML.toUpperCase(),
-        email = el.dataset.email.toUpperCase();
+        email = el.dataset.email;
 
       if (email == 'new') return;
 
@@ -65,12 +65,12 @@ ML.hidePages = function ()
     if (!any && r.test(this.value))
     {
       ny.style.display = 'block';
-      ny.getElementsByClassName('name')[0].innerHTML = this.value;
+      ny.querySelector('.name').innerHTML = this.value;
     }
     else
     {
       ny.style.display = 'none';
-      ny.getElementsByClassName('name')[0].innerHTML = '';
+      ny.querySelector('.name').innerHTML = '';
     }
   };
 
