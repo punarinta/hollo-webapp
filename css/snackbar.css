@@ -1,23 +1,23 @@
 #snackbar
 {
     display: none; position: fixed; top: 0; width: 100%; height: 56px; box-shadow: 0 0 7px 0 rgba(80,80,80,.75);
-    background-color: /*#2aff67*//*#eaeaea*/ rgba(255,255,255,.8); z-index: 10
+    background-color: rgba(255,255,255,.8); z-index: 10; color: #0001f7;
 }
 #snackbar > div {position: fixed; top: 0}
 #snackbar .icon {width: 40px; height: 40px; text-align: center; background: no-repeat center center; top: 8px; cursor: pointer; border-radius: 50%}
-#snackbar .back {left: 5px; background-image: url('/gfx/black/arrow_back.svg')}
-#snackbar .name {left: 50px; padding-top: 17px; font-weight: 500; font-size: 27px}
-#snackbar .tags {right: 85px; background-image: url('/gfx/black/subject.svg')}
-#snackbar .files {right: 42px; background-image: url('/gfx/black/attachment.svg')}
-#snackbar .more {right: 5px; background-image: url('/gfx/black/more_vert.svg'); transition: transform .3s; }
+#snackbar .back {left: 5px; background-image: url('/gfx/color/arrow-back.svg')}
+#snackbar .name {left: 50px; padding-top: 13px; font-weight: 300; font-size: 27px}
+#snackbar .tags {right: 85px; background-image: url('/gfx/color/subjs.svg')}
+#snackbar .files {right: 42px; background-image: url('/gfx/color/clip.svg')}
+#snackbar .more {right: 5px; background-image: url('/gfx/color/more-vert.svg'); transition: transform .3s; }
 #snackbar .more.toggled {transform: rotate(90deg)}
-#snackbar .toggled {background-color: #86feab}
+#snackbar .toggled {background-color: #f5f5f5}
 
-.snackbar-menu {z-index: 10; position: fixed; right: 3px; top: 65px; display: none; background-color: #2aff67; box-shadow: 0 2px 6px 0 rgba(80,80,80,.75); }
+.snackbar-menu {z-index: 10; position: fixed; right: 3px; top: 65px; display: none; background-color: #fff; box-shadow: 0 2px 6px 0 rgba(80,80,80,.75) }
 .snackbar-menu ul {list-style-type: none; padding: 2px 0; margin: 0}
 .snackbar-menu:before
 {
-    right: 11px; border-color: transparent transparent #2aff67 transparent; content: ''; position: absolute;
+    right: 11px; border-color: transparent transparent #fff transparent; content: ''; position: absolute;
     top: -10px; width: 0; height: 0; border-style: solid; border-width: 0 10px 10px; z-index: 10
 }
 .snackbar-menu li {padding: 10px 14px; cursor: pointer}
@@ -29,7 +29,7 @@
 #snackbar-menu-files {right: 0; width: 100%; bottom:0;z-index:10;padding-top: 1vh;}
 #snackbar-menu-files li
 {
-    margin: 1vw;max-width: 47%; height: 60vw; background-color: #c3d9ff;
+    margin: 1vw;max-width: 47%; height: 60vw; background-color: #fff;
     border-radius: 4px; padding: 0;flex: 1 0 47%;
 }
 #snackbar-menu-files li .img
@@ -39,8 +39,8 @@
 }
 #snackbar-menu-files li .bar {width:100%; height: 13vw;background-color: #fff;border-radius: 0 0 4px 4px; display: flex}
 #snackbar-menu-files li .bar > div {flex: 1;background: no-repeat center center;opacity: .6}
-#snackbar-menu-files li .bar > div:nth-child(1) {background-image: url('/gfx/black/file_download.svg')}
-#snackbar-menu-files li .bar > div:nth-child(2) {background-image: url('/gfx/black/share.svg')}
+#snackbar-menu-files li .bar > div:nth-child(1) {background-image: url('/gfx/color/download.svg')}
+#snackbar-menu-files li .bar > div:nth-child(2) {background-image: url('/gfx/color/share.svg')}
 
 @media (min-width: 600px)
 {

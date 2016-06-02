@@ -199,8 +199,6 @@ CO.show = function (mode)
         default:
           item.style.transform = 'translateX(0)';
       }
-
-      console.log('Swiped:', action);
     }
   });
 

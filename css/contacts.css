@@ -13,7 +13,7 @@
 }
 #page-contacts .search input::-webkit-input-placeholder { color: #0001f7 }
 #page-contacts .search input::-moz-placeholder { color: #0001f7 }
-#page-contacts .head .clear {width: 20px;height:20px;background: url('/gfx/white/clear.svg');position: fixed; top:94px;right: 10px;display:none;cursor: pointer}
+#page-contacts .head .clear {width: 20px;height:20px;background: url('/gfx/color/clear.svg');position: fixed; top:94px;right: 10px;display:none;cursor: pointer}
 #page-contacts .head.mode2 .clear {display:block}
 #page-contacts .head.mode2 .accounts {display:none}
 #page-contacts .head.mode2 .hint {display: flex}
