@@ -32,11 +32,11 @@
     border:0;border-top:1px solid #ddd;margin:0;position: fixed; left: 0; bottom: 0; max-height: 30vh;
     width: calc(100vw - 60px); height: 40px; transition: all .4s; padding: 20px 60px 0 20px; font-size: 18px;
 }
-#composer textarea::-webkit-input-placeholder { font-style: italic; }
-#composer textarea::-moz-placeholder { font-style: italic; }
+#composer textarea::-webkit-input-placeholder { font-style: italic; font-family: 'Work Sans', sans-serif; font-weight: 300 }
+#composer textarea::-moz-placeholder { font-style: italic; font-family: 'Work Sans', sans-serif; font-weight: 300 }
 #composer .head
 {
-    display: none; height: 32px;position: fixed;bottom:61px;left:0;background: #fff;width:100%;
+    display: none; height: 32px; position: fixed; bottom:61px; left:0; background: #fff;width:100%;
     border-top: 1px solid #ddd; color: #0001f7; flex-wrap: nowrap
 }
 #composer .head > * {height:32px}
