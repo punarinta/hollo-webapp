@@ -116,3 +116,9 @@ body::-webkit-scrollbar {display: none}
           -webkit-transform: scaleY(1.0);
       }
 }
+
+@media (min-width: 540px)
+{
+    .page {width:540px; margin: 0 auto; background: #f5f5f5}
+    body {background: url('/gfx/bg1.jpg')}
+}
