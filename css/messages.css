@@ -1,4 +1,4 @@
-#page-msgs { padding-top: 61px; font-family: 'DejaVu Sans', sans-serif }
+#page-msgs { padding-top: 61px; font-family: 'DejaVu Sans', sans-serif; min-height: calc(100vh - 100px) }
 #page-msgs ul {list-style-type: none; padding: 0 0 50px 0; margin: 0;}
 #page-msgs ul li {overflow: auto}
 #page-msgs ul li > div {overflow: auto; margin: 5px 3px; min-width: 200px;max-width: 100%}
