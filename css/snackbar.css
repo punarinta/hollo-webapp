@@ -25,12 +25,13 @@
 #snackbar-menu-tags {right: 85px}
 #snackbar-menu-tags div
 {
-    width: 152px; font:14px Roboto; font-style: italic; text-align: center;margin: 24px 32px; color: rgba(0,0,0,.56)
+    width: 152px; font:italic 14px 'Roboto'; text-align: center;margin: 24px 32px; color: rgba(0,0,0,.56)
 }
 
 #snackbar-menu-files:before {right: 51px;}
 #snackbar-menu-files ul {height:100%;margin: 0 1%;display:flex;flex-flow: row wrap;justify-content: center;overflow: auto; align-items:center}
-#snackbar-menu-files {right: 0; width: 100%; bottom:0;z-index:10;padding-top: 1vh;}
+#snackbar-menu-files {right: 0; width: 100%; bottom:0; z-index:10; padding-top: 1vh}
+#snackbar-menu-files ul > div {color: rgba(0,0,0,.56); font:italic 14px Roboto}
 #snackbar-menu-files li
 {
     margin: 1vw;max-width: 47%; height: 60vw; background-color: #fff;
