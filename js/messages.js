@@ -131,7 +131,12 @@ MS.add = function (data, pos)
     html += '<li>' + subjects[i] + '</li>';
   }
 
-  document.querySelector('#snackbar-menu-tags ul').innerHTML += html;
+  var menuTags = document.querySelector('#snackbar-menu-tags ul');
+
+  // reset placeholder
+  if (menuTags.innerHTML.indexOf('<div>') != -1 && data.length) menuTags.innerHTML = '';
+
+  menuTags.innerHTML += html;
   cmp.querySelector('.subjects').innerHTML += html;
 
   // connect subject picker
@@ -204,7 +209,7 @@ MS.show = function (email, id)
 
     // reset subject lists
     MS.subjects = [];
-    document.querySelector('#snackbar-menu-tags ul').innerHTML = '';
+    document.querySelector('#snackbar-menu-tags ul').innerHTML = '<div>Here we will list the subjects used in this conversation</div>';
     page.querySelector('.subjects').innerHTML = '';
 
     ul.innerHTML = '';
