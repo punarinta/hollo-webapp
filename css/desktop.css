@@ -18,4 +18,7 @@
     #snackbar-menu-tags {right: calc(50vw - 255px + 80px)}
     #snackbar-menu-files {right: calc(50vw - 255px); width: 510px;}
     #snackbar-menu-more {right: calc(50vw - 255px)}
+
+    #page-contacts ul li {width: 492px}
+    #page-contacts ul .hujava {width: 412px}
 }
