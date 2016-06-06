@@ -17,5 +17,6 @@ var EMJ =
   unicorn: ['🦄'],
   fuck: ['🖕'],
   sad: ['🙁'],
-  money: ['💰']
+  money: ['💰'],
+  hollo: ['🦄']
 };
