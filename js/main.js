@@ -20,7 +20,15 @@ ML.hidePages = function ()
 
 (function ()
 {
-  if (screen.width > 768) ML.state.widthMode = 1;
+  window.onresize = function ()
+  {
+    var mode = ML.state.widthMode;
+    ML.state.widthMode = window.innerWidth > 768;
+    if (mode != ML.state.widthMode)
+    {
+      window.location.reload()
+    }
+  };
 
   // === FILTERS ===
   var head = document.querySelector('#page-contacts .head');

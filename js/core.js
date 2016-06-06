@@ -5,7 +5,7 @@ var ML =
   {
     muted: 0,
     currentDemo: null,
-    widthMode: 0
+    widthMode: window.innerWidth > 768
   },
   _loaded: [],
   _mbox : null,
