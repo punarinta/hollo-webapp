@@ -195,7 +195,7 @@ MS.show = function (email, id)
   ul.innerHTML = '<li>Loading...</li>';
   document.querySelector('#snackbar .name').innerHTML = '';
   document.getElementById('snackbar').style.display = 'flex';
-  page.style.display = 'block';
+  page.style.display = 'inline-block';
 
   ML.load('modules/emojis');
 

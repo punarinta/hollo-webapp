@@ -59,7 +59,7 @@ CO.show = function (mode)
   if (mode & 1)
   {
     ML.hidePages();
-    page.style.display = 'block';
+    page.style.display = 'inline-block';
   }
 
   if (mode & 2)

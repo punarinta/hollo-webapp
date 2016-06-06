@@ -1,10 +1,10 @@
 @media (min-width: 768px)
 {
     .page {background: #f5f5f5}
-    #page-login {width:500px; margin: 0 auto}
-    body {background: /*url('/gfx/bg1.jpg')*/ #c76eff}
+    #page-login {width:480px; margin: 0 auto}
+    body {background: url('/gfx/bg1.jpg')}
 
-    #page-contacts {display: inline-block; width: 360px}
+    #page-contacts {width: 360px}
     #page-contacts .head {width: 360px}
     #page-contacts .head .filter {width: 271px}
     #page-contacts .head .clear {left: 330px; right: auto}
@@ -12,7 +12,7 @@
     #page-contacts ul li {width: 360px}
     #page-contacts ul .hujava {width: 250px}
 
-    #page-msgs {display: inline-block; position: fixed; top:0; left: 360px; right:0; width: auto; height: 100vh; overflow-y: scroll}
+    #page-msgs {position: fixed; top:0; left: 360px; right:0; width: auto; height: 100vh; overflow-y: scroll}
     #page-msgs ul {padding-bottom: 60px}
 
     #snackbar {left: 360px; right:0; width: auto; box-shadow: none; padding-top: 4px}
