@@ -23,7 +23,8 @@
     "css/login",
     "css/snackbar",
     "css/contacts",
-    "css/messages"
+    "css/messages",
+    "css/desktop"
   ],
   "dist": "../dist",
   "shell":

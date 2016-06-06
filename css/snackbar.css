@@ -1,12 +1,11 @@
 #snackbar
 {
     display: none; position: fixed; top: 0; width: 100%; height: 56px; box-shadow: 0 0 7px 0 rgba(128,128,128,.5);
-    background-color: #fff; z-index: 10; color: #0001f7; left:0
+    background-color: #fff; z-index: 10; color: #0001f7; left:0; align-items: center
 }
-#snackbar > div {position: fixed; top: 0}
 #snackbar .icon {width: 40px; height: 40px; text-align: center; background: no-repeat center center; top: 8px; cursor: pointer; border-radius: 50%}
 #snackbar .back {left: 5px; background-image: url('/gfx/color/arrow-back.svg')}
-#snackbar .name {left: 50px; padding-top: 12px; font-weight: 300; font-size: 27px}
+#snackbar .name {left: 50px; font-weight: 300; font-size: 27px; flex-grow: 4}
 #snackbar .tags {right: 85px; background-image: url('/gfx/color/subjs.svg')}
 #snackbar .files {right: 42px; background-image: url('/gfx/color/clip.svg')}
 #snackbar .more {right: 5px; background-image: url('/gfx/color/more-vert.svg'); transition: transform .3s; }
@@ -34,22 +33,22 @@
 #snackbar-menu-files ul > div {color: rgba(0,0,0,.56); font:italic 14px Roboto}
 #snackbar-menu-files li
 {
-    margin: 1vw;max-width: 47%; height: 60vw; background-color: #fff;
-    border-radius: 4px; padding: 0;flex: 1 0 47%;
+    margin: 1vw;max-width: 47%; background-color: #fff;
+    border-radius: 4px; padding: 0;flex: 1 0 45%;
 }
 #snackbar-menu-files li .img
 {
     height: 47vw; background-size: cover; display:flex;justify-content:center;align-items:center;color:#fff;
-    font: 32px Edmondsans,sans-serif; text-transform: uppercase;
+    font: 32px Edmondsans,sans-serif; text-transform: uppercase; max-height: 250px
 }
 #snackbar-menu-files li .bar {width:100%; height: 13vw;background-color: #fff;border-radius: 0 0 4px 4px; display: flex}
 #snackbar-menu-files li .bar > div {flex: 1;background: no-repeat center center;opacity: .6}
 #snackbar-menu-files li .bar > div:nth-child(1) {background-image: url('/gfx/color/download.svg')}
 #snackbar-menu-files li .bar > div:nth-child(2) {background-image: url('/gfx/color/share.svg')}
 
-@media (min-width: 600px)
+/*@media (min-width: 600px)
 {
     #snackbar-menu-files li { max-width: 31%; height: 39vw; flex: 1 0 31%; }
     #snackbar-menu-files li .img {height: 31vw;}
     #snackbar-menu-files li .bar {height: 8vw;}
-}
+}*/

@@ -1,0 +1,21 @@
+@media (min-width: 500px)
+{
+    .page {width:500px; margin: 0 auto; background: #f5f5f5}
+    body {background: url('/gfx/bg1.jpg')}
+
+    #page-contacts .head {width: 500px; left: calc(50vw - 250px)}
+    #page-contacts .head .filter {width: 411px}
+    #page-contacts .head .clear {right: calc(50vw - 250px + 10px)}
+
+    #composer textarea {width: 430px; left: calc(50vw - 255px)}
+    #composer .head {width: 510px; left: calc(50vw - 255px)}
+    #composer .subjects {width: 510px; left: calc(50vw - 255px)}
+    #uploaded {width: 510px; left: calc(50vw - 255px)}
+    #composer .send {right: calc(50vw - 255px + 19px)}
+
+    #snackbar {width: 510px; left:calc(50vw - 255px)}
+
+    #snackbar-menu-tags {right: calc(50vw - 255px + 80px)}
+    #snackbar-menu-files {right: calc(50vw - 255px); width: 510px;}
+    #snackbar-menu-more {right: calc(50vw - 255px)}
+}

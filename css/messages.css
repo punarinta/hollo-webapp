@@ -12,7 +12,7 @@
 #page-msgs ul li .files {display: flex; margin-top: 10px}
 #page-msgs ul li .files > div { margin-right: 3px }
 #page-msgs ul li .files > div.full { width: 80vw; height: 50vw }
-#page-msgs ul li .foot .ts {float:right; margin:6px 25px 0; font-size: 10px;color: rgba(0,0,0,.3); font-family: Roboto;}
+#page-msgs ul li .foot .ts {float:right; margin:6px 25px 0; font-size: 10px;color: rgba(0,0,0,.3); font-family: Roboto }
 #page-msgs ul li .foot .ava
 {
     float:right; position: relative;width: 32px; height: 32px; border-radius: 50%; top:-9px; left:-16px;
@@ -30,13 +30,13 @@
 #composer textarea
 {
     border:0;border-top:1px solid #ddd;margin:0;position: fixed; left: 0; bottom: 0; max-height: 30vh;
-    width: calc(100vw - 60px); height: 40px; transition: all .4s; padding: 20px 60px 0 20px; font-size: 18px;
+    width: calc(100vw - 60px); height: 40px; transition: height .4s; padding: 20px 60px 0 20px; font-size: 18px;
 }
 #composer textarea::-webkit-input-placeholder { font-style: italic; font-family: 'Work Sans', sans-serif; font-weight: 300 }
 #composer textarea::-moz-placeholder { font-style: italic; font-family: 'Work Sans', sans-serif; font-weight: 300 }
 #composer .head
 {
-    display: none; height: 32px; position: fixed; bottom:61px; left:0; background: #fff;width:100%;
+    display: none; height: 32px; position: fixed; bottom:61px; left: 0; background: #fff;width:100%;
     border-top: 1px solid #ddd; color: #0001f7; flex-wrap: nowrap
 }
 #composer .head > * {height:32px}

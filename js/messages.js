@@ -194,7 +194,7 @@ MS.show = function (email, id)
   ML.hidePages();
   ul.innerHTML = '<li>Loading...</li>';
   document.querySelector('#snackbar .name').innerHTML = '';
-  document.getElementById('snackbar').style.display = 'block';
+  document.getElementById('snackbar').style.display = 'flex';
   page.style.display = 'block';
 
   ML.load('modules/emojis');
