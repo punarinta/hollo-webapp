@@ -4,7 +4,8 @@ var ML =
   state:
   {
     muted: 0,
-    currentDemo: null
+    currentDemo: null,
+    widthMode: 0
   },
   _loaded: [],
   _mbox : null,

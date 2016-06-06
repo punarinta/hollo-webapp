@@ -1,7 +1,14 @@
 ML.hidePages = function ()
 {
-  Array.prototype.forEach.call(document.getElementsByClassName('page'), function (el) { el.style.display = 'none' });
-  document.getElementById('snackbar').style.display = 'none';
+  Array.prototype.forEach.call(document.getElementsByClassName('page'), function (el)
+  {
+    // console.log(el.id, ML.state.widthMode, el.className);
+    if (ML.state.widthMode == 0 || el.classList.contains('fullhide'))
+    {
+      el.style.display = 'none';
+      document.getElementById('snackbar').style.display = 'none';
+    }
+  });
   Array.prototype.forEach.call(document.getElementsByClassName('snackbar-menu'), function(el)
   {
     el.style.display = 'none'
@@ -13,6 +20,7 @@ ML.hidePages = function ()
 
 (function ()
 {
+  if (screen.width > 768) ML.state.widthMode = 1;
 
   // === FILTERS ===
   var head = document.querySelector('#page-contacts .head');
@@ -244,8 +252,6 @@ ML.hidePages = function ()
   window.onpopstate = function (e)
   {
     var r = e.state.route, rs = r.split('/');
-
-    // console.log('Route: ' + e.state.route);
 
     if (rs[0] == 'chat')
     {
