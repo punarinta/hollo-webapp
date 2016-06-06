@@ -13,7 +13,9 @@
     #page-contacts ul .hujava {width: 250px}
 
     #page-msgs {position: fixed; top:0; left: 360px; right:0; width: auto; height: 100vh; overflow-y: scroll}
-    #page-msgs ul {padding-bottom: 60px}
+    #page-msgs ul {padding: 20px 0 60px}
+    #page-msgs ul li.yours > div {margin-left:24px}
+    #page-msgs ul li.mine > div {margin-right:24px}
 
     #snackbar {left: 360px; right:0; width: auto; box-shadow: none; padding-top: 4px}
     #snackbar .icon.back {display: none}
