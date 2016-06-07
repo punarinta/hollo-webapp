@@ -67,10 +67,10 @@ MS.cmpResize = function ()
     var h = Math.min(parseInt(e.target.style.height, 10), window.innerHeight * .3), f = MS._upl.length ? 78 : 0;
 
     cmp.style.height = (h + 21) + 'px';
-    cmp.querySelector('.emojis').style.bottom = f + (h + 53) + 'px';
+    cmp.querySelector('.emojis').style.bottom = f + (h + 61) + 'px';
     cmp.querySelector('.head').style.bottom = f + (h + 21) + 'px';
     cmp.querySelector('.send').style.bottom = (f + h)/2 + 'px';
-    cmp.querySelector('.subjects').style.bottom = f + (h + 54) + 'px';
+    cmp.querySelector('.subjects').style.bottom = f + (h + 62) + 'px';
     cmpText.style.bottom = f + 'px';
   });
 
