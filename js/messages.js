@@ -153,20 +153,6 @@ MS.add = function (data, pos)
     }
   });
 
-
-  /*Array.prototype.forEach.call(page.querySelectorAll('li a'), function (el)
-   {
-   el.onclick = function ()
-   {
-   ML.api('file', 'getFileUrl', {extId: el.dataset.id}, function (url)
-   {
-   window.location = url;
-   });
-   return false;
-   };
-   });*/
-
-
   // scrolling hack
   setTimeout(function (ul)
   {

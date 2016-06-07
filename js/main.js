@@ -196,6 +196,24 @@ ML.hidePages = function ()
     closeSnackbar();
   };
 
+  var snackTags = document.getElementById('snackbar-menu-tags');
+  snackTags.onclick = function (e)
+  {
+    if (e.target.tagName == 'LI')
+    {
+      var filter = e.target.innerText;
+
+      Array.prototype.forEach.call(document.querySelectorAll('#page-msgs > ul li'), function (li)
+      {
+        if (li.querySelector('.cap').innerText != filter) li.style.display = 'none';
+      });
+
+      // close picker
+      snackbar.querySelector('.icon.tags').classList.remove('toggled');
+      snackTags.style.display = 'none';
+    }
+  };
+
 
   // prevent scrolling of the main screen by files list
 
