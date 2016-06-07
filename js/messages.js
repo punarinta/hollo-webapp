@@ -28,8 +28,6 @@ MS.add = function (data, pos)
     tags = tags.concat(data[i].subject.split(' '));
     subjects.push(data[i].subject);
 
-    if (!body) body = '[HTML content]';
-
     // preprocess body
     var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i;
     body = body.replace(/(?:\r\n|\r|\n)/g, '<br />');
@@ -79,6 +77,10 @@ MS.add = function (data, pos)
           + '">' + file.type.split('/')[1] + '</div>';
       }
     }
+    else
+    {
+      if (!body) body = '[HTML content]';
+    }
 
     subj = data[i].subject;
 
@@ -101,7 +103,7 @@ MS.add = function (data, pos)
       '<div>' +
       '<div class="white">' +
       '<div class="cap">' + subj + '</div>' +
-      '<div class="msg">' + body + '</div>' +
+      (body ? ('<div class="msg">' + body + '</div>') : '') +
       (filesHtml ? '<div class="files">' + filesHtml + '</div>': '') +
       '</div>' +
       '<div class="foot"><div class="ava' + (mine ? ' full' : '') + '" style="background:' + ava + '">' + nc + '</div><div class="ts">' + ML.ts(data[i].ts) + '</div></div>' +

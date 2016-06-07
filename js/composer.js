@@ -93,9 +93,9 @@ MS.cmpResize = function ()
     // send a message
     var msg = cmpText.value, subj = cmp.querySelector('.cap').innerText, msgId = null, to = [];
 
-    if (!msg.length)
+    if (!msg.length && !MS._upl.length)
     {
-      ML.mbox('You didn\'t input any message');
+      ML.mbox('Nothing to send');
       return;
     }
 
