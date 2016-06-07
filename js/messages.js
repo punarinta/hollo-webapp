@@ -203,6 +203,11 @@ MS.show = function (email, id)
 
   ML.api('message', 'findByReference', {email: email, id: id}, function (data)
   {
+    if (MS.contact && email != MS.contact.email)
+    {
+      page.querySelector('textarea').value = '';
+    }
+
     MS.contact = data.contact;
     MS.contact.email = email;
 
