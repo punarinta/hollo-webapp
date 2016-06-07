@@ -19,6 +19,13 @@ AU.loginImap = function ()
     return;
   }
 
+  // disallow Gmail login here
+  if (user.split('@')[1] == 'gmail.com')
+  {
+    ML.mbox('Use "Sign in with Goolge" button');
+    return;
+  }
+
   ML.api('auth', 'loginImap',
   {
     'identity': user,
