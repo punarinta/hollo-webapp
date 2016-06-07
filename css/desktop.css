@@ -4,7 +4,7 @@
     #page-login {width:480px; margin: 0 auto}
     body {background: url('/gfx/bg1.jpg')}
 
-    #page-contacts {width: 360px}
+    #page-contacts {width: 360px;background: #fff; min-height: 100vh}
     #page-contacts .head {width: 360px}
     #page-contacts .head .filter {width: 271px}
     #page-contacts .head .clear {left: 330px; right: auto}
