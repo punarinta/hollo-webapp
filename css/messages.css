@@ -20,7 +20,7 @@
 }
 #page-msgs ul li.yours .foot .ava {float:left; left:16px}
 #page-msgs ul li.yours .foot .ts {float:left; margin-right: 25px}
-#page-msgs ul li.mine .foot .ava.full {background-size: cover !important;}
+#page-msgs ul li.mine .foot .ava.full {background-size: cover !important}
 #page-msgs ul li.mine > div {float: right; margin-left: 15px}
 #page-msgs ul li.yours > div {float: left; margin-right: 15px}
 
@@ -62,6 +62,6 @@
 #composer.focused .send {display: block}
 #composer.focused .subjects.opened {display: block}
 
-#upload {opacity: 0;cursor: pointer; line-height: 34px;}
+#upload {opacity: 0;cursor: pointer; line-height: 34px}
 #uploaded { position: fixed; left: 4px; bottom: 0; width: 100vw; background: #fff; white-space: nowrap; display: flex}
 #uploaded div {margin: 3px 2px}
