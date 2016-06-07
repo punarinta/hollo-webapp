@@ -35,6 +35,12 @@ body::-webkit-scrollbar {display: none}
 .page {display: none; padding: 5px}
 .page * {outline:0}
 
+*
+{
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -moz-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
 .file-icon
 {
     height: 72px; width: 72px; border-radius: 2px; background-size: cover !important; text-transform: uppercase;
