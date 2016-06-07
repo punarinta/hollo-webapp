@@ -1,4 +1,4 @@
-#page-contacts {padding:0; min-height: calc(100vh - 186px); background:#fff}
+#page-contacts {padding:0; min-height: calc(100vh - 176px); background:#fff}
 #page-contacts .head { height:128px; color:#0001f7; background:#fff; position: fixed; width: 100%;top:0;left:0; z-index:9}
 #page-contacts .head .ava {float: left;padding: 15px 16px 15px 24px}
 #page-contacts .head img {border-radius: 50%; border-image:0}
@@ -25,7 +25,7 @@
 #show-holloed {padding-left: 24px}
 #show-muted {padding-right: 24px}
 
-#page-contacts ul {list-style-type: none;margin:186px 0 0;padding: 0; overflow-x: hidden}
+#page-contacts ul {list-style-type: none;margin:176px 0 0;padding: 0; overflow-x: hidden}
 #page-contacts ul li.new {display: none}
 #page-contacts ul li.new .name {padding-top:23px; color: #0001f7}
 #page-contacts ul li.new .img {background: transparent url('/gfx/color/plus.svg') no-repeat center;display: block}
@@ -44,11 +44,11 @@
 
 #page-contacts ul li
 {
-    overflow: hidden; height:64px; white-space: nowrap; display: flex; padding-left: 10px; width: 100vw;
+    overflow: hidden; height:80px; white-space: nowrap; display: flex; padding-left: 10px; width: 100vw;
     transition: height .8s ease-in, opacity .8s ease-in; cursor: pointer; background: #fff; align-items:center;
 }
 
-#page-contacts ul .shadow {height: 64px;display:none;background: #0001f7; color: #fff }
+#page-contacts ul .shadow {height: 80px;display:none;background: #0001f7; color: #fff }
 #page-contacts ul .shadow div { display:flex;justify-content:center;align-items:center;height:100%;width:80px; font-size: 15px; text-align: center }
 #page-contacts ul .shadow div:first-child { float: left}
 #page-contacts ul .shadow div:last-child { float: right}
