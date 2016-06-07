@@ -1,6 +1,6 @@
 #page-msgs { padding-top: 61px; font-family: 'DejaVu Sans', sans-serif; min-height: calc(100vh - 100px) }
 #page-msgs ul {list-style-type: none; padding: 0 0 50px 0; margin: 0;}
-#page-msgs ul li {overflow: auto; width: 100%}
+#page-msgs ul li {overflow: auto; width: calc(100vw - 10px)}
 #page-msgs ul li > div {overflow: auto; margin: 5px 3px; min-width: 200px;max-width: 100%}
 #page-msgs ul li .white {background-color: #fff; padding: 10px 12px 16px; border-radius: 3px}
 #page-msgs ul li .msg {display: inline-block; font-size: 14px; word-break: break-all}
