@@ -105,7 +105,7 @@ CO.show = function (mode)
   // === SWIPES ===
   var item, shadow, startX, startY, swipe = 0, action = 0, blockSwipe = 0,
     conts = document.querySelector('#page-contacts ul'),
-    vw = window.innerWidth, threshold = vw * .3;
+    vw = ML.state.widthMode ? 360 : window.innerWidth, threshold = vw * .3;
 
   conts.addEventListener('touchstart', function (e)
   {
