@@ -29,7 +29,7 @@
 #composer {height: 60px}
 #composer textarea
 {
-    border:0;border-top:1px solid #ddd;margin:0;position: fixed; left: 0; bottom: 0; max-height: 30vh;
+    border:0;border-top:1px solid #ddd;margin:0;position: fixed; left: 0; bottom: 0; max-height: 30vh; font: 15px Roboto;
     width: calc(100vw - 60px); height: 40px; transition: height .4s; padding: 20px 60px 0 20px; font-size: 18px;
 }
 #composer textarea::-webkit-input-placeholder { font-style: italic; font-family: 'Work Sans', sans-serif; font-weight: 300 }
