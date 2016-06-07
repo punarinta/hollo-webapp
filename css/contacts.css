@@ -1,5 +1,5 @@
-#page-contacts {padding:0}
-#page-contacts .head { height:128px; background:#fff; color:#0001f7; position: fixed; width: 100%;top:0;left:0; z-index:9}
+#page-contacts {padding:0; min-height: calc(100vh - 176px); background:#fff}
+#page-contacts .head { height:128px; color:#0001f7; background:#fff; position: fixed; width: 100%;top:0;left:0; z-index:9}
 #page-contacts .head .ava {float: left;padding: 15px 16px 15px 24px}
 #page-contacts .head img {border-radius: 50%; border-image:0}
 #page-contacts .head .name {font-size: 27px; padding-top: 16px; font-weight: 500}
@@ -23,7 +23,7 @@
 #page-contacts .tabs div span {border: 0 solid}
 #page-contacts .tabs div.sel span {border-width:0 0 2px; font-weight: 600}
 
-#page-contacts ul {list-style-type: none;margin-top:176px;padding: 0; overflow-x: hidden}
+#page-contacts ul {list-style-type: none;margin:176px 0 0;padding: 0; overflow-x: hidden}
 #page-contacts ul li.new {display: none}
 #page-contacts ul li.new .name {padding-top:23px; color: #0001f7}
 #page-contacts ul li.new .img {background: transparent url('/gfx/color/plus.svg') no-repeat center;display: block}
