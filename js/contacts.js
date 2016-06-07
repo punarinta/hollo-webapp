@@ -87,7 +87,7 @@ CO.show = function (mode)
       }
 
       // load the first contact on laptop
-      if (ML.state.widthMode == 1 && data.length)
+      if (ML.state.widthMode == 1 && data.length && !MS.loaded)
       {
         ML.go('chat/' + data[0].email, data[0].id);
       }

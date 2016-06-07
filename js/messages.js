@@ -2,7 +2,8 @@ var MS =
 {
   contact: null,
   _upl: [],
-  subjects: []
+  subjects: [],
+  loaded: 0
 };
 
 MS.add = function (data, pos)
@@ -178,6 +179,14 @@ MS.show = function (email, id)
 {
   var page = document.getElementById('page-msgs'),
       ul = page.querySelector('ul');
+
+  if (!CO.loaded && ML.state.widthMode)
+  {
+    CO.show(8);
+  }
+  
+  // 'shown'
+  MS.loaded = 1;
 
   ML.hidePages();
   ul.innerHTML = '<li>Loading...</li>';
