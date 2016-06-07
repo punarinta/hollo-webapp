@@ -6,8 +6,8 @@
 #page-msgs ul li .msg {display: inline-block; font-size: 14px; word-break: break-all}
 #page-msgs ul li .cap
 {
-    color: #0001f7; cursor: pointer; font: 12px monospace;margin-bottom: 7px;
-    background: url('/gfx/color/subj.svg') no-repeat; padding: 2px 0 0 24px;
+    color: #0001f7; cursor: pointer; font: 15px 'Work Sans'; margin-bottom: 7px;
+    background: url('/gfx/color/subj.svg') no-repeat 1px; padding-left: 24px;
 }
 #page-msgs ul li .files {display: flex; margin-top: 10px}
 #page-msgs ul li .files > div { margin-right: 3px }
