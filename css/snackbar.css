@@ -52,3 +52,12 @@
     #snackbar-menu-files li .img {height: 31vw;}
     #snackbar-menu-files li .bar {height: 8vw;}
 }*/
+
+#msgs-filter
+{
+    position: fixed; top: 64px; height: 60px; left: 12px; right: 12px; background: #fff; display: none;
+    padding-left: 10px; align-items:center; font-family: 'Work Sans'; border: 1px #eee solid;
+}
+#msgs-filter .cap {font-size: 13px; color: rgba(0,0,0,.54)}
+#msgs-filter .close {background: url('/gfx/color/clear.svg') no-repeat; width:20px; height: 20px; cursor: pointer; margin: 0 10px 0 auto}
+#msgs-filter .body {font-size: 15px; color: #0001f7}
