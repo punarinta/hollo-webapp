@@ -1,8 +1,6 @@
 @media (min-width: 768px)
 {
     .page {background: #f5f5f5}
-    #page-login {width:480px; margin: 0 auto}
-    body {background: url('/gfx/bg1.jpg')}
 
     #page-contacts {width: 360px;background: #fff; min-height: 100vh}
     #page-contacts .head {width: 360px}
