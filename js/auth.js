@@ -22,7 +22,7 @@ AU.loginImap = function ()
   // disallow Gmail login here
   if (user.split('@')[1] == 'gmail.com')
   {
-    ML.mbox('Use "Sign in with Goolge" button');
+    ML.mbox('Use "Sign in with Google" button');
     return;
   }
 
