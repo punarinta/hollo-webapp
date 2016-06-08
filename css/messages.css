@@ -36,16 +36,16 @@
 #composer textarea::-moz-placeholder { font-style: italic; font-family: 'Work Sans', sans-serif; font-weight: 300 }
 #composer .head
 {
-    display: none; height: 32px; position: fixed; bottom:61px; left: 0; background: #fff;width:100%;
-    border-top: 1px solid #ddd; color: #0001f7; flex-wrap: nowrap; padding: 4px 0
+    display: none; height: 40px; position: fixed; bottom:61px; left: 0; background: #fff;width:100%;
+    border-top: 1px solid #ddd; color: #0001f7; flex-wrap: nowrap
 }
-#composer .head > * {height:32px}
-#composer .head .icon {background: url('/gfx/color/subj.svg') no-repeat 9px 8px;width:32px}
-#composer .head .cap {margin-top: 10px;font-size: 12px; flex: 4 1 0}
+#composer .head > * {height:40px}
+#composer .head .icon {background: url('/gfx/color/subj.svg') no-repeat 13px 12px;width:40px}
+#composer .head .cap {font-size: 12px; flex: 4 1 0; display: flex; align-items: center; padding-top: 1px}
 #composer .head .cap br {display: none}
-#composer .head .picker, #composer .head .files {width: 32px; max-width: 32px; flex: 1 1 0; cursor: pointer}
-#composer .head .picker {background: url('/gfx/color/updown.svg') no-repeat 11px 7px}
-#composer .head .files {background: url('/gfx/color/clip.svg') no-repeat 5px 10px}
+#composer .head .picker, #composer .head .files {width: 40px; max-width: 40px; flex: 1 1 0; cursor: pointer}
+#composer .head .picker {background: url('/gfx/color/updown.svg') no-repeat 15px 11px}
+#composer .head .files {background: url('/gfx/color/clip.svg') no-repeat 9px 14px}
 #composer .send
 {
     background: url('/gfx/color/send.svg') no-repeat;width: 21px;height:18px; position:fixed; right:12px;
@@ -62,6 +62,6 @@
 #composer.focused .send {display: block}
 #composer.focused .subjects.opened {display: block}
 
-#upload {opacity: 0;cursor: pointer; line-height: 34px}
+#upload {opacity: 0;cursor: pointer; line-height: 40px}
 #uploaded { position: fixed; left: 4px; bottom: 0; width: 100vw; background: #fff; white-space: nowrap; display: flex}
 #uploaded div {margin: 3px 2px}
