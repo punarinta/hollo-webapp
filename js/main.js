@@ -92,16 +92,6 @@ ML.hidePages = function ()
 
   head.querySelector('.clear').onclick = CO.resetFilter;
 
-  /*document.querySelector('#page-msgs .filter').onkeyup = function ()
-   {
-   var filter = this.value.toUpperCase();
-   Array.prototype.forEach.call(document.querySelectorAll('#page-chat li'), function(el)
-   {
-   var name = el.getElementsByClassName('tag')[0].innerHTML;
-   if (name.toUpperCase().indexOf(filter) != -1) el.style.display = 'list-item';
-   else el.style.display = 'none';
-   });
-   };*/
 
   // === SNACKBAR ===
   var snackbar = document.getElementById('snackbar'),
@@ -301,15 +291,22 @@ ML.hidePages = function ()
         case 'contacts':
           CO.show(e.state.data || 7);
           break;
+        
         case 'auth/login':
           AU.showLogin();
           break;
+
         case 'auth/logout':
           ML.api('auth', 'logout', null, function ()
           {
             ML.go('auth/login');
           });
           break;
+
+        case 'settings':
+          CFG.show();
+          break;
+
         case 'demo':
           ML.go('contacts');
       }

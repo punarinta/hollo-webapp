@@ -122,3 +122,27 @@ body::-webkit-scrollbar {display: none}
           -webkit-transform: scaleY(1.0);
       }
 }
+
+.onoff { position: relative; width: 64px; -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none }
+.onoff input { display: none }
+.onoff label
+{
+    display: block; overflow: hidden; cursor: pointer;
+    height: 36px; padding: 0; line-height: 36px;
+    border: 2px solid #ccc; border-radius: 36px;
+    background-color: #fff;
+    transition: background-color .3s ease-in;
+}
+.onoff label:before
+{
+    content: "";
+    display: block; width: 36px; margin: 0;
+    background: #fff;
+    position: absolute; top: 0; bottom: 0;
+    right: 26px;
+    border: 2px solid #ccc; border-radius: 36px;
+    transition: all .3s ease-in 0s;
+}
+.onoff input:checked + label { background-color: #0001f7 }
+.onoff input:checked + label, .onoff input:checked + label:before { border-color: #0001f7 }
+.onoff input:checked + label:before { right: 0 }

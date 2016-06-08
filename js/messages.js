@@ -194,15 +194,15 @@ MS.show = function (email, id)
   document.getElementById('snackbar').style.display = 'flex';
   page.style.display = 'inline-block';
 
+  if (MS.contact && email != MS.contact.email)
+  {
+    page.querySelector('textarea').value = '';
+  }
+
   ML.load('modules/emojis');
 
   ML.api('message', 'findByReference', {email: email, id: id}, function (data)
   {
-    if (MS.contact && email != MS.contact.email)
-    {
-      page.querySelector('textarea').value = '';
-    }
-
     MS.contact = data.contact;
     MS.contact.email = email;
 

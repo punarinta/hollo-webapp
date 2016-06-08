@@ -10,6 +10,7 @@
     "js/contacts",
     "js/messages",
     "js/composer",
+    "js/settings",
     "js/main"
   ],
   "mods":
@@ -24,7 +25,8 @@
     "css/snackbar",
     "css/contacts",
     "css/messages",
-    "css/desktop"
+    "css/desktop",
+    "css/settings"
   ],
   "dist": "../dist",
   "shell":
