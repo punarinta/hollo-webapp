@@ -43,7 +43,7 @@ MS.cmpResize = function ()
               // replace the last occurrence of a word with an emoji
               // var pat = new RegExp('(\\b' + this.dataset.w + '\\b)(?!.*\\b\\1\\b)', 'i');
               // that.value = that.value.replace(pat, this.innerText);
-              that.value += ' ' + this.innerText;
+              that.value += this.innerText + ' ';
               Array.prototype.forEach.call(document.querySelectorAll('.emj-' + w), function(el)
               {
                 el.parentNode.removeChild(el);
