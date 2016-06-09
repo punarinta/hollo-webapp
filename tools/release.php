@@ -36,13 +36,14 @@ foreach ($config['css'] as $file)
 
 $html = file_get_contents($config['index']);
 
-$search = ['/\>[^\S ]+/s', '/[^\S ]+\</s', '/(\s)+/s', '#<!-- DEV -->(.*?)<!-- END -->#is'];
+$search = ['/\>[^\S ]+/s', '/[^\S ]+\</s', '/(\s)+/s', '#<!-- DEV -->(.*?)<!-- /DEV -->#is'];
 $replace = ['>', '<', '\\1', ''];
 $html = preg_replace($search, $replace, $html);
 
 $html = strtr($html, ['> ' => '>', ' <' => '<']);
 $html = str_replace('<!-- CSS -->', '<link rel="stylesheet" type="text/css" href="/' . $random . '.css" />', $html);
-$html = str_replace('<!-- JS -->', '<script>var __DATE__ = "' . date('r') . '";</script><script src="/' . $random . '.js"></script>', $html);
+$html = str_replace('<!-- JS -->', '<script src="/' . $random . '.js"></script>', $html);
+$html = str_replace('<!-- VERSION -->dev<!-- /VERSION -->', date('d.m.Y H:i'), $html);
 
 file_put_contents($distDir . '/index.html', $html);
 
