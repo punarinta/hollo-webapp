@@ -1,6 +1,6 @@
 #page-contacts {padding:0; min-height: calc(100vh - 176px); background:#fff}
 #page-contacts .head { height:128px; color:#0001f7; background:#fff; position: fixed; width: 100%;top:0;left:0; z-index:9}
-#page-contacts .head .ava {float: left;padding: 15px 16px 15px 24px}
+#page-contacts .head .ava {float: left;padding: 15px 16px 15px 24px; cursor: pointer}
 #page-contacts .head img {border-radius: 50%; border-image:0}
 #page-contacts .head .name {font-size: 27px; padding-top: 16px; font-weight: 500}
 #page-contacts .head .email {font-size: 14px}

@@ -45,10 +45,6 @@ ML.hidePages = function ()
         ML.go('auth/logout');
         break;
 
-      case 'VERSION':
-        this.value = __DATE__;
-        break;
-
       case 'INCARNATE':
         this.value = '';
         ML.api('auth', 'incarnate', {userId:cmd[0]}, function (data)
