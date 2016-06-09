@@ -1,32 +1,39 @@
 var CFG =
 {
-};
-
-CFG.reset = function ()
-{
-  if (!AU.user.settings.flags) AU.user.settings.flags = {};
-  if (typeof AU.user.settings.flags['emojis-replace'] == 'undefined') AU.user.settings.flags['emojis-replace'] = 0;
-  if (typeof AU.user.settings.flags['ctrlenter'] == 'undefined') AU.user.settings.flags['ctrlenter'] = 1;
-  if (typeof AU.user.settings.flags['newlines'] == 'undefined') AU.user.settings.flags['newlines'] = 0;
-};
-
-CFG.show = function ()
-{
-  var i, page = document.getElementById('page-cfg'), flags = AU.user.settings.flags;
-
-  ML.hidePages();
-
-  // go through settings and setup the fields
-  if (flags)
+  reset: function ()
   {
-    for (i in flags)
+    if (!AU.user.settings.flags) AU.user.settings.flags = {};
+    CFG._('emojis-replace', 0);
+    CFG._('ctrlenter', 1);
+    CFG._('newlines', 0);
+  },
+
+  _: function (key, value)
+  {
+    if (typeof AU.user.settings.flags[key] == 'undefined' && value) AU.user.settings.flags[key] = value;
+
+    return AU.user.settings.flags[key];
+  },
+
+  show: function ()
+  {
+    var i, page = document.getElementById('page-cfg'), flags = AU.user.settings.flags;
+
+    ML.hidePages();
+
+    // go through settings and setup the fields
+    if (flags)
     {
-      page.querySelector('#cfg-' + i).checked = flags[i]
+      for (i in flags)
+      {
+        page.querySelector('#cfg-' + i).checked = flags[i]
+      }
     }
+
+    page.style.display = 'block';
   }
-  
-  page.style.display = 'block';
 };
+
 
 (function ()
 {

@@ -7,6 +7,83 @@ MS.cmpResize = function ()
   cmpText.dispatchEvent(new Event('autosize:resized'));
 };
 
+MS.send = function ()
+{
+  var cmp = document.getElementById('composer'),
+      cmpText = cmp.querySelector('textarea');
+
+  // send a message
+  var msg = cmpText.value, subj = cmp.querySelector('.cap').innerText, msgId = null, to = [];
+
+  if (!msg.length && !MS._upl.length)
+  {
+    ML.mbox('Nothing to send');
+    return;
+  }
+
+  // try to find last message with real id
+  Array.prototype.forEach.call(document.querySelectorAll('#page-msgs > ul li'), function (el)
+  {
+    msgId = (el.dataset.id - 0) || msgId
+  });
+
+  if (!msgId)
+  {
+    // collect emails for a new chat
+
+    // TODO: support multiple emails
+    to = [{email: MS.contact.email}]
+  }
+
+  console.log('body:', msg);
+  console.log('subject:', subj);
+  console.log('messageId:', msgId);
+
+  // push data to the bottom
+  var m =
+  {
+    body: msg,
+    subject: subj,
+    from: AU.user,
+    ts: new Date().getTime() / 1000,
+    id: 0, // ?,
+    files: []
+  };
+
+  if (MS._upl.length)
+  {
+    for (var i = 0, u; u = MS._upl[i]; i++)
+    {
+      m.files.push(
+        {
+          name: u.name,
+          type: u.mime,
+          size: u.size,
+          extId: 'x',
+          data: u.data
+        });
+      console.log('File attached: ', MS._upl[i]);
+    }
+  }
+
+  MS.add([m], 'bottom');
+
+  ML.api('message', 'send', {body: msg, messageId: msgId, subject: subj, files: m.files, to: to}, function (json)
+  {
+    console.log('send()', json);
+
+    // reset composer
+    MS._upl = [];
+    cmpText.value = '';
+    document.getElementById('uploaded').innerHTML = '';
+    cmp.classList.remove('focused');
+    MS.cmpResize();
+
+    // close topic picker
+    cmp.querySelector('.subjects').classList.remove('opened');
+  });
+};
+
 (function ()
 {
   var cmp = document.getElementById('composer'),
@@ -19,6 +96,11 @@ MS.cmpResize = function ()
 
   cmpText.onkeyup = function (e)
   {
+    if (e.keyCode == 13 && e.ctrlKey && CFG._('ctrlenter'))
+    {
+      MS.send()
+    }
+
     if (/[^a-zA-Z0-9-_]/.test(this.value.slice(-1)) && e.keyCode > 31)
     {
       var that = this, i = 0, w = this.value.trim().split(' ').slice(-1)[0].toLowerCase().replace(/[_\W]+/g, '');
@@ -40,10 +122,17 @@ MS.cmpResize = function ()
           {
             em.onclick = function (e)
             {
-              // replace the last occurrence of a word with an emoji
-              // var pat = new RegExp('(\\b' + this.dataset.w + '\\b)(?!.*\\b\\1\\b)', 'i');
-              // that.value = that.value.replace(pat, this.innerText);
-              that.value += this.innerText + ' ';
+              if (CFG._('emojis-replace'))
+              {
+                // replace the last occurrence of a word with an emoji
+                var pat = new RegExp('(\\b' + this.dataset.w + '\\b)(?!.*\\b\\1\\b)', 'i');
+                that.value = that.value.replace(pat, this.innerText);
+              }
+              else
+              {
+                that.value += this.innerText + ' ';
+              }
+
               Array.prototype.forEach.call(document.querySelectorAll('.emj-' + w), function(el)
               {
                 el.parentNode.removeChild(el);
@@ -89,79 +178,7 @@ MS.cmpResize = function ()
 
   // === POSTING ===
 
-  cmp.querySelector('.send').onclick = function ()
-  {
-    // send a message
-    var msg = cmpText.value, subj = cmp.querySelector('.cap').innerText, msgId = null, to = [];
-
-    if (!msg.length && !MS._upl.length)
-    {
-      ML.mbox('Nothing to send');
-      return;
-    }
-
-    // try to find last message with real id
-    Array.prototype.forEach.call(document.querySelectorAll('#page-msgs > ul li'), function (el)
-    {
-      msgId = (el.dataset.id - 0) || msgId
-    });
-
-    if (!msgId)
-    {
-      // collect emails for a new chat
-
-      // TODO: support multiple emails
-      to = [{email: MS.contact.email}]
-    }
-
-    console.log('body:', msg);
-    console.log('subject:', subj);
-    console.log('messageId:', msgId);
-
-    // push data to the bottom
-    var m =
-    {
-      body: msg,
-      subject: subj,
-      from: AU.user,
-      ts: new Date().getTime() / 1000,
-      id: 0, // ?,
-      files: []
-    };
-
-    if (MS._upl.length)
-    {
-      for (var i = 0, u; u = MS._upl[i]; i++)
-      {
-        m.files.push(
-        {
-          name: u.name,
-          type: u.mime,
-          size: u.size,
-          extId: 'x',
-          data: u.data
-        });
-        console.log('File attached: ', MS._upl[i]);
-      }
-    }
-
-    MS.add([m], 'bottom');
-
-    ML.api('message', 'send', {body: msg, messageId: msgId, subject: subj, files: m.files, to: to}, function (json)
-    {
-      console.log('send()', json);
-
-      // reset composer
-      MS._upl = [];
-      cmpText.value = '';
-      document.getElementById('uploaded').innerHTML = '';
-      cmp.classList.remove('focused');
-      MS.cmpResize();
-
-      // close topic picker
-      cmp.querySelector('.subjects').classList.remove('opened');
-    });
-  };
+  cmp.querySelector('.send').onclick = MS.send;
 
   cmp.querySelector('.picker').onclick = function ()
   {
