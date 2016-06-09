@@ -144,18 +144,24 @@ ML.hidePages = function ()
 
   snackdrop.querySelector('.rename').onclick = function ()
   {
-    var mbox = ML.mbox('<input value="' + MS.contact.name + '"/>', 1, function (ret)
+    var mbox = ML.mbox('<input class="texty" value="' + (MS.contact.name || '') + '"/>', 1, function (ret)
     {
       if (ret)
       {
         var name = mbox.querySelector('input').value;
         ML.api('contact', 'update', { id: MS.contact.id, name: name }, function ()
         {
-          MS.contact.name = name;
-          snackbar.querySelector('.name').innerText = MS.xname(MS.contact)
+          if (name.length)
+          {
+            MS.contact.name = name;
+            snackbar.querySelector('.name').innerText = MS.xname(MS.contact)
+          }
+          else ML.mbox('Name cannot be empty')
         });
       }
     });
+
+    mbox.querySelector('input').focus();
 
     closeSnackbar();
   };

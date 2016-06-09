@@ -39,7 +39,7 @@ button
 button:active {background-color: #0001f7; color: #fff}
 
 .page {display: none; padding: 5px}
-.page * {outline:0}
+* {outline:0}
 
 *
 {
@@ -53,27 +53,7 @@ button:active {background-color: #0001f7; color: #fff}
     font: 15px sans-serif; display:flex;justify-content:center;align-items:center; cursor: pointer; color: #fff;
 }
 
-#page-loader {background: #0001f7;display:flex;justify-content:center;align-items:center;height: 100vh;flex-direction: column}
-
-#mbox { top:0;display: none;z-index: 100;width: 100vw;height: 100vh;background: rgba(0,1,247,.7);position: fixed }
-#mbox > div { background: #fff; display:flex; flex-direction: column; margin: 5% auto; width:90%;align-self: center; max-width: 480px}
-#mbox .body {padding: 20px;font-size: 16px}
-#mbox .foot {border-top: 1px solid #ddd; display: flex}
-#mbox input {width: calc(100% - 16px); padding: 5px 8px; border: 1px solid #ddd}
-#mbox button {display: none; margin: 15px auto}
-#demo { top:0;display: none;z-index: 100;width: 100vw;height: 100vh;background: rgba(0,1,247,.7);position: fixed }
-#demo > div { display:flex; flex-direction: column; width:100%; align-self: center}
-#demo .img
-{
-    width:100%; background-size: contain !important; height: 50vh;text-transform: uppercase;
-    justify-content:center;align-items:center;color:#fff;font-size: 64px; display: flex;
-}
-#demo .head {display: flex; justify-content: flex-end;margin: 5px}
-#demo .close {background: url('/gfx/white/close.svg') no-repeat; width:20px; height: 20px; cursor: pointer}
-
-#demo .bar {height: 10vmin; position: fixed; width: 100%; top: calc(100vh - 50vw - 2px); display: none}
-#demo .delete {background: url('/gfx/white/delete.svg') no-repeat center; width: 10vmin; height: 100%; float: right; cursor: pointer; margin-left: auto}
-#demo .name {color: #fff; display: flex; justify-content:left;align-items:center;margin-left: 10px}
+.texty {border: 1px solid #0001f7; padding: 5px 8px; height: 26px; font-size: 16px}
 
 .spinner {
     margin: 80px auto 30px;
@@ -151,3 +131,28 @@ button:active {background-color: #0001f7; color: #fff}
 .onoff input:checked + label { background-color: #0001f7 }
 /*.onoff input:checked + label, .onoff input:checked + label:before { border-color: #0001f7 }*/
 .onoff input:checked + label:before { right: 0 }
+
+
+
+
+#page-loader {background: #0001f7;display:flex;justify-content:center;align-items:center;height: 100vh;flex-direction: column}
+
+#mbox { top:0;display: none;z-index: 100;width: 100vw;height: 100vh;background: rgba(0,1,247,.7);position: fixed }
+#mbox > div { background: #fff; display:flex; flex-direction: column; margin: 5% auto; width:90%;align-self: center; max-width: 480px}
+#mbox .body {padding: 20px;font-size: 16px}
+#mbox .foot {border-top: 1px solid #ddd; display: flex}
+#mbox input {width: calc(100% - 16px)}
+#mbox button {display: none; margin: 15px auto}
+#demo { top:0;display: none;z-index: 100;width: 100vw;height: 100vh;background: rgba(0,1,247,.7);position: fixed }
+#demo > div { display:flex; flex-direction: column; width:100%; align-self: center}
+#demo .img
+{
+    width:100%; background-size: contain !important; height: 50vh;text-transform: uppercase;
+    justify-content:center;align-items:center;color:#fff;font-size: 64px; display: flex;
+}
+#demo .head {display: flex; justify-content: flex-end;margin: 5px}
+#demo .close {background: url('/gfx/white/close.svg') no-repeat; width:20px; height: 20px; cursor: pointer}
+
+#demo .bar {height: 10vmin; position: fixed; width: 100%; top: calc(100vh - 50vw - 2px); display: none}
+#demo .delete {background: url('/gfx/white/delete.svg') no-repeat center; width: 10vmin; height: 100%; float: right; cursor: pointer; margin-left: auto}
+#demo .name {color: #fff; display: flex; justify-content:left;align-items:center;margin-left: 10px}
