@@ -201,6 +201,9 @@ MS.show = function (email, id)
 
   ML.load('modules/emojis');
 
+  // reset filter
+  MS.filter(0);
+
   ML.api('message', 'findByReference', {email: email, id: id}, function (data)
   {
     MS.contact = data.contact;
@@ -251,6 +254,35 @@ MS.show = function (email, id)
 
       fileList.innerHTML = html.length ? html : '<div>No files in this chat</div>';
     })
+  }
+};
+
+MS.filter = function (subj)
+{
+  var snackTags = document.getElementById('snackbar-menu-tags'),
+      filter = document.getElementById('msgs-filter'),
+      snackbar = document.getElementById('snackbar');
+  
+  if (subj)
+  {
+    Array.prototype.forEach.call(document.querySelectorAll('#page-msgs > ul li'), function (li)
+    {
+      if (li.querySelector('.cap').innerText != subj) li.style.display = 'none';
+    });
+
+    filter.style.display = 'flex';
+    filter.querySelector('.body').innerText = subj;
+    snackbar.querySelector('.icon.tags').classList.remove('toggled');
+    snackTags.style.display = 'none';
+  }
+  else
+  {
+    Array.prototype.forEach.call(document.querySelectorAll('#page-msgs > ul li'), function (li)
+    {
+      li.style.display = 'list-item';
+    });
+
+    filter.style.display = 'none';
   }
 };
 

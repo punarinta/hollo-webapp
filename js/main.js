@@ -186,34 +186,17 @@ ML.hidePages = function ()
     closeSnackbar();
   };
 
-  var snackTags = document.getElementById('snackbar-menu-tags'),
-      filter = document.getElementById('msgs-filter');
-
-  snackTags.onclick = function (e)
+  document.getElementById('snackbar-menu-tags').onclick = function (e)
   {
     if (e.target.tagName == 'LI')
     {
-      var subj = e.target.innerText;
-
-      Array.prototype.forEach.call(document.querySelectorAll('#page-msgs > ul li'), function (li)
-      {
-        if (li.querySelector('.cap').innerText != subj) li.style.display = 'none';
-      });
-
-      filter.style.display = 'flex';
-      filter.querySelector('.body').innerText = subj;
-      snackbar.querySelector('.icon.tags').classList.remove('toggled');
-      snackTags.style.display = 'none';
+      MS.filter(e.target.innerText);
     }
   };
 
-  filter.querySelector('.close').onclick = function ()
+  document.querySelector('#msgs-filter .close').onclick = function ()
   {
-    Array.prototype.forEach.call(document.querySelectorAll('#page-msgs > ul li'), function (li)
-    {
-      li.style.display = 'list-item';
-    });
-    filter.style.display = 'none';
+    MS.filter(0)
   };
 
   // prevent scrolling of the main screen by files list
