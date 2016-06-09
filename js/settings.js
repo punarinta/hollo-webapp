@@ -12,8 +12,15 @@ CFG.show = function ()
 
 (function ()
 {
+  var page = document.getElementById('page-cfg');
+
   document.querySelector('#page-contacts .head .ava').onclick = function ()
   {
-    // ML.go('settings')
+    ML.go('settings')
+  };
+
+  page.querySelector('.bar button').onclick = function ()
+  {
+    ML.go('contacts')
   }
 })();

@@ -31,6 +31,12 @@
 
 body {font-family: 'Work Sans', sans-serif; padding: 0; margin: 0; background-color: #fff}
 body::-webkit-scrollbar {display: none}
+button
+{
+    margin: 5px auto; padding: 7px 15px 6px; cursor: pointer; font-size: 16px; background: #fff;
+    border: 1px #0001f7 solid; color: #0001f7; border-radius: 3px; min-width: 64px; height:36px
+}
+button:active {background-color: #0001f7; color: #fff}
 
 .page {display: none; padding: 5px}
 .page * {outline:0}
@@ -51,11 +57,10 @@ body::-webkit-scrollbar {display: none}
 
 #mbox { top:0;display: none;z-index: 100;width: 100vw;height: 100vh;background: rgba(0,1,247,.7);position: fixed }
 #mbox > div { background: #fff; display:flex; flex-direction: column; margin: 5% auto; width:90%;align-self: center; max-width: 480px}
-#mbox button {display: none;margin: 15px auto;height:32px; padding: 5px 15px;cursor: pointer}
 #mbox .body {padding: 20px;font-size: 16px}
 #mbox .foot {border-top: 1px solid #ddd; display: flex}
 #mbox input {width: calc(100% - 16px); padding: 5px 8px; border: 1px solid #ddd}
-
+#mbox button {display: none; margin: 15px auto}
 #demo { top:0;display: none;z-index: 100;width: 100vw;height: 100vh;background: rgba(0,1,247,.7);position: fixed }
 #demo > div { display:flex; flex-direction: column; width:100%; align-self: center}
 #demo .img
@@ -123,13 +128,13 @@ body::-webkit-scrollbar {display: none}
       }
 }
 
-.onoff { position: relative; width: 64px; -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none }
+.onoff { position: relative; width: 64px; -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none; cursor: pointer }
 .onoff input { display: none }
 .onoff label
 {
     display: block; overflow: hidden; cursor: pointer;
     height: 36px; padding: 0; line-height: 36px;
-    border: 2px solid #ccc; border-radius: 36px;
+    border: 1px solid #0001f7; border-radius: 36px;
     background-color: #fff;
     transition: background-color .3s ease-in;
 }
@@ -140,9 +145,9 @@ body::-webkit-scrollbar {display: none}
     background: #fff;
     position: absolute; top: 0; bottom: 0;
     right: 26px;
-    border: 2px solid #ccc; border-radius: 36px;
+    border: 1px solid #0001f7; border-radius: 36px;
     transition: all .3s ease-in 0s;
 }
 .onoff input:checked + label { background-color: #0001f7 }
-.onoff input:checked + label, .onoff input:checked + label:before { border-color: #0001f7 }
+/*.onoff input:checked + label, .onoff input:checked + label:before { border-color: #0001f7 }*/
 .onoff input:checked + label:before { right: 0 }
