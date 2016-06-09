@@ -53,9 +53,7 @@ ML.hidePages = function ()
         this.value = '';
         ML.api('auth', 'incarnate', {userId:cmd[0]}, function (data)
         {
-          AU.sessionId = data.sessionId;
-          AU.user = data.user;
-          localStorage.setItem('sessionId', AU.sessionId);
+          AU.init(data);
           that.value = '';
           ML.go('contacts');
         });
@@ -320,11 +318,7 @@ ML.hidePages = function ()
     {
       if (data.user)
       {
-        AU.sessionId = data.sessionId;
-        AU.user = data.user;
-
-        localStorage.setItem('sessionId', AU.sessionId);
-
+        AU.init(data);
         ML.go('contacts')
       }
       else
@@ -340,8 +334,7 @@ ML.hidePages = function ()
   {
     if (data.user)
     {
-      AU.sessionId = data.sessionId;
-      AU.user = data.user;
+      AU.init(data);
 
       var p = document.location.pathname;
       if (p == '/') ML.go('contacts');

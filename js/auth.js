@@ -8,6 +8,14 @@ var AU =
   }
 };
 
+AU.init = function (data)
+{
+  AU.sessionId = data.sessionId;
+  AU.user = data.user;
+  CFG.reset();
+  localStorage.setItem('sessionId', AU.sessionId);
+};
+
 AU.loginImap = function ()
 {
   var user = document.querySelector('#page-login .username').value,
@@ -35,10 +43,7 @@ AU.loginImap = function ()
   {
     // memorize login
     localStorage.setItem('imapLogin', user);
-
-    AU.sessionId = data.sessionId;
-    AU.user = data.user;
-    localStorage.setItem('sessionId', AU.sessionId);
+    AU.init(data);
     ML.go('contacts');
   });
 };
