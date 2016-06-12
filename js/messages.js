@@ -275,7 +275,7 @@ MS.filter = function (subj)
   {
     Array.prototype.forEach.call(document.querySelectorAll('#page-msgs > ul li'), function (li)
     {
-      if (li.querySelector('.cap').innerText != subj) li.style.display = 'none';
+      li.style.display = li.querySelector('.cap').innerText == subj ? 'list-item' : 'none';
     });
 
     filter.style.display = 'flex';
