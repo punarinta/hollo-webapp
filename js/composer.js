@@ -209,9 +209,10 @@ MS.send = function ()
     // remove deleted file from _upl array
     for (var i in MS._upl)
     {
-      if (MS._upl[i].hash == ML.state.currentDemo)
+      if (MS._upl[i] && MS._upl[i].hash == ML.state.currentDemo)
       {
-        MS._upl = ML.unpush(MS._upl, i)
+        MS._upl = ML.unpush(MS._upl, i);
+        if (typeof MS._upl.constructor !== Array) MS._upl = []
       }
     }
 
@@ -271,5 +272,7 @@ MS.send = function ()
       // Read in the image file as a data URL.
       reader.readAsDataURL(f);
     }
+
+    this.value = '';
   };
 })();
