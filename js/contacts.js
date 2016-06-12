@@ -29,7 +29,7 @@ CO.add = function (data)
       '<div class="ava"><div class="img' + unread + '" id="img-gr-' + md5(data[i].email) + '" style="background:' + ML.colorHash(data[i].email) + '">' + nc + '</div></div>' +
       '<div class="hujava"><div class="name">' + name + '</div><div class="email">' + data[i].email + '</div></div>' +
       '</li>' +
-      '<div class="shadow shad-' + data[i].id + '"><div>' + (ML.state.muted?'un':'') + 'mute</div><div>mark<br>as ' + (unread?'':'un') + 'read</div></div>';
+      '<div class="shadow shad-' + data[i].id + '"><div>' + (ML.state.muted?'un':'') + 'mute</div><div class="markas">mark<br>as ' + (unread?'':'un') + 'read</div></div>';
   }
 
   document.querySelector('#page-contacts ul').innerHTML += html;
@@ -198,7 +198,10 @@ CO.show = function (mode)
           {
             var cl = item.querySelector('.img').classList;
             cl.toggle('unread');
-            item.querySelector('.post').innerHTML = 'mark as<br>' + (cl.contains('unread')?'':'un') + 'read';
+            setTimeout(function (cl, shadow)
+            {
+              shadow.querySelector('.markas').innerHTML = 'mark<br>as ' + (cl.contains('unread')?'':'un') + 'read';
+            }, 400, cl, shadow);
           });
           break;
 
