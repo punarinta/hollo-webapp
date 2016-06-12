@@ -183,7 +183,8 @@ MS.xname = function (contact)
 MS.show = function (email, id)
 {
   var page = document.getElementById('page-msgs'),
-      ul = page.querySelector('ul');
+      ul = page.querySelector('ul'),
+      snackbar = document.getElementById('snackbar');
 
   if (!CO.loaded && ML.state.widthMode)
   {
@@ -195,8 +196,10 @@ MS.show = function (email, id)
 
   ML.hidePages();
   ul.innerHTML = '<li>Loading...</li>';
-  document.querySelector('#snackbar .name').innerHTML = '';
-  document.getElementById('snackbar').style.display = 'flex';
+  snackbar.querySelector('.name').innerHTML = '';
+  snackbar.querySelector('.icon.more').classList.remove('toggled');
+  snackbar.style.display = 'flex';
+
   page.style.display = 'inline-block';
 
   if (MS.contact && email != MS.contact.email)
