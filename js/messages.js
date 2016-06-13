@@ -121,7 +121,7 @@ MS.add = function (data, pos)
   else ul.innerHTML += html;
 
   // caption for a composer topic suggester
-  cmp.querySelector('.cap').innerText = subj || 'New topic';
+  cmp.querySelector('.cap').value = subj || 'New topic';
 
   // fill in subjects
   html = '';
@@ -153,7 +153,7 @@ MS.add = function (data, pos)
     el.classList.add('ndf');
     el.onclick = function ()
     {
-      cmp.querySelector('.cap').innerText = this.innerText;
+      cmp.querySelector('.cap').value = this.innerText;
       cmp.querySelector('textarea').focus();
       cmp.querySelector('.subjects').classList.remove('opened');
     }

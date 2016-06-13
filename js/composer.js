@@ -13,7 +13,7 @@ MS.send = function ()
       cmpText = cmp.querySelector('textarea');
 
   // send a message
-  var msg = cmpText.value, subj = cmp.querySelector('.cap').innerText, msgId = null, to = [];
+  var msg = cmpText.value, subj = cmp.querySelector('.cap').value, msgId = null, to = [];
 
   if (!msg.length && !MS._upl.length)
   {
