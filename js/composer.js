@@ -186,6 +186,23 @@ MS.send = function ()
     cmpText.focus();
   };
 
+  cmp.querySelector('.subjects').onclick = function (e)
+  {
+    if (e.target.classList.contains('add'))
+    {
+      var mbox = ML.mbox('<input class="texty"/>', 1, function (ret)
+      {
+        if (ret)
+        {
+          var subj = mbox.querySelector('input').value.trim();
+
+          // do not push to 'MS.subjects'!
+          if (subj.length) cmp.querySelector('.cap').value = subj
+        }
+      });
+    }
+  };
+
   cmp.querySelector('#uploaded').onclick = function (e)
   {
     if (!e.target.classList.contains('file-icon')) return;

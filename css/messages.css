@@ -40,8 +40,8 @@
     border-top: 1px solid #ddd; color: #0001f7; flex-wrap: nowrap
 }
 #composer .head > * {height:40px}
-#composer .head .icon {background: url('/gfx/color/subj.svg') no-repeat 13px 12px;width:40px}
-#composer .head .cap {font-size: 15px; flex: 4 1 0; display: flex; border: 0; color: #0001f7}
+#composer .head .icon {background: url('/gfx/color/subj.svg') no-repeat 13px 12px; width:39px}
+#composer .head .cap {font: 15px 'Work Sans'; flex: 4 1 0; display: flex; border: 0; color: #0001f7}
 #composer .head .picker, #composer .head .files {width: 40px; max-width: 40px; flex: 1 1 0; cursor: pointer}
 #composer .head .picker {background: url('/gfx/color/updown.svg') no-repeat 15px 11px}
 #composer .head .files {background: url('/gfx/color/clip.svg') no-repeat 9px 14px}
@@ -53,9 +53,10 @@
 #composer .subjects
 {
     display: none; position: fixed; left: 0; bottom: 102px; background: #fff; width: 100%;
-    font-size: 12px; color: #0001f7; margin: 0; border-top: 1px solid #ddd; padding: 0
+    font: 15px 'Work Sans'; color: #0001f7; margin: 0; border-top: 1px solid #ddd; padding: 0
 }
-#composer .subjects li {padding: 12px 10px;cursor: pointer}
+#composer .subjects li {padding: 12px 10px 12px 39px; cursor: pointer}
+#composer .subjects li.add {background: url('/gfx/color/plus2.svg') no-repeat 14px 15px}
 
 #composer.focused .head {display: flex}
 #composer.focused .send {display: block}

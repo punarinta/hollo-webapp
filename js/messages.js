@@ -198,6 +198,7 @@ MS.show = function (email, id)
   ul.innerHTML = '<li>Loading...</li>';
   snackbar.querySelector('.name').innerHTML = '';
   snackbar.querySelector('.icon.more').classList.remove('toggled');
+  page.querySelector('.subjects').classList.remove('opened');
   snackbar.style.display = 'flex';
 
   page.style.display = 'inline-block';
@@ -223,7 +224,7 @@ MS.show = function (email, id)
     // reset subject lists
     MS.subjects = [];
     document.querySelector('#snackbar-menu-tags ul').innerHTML = '<div>Here we will list the subjects used in this conversation</div>';
-    page.querySelector('.subjects').innerHTML = '';
+    page.querySelector('.subjects').innerHTML = '<li class="add">New topic</li>';
 
     ul.innerHTML = '';
     MS.add(data.messages, 'top');
