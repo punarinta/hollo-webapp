@@ -205,7 +205,11 @@ MS.show = function (email, id)
 
   if (MS.contact && email != MS.contact.email)
   {
+    // clear all the shit from composer
+    MS._upl = [];
     page.querySelector('textarea').value = '';
+    document.querySelector('#uploaded').innerHTML = '';
+    MS.cmpResize();
   }
 
   ML.load('modules/emojis');
