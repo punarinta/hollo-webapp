@@ -1,5 +1,7 @@
 var CFG =
 {
+  apiRoot: 'api.hollo.email',
+  
   reset: function ()
   {
     if (!AU.user.settings.flags) AU.user.settings.flags = {};

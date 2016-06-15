@@ -1,6 +1,5 @@
 var ML =
 {
-  apiRoot: document.location.hostname.replace('app.', 'api.'),
   state:
   {
     muted: 0,
@@ -15,7 +14,7 @@ var ML =
   {
     var r = new XMLHttpRequest(), ps = null, pl;
 
-    r.open('POST', 'https://' + ML.apiRoot + '/api/' + endpoint, true);
+    r.open('POST', 'https://' + CFG.apiRoot + '/api/' + endpoint, true);
     r.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 
     if (AU.sessionId)

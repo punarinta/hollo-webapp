@@ -5,3 +5,4 @@
 *.log
 deploy.tar.gz
 dist
+local-config.js

@@ -8,3 +8,4 @@
 fabfile.*
 *.md
 nodeploy*
+local-config*
