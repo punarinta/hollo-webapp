@@ -32,13 +32,18 @@ MS.add = function (data, pos)
     // preprocess body
     var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i;
     
-    if (!CFG._('newlines'))
+    if (CFG._('newlines'))
     {
       body = body.replace(/(?:\r\n|\r|\n)/g, '<br />');
+    }
+    else
+    {
+      body = body.replace(/(?:\r\n\r\n)/g, '</p><p>');
     }
 
     body = body.replace(exp,"<a href='$1'>$1</a>");
     body = body.replace(/ -- /g, ' — ');
+    body = '<p>' + body + '</p>';
 
     if (data[i].files)
     {

@@ -5,7 +5,7 @@ var CFG =
     if (!AU.user.settings.flags) AU.user.settings.flags = {};
     CFG._('emojis-replace', 0);
     CFG._('ctrlenter', 1);
-    CFG._('newlines', 0);
+    CFG._('newlines', 1);
   },
 
   _: function (key, value)
