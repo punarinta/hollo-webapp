@@ -202,7 +202,10 @@ MS.show = function (email, id)
   ML.hidePages();
   ul.innerHTML = '<li>Loading...</li>';
   snackbar.querySelector('.name').innerHTML = '';
-  snackbar.querySelector('.icon.more').classList.remove('toggled');
+  Array.prototype.forEach.call(snackbar.querySelectorAll('.icon'), function (el)
+  {
+    el.classList.remove('toggled')
+  });
   page.querySelector('.subjects').classList.remove('opened');
   snackbar.style.display = 'flex';
 
