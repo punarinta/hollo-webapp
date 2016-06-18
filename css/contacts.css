@@ -2,7 +2,7 @@
 #page-contacts .head { height:128px; color:#0001f7; background:#fff; position: fixed; width: 100%;top:0;left:0; z-index:9}
 #page-contacts .head .ava {float: left;padding: 15px 16px 15px 24px; cursor: pointer}
 #page-contacts .head img {border-radius: 50%; border-image:0}
-#page-contacts .head .name {font-size: 27px; padding-top: 16px; font-weight: 500}
+#page-contacts .head .name {font-size: 27px; padding-top: 13px; font-weight: 500}
 #page-contacts .head .email {font-size: 14px}
 #page-contacts .accounts {overflow: hidden;height:80px;white-space: nowrap;display: flex}
 #page-contacts .hint {height:80px;display:none;justify-content:center;align-items:center;font-size: 14px;text-align: center}
