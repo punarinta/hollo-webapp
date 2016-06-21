@@ -85,7 +85,11 @@ CO.show = function (mode)
       if (filter.length && !data.length && r.test(filter))
       {
         // filter is ON, but no results found => offer to create a new one
-        ul.innerHTML = '<li data-email="new" class="new"><div class="ava"><div class="new img"></div></div><div><div class="name"></div><div class="email"></div></div></li>';
+        ul.innerHTML = '<li data-email="new" class="new"><div class="ava"><div class="new img"></div></div><div><div class="name">' + filter + '</div><div class="email"></div></div></li>';
+      }
+      else
+      {
+        ul.innerHTML = '';
       }
       
       CO.add(data);
@@ -256,7 +260,10 @@ CO.show = function (mode)
 
       console.log('Contacts fetch at offset ' + CO.offset);
 
-      ML.api('contact', 'find', { pageStart: CO.offset, pageLength: 25, filters: [{mode:'muted', value:ML.state.muted}] }, function (data)
+      var filter = document.querySelector('#page-contacts .head .filter').value, filters = [{mode:'muted', value:ML.state.muted}];
+      if (filter.length) filters.push({mode:'email', value:filter});
+
+      ML.api('contact', 'find', { pageStart: CO.offset, pageLength: 25, filters: filters }, function (data)
       {
         CO.add(data);
         if (data.length == 25) CO.more = 1;

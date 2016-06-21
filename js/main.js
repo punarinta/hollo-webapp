@@ -55,33 +55,7 @@ ML.hidePages = function ()
         });
         break;
     }
-
-    var any = 0;
-
-    /*Array.prototype.forEach.call(document.querySelectorAll('#page-contacts li'), function(el)
-    {
-      var name = el.getElementsByClassName('name')[0].innerHTML.toUpperCase(),
-        email = el.dataset.email;
-
-      if (email == 'new') return;
-
-      if (name.indexOf(filter) != -1 || email.indexOf(filter) != -1) { el.style.display = 'flex'; any = 1 }
-      else el.style.display = 'none';
-    });
-
-    var ny = document.querySelector('#page-contacts ul li.new'),
-      r = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    if (!any && r.test(this.value))
-    {
-      ny.style.display = 'block';
-      ny.querySelector('.name').innerHTML = this.value;
-    }
-    else
-    {
-      ny.style.display = 'none';
-      ny.querySelector('.name').innerHTML = '';
-    }*/
+    CO.show(4);
   };
 
   head.querySelector('.clear').onclick = CO.resetFilter;

@@ -26,8 +26,7 @@
 #show-muted {padding-right: 24px}
 
 #page-contacts ul {list-style-type: none;margin:176px 0 0;padding: 0; overflow-x: hidden}
-/*#page-contacts ul li.new {display: none}*/
-#page-contacts ul li.new .name {padding-top:23px; color: #0001f7}
+#page-contacts ul li.new .name {color: #0001f7}
 #page-contacts ul li.new .img {background: transparent url('/gfx/color/plus.svg') no-repeat center;display: block}
 
 #page-contacts ul .ava {float: left;padding: 14px; margin-right: 3px;min-width: 48px}
