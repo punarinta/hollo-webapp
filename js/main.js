@@ -316,7 +316,7 @@ ML.hidePages = function ()
   var oauthCode = ML.getQueryVar('code');
   if (oauthCode)
   {
-    ML.api('auth', 'processOAuthCode', {code: oauthCode}, function (data)
+    ML.api('auth', 'processOAuthCode', {code: oauthCode, redirectUrl: CFG.redirectUrl}, function (data)
     {
       if (data.user)
       {

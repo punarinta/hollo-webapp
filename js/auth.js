@@ -50,7 +50,7 @@ AU.loginImap = function ()
 
 AU.googleStart = function ()
 {
-  ML.api('auth', 'getOAuthToken', {}, function (data)
+  ML.api('auth', 'getOAuthToken', {redirectUrl: CFG.redirectUrl}, function (data)
   {
     window.location.href = data;
   });
