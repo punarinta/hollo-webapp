@@ -282,7 +282,8 @@ MS.filter = function (subj)
 {
   var snackTags = document.getElementById('snackbar-menu-tags'),
       filter = document.getElementById('msgs-filter'),
-      snackbar = document.getElementById('snackbar');
+      snackbar = document.getElementById('snackbar'),
+      page = document.getElementById('page-msgs');
   
   if (subj)
   {
@@ -295,6 +296,7 @@ MS.filter = function (subj)
     filter.querySelector('.body').innerText = subj;
     snackbar.querySelector('.icon.tags').classList.remove('toggled');
     snackTags.style.display = 'none';
+    page.classList.add('filtered');
   }
   else
   {
@@ -304,6 +306,7 @@ MS.filter = function (subj)
     });
 
     filter.style.display = 'none';
+    page.classList.remove('filtered');
   }
 };
 
