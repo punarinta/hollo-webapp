@@ -58,7 +58,7 @@ ML.hidePages = function ()
 
     var any = 0;
 
-    Array.prototype.forEach.call(document.querySelectorAll('#page-contacts li'), function(el)
+    /*Array.prototype.forEach.call(document.querySelectorAll('#page-contacts li'), function(el)
     {
       var name = el.getElementsByClassName('name')[0].innerHTML.toUpperCase(),
         email = el.dataset.email;
@@ -81,7 +81,7 @@ ML.hidePages = function ()
     {
       ny.style.display = 'none';
       ny.querySelector('.name').innerHTML = '';
-    }
+    }*/
   };
 
   head.querySelector('.clear').onclick = CO.resetFilter;

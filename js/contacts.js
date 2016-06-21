@@ -74,11 +74,20 @@ CO.show = function (mode)
   {
     CO.offset = 0;
 
-    ML.api('contact', 'find', {pageStart:CO.offset, pageLength:25, filters: [{mode:'muted', value:ML.state.muted}]}, function (data)
-    {
-      // that's a first load, so keep it clean
-      ul.innerHTML = '<li data-email="new" class="new"><div class="ava"><div class="new img"></div></div><div><div class="name"></div><div class="email"></div></div></li>';
+    var filter = page.querySelector('.head .filter').value,
+        filters = [{mode:'muted', value:ML.state.muted}],
+        r = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
+    if (filter.length) filters.push({mode:'email', value:filter});
+
+    ML.api('contact', 'find', {pageStart:CO.offset, pageLength:25, filters:filters }, function (data)
+    {
+      if (filter.length && !data.length && r.test(filter))
+      {
+        // filter is ON, but no results found => offer to create a new one
+        ul.innerHTML = '<li data-email="new" class="new"><div class="ava"><div class="new img"></div></div><div><div class="name"></div><div class="email"></div></div></li>';
+      }
+      
       CO.add(data);
 
       if (data.length == 25)
