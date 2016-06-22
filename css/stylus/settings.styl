@@ -1,8 +1,23 @@
-#page-cfg {padding: 10px}
-#page-cfg .bar { position: fixed; bottom: 15px; width: 100%}
-#page-cfg .slide {display: flex; margin: 5px auto}
-#page-cfg .slide > div:nth-child(2n+1) {display: flex; align-items:center}
-#page-cfg .slide > div:nth-child(2n) {width: 64px; margin-left: auto}
-#page-cfg .infoline {height:36px; display: flex; align-items:center}
-
-#page-cfg button {display: block}
+#page-cfg
+  padding 10px
+  .bar
+    position fixed
+    bottom 15px
+    width 100%
+  .slide
+    display flex
+    margin 5px auto
+    & > div
+      &:nth-child(2n
+        & + 1)
+          display flex
+          align-items center
+      &:nth-child(2n)
+        width 64px
+        margin-left auto
+  .infoline
+    height 36px
+    display flex
+    align-items center
+  button
+    display block

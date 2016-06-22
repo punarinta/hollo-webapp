@@ -1,60 +1,173 @@
-#page-contacts {padding:0; min-height: calc(100vh - 176px); background:#fff}
-#page-contacts .head { height:128px; color:#0001f7; background:#fff; position: fixed; width: 100%;top:0;left:0; z-index:9}
-#page-contacts .head .ava {float: left;padding: 15px 16px 15px 24px; cursor: pointer}
-#page-contacts .head img {border-radius: 50%; border-image:0}
-#page-contacts .head .name {font-size: 27px; padding-top: 13px; font-weight: 500}
-#page-contacts .head .email {font-size: 14px}
-#page-contacts .accounts {overflow: hidden;height:80px;white-space: nowrap;display: flex}
-#page-contacts .hint {height:80px;display:none;justify-content:center;align-items:center;font-size: 14px;text-align: center}
-#page-contacts .search input
-{
-    height:48px; border:0; width:100%; background: url('/gfx/color/search.svg') no-repeat 40px 15px;
-    color:#0001f7; font-size: 14px; padding: 0 0 0 89px;
-}
-#page-contacts .search input::-webkit-input-placeholder { color: #0001f7 }
-#page-contacts .search input::-moz-placeholder { color: #0001f7 }
-#page-contacts .head .clear {width: 20px;height:20px;background: url('/gfx/color/clear.svg');position: fixed; top:94px;right: 10px;display:none;cursor: pointer}
-#page-contacts .head.mode2 .clear {display:block}
-#page-contacts .head.mode2 .accounts {display:none}
-#page-contacts .head.mode2 .hint {display: flex}
+#page-contacts
+  padding 0
+  min-height calc(100vh - 176px)
+  background #fff
+  .head
+    height 128px
+    color #0001f7
+    background #fff
+    position fixed
+    width 100%
+    top 0
+    left 0
+    z-index 9
+    .ava
+      float left
+      padding 15px 16px 15px 24px
+      cursor pointer
+    img
+      border-radius 50%
+      border-image 0
+    .name
+      font-size 27px
+      padding-top 13px
+      font-weight 500
+    .email
+      font-size 14px
+    .clear
+      width 20px
+      height 20px
+      background url('/gfx/color/clear.svg')
+      position fixed
+      top 94px
+      right 10px
+      display none
+      cursor pointer
+    &.mode2
+      .clear
+        display block
+      .accounts
+        display none
+      .hint
+        display flex
+  .accounts
+    overflow hidden
+    height 80px
+    white-space nowrap
+    display flex
+  .hint
+    height 80px
+    display none
+    justify-content center
+    align-items center
+    font-size 14px
+    text-align center
+  .search
+    input
+      height 48px
+      border 0
+      width 100%
+      background url('/gfx/color/search.svg') no-repeat 40px 15px
+      color #0001f7
+      font-size 14px
+      padding 0 0 0 89px
+      &::-webkit-input-placeholder
+        color #0001f7
+      &::-moz-placeholder
+        color #0001f7
+  .tabs
+    height 48px
+    display flex
+    font-weight 500
+    background #fff
+    z-index 10
+    div
+      border-bottom 1px #f5f5f5 solid
+      flex 1 0 0
+      text-align center
+      padding-top 14px
+      color #0001f7
+      cursor pointer
+      span
+        border 0 solid
+      &.sel
+        span
+          border-width 0 0 2px
+          font-weight 600
+  ul
+    list-style-type none
+    margin 176px 0 0
+    padding 0
+    overflow-x hidden
+    li
+      overflow hidden
+      height 72px
+      white-space nowrap
+      display flex
+      padding-left 10px
+      width 100vw
+      transition height .8s ease-in, opacity .8s ease-in
+      cursor pointer
+      background #fff
+      align-items center
+      position relative
+      &.new
+        .name
+          color #0001f7
+        .img
+          background transparent url('/gfx/color/plus.svg') no-repeat center
+          display block
+      &:nth-child(n
+        & + 3):after
+          content ''
+          display block
+          position absolute
+          background-color #f5f5f5
+          height 1px
+          width calc(100% - 48px)
+          left 24px
+      &.travel
+        transition all .4s ease-in
+    .ava
+      float left
+      padding 14px
+      margin-right 3px
+      min-width 48px
+    .hujava
+      width 100%
+    .img
+      border-radius 50%
+      width 42px
+      height 42px
+      display flex
+      justify-content center
+      align-items center
+      border 3px transparent solid
+      transition border-color .5s
+      transition-delay .5s
+      color #fff
+      text-transform uppercase
+      font 18px sans-serif
+      background-size cover
+      &.unread
+        border-color #0001f7
+    .name
+      font-size 24px
+      font-weight 300
+    .email
+      color #333
+      font 15px Roboto
+    .shadow
+      height 72px
+      display none
+      background #0001f7
+      color #fff
+      div
+        display flex
+        justify-content center
+        align-items center
+        height 100%
+        width 80px
+        font-size 15px
+        text-align center
+        &:first-child
+          float left
+        &:last-child
+          float right
 
-#page-contacts .tabs {height:48px; display: flex; font-weight: 500; background: #fff; z-index: 10}
-#page-contacts .tabs div {border-bottom: 1px #f5f5f5 solid; flex: 1 0 0;text-align: center; padding-top: 14px; color: #0001f7; cursor: pointer}
-#page-contacts .tabs div span {border: 0 solid}
-#page-contacts .tabs div.sel span {border-width:0 0 2px; font-weight: 600}
-#show-holloed {padding-left: 24px}
-#show-muted {padding-right: 24px}
+#show-holloed
+  padding-left 24px
 
-#page-contacts ul {list-style-type: none;margin:176px 0 0;padding: 0; overflow-x: hidden}
-#page-contacts ul li.new .name {color: #0001f7}
-#page-contacts ul li.new .img {background: transparent url('/gfx/color/plus.svg') no-repeat center;display: block}
+#show-muted
+  padding-right 24px
 
-#page-contacts ul .ava {float: left;padding: 14px; margin-right: 3px;min-width: 48px}
-#page-contacts ul .hujava {width: 100%}
-#page-contacts ul .img
-{
-    border-radius: 50%; width:42px; height:42px;display:flex;justify-content:center;align-items:center;
-    border: 3px transparent solid; transition: border-color .5s; transition-delay: .5s;
-    color:#fff;text-transform: uppercase;font:18px sans-serif;background-size: cover;
-}
-#page-contacts ul .img.unread {border-color:#0001f7}
-#page-contacts ul .name {font-size: 24px; font-weight: 300}
-#page-contacts ul .email {color: #333; font: 15px Roboto}
-
-#page-contacts ul li
-{
-    overflow: hidden; height:72px; white-space: nowrap; display: flex; padding-left: 10px; width: 100vw;
-    transition: height .8s ease-in, opacity .8s ease-in; cursor: pointer; background: #fff; align-items:center; position: relative;
-}
-
-#page-contacts ul li:nth-child(n + 3):after
-{
-    content: ''; display: block; position: absolute; background-color: #f5f5f5; height: 1px; width: calc(100% - 48px);
-    /*bottom: 1px;*/ left: 24px;
-}
-
-#page-contacts ul .shadow {height: 72px;display:none;background: #0001f7; color: #fff }
-#page-contacts ul .shadow div { display:flex;justify-content:center;align-items:center;height:100%;width:80px; font-size: 15px; text-align: center }
-#page-contacts ul .shadow div:first-child { float: left}
-#page-contacts ul .shadow div:last-child { float: right}
-#page-contacts ul li.travel {transition: all .4s ease-in}

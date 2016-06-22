@@ -1,63 +1,154 @@
 #snackbar
-{
-    display: none; position: fixed; top: 0; width: 100%; height: 56px; /*box-shadow: 0 0 7px 0 rgba(128,128,128,.5);*/
-    background-color: #fff; z-index: 10; color: #0001f7; left:0; align-items: center; border-bottom: 1px #f5f5f5 solid
-}
-#snackbar .icon {width: 40px; height: 40px; text-align: center; background: no-repeat center center; top: 8px; cursor: pointer; border-radius: 50%}
-#snackbar .back {left: 5px; background-image: url('/gfx/color/arrow-back.svg')}
-#snackbar .name {left: 50px; font-weight: 300; font-size: 27px; flex-grow: 4}
-#snackbar .tags {right: 85px; background-image: url('/gfx/color/subjs.svg')}
-#snackbar .files {right: 42px; background-image: url('/gfx/color/clip.svg')}
-#snackbar .more {right: 5px; background-image: url('/gfx/color/more-vert.svg'); transition: transform .3s; }
-#snackbar .more.toggled {transform: rotate(90deg)}
-#snackbar .toggled {background-color: #f5f5f5}
+  display none
+  position fixed
+  top 0
+  width 100%
+  height 56px
+  background-color #fff
+  z-index 10
+  color color-brand
+  left 0
+  align-items center
+  border-bottom 1px #f5f5f5 solid
+  .icon
+    width 40px
+    height 40px
+    text-align center
+    background no-repeat center center
+    top 8px
+    cursor pointer
+    border-radius 50%
+  .back
+    left 5px
+    background-image url("/gfx/color/arrow-back.svg")
+  .name
+    left 50px
+    font-weight 300
+    font-size 27px
+    flex-grow 4
+  .tags
+    right 85px
+    background-image url("/gfx/color/subjs.svg")
+  .files
+    right 42px
+    background-image url("/gfx/color/clip.svg")
+  .more
+    right 5px
+    background-image url("/gfx/color/more-vert.svg")
+    transition transform 0.3s
+    &.toggled
+      transform rotate(90deg)
+  .toggled
+    background-color #f5f5f5
 
-.snackbar-menu {z-index: 10; position: fixed; right: 3px; top: 65px; display: none; background-color: #fff; box-shadow: 0 2px 6px 0 rgba(128,128,128,.5) }
-.snackbar-menu ul {list-style-type: none; padding: 2px 0; margin: 0}
-.snackbar-menu:before
-{
-    right: 11px; border-color: transparent transparent #fff transparent; content: ''; position: absolute;
-    top: -10px; width: 0; height: 0; border-style: solid; border-width: 0 10px 10px; z-index: 10
-}
-.snackbar-menu li {padding: 10px 14px; cursor: pointer}
+.snackbar-menu
+  z-index 10
+  position fixed
+  right 3px
+  top 65px
+  display none
+  background-color #fff
+  box-shadow 0 2px 6px 0 rgba(128,128,128,0.5)
+  ul
+    list-style-type none
+    padding 2px 0
+    margin 0
+  &:before
+    right 11px
+    border-color transparent transparent #fff transparent
+    content ''
+    position absolute
+    top -10px
+    width 0
+    height 0
+    border-style solid
+    border-width 0 10px 10px
+    z-index 10
+  li
+    padding 10px 14px
+    cursor pointer
 
-#snackbar-menu-tags {right: 85px}
-#snackbar-menu-tags div
-{
-    width: 152px; font:italic 14px 'Roboto'; text-align: center;margin: 24px 32px; color: rgba(0,0,0,.56)
-}
+#snackbar-menu-tags
+  right 85px
+  div
+    width 152px
+    font italic 14px 'Roboto'
+    text-align center
+    margin 24px 32px
+    color rgba(0,0,0,0.56)
 
-#snackbar-menu-files:before {right: 51px;}
-#snackbar-menu-files ul {height:100%;margin: 0 1%;display:flex;flex-flow: row wrap;justify-content: center;overflow: auto; align-items:center}
-#snackbar-menu-files {right: 0; width: 100%; bottom:0; z-index:10; padding-top: 1vh}
-#snackbar-menu-files ul > div {color: rgba(0,0,0,.56); font:italic 14px Roboto}
-#snackbar-menu-files li
-{
-    margin: 1vw;max-width: 47%; background-color: #fff;
-    border-radius: 4px; padding: 0;flex: 1 0 45%;
-}
-#snackbar-menu-files li .img
-{
-    height: 47vw; background-size: cover; display:flex;justify-content:center;align-items:center;color:#fff;
-    font: 32px Edmondsans,sans-serif; text-transform: uppercase; max-height: 250px
-}
-#snackbar-menu-files li .bar {width:100%; height: 13vw;background-color: #fff;border-radius: 0 0 4px 4px; display: flex}
-#snackbar-menu-files li .bar > div {flex: 1;background: no-repeat center center;opacity: .6}
-#snackbar-menu-files li .bar > div:nth-child(1) {background-image: url('/gfx/color/download.svg')}
-#snackbar-menu-files li .bar > div:nth-child(2) {background-image: url('/gfx/color/share.svg')}
-
-/*@media (min-width: 600px)
-{
-    #snackbar-menu-files li { max-width: 31%; height: 39vw; flex: 1 0 31%; }
-    #snackbar-menu-files li .img {height: 31vw;}
-    #snackbar-menu-files li .bar {height: 8vw;}
-}*/
+#snackbar-menu-files
+  right 0
+  width 100%
+  bottom 0
+  z-index 10
+  padding-top 1vh
+  &:before
+    right 51px
+  ul
+    height 100%
+    margin 0 1%
+    display flex
+    flex-flow row wrap
+    justify-content center
+    overflow auto
+    align-items center
+    & > div
+      color rgba(0,0,0,0.56)
+      font italic 14px Roboto
+  li
+    margin 1vw
+    max-width 47%
+    background-color #fff
+    border-radius 4px
+    padding 0
+    flex 1 0 45%
+    .img
+      height 47vw
+      background-size cover
+      display flex
+      justify-content center
+      align-items center
+      color #fff
+      font 32px Edmondsans, sans-serif
+      text-transform uppercase
+      max-height 250px
+    .bar
+      width 100%
+      height 13vw
+      background-color #fff
+      border-radius 0 0 4px 4px
+      display flex
+      & > div
+        flex 1
+        background no-repeat center center
+        opacity 0.6
+        &:nth-child(1)
+          background-image url("/gfx/color/download.svg")
+        &:nth-child(2)
+          background-image url("/gfx/color/share.svg")
 
 #msgs-filter
-{
-    position: fixed; top: 64px; height: 60px; left: 12px; right: 12px; background: #fff; display: none;
-    padding-left: 10px; align-items:center; font-family: 'Work Sans'; border: 1px #eee solid;
-}
-#msgs-filter .cap {font-size: 13px; color: rgba(0,0,0,.54)}
-#msgs-filter .close {background: url('/gfx/color/clear.svg') no-repeat; width:20px; height: 20px; cursor: pointer; margin: 0 10px 0 auto}
-#msgs-filter .body {font-size: 15px; color: #0001f7}
+  position fixed
+  top 64px
+  height 60px
+  left 12px
+  right 12px
+  background #fff
+  display none
+  padding-left 10px
+  align-items center
+  font-family 'Work Sans'
+  border 1px #eee solid
+  .cap
+    font-size 13px
+    color rgba(0,0,0,0.54)
+  .close
+    background url("/gfx/color/clear.svg") no-repeat
+    width 20px
+    height 20px
+    cursor pointer
+    margin 0 10px 0 auto
+  .body
+    font-size 15px
+    color color-brand
