@@ -16,6 +16,13 @@ mkdir("$distDir/modules");
 
 $random = uniqid();
 
+echo "Running pre scripts...\n";
+foreach ($config['pre-shell'] as $sh)
+{
+    echo "$sh\n";
+    shell_exec(str_replace('$distDir', $distDir, $sh));
+}
+
 foreach ($config['js'] as $file)
 {
     echo "Script '$file.js'...\n";
@@ -47,8 +54,8 @@ $html = str_replace('<!-- VERSION -->dev<!-- /VERSION -->', date('d.m.Y H:i'), $
 
 file_put_contents($distDir . '/index.html', $html);
 
-echo "Copying assets...\n";
-foreach ($config['shell'] as $sh)
+echo "Running post scripts...\n";
+foreach ($config['post-shell'] as $sh)
 {
     echo "$sh\n";
     shell_exec(str_replace('$distDir', $distDir, $sh));

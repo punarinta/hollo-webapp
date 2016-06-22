@@ -10,3 +10,5 @@ fabfile.*
 nodeploy*
 local-config*
 stuff
+css/stylus
+css/oldcss

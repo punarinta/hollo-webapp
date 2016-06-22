@@ -7,3 +7,4 @@ deploy.tar.gz
 dist
 local-config.js
 stuff
+css/*.css

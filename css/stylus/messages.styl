@@ -1,0 +1,68 @@
+#page-msgs { padding-top: 61px; font-family: 'DejaVu Sans', sans-serif; min-height: calc(100vh - 100px); background: #f5f5f5 }
+#page-msgs.filtered { padding-top: 130px }
+#page-msgs ul {list-style-type: none; padding: 0 0 50px 0; margin: 0; width: calc(100vw - 10px)}
+#page-msgs ul li {overflow: auto; width: calc(100vw - 10px)}
+#page-msgs ul li > div {overflow: auto; margin: 5px 3px; min-width: 200px;max-width: 100%}
+#page-msgs ul li .white {background-color: #fff; padding: 10px 12px 2px; border-radius: 3px}
+#page-msgs ul li .msg {display: inline-block; font-size: 14px; word-break: break-all}
+#page-msgs ul li .cap
+{
+    color: #0001f7; cursor: pointer; font: 15px 'Work Sans';
+    background: url('/gfx/color/subj.svg') no-repeat 1px; padding-left: 24px;
+}
+#page-msgs ul li .files {display: flex; margin-top: 10px}
+#page-msgs ul li .files > div { margin-right: 3px }
+#page-msgs ul li .files > div.full { width: 80vw; height: 50vw }
+#page-msgs ul li .foot .ts {float:right; margin:6px 25px 0; font-size: 10px;color: rgba(0,0,0,.3); font-family: Roboto }
+#page-msgs ul li .foot .ava
+{
+    float:right; position: relative;width: 32px; height: 32px; border-radius: 50%; top:-9px; left:-16px;
+    display:flex;justify-content:center;align-items:center;color:#fff;font:15px sans-serif
+}
+#page-msgs ul li.yours .foot .ava {float:left; left:16px}
+#page-msgs ul li.yours .foot .ts {float:left; margin-right: 25px}
+#page-msgs ul li.mine .foot .ava.full {background-size: cover !important}
+#page-msgs ul li.mine > div {float: right; margin-left: 15px}
+#page-msgs ul li.yours > div {float: left; margin-right: 15px}
+
+#composer .emojis {position: fixed; right:5px; font-size: 48px}
+#composer .emojis .emoji {color:#0001f7; cursor: pointer; display: inline-block}
+#composer {height: 60px}
+#composer textarea
+{
+    border:0;border-top:1px solid #ddd;margin:0;position: fixed; left: 0; bottom: 0; max-height: 30vh; font: 15px Roboto;
+    width: calc(100vw - 60px); height: 40px; transition: height .4s; padding: 20px 60px 0 20px; font-size: 18px;
+}
+#composer textarea::-webkit-input-placeholder { font-style: italic; font-family: 'Work Sans', sans-serif; font-weight: 300 }
+#composer textarea::-moz-placeholder { font-style: italic; font-family: 'Work Sans', sans-serif; font-weight: 300 }
+#composer .head
+{
+    display: none; height: 40px; position: fixed; bottom:61px; left: 0; background: #fff;width:100%;
+    border-top: 1px solid #ddd; color: #0001f7; flex-wrap: nowrap
+}
+#composer .head > * {height:40px}
+#composer .head .icon {background: url('/gfx/color/subj.svg') no-repeat 13px 12px; width:39px}
+#composer .head .cap {font: 15px 'Work Sans'; flex: 4 1 0; display: flex; border: 0; color: #0001f7}
+#composer .head .picker, #composer .head .files {width: 40px; max-width: 40px; flex: 1 1 0; cursor: pointer}
+#composer .head .picker {background: url('/gfx/color/updown.svg') no-repeat 15px 11px}
+#composer .head .files {background: url('/gfx/color/clip.svg') no-repeat 9px 14px}
+#composer .send
+{
+    background: url('/gfx/color/send.svg') no-repeat;width: 21px;height:18px; position:fixed; right:12px;
+    bottom:19px; z-index:1;cursor: pointer; display: none
+}
+#composer .subjects
+{
+    display: none; position: fixed; left: 0; bottom: 102px; background: #fff; width: 100%;
+    font: 15px 'Work Sans'; color: #0001f7; margin: 0; border-top: 1px solid #ddd; padding: 0
+}
+#composer .subjects li {padding: 12px 10px 12px 39px; cursor: pointer}
+#composer .subjects li.add {background: url('/gfx/color/plus2.svg') no-repeat 14px 15px}
+
+#composer.focused .head {display: flex}
+#composer.focused .send {display: block}
+#composer.focused .subjects.opened {display: block}
+
+#upload {opacity: 0;cursor: pointer; line-height: 40px}
+#uploaded { position: fixed; left: 4px; bottom: 0; width: 100vw; background: #fff; white-space: nowrap; display: flex}
+#uploaded div {margin: 3px 2px}

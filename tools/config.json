@@ -20,16 +20,14 @@
   ],
   "css":
   [
-    "css/core",
-    "css/login",
-    "css/snackbar",
-    "css/contacts",
-    "css/messages",
-    "css/desktop",
-    "css/settings"
+    "css/main"
   ],
   "dist": "../dist",
-  "shell":
+  "pre-shell":
+  [
+    "stylus css/stylus/main.styl -o css/main.css"
+  ],
+  "post-shell":
   [
     "cp favicon.ico $distDir/favicon.ico",
     "cp -R gfx $distDir/gfx"
