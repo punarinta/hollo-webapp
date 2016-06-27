@@ -164,11 +164,14 @@ MS.add = function (data, pos)
     }
   });
 
-  // scrolling hack
-  setTimeout(function (ul)
+  if (pos != 'top')
   {
-    ul.scrollIntoView(false);
-  }, 100, ul);
+    // scrolling hack
+    setTimeout(function (ul)
+    {
+      ul.scrollIntoView(false);
+    }, 100, ul);
+  }
 };
 
 MS.xname = function (contact)
@@ -239,7 +242,7 @@ MS.show = function (email, id)
     page.querySelector('.subjects').innerHTML = '<li class="add">New topic</li>';
 
     ul.innerHTML = '';
-    MS.add(data.messages, 'top');
+    MS.add(data.messages, 'bottom');
 
     ML.loadFiles(email)
   });
