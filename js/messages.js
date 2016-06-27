@@ -322,4 +322,14 @@ MS.filter = function (subj)
 
     ML.demo(e.target.dataset.url, e.target.dataset.mime)
   };
+
+  document.getElementById('msgs-more').onclick = function ()
+  {
+    // can be called only by ID
+    ML.api('file', 'moreByContactId', {contactId: MS.contact.id}, function (data)
+    {
+      console.log('More messages requested:', data);
+      MS.add(data, 'top');
+    });
+  };
 })();
