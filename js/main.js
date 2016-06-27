@@ -150,10 +150,10 @@ ML.hidePages = function ()
 
         // TODO: uncomment before release
         
-        /*ML.api('contact', 'delete', {id: MS.contact.id}, function ()
+        ML.api('contact', 'delete', {id: MS.contact.id}, function ()
         {
           ML.go('contacts')
-        });*/
+        });
       }
     });
 
