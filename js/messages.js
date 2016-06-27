@@ -297,6 +297,7 @@ MS.filter = function (subj)
     snackbar.querySelector('.icon.tags').classList.remove('toggled');
     snackTags.style.display = 'none';
     page.classList.add('filtered');
+    document.getElementById('msgs-more').style.display = 'none';
   }
   else
   {
@@ -307,6 +308,7 @@ MS.filter = function (subj)
 
     filter.style.display = 'none';
     page.classList.remove('filtered');
+    document.getElementById('msgs-more').style.display = 'block';
   }
 };
 
