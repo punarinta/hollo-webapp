@@ -21,7 +21,7 @@ MS.add = function (data, pos)
     if (!data[i].from.id) data[i].from = AU.user;
 
     var filesHtml = 0,
-      body = data[i].body,
+      body = data[i].body || '',
       mine = data[i].from.email == AU.user.email,
       whose = mine ? 'mine' : 'yours',
       sName = data[i].from.name ? data[i].from.name : data[i].from.email;
