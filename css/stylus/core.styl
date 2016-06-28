@@ -28,6 +28,12 @@ $font-bread // This is a placeholder selector, wont be generated in the css but 
 	line-height font-size-medium
 	color color-font-standard
 
+$font-clickable
+	font-family 'Work Sans', sans-serif
+	font-size font-size-small
+	font-weight 400
+	color color-brand
+
 $font-clickable-bold
 	font-family 'Work Sans', sans-serif
 	font-size font-size-small
@@ -90,13 +96,13 @@ button
 	margin 5px auto
 	padding 7px 15px 6px
 	cursor pointer
-	font-size 16px
 	background #fff
 	border 1px color-brand solid
 	color color-brand
 	border-radius 3px
 	min-width 64px
 	height 36px
+	@extend $font-clickable
 	&:active
 		background-color color-brand
 		color #fff
