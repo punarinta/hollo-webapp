@@ -34,10 +34,13 @@ foreach ($config['mods'] as $file)
     echo "Module '$file.js'...\n";
     shell_exec("yui-compressor modules/$file.js -o $distDir/modules/$file.js");
 }
-foreach ($config['css'] as $file)
+foreach ($config['css']['files'] as $file)
 {
     echo "Style '$file.css'...\n";
     shell_exec("yui-compressor $file.css -o $distDir/temp.css");
+    
+    // TODO: add prefixes
+    
     file_put_contents("$distDir/$random.css", file_get_contents("$distDir/temp.css"), FILE_APPEND);
 }
 

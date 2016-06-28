@@ -19,9 +19,27 @@
     "blowfish"
   ],
   "css":
-  [
-    "css/main"
-  ],
+  {
+    "files":
+    [
+      "css/main"
+    ],
+    "prefixes":
+    [
+      "-webkit-",
+      "-moz-",
+      "-ms-"
+    ],
+    "prefixed":
+    [
+      ["user-select", [0,1,2]],
+      ["tap-highlight-color", [0,1]],
+      ["animation", [0]],
+      ["animation-fill-mode", [0]],
+      ["animation-timing-function", [0]],
+      ["animation-delay", [0]]
+    ]
+  },
   "dist": "../dist",
   "pre-shell":
   [
