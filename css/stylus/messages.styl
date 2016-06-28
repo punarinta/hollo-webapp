@@ -100,7 +100,7 @@
       display inline-block
   textarea
     border 0
-    border-top 1px solid #ddd
+    border-top 1px solid color-bg-grey
     margin 0
     position fixed
     left 0
@@ -124,11 +124,11 @@
     display none
     height 40px
     position fixed
-    bottom 61px
+    bottom 60px
     left 0
     background #fff
     width 100%
-    border-top 1px solid #ddd
+    border-top 1px solid color-bg-grey
     color color-brand
     flex-wrap nowrap
     & > *
@@ -163,13 +163,13 @@
     pointer-events none
     position fixed
     left 0
-    bottom 102px
+    bottom 100px
     background #fff
     width 100%
     font 15px 'Work Sans'
     color color-brand
     margin 0
-    border-top 1px solid #ddd
+    border-top 1px solid color-bg-grey
     padding 0
     li
       padding 12px 10px 12px 39px
@@ -185,6 +185,8 @@
       &.opened
         pointer-events all
         transform translateY(0)
+    textarea
+      border-top 0px solid color-bg-grey
 
 #composer .head .picker,
 #composer .head .files
