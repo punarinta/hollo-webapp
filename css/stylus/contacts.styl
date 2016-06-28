@@ -70,22 +70,20 @@
   .tabs
     height 48px
     display flex
-    font-weight 500
     background #fff
     z-index 10
+    @extend $font-clickable-bold
     div
       border-bottom 1px color-bg-grey solid
       flex 1 0 0
       text-align center
       padding-top 14px
-      color #0001f7
       cursor pointer
       span
         border 0 solid
       &.sel
         span
           border-width 0 0 2px
-          font-weight 600
   ul
     list-style-type none
     margin 176px 0 0
