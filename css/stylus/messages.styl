@@ -13,6 +13,12 @@
     li
       overflow auto
       width calc(100vw - 10px)
+      animation-mixin(fadeInUp)
+      opacity 0
+      animation-delay 1s
+      for num in (1..12) // Makes content show up in read order
+        &:nth-last-of-type({num})
+          animation-delay num * 0.05s
       & > div
         overflow auto
         margin 5px 3px
