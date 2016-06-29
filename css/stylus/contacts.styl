@@ -19,11 +19,13 @@
       border-radius 50%
       border-image 0
     .name
-      font-size 27px
       padding-top 13px
+      @extend $font-heading
+      color color-brand
       font-weight 500
     .email
-      font-size 14px
+      @extend $font-bread
+      color color-brand
     .clear
       width 20px
       height 20px
@@ -68,22 +70,20 @@
   .tabs
     height 48px
     display flex
-    font-weight 500
     background #fff
     z-index 10
+    @extend $font-clickable-bold
     div
-      border-bottom 1px #f5f5f5 solid
+      border-bottom 1px color-bg-grey solid
       flex 1 0 0
       text-align center
       padding-top 14px
-      color #0001f7
       cursor pointer
       span
         border 0 solid
       &.sel
         span
           border-width 0 0 2px
-          font-weight 600
   ul
     list-style-type none
     margin 176px 0 0
@@ -112,7 +112,7 @@
           content ''
           display block
           position absolute
-          background-color #f5f5f5
+          background-color color-bg-grey
           height 1px
           width calc(100% - 48px)
           left 24px
@@ -142,11 +142,10 @@
       &.unread
         border-color #0001f7
     .name
-      font-size 24px
-      font-weight 300
+      @extend $font-heading
+      margin-bottom 2px
     .email
-      color #333
-      font 15px Roboto
+      @extend $font-bread
     .shadow
       height 72px
       display none
@@ -164,10 +163,10 @@
           float left
         &:last-child
           float right
+          margin-right 12px
 
 #show-holloed
   padding-left 24px
 
 #show-muted
   padding-right 24px
-
