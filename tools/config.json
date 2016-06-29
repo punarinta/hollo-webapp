@@ -27,12 +27,11 @@
     "prefixes":
     [
       "-webkit-",
-      "-moz-",
-      "-ms-"
+      "-moz-"
     ],
     "prefixed":
     [
-      ["user-select", [0,1,2]],
+      ["user-select", [0,1]],
       ["tap-highlight-color", [0,1]],
       ["animation", [0]],
       ["animation-fill-mode", [0]],

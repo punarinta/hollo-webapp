@@ -1,5 +1,32 @@
 <?php
 
+function prefixify($text = '', $prefixes = [], $prefixed = [])
+{
+    $textLines = explode("\n", $text);
+
+    for ($i = 0; $i < count($textLines); $i++)
+    {
+        $style = explode(':', $textLines[$i]);
+        $style = trim($style[0]);
+
+        foreach ($prefixed as $instruction)
+        {
+            if ($style == $instruction[0])
+            {
+                foreach ($instruction[1] as $pfx)
+                {
+                    $extraTextLine = str_replace($style, $prefixes[$pfx] . $style, $textLines[$i]);
+                    array_splice($textLines, $i + 1, 0, $extraTextLine);
+
+                    echo "$style - $extraTextLine\n";
+                }
+            }
+        }
+    }
+
+    return implode("\n", $textLines);
+}
+
 echo "Setting up...\n";
 
 chdir(__DIR__);
@@ -37,10 +64,12 @@ foreach ($config['mods'] as $file)
 foreach ($config['css']['files'] as $file)
 {
     echo "Style '$file.css'...\n";
+
+    $cssData = prefixify(file_get_contents("$file.css"), $config['css']['prefixes'], $config['css']['prefixed']);
+    file_put_contents("$file.css", $cssData);
+
     shell_exec("yui-compressor $file.css -o $distDir/temp.css");
-    
-    // TODO: add prefixes
-    
+
     file_put_contents("$distDir/$random.css", file_get_contents("$distDir/temp.css"), FILE_APPEND);
 }
 
