@@ -8,6 +8,7 @@ var CFG =
     CFG._('emojis-replace', 0);
     CFG._('ctrlenter', 1);
     CFG._('newlines', 1);
+    CFG._('contact-sort', 'lastTs');  // Options are 'name', 'email', 'lastTs'.
   },
 
   _: function (key, value)

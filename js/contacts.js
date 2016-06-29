@@ -80,7 +80,7 @@ CO.show = function (mode)
 
     if (filter.length) filters.push({mode:'email', value:filter});
 
-    ML.api('contact', 'find', {pageStart:CO.offset, pageLength:25, filters:filters }, function (data)
+    ML.api('contact', 'find', {pageStart:CO.offset, pageLength:25, filters:filters, sortBy: CFG._('contact-sort') }, function (data)
     {
       if (filter.length && !data.length && r.test(filter))
       {
@@ -263,7 +263,7 @@ CO.show = function (mode)
       var filter = document.querySelector('#page-contacts .head .filter').value, filters = [{mode:'muted', value:ML.state.muted}];
       if (filter.length) filters.push({mode:'email', value:filter});
 
-      ML.api('contact', 'find', { pageStart: CO.offset, pageLength: 25, filters: filters }, function (data)
+      ML.api('contact', 'find', { pageStart: CO.offset, pageLength: 25, filters: filters, sortBy: CFG._('contact-sort') }, function (data)
       {
         CO.add(data);
         if (data.length == 25) CO.more = 1;
