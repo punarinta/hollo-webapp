@@ -47,6 +47,7 @@
   "post-shell":
   [
     "cp favicon.ico $distDir/favicon.ico",
-    "cp -R gfx $distDir/gfx"
+    "cp -R gfx $distDir/gfx",
+    "cp -R favicon $distDir/favicon"
   ]
 }
