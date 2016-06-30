@@ -172,6 +172,25 @@ ML.hidePages = function ()
   {
     MS.filter(0)
   };
+  
+  snackbar.querySelector('.name').onclick = function ()
+  {
+    var html = '', container = document.createElement('div');
+    container.innerHTML = document.getElementById('cont-user-picker').innerHTML;
+
+    // fill in users
+    for (var i in MS.users)
+    {
+      html += '<li><input type="checkbox" checked>' + MS.users[i].email + '</li>';
+    }
+
+    container.querySelector('ul').innerHTML = html;
+
+    ML.mbox(container.innerHTML, 0, function ()
+    {
+      // users picked, redraw
+    })
+  };
 
   // prevent scrolling of the main screen by files list
 
