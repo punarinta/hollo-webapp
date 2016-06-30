@@ -96,7 +96,7 @@ MS.send = function ()
 
   cmpText.onkeyup = function (e)
   {
-    if (e.keyCode == 13 && e.ctrlKey && CFG._('ctrlenter'))
+    if (e.keyCode == 13 && e.ctrlKey)
     {
       MS.send()
     }
