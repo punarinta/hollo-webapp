@@ -31,8 +31,12 @@ MS.send = function ()
   {
     // collect emails for a new chat
 
-    // TODO: support multiple emails
-    to = [{email: MS.contact.email}]
+    to = [];
+
+    for (var i in MS.usersToSend)
+    {
+      to.push({email: MS.usersToSend[i]})
+    }
   }
 
   console.log('body:', msg);
