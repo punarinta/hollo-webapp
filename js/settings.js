@@ -29,7 +29,8 @@ var CFG =
     {
       for (i in flags)
       {
-        page.querySelector('#cfg-' + i).checked = flags[i]
+        var x = page.querySelector('#cfg-' + i);
+        if (x) x.checked = flags[i]
       }
     }
 
