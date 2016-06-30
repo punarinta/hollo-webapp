@@ -3,7 +3,10 @@ var MS =
   contact: null,
   _upl: [],
   subjects: [],
-  loaded: 0
+  loaded: 0,
+  users: [],
+  usersToSend: [],
+  userIds: []
 };
 
 MS.add = function (data, pos)
@@ -120,6 +123,13 @@ MS.add = function (data, pos)
       '<div class="foot"><div class="ava' + (mine ? ' full' : '') + '" style="background:' + ava + '">' + nc + '</div><div class="ts">' + ML.ts(data[i].ts) + '</div></div>' +
       '</div>' +
       '</li>';
+
+    // save user to participants list
+    if (data[i].from.id && MS.userIds.indexOf(data[i].from.id) == -1)
+    {
+      MS.users.push(data[i].from);
+      MS.userIds.push(data[i].from.id)
+    }
   }
 
   if (pos == 'top') ul.innerHTML = html + ul.innerHTML;
