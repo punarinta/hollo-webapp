@@ -183,7 +183,18 @@ button
 		border 1px solid color-brand
 		border-radius 36px
 		background-color #fff
-		transition background-color 0.3s ease-in
+		transition background-color .3s ease-in
+		&:before
+			content ""
+			display block
+			width 36px
+			height 36px
+			margin -1px 9px 0 -1px
+			background #fff
+			position absolute
+			border 1px solid color-brand
+			border-radius 36px
+/* Transition to Stylus has completely fucked up this switch, plus transition does not work at all anymore :/
 		&:before
 			content ""
 			display block
@@ -196,7 +207,7 @@ button
 			right 26px
 			border 1px solid color-brand
 			border-radius 36px
-			transition all 0.3s ease-in 0s
+			transition all 0.3s ease-in 0s*/
 
 #page-loader
 	background color-brand
