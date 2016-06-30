@@ -181,14 +181,24 @@ ML.hidePages = function ()
     // fill in users
     for (var i in MS.users)
     {
-      html += '<li><input type="checkbox" checked>' + MS.users[i].email + '</li>';
+      var email = MS.users[i].email;
+
+      html += '<li><input type="checkbox"'
+           + (MS.usersToSend.indexOf(email) != -1 ? ' checked' : '')
+           + ' data-email="' + email + '">'
+           + email + '</li>';
     }
 
     container.querySelector('ul').innerHTML = html;
 
-    ML.mbox(container.innerHTML, 0, function ()
+    var x = ML.mbox(container.innerHTML, 0, function ()
     {
-      // users picked, redraw
+      MS.usersToSend = [];
+      // users picked
+      Array.prototype.forEach.call(x.querySelectorAll('input:checked'), function (el)
+      {
+        MS.usersToSend.push(el.dataset.email);
+      });
     })
   };
 

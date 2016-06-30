@@ -125,10 +125,10 @@ MS.add = function (data, pos)
       '</li>';
 
     // save user to participants list
-    if (data[i].from.id && MS.userIds.indexOf(data[i].from.id) == -1)
+    if (data[i].from.id && MS.userIds.indexOf(data[i].from.id) == -1 && data[i].from.email != AU.user.email)
     {
       MS.users.push(data[i].from);
-      MS.usersToSend.push(data[i].from);
+      MS.usersToSend.push(data[i].from.email);
       MS.userIds.push(data[i].from.id)
     }
   }
@@ -246,7 +246,7 @@ MS.show = function (email, id)
 
     MS.users = [MS.contact];
     MS.userIds = [MS.contact.id];
-    MS.usersToSend = [MS.contact];
+    MS.usersToSend = [MS.contact.email];
 
     document.querySelector('#snackbar .name').innerHTML = MS.xname(MS.contact);
     document.querySelector('#snackbar-menu-more .mute').innerText = MS.contact.muted ? 'Unmute' : 'Mute';
