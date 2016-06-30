@@ -228,6 +228,7 @@ MS.show = function (email, id)
   {
     // clear all the shit from composer
     MS._upl = [];
+    MS.users = [];
     page.querySelector('textarea').value = '';
     document.querySelector('#uploaded').innerHTML = '';
     MS.cmpResize();
