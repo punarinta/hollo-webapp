@@ -128,6 +128,7 @@ MS.add = function (data, pos)
     if (data[i].from.id && MS.userIds.indexOf(data[i].from.id) == -1)
     {
       MS.users.push(data[i].from);
+      MS.usersToSend.push(data[i].from);
       MS.userIds.push(data[i].from.id)
     }
   }
@@ -213,7 +214,7 @@ MS.show = function (email, id)
   MS.loaded = 1;
 
   ML.hidePages();
-  ul.innerHTML = '<li>Loading...</li>';
+  ul.innerHTML = '';
   snackbar.querySelector('.name').innerHTML = '';
   Array.prototype.forEach.call(snackbar.querySelectorAll('.icon'), function (el)
   {
@@ -228,7 +229,6 @@ MS.show = function (email, id)
   {
     // clear all the shit from composer
     MS._upl = [];
-    MS.users = [];
     page.querySelector('textarea').value = '';
     document.querySelector('#uploaded').innerHTML = '';
     MS.cmpResize();
@@ -243,6 +243,10 @@ MS.show = function (email, id)
   {
     MS.contact = data.contact;
     MS.contact.email = email;
+
+    MS.users = [MS.contact];
+    MS.userIds = [MS.contact.id];
+    MS.usersToSend = [MS.contact];
 
     document.querySelector('#snackbar .name').innerHTML = MS.xname(MS.contact);
     document.querySelector('#snackbar-menu-more .mute').innerText = MS.contact.muted ? 'Unmute' : 'Mute';
