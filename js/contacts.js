@@ -251,7 +251,7 @@ CO.show = function (mode)
   {
     if (!CO.more) return;
 
-    var el = document.querySelector('#page-contacts ul li:last-child');
+    var el = document.querySelector('#page-contacts ul li:nth-last-child(2)');
 
     if (el && el.getBoundingClientRect().bottom < screen.height + 50)
     {
