@@ -70,6 +70,7 @@ MS.send = function ()
     }
   }
 
+  busybox.classList.add('flex');
   MS.add([m], 'bottom');
 
   ML.api('message', 'send', {body: msg, messageId: msgId, subject: subj, files: m.files, to: to}, function (json)
@@ -85,6 +86,7 @@ MS.send = function ()
 
     // close topic picker
     cmp.querySelector('.subjects').classList.remove('opened');
+    busybox.classList.remove('flex');
   });
 };
 
