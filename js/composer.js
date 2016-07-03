@@ -59,13 +59,13 @@ MS.send = function ()
     for (var i = 0, u; u = MS._upl[i]; i++)
     {
       m.files.push(
-        {
-          name: u.name,
-          type: u.mime,
-          size: u.size,
-          extId: 'x',
-          data: u.data
-        });
+      {
+        name: u.name,
+        type: u.mime,
+        size: u.size,
+        extId: 'x',
+        data: u.data
+      });
       console.log('File attached: ', MS._upl[i]);
     }
   }
