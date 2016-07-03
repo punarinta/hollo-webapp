@@ -1,3 +1,5 @@
+var busybox = document.getElementById('busybox');
+
 ML.hidePages = function ()
 {
   Array.prototype.forEach.call(document.getElementsByClassName('page'), function (el)

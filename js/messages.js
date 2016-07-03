@@ -346,11 +346,13 @@ MS.filter = function (subj)
 
   document.getElementById('msgs-more').onclick = function ()
   {
+    busybox.classList.add('flex');
     // can be called only by ID
     ML.api('message', 'moreByContactId', {contactId: MS.contact.id}, function (data)
     {
       console.log('More messages requested:', data);
       MS.add(data, 'top');
+      busybox.classList.remove('flex');
     });
   };
 })();

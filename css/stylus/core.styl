@@ -111,6 +111,9 @@ button
 .hidden
 	display none
 
+.flex
+	display flex
+
 .page
 	display none
 	padding 5px
@@ -169,8 +172,8 @@ button
 	width 100%
 	height 100%
 	border-radius 50%
-	background-color #333
-	opacity 0.6
+	background-color color-brand
+	opacity 0.75
 	position absolute
 	top 0
 	left 0
@@ -232,14 +235,15 @@ button
 	flex-direction column
 
 #busybox
+	background rgba(80,80,80,.4)
 	position fixed
 	top 0
 	left 0
-	display flex
 	justify-content center
 	align-items center
 	width 100vw
 	height 100vh
+	z-index 100
 
 #mbox
 	top 0
