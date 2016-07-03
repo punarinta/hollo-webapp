@@ -9,7 +9,7 @@ var MS =
   userIds: []
 };
 
-MS.add = function (data, pos)
+MS.add = function (data, pos, status)
 {
   var html = '',
     subj,
@@ -112,6 +112,8 @@ MS.add = function (data, pos)
       nc = nc.length == 1 ? nc[0].charAt(0) : (nc[0].charAt(0) + nc[1].charAt(0));
     }
 
+    status = status || '';
+
     html +=
       '<li data-id="' + data[i].id + '" class="' + whose + '">' +
       '<div>' +
@@ -120,7 +122,8 @@ MS.add = function (data, pos)
       (body ? ('<div class="msg">' + body + '</div>') : '') +
       (filesHtml ? '<div class="files">' + filesHtml + '</div>': '') +
       '</div>' +
-      '<div class="foot"><div class="ava' + (mine ? ' full' : '') + '" style="background:' + ava + '">' + nc + '</div><div class="ts">' + ML.ts(data[i].ts) + '</div></div>' +
+      '<div class="foot"><div class="ava' + (mine ? ' full' : '') + '" style="background:' + ava + '">' + nc +
+      '</div><div class="ts"><span class="status ' + status + '"></span>' + ML.ts(data[i].ts) + '</div></div>' +
       '</div>' +
       '</li>';
 
