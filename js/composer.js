@@ -166,7 +166,7 @@ MS.send = function ()
     cmp.querySelector('.emojis').style.bottom = f + (h + 61) + 'px';
     cmp.querySelector('.head').style.bottom = f + (h + 21) + 'px';
     cmp.querySelector('.send').style.bottom = (f + h)/2 + 'px';
-    cmp.querySelector('.subjects').style.bottom = f + (h + 62) + 'px';
+    cmp.querySelector('.subjects').style.bottom = f + (h + 42) + 'px';
     cmpText.style.bottom = f + 'px';
   });
 
