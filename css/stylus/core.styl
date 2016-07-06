@@ -269,6 +269,12 @@ button
 	width 100vw
 	height 100vh
 	z-index 100
+	opacity 1
+	transition-mixin(opacity)
+	&.hidden
+		display block
+		opacity 0
+		pointer-events none
 
 #mbox
 	top 0
