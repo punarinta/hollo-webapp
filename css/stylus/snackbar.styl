@@ -63,10 +63,29 @@
     background-image url("/gfx/color/clip.svg")
   .more
     right 5px
-    background-image url("/gfx/color/more-vert.svg")
-    transition transform 0.3s
+    span
+      display block
+      position absolute
+      width 40px
+      top 0
+      left 0
+      height @width
+      pointer-events none
+      border-radius 999px
+      transition-mixin(transform)
+      background-position center
+      background-image url("/gfx/color/more-single.svg")
+      &:first-of-type
+        transform translate(-6px)
+      &:last-of-type
+        transform translate(6px)
     &.toggled
-      transform rotate(90deg)
+      span
+        &:first-of-type
+          transform translateY(-9px)
+        &:last-of-type
+          transform translateY(9px)
+
   .toggled
     background-color color-bg-grey
 
