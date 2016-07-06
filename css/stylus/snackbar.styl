@@ -35,7 +35,29 @@
     flex-grow 4
   .tags
     right 85px
-    background-image url("/gfx/color/subjs.svg")
+    overflow hidden
+    span
+      position absolute
+      display block
+      pointer-events none
+      width 40px
+      height @width
+      top 0
+      left 0
+      background-position center
+      background-image url("/gfx/color/subject-card.svg")
+      transition-mixin(transform)
+      &:first-of-type
+        transform translate(-3px, -3px)
+      &:last-of-type
+        transform translate(3px, 3px)
+    &.toggled
+      span
+        &:first-of-type
+          transform translate(-5px, -5px)
+        &:last-of-type
+          transform translate(5px, 5px)
+
   .files
     right 42px
     background-image url("/gfx/color/clip.svg")
