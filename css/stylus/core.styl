@@ -191,6 +191,22 @@ button
 			border-radius 8px 0px 0px 8px
 			margin-right 0px
 
+.hollo-loader-big
+	@extend .hollo-loader-small
+	margin-top 20px
+	transform none
+	float none
+	top auto
+	left auto
+	span
+		height 10px
+		width 24px
+		margin 0 -4px
+		background-color #fff
+		animation(load-anim-big)
+		&:nth-of-type(odd)
+			animation(load-anim-big2)
+
 .onoff
 	input
 		display none
