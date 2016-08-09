@@ -304,7 +304,8 @@ MS.filter = function (subj)
   var snackTags = document.getElementById('snackbar-menu-tags'),
       filter = document.getElementById('msgs-filter'),
       snackbar = document.getElementById('snackbar'),
-      page = document.getElementById('page-msgs');
+      page = document.getElementById('page-msgs'),
+      ul = page.querySelector('ul');
   
   if (subj)
   {
@@ -330,6 +331,11 @@ MS.filter = function (subj)
     filter.style.display = 'none';
     page.classList.remove('filtered');
     document.getElementById('msgs-more').style.display = 'block';
+
+    setTimeout(function (ul)
+    {
+      ul.scrollIntoView(false);
+    }, 100, ul);
   }
 };
 
