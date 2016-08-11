@@ -14,27 +14,46 @@ CO.resetFilter = function ()
 
 CO.add = function (data)
 {
-  var html = '', name;
+  var html = '', nc, name;
 
   for (var i in data)
   {
-    name = data[i].name ? data[i].name : data[i].email;
+    var unread = data[i].read ? '' : ' unread', count = data[i].users.length;
 
-    var unread = data[i].read ? '' : ' unread', nc = name.split(' ');
+    if (count > 1)
+    {
+      name = ['You'];
+      for (var n = 0, user; n < count; n++)
+      {
+        if (data[i].users[n].name)
+          user = data[i].users[n].name.split(' ')[0];
+        else
+          user = data[i].users[n].email.split('@')[0].split('.')[0];
 
-    nc = nc.length == 1 ? nc[0].charAt(0) : (nc[0].charAt(0) + nc[1].charAt(0));
+        name.push(user.charAt(0).toUpperCase() + user.slice(1));
+      }
+
+      name = name.join(', ');
+      nc = '+' + count;
+    }
+    else
+    {
+      name = data[i].users[0].name ? data[i].users[0].name : data[i].users[0].email.split('@')[0];
+      nc = name.split(' ');
+      nc = nc.length == 1 ? nc[0].charAt(0) : (nc[0].charAt(0) + nc[1].charAt(0));
+    }
 
     html +=
-      '<li data-email="' + data[i].email + '" data-id="' + data[i].id + '">' +
-      '<div class="ava"><div class="img' + unread + '" id="img-gr-' + md5(data[i].email) + '" style="background:' + ML.colorHash(data[i].email) + '">' + nc + '</div></div>' +
-      '<div class="hujava"><div class="name">' + name + '</div><div class="email">' + data[i].email + '</div></div>' +
+      '<li data-id="' + data[i].id + '">' +
+      '<div class="ava"><div class="img' + unread + '" style="background:' + ML.colorHash(data[i].id + '') + '">' + nc + '</div></div>' +
+      '<div class="hujava"><div class="name">' + name + '</div><div class="email">' + (data[i].lastMsg || '&mdash;') + '</div></div>' +
       '</li>' +
       '<div class="shadow shad-' + data[i].id + '"><div>' + (ML.state.muted?'un':'') + 'mute</div><div class="markas">mark<br>as ' + (unread?'':'un') + 'read</div></div>';
   }
 
   document.querySelector('#page-contacts ul').innerHTML += html;
 
-  for (i in data)
+  /*for (i in data)
   {
     ML.grava(data[i].email, function (d)
     {
@@ -46,7 +65,7 @@ CO.add = function (data)
         s.innerHTML = '';
       }
     });
-  }
+  }*/
 };
 
 CO.show = function (mode)
@@ -80,7 +99,7 @@ CO.show = function (mode)
 
     if (filter.length) filters.push({mode:'email', value:filter});
 
-    ML.api('contact', 'find', {pageStart:CO.offset, pageLength:25, filters:filters, sortBy: CFG._('contact-sort-ts')?'lastTs':'email' }, function (data)
+    ML.api('chat', 'find', {pageStart:CO.offset, pageLength:25, filters:filters, sortBy: CFG._('contact-sort-ts')?'lastTs':'email' }, function (data)
     {
       if (filter.length && !data.length && r.test(filter))
       {
@@ -263,7 +282,7 @@ CO.show = function (mode)
       var filter = document.querySelector('#page-contacts .head .filter').value, filters = [{mode:'muted', value:ML.state.muted}];
       if (filter.length) filters.push({mode:'email', value:filter});
 
-      ML.api('contact', 'find', { pageStart: CO.offset, pageLength: 25, filters: filters, sortBy: CFG._('contact-sort-ts')?'lastTs':'email' }, function (data)
+      ML.api('chat', 'find', { pageStart: CO.offset, pageLength: 25, filters: filters, sortBy: CFG._('contact-sort-ts')?'lastTs':'email' }, function (data)
       {
         CO.add(data);
         if (data.length == 25) CO.more = 1;
