@@ -12,36 +12,44 @@ CO.resetFilter = function ()
   f.dispatchEvent(new Event('keyup'));
 };
 
+CO.xname = function(chat, short)
+{
+  var count = chat.users.length, name, nc;
+
+  if (count > 1)
+  {
+    name = short ? [] : ['You'];
+    for (var n = 0, user; n < count; n++)
+    {
+      if (chat.users[n].name)
+        user = chat.users[n].name.split(' ')[0];
+      else
+        user = chat.users[n].email.split('@')[0].split('.')[0];
+
+      name.push(user.charAt(0).toUpperCase() + user.slice(1));
+    }
+
+    name = name.join(', ');
+    nc = '+' + count;
+  }
+  else
+  {
+    name = chat.users[0].name ? chat.users[0].name : chat.users[0].email.split('@')[0];
+    nc = name.split(' ');
+    nc = nc.length == 1 ? nc[0].charAt(0) : (nc[0].charAt(0) + nc[1].charAt(0));
+  }
+
+  return [name, nc]
+};
+
 CO.add = function (data)
 {
-  var html = '', nc, name;
+  var html = '';
 
   for (var i in data)
   {
-    var unread = data[i].read ? '' : ' unread', count = data[i].users.length;
-
-    if (count > 1)
-    {
-      name = ['You'];
-      for (var n = 0, user; n < count; n++)
-      {
-        if (data[i].users[n].name)
-          user = data[i].users[n].name.split(' ')[0];
-        else
-          user = data[i].users[n].email.split('@')[0].split('.')[0];
-
-        name.push(user.charAt(0).toUpperCase() + user.slice(1));
-      }
-
-      name = name.join(', ');
-      nc = '+' + count;
-    }
-    else
-    {
-      name = data[i].users[0].name ? data[i].users[0].name : data[i].users[0].email.split('@')[0];
-      nc = name.split(' ');
-      nc = nc.length == 1 ? nc[0].charAt(0) : (nc[0].charAt(0) + nc[1].charAt(0));
-    }
+    var unread = data[i].read ? '' : ' unread';
+    var xname = CO.xname(data[i]), name=xname[0], nc=xname[1];
 
     html +=
       '<li data-id="' + data[i].id + '">' +
@@ -246,22 +254,21 @@ CO.show = function (mode)
   // === CONTACT LIST ===
   conts.onclick = function (e)
   {
-    var ds = PP.par(e.target, 'li').dataset,
-      email = ds.email;
+    var ds = PP.par(e.target, 'li').dataset, id = ds.id;
 
-    if (email != 'new')
+    if (id != 'new')
     {
       CO.resetFilter();
-      ML.go('chat/' + email, ds.id);
+      ML.go('chat/' + id);
     }
     else
     {
-      email = document.querySelector('#page-contacts .filter').value;
+      var email = document.querySelector('#page-contacts .filter').value;
       CO.resetFilter();
 
-      ML.api('contact', 'add', {email:email}, function (data)
+      ML.api('chat', 'add', {email:email}, function (data)
       {
-        ML.go('chat/' + email, data.id);
+        ML.go('chat/' + data.id);
       });
     }
   };

@@ -1,6 +1,6 @@
 var MS =
 {
-  contact: null,
+  chat: null,
   _upl: [],
   subjects: [],
   loaded: 0,
@@ -202,7 +202,7 @@ MS.xname = function (contact)
   }
 };
 
-MS.show = function (email, id)
+MS.show = function (id)
 {
   var page = document.getElementById('page-msgs'),
       ul = page.querySelector('ul'),
@@ -228,31 +228,32 @@ MS.show = function (email, id)
 
   page.style.display = 'inline-block';
 
-  if (MS.contact && email != MS.contact.email)
+  /*if (MS.contact && email != MS.contact.email)
   {
     // clear all the shit from composer
     MS._upl = [];
     page.querySelector('textarea').value = '';
     document.querySelector('#uploaded').innerHTML = '';
     MS.cmpResize();
-  }
+  }*/
 
   ML.load('modules/emojis');
 
   // reset filter
   MS.filter(0);
 
-  ML.api('message', 'findByReference', {email: email, id: id}, function (data)
+  ML.api('message', 'findByChatId', {chatId: id}, function (data)
   {
-    MS.contact = data.contact;
-    MS.contact.email = email;
+    MS.chat = data.chat;
+    // MS.contact.email = email;
 
-    MS.users = [MS.contact];
-    MS.userIds = [MS.contact.id];
-    MS.usersToSend = [MS.contact.email];
+    MS.users = [MS.chat];
+    MS.userIds = [MS.chat.id];
+    //MS.usersToSend = [MS.chat.email];
 
-    document.querySelector('#snackbar .name').innerHTML = MS.xname(MS.contact);
-    document.querySelector('#snackbar-menu-more .mute').innerText = MS.contact.muted ? 'Unmute' : 'Mute';
+    var xname = CO.xname(MS.chat, 1);
+    document.querySelector('#snackbar .name').innerHTML = xname[0];
+    document.querySelector('#snackbar-menu-more .mute').innerText = MS.chat.muted ? 'Unmute' : 'Mute';
 
     // reset subject lists
     MS.subjects = [];
@@ -262,7 +263,7 @@ MS.show = function (email, id)
     ul.innerHTML = '';
     MS.add(data.messages, 'bottom');
 
-    ML.loadFiles(email)
+    // ML.loadFiles(email)
   });
 
   ML.loadFiles = function (email)
