@@ -33,7 +33,7 @@ ML.hidePages = function ()
   };
 
   // === FILTERS ===
-  var head = document.querySelector('#page-contacts .head');
+  var head = document.querySelector('#page-contacts .head'), prevEmailFilter = '';
   head.querySelector('.filter').onkeyup = function ()
   {
     var filter = this.value.toUpperCase(), cmd = filter.split(' '), that = this;
@@ -57,7 +57,12 @@ ML.hidePages = function ()
         });
         break;
     }
-    CO.show(4);
+
+    if (prevEmailFilter != filter)
+    {
+      prevEmailFilter = filter;
+      CO.show(4);
+    }
   };
 
   head.querySelector('.clear').onclick = CO.resetFilter;
