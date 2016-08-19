@@ -220,7 +220,7 @@ CO.show = function (mode)
         case 1:
           item.style.transform = 'translateX(' + vw + 'px)';
 
-          ML.api('contact', 'update', {id: id, muted: !ML.state.muted - 0}, function ()
+          ML.api('chat', 'update', {id: id, muted: !ML.state.muted - 0}, function ()
           {
             setTimeout(function (e)
             {
@@ -234,7 +234,7 @@ CO.show = function (mode)
         case -1:
           item.style.transform = 'translateX(-' + vw + 'px)';
 
-          ML.api('contact', 'update', {id: id, read: item.querySelector('.img').classList.contains('unread') - 0}, function ()
+          ML.api('chat', 'update', {id: id, read: item.querySelector('.img').classList.contains('unread') - 0}, function ()
           {
             var cl = item.querySelector('.img').classList;
             cl.toggle('unread');
