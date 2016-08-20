@@ -112,7 +112,7 @@ CO.show = function (mode)
       if (filter.length && !data.length && r.test(filter))
       {
         // filter is ON, but no results found => offer to create a new one
-        ul.innerHTML = '<li data-email="new" class="new"><div class="ava"><div class="new img"></div></div><div><div class="name">' + filter + '</div><div class="email"></div></div></li>';
+        ul.innerHTML = '<li data-id="new" class="new"><div class="ava"><div class="new img"></div></div><div><div class="name">' + filter + '</div><div class="email"></div></div></li>';
       }
       else
       {
@@ -266,7 +266,7 @@ CO.show = function (mode)
       var email = document.querySelector('#page-contacts .filter').value;
       CO.resetFilter();
 
-      ML.api('chat', 'add', {email:email}, function (data)
+      ML.api('chat', 'add', {emails:[email]}, function (data)
       {
         ML.go('chat/' + data.id);
       });
