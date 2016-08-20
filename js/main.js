@@ -105,10 +105,10 @@ ML.hidePages = function ()
   snackdrop.querySelector('.mute').onclick = function ()
   {
     var t = this;
-    ML.api('contact', 'update', {id:MS.contact.id, muted:!MS.contact.muted}, function ()
+    ML.api('chat', 'update', {id:MS.chat.id, muted:!MS.chat.muted}, function ()
     {
-      MS.contact.muted = !MS.contact.muted;
-      t.innerText = MS.contact.muted ? 'Unmute' : 'Mute';
+      MS.chat.muted = !MS.chat.muted;
+      t.innerText = MS.chat.muted ? 'Unmute' : 'Mute';
     });
   };
 
@@ -120,22 +120,22 @@ ML.hidePages = function ()
 
   snackdrop.querySelector('.unread').onclick = function ()
   {
-    ML.api('contact', 'update', {id:MS.contact.id, read:0}, closeSnackbar);
+    ML.api('chat', 'update', {id:MS.chat.id, read:0}, closeSnackbar);
   };
 
   snackdrop.querySelector('.rename').onclick = function ()
   {
-    var mbox = ML.mbox('<input class="texty" value="' + (MS.contact.name || '') + '"/>', 1, function (ret)
+    var mbox = ML.mbox('<input class="texty" value="' + (MS.chat.name || '') + '"/>', 1, function (ret)
     {
       if (ret)
       {
         var name = mbox.querySelector('input').value;
-        ML.api('contact', 'update', { id: MS.contact.id, name: name }, function ()
+        ML.api('chat', 'update', { id: MS.chat.id, name: name }, function ()
         {
           if (name.length)
           {
-            MS.contact.name = name;
-            snackbar.querySelector('.name').innerText = MS.xname(MS.contact)
+            MS.chat.name = name;
+            snackbar.querySelector('.name').innerText = MS.xname(MS.chat)
           }
           else ML.mbox('Name cannot be empty')
         });
@@ -157,7 +157,7 @@ ML.hidePages = function ()
 
         // TODO: uncomment before release
         
-        ML.api('contact', 'delete', {id: MS.contact.id}, function ()
+        ML.api('chat', 'leave', {id: MS.chat.id}, function ()
         {
           ML.go('contacts')
         });

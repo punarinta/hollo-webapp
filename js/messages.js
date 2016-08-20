@@ -228,7 +228,7 @@ MS.show = function (id)
 
   page.style.display = 'inline-block';
 
-  /*if (MS.contact && email != MS.contact.email)
+  /*if (MS.chat && email != MS.chat.email)
   {
     // clear all the shit from composer
     MS._upl = [];
@@ -245,7 +245,7 @@ MS.show = function (id)
   ML.api('message', 'findByChatId', {chatId: id}, function (data)
   {
     MS.chat = data.chat;
-    // MS.contact.email = email;
+    // MS.chat.email = email;
 
     MS.users = [MS.chat];
     MS.userIds = [MS.chat.id];
@@ -355,7 +355,7 @@ MS.filter = function (subj)
   {
     busybox.classList.add('flex');
     // can be called only by ID
-    ML.api('message', 'moreByContactId', {contactId: MS.contact.id}, function (data)
+    ML.api('message', 'moreByChatId', {chatId: MS.chat.id}, function (data)
     {
       console.log('More messages requested:', data);
       MS.add(data, 'top');
