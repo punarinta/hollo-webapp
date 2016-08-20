@@ -12,13 +12,13 @@ CO.resetFilter = function ()
   f.dispatchEvent(new Event('keyup'));
 };
 
-CO.xname = function(chat, short)
+CO.xname = function(chat, shorty)
 {
   var count = chat.users.length, name, nc;
 
   if (count > 1)
   {
-    name = short ? [] : ['You'];
+    name = shorty ? [] : ['You'];
     for (var n = 0, user; n < count; n++)
     {
       if (chat.users[n].name)
