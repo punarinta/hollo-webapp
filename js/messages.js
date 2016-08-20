@@ -228,14 +228,14 @@ MS.show = function (id)
 
   page.style.display = 'inline-block';
 
-  /*if (MS.chat && email != MS.chat.email)
+  if (MS.chat && id != MS.chat.id)
   {
     // clear all the shit from composer
     MS._upl = [];
     page.querySelector('textarea').value = '';
     document.querySelector('#uploaded').innerHTML = '';
     MS.cmpResize();
-  }*/
+  }
 
   ML.load('modules/emojis');
 
@@ -245,11 +245,8 @@ MS.show = function (id)
   ML.api('message', 'findByChatId', {chatId: id}, function (data)
   {
     MS.chat = data.chat;
-    // MS.chat.email = email;
-
     MS.users = [MS.chat];
     MS.userIds = [MS.chat.id];
-    //MS.usersToSend = [MS.chat.email];
 
     var xname = CO.xname(MS.chat, 1);
     document.querySelector('#snackbar .name').innerHTML = xname[0];
@@ -266,12 +263,24 @@ MS.show = function (id)
     // ML.loadFiles(email)
   });
 
-  ML.loadFiles = function (email)
+  /**
+   * Load files by email
+   *
+   * @param index
+   * @param mode    - 0 -- by chat ID, 1 -- by email
+   */
+  ML.loadFiles = function (index, mode)
   {
-    var fileList = document.querySelector('#snackbar-menu-files ul');
-    fileList.innerHTML = 'Loading ...';
+    mode = mode || 0;
 
-    ML.api('file', 'findByEmail', {email: email, withImageUrl: true}, function (files)
+    var fileList = document.querySelector('#snackbar-menu-files ul'),
+         endPoint = mode ? 'findByEmail' : 'findByChatId',
+         params = mode ? {email: index} : {chatId: index};
+
+    fileList.innerHTML = 'Loading ...';
+    params.withImageUrl = true;
+
+    ML.api('file', endPoint, params, function (files)
     {
       var url, html = '', im, div;
 
