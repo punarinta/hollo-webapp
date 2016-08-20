@@ -182,7 +182,9 @@ ML.hidePages = function ()
   
   snackbar.querySelector('.name').onclick = function ()
   {
-    var html = '', container = document.createElement('div');
+    // TODO: add users (?)
+
+  /*  var html = '', container = document.createElement('div');
     container.innerHTML = document.getElementById('cont-user-picker').innerHTML;
 
     // fill in users
@@ -206,7 +208,7 @@ ML.hidePages = function ()
       {
         MS.usersToSend.push(el.dataset.email);
       });
-    })
+    })*/
   };
 
   // prevent scrolling of the main screen by files list

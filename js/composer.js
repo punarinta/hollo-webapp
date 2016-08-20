@@ -33,9 +33,10 @@ MS.send = function ()
 
     to = [];
 
-    for (var i in MS.usersToSend)
+    // all users are known from the very beginning
+    for (var i in MS.chat.users)
     {
-      to.push({email: MS.usersToSend[i]})
+      to.push({email: MS.chat.users[i].email})
     }
   }
 

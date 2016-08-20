@@ -3,10 +3,7 @@ var MS =
   chat: null,
   _upl: [],
   subjects: [],
-  loaded: 0,
-  users: [],
-  usersToSend: [],
-  userIds: []
+  loaded: 0
 };
 
 MS.add = function (data, pos, status)
@@ -126,14 +123,6 @@ MS.add = function (data, pos, status)
       '</div><div class="ts"><span class="status ' + status + '"></span>' + ML.ts(data[i].ts) + '</div></div>' +
       '</div>' +
       '</li>';
-
-    // save user to participants list
-    if (data[i].from.id && MS.userIds.indexOf(data[i].from.id) == -1 && data[i].from.email != AU.user.email)
-    {
-      MS.users.push(data[i].from);
-      MS.usersToSend.push(data[i].from.email);
-      MS.userIds.push(data[i].from.id)
-    }
   }
 
   if (pos == 'top') ul.innerHTML = html + ul.innerHTML;
@@ -245,8 +234,6 @@ MS.show = function (id)
   ML.api('message', 'findByChatId', {chatId: id}, function (data)
   {
     MS.chat = data.chat;
-    MS.users = [MS.chat];
-    MS.userIds = [MS.chat.id];
 
     var xname = CO.xname(MS.chat, 1);
     document.querySelector('#snackbar .name').innerHTML = xname[0];
@@ -260,7 +247,15 @@ MS.show = function (id)
     ul.innerHTML = '';
     MS.add(data.messages, 'bottom');
 
-    // ML.loadFiles(email)
+    if (MS.chat.users.length > 1)
+    {
+      ML.loadFiles(MS.chat.id)
+    }
+    else
+    {
+      // load directly by email
+      ML.loadFiles(MS.chat.users[0].email, 1)
+    }
   });
 
   /**
