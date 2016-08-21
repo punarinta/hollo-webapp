@@ -182,33 +182,46 @@ ML.hidePages = function ()
   
   snackbar.querySelector('.name').onclick = function ()
   {
-    // TODO: add users (?)
-
-  /*  var html = '', container = document.createElement('div');
+    var html = '', container = document.createElement('div'), chatEmails = [];
     container.innerHTML = document.getElementById('cont-user-picker').innerHTML;
 
-    // fill in users
-    for (var i in MS.users)
+    // build a list of chat participants emails
+    for (var i in MS.chat.users)
     {
-      var email = MS.users[i].email;
-
-      html += '<li><input type="checkbox"'
-           + (MS.usersToSend.indexOf(email) != -1 ? ' checked' : '')
-           + ' data-email="' + email + '">'
-           + email + '</li>';
+      chatEmails.push(MS.chat.users[i].email)
     }
 
-    container.querySelector('ul').innerHTML = html;
-
-    var x = ML.mbox(container.innerHTML, 0, function ()
+    ML.api('contact', 'find', null, function (users)
     {
-      MS.usersToSend = [];
-      // users picked
-      Array.prototype.forEach.call(x.querySelectorAll('input:checked'), function (el)
+      // fill in users
+      for (var i in users)
       {
-        MS.usersToSend.push(el.dataset.email);
-      });
-    })*/
+        var email = users[i].email;
+
+        html += '<li><input type="checkbox"'
+             + (chatEmails.indexOf(email) != -1 ? ' checked' : '')
+             + ' data-email="' + email + '">'
+             + (users[i].name || email) + '</li>';
+      }
+
+      container.querySelector('ul').innerHTML = html;
+
+      var x = ML.mbox(container.innerHTML, 0, function ()
+      {
+        var newChatEmails = [];
+
+        Array.prototype.forEach.call(x.querySelectorAll('input:checked'), function (el)
+        {
+          newChatEmails.push(el.dataset.email);
+        });
+
+        // create a chat with current users and added users (or just emails) and switch to that chat
+        ML.api('chat', 'add', {emails: newChatEmails}, function (data)
+        {
+          ML.go('chat/' + data.id);
+        });
+      })
+    });
   };
 
   // prevent scrolling of the main screen by files list
