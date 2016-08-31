@@ -1,11 +1,7 @@
 var AU =
 {
   sessionId: null,
-  user:
-  {
-    id: null,
-    email: null
-  }
+  user: null
 };
 
 AU.init = function (data)

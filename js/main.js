@@ -72,20 +72,16 @@ ML.hidePages = function ()
   var snackbar = document.getElementById('snackbar'),
       snackdrop = document.getElementById('snackbar-menu-more');
 
-  Array.prototype.forEach.call(snackbar.querySelectorAll('.icon'), function(el)
+  Array.prototype.forEach.call(snackbar.querySelectorAll('.sub'), function(el)
   {
     el.onclick = function ()
     {
-      var type = this.className.replace(/icon|toggled/gi, '').trim(),
-        menu = document.getElementById('snackbar-menu-' + type);
-
-      if (type == 'back') ML.go('contacts', 1);
-      if (!menu) return;
-
-      var toggled = this.classList.contains('toggled');
+      var type = this.className.replace(/icon|sub|toggled/gi, '').trim(),
+          menu = document.getElementById('snackbar-menu-' + type),
+          toggled = this.classList.contains('toggled');
 
       // close all others
-      Array.prototype.forEach.call(snackbar.querySelectorAll('.icon'), function(el)
+      Array.prototype.forEach.call(snackbar.querySelectorAll('.sub'), function(el)
       {
         el.classList.remove('toggled');
       });
@@ -101,6 +97,8 @@ ML.hidePages = function ()
       }
     }
   });
+
+  snackbar.querySelector('.back').onclick = function () { ML.go('contacts', 1) };
 
   snackdrop.querySelector('.mute').onclick = function ()
   {
@@ -180,7 +178,7 @@ ML.hidePages = function ()
     MS.filter(0)
   };
   
-  snackbar.querySelector('.name').onclick = function ()
+  /*snackbar.querySelector('.name').onclick = function ()
   {
     var html = '', container = document.createElement('div'), chatEmails = [];
     container.innerHTML = document.getElementById('cont-user-picker').innerHTML;
@@ -222,7 +220,7 @@ ML.hidePages = function ()
         });
       })
     });
-  };
+  };*/
 
   // prevent scrolling of the main screen by files list
 
@@ -297,7 +295,7 @@ ML.hidePages = function ()
       switch (r)
       {
         case 'contacts':
-          CO.show(e.state.data || 7);
+          if (AU.user) CO.show(e.state.data || 7);
           break;
         
         case 'auth/login':
