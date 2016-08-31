@@ -27,17 +27,10 @@ MS.send = function ()
     msgId = (el.dataset.id - 0) || msgId
   });
 
-  if (!msgId)
+  // collect emails, all users are known from the very beginning
+  for (var i in MS.chat.users)
   {
-    // collect emails for a new chat
-
-    to = [];
-
-    // all users are known from the very beginning
-    for (var i in MS.chat.users)
-    {
-      to.push({email: MS.chat.users[i].email})
-    }
+    to.push({email: MS.chat.users[i].email})
   }
 
   console.log('body:', msg);
