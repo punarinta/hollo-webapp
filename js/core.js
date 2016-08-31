@@ -220,6 +220,12 @@ var ML =
     var rest = array.slice(index + 1 || array.length);
     this.length = index < 0 ? array.length + index : index;
     return array.push.apply(array, rest);
+  },
+
+  isEmail: function (email)
+  {
+    var r = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return r.test(email);
   }
 };
 

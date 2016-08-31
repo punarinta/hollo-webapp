@@ -8,6 +8,7 @@
     "js/core",
     "js/auth",
     "js/contacts",
+    "js/chat-roster",
     "js/messages",
     "js/composer",
     "js/settings",

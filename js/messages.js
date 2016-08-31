@@ -74,10 +74,13 @@ MS.add = function (data, pos, status)
             ML.api('file', 'getFileUrl', {extId:file.extId}, function (url)
             {
               var image = document.getElementById('img-file-' + f.extId);
-              image.innerHTML = '';
-              image.dataset.url = url;
-              image.dataset.mime = f.type;
-              image.style.backgroundImage = 'url(' + url + ')';
+              if (image)
+              {
+                image.innerHTML = '';
+                image.dataset.url = url;
+                image.dataset.mime = f.type;
+                image.style.backgroundImage = 'url(' + url + ')';
+              }
             })
           })(file);
         }
@@ -207,8 +210,8 @@ MS.show = function (id)
 
   ML.hidePages();
   ul.innerHTML = '';
-  snackbar.querySelector('.name').innerHTML = '';
-  Array.prototype.forEach.call(snackbar.querySelectorAll('.icon'), function (el)
+  snackbar.querySelector('.roster').innerHTML = '';
+  Array.prototype.forEach.call(snackbar.querySelectorAll('.sub'), function (el)
   {
     el.classList.remove('toggled')
   });
@@ -236,7 +239,7 @@ MS.show = function (id)
     MS.chat = data.chat;
 
     var xname = CO.xname(MS.chat, 1);
-    document.querySelector('#snackbar .name').innerHTML = xname[0];
+    snackbar.querySelector('.roster').innerHTML = xname[0];
     document.querySelector('#snackbar-menu-more .mute').innerText = MS.chat.muted ? 'Unmute' : 'Mute';
 
     // reset subject lists
@@ -256,6 +259,9 @@ MS.show = function (id)
       // load directly by email
       ML.loadFiles(MS.chat.users[0].email, 1)
     }
+
+    // init chat roster
+    CR.init(MS.chat.users)
   });
 
   /**

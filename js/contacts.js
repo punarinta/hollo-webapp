@@ -102,14 +102,13 @@ CO.show = function (mode)
     CO.offset = 0;
 
     var filter = page.querySelector('.head .filter').value,
-        filters = [{mode:'muted', value:ML.state.muted}],
-        r = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        filters = [{mode:'muted', value:ML.state.muted}];
 
     if (filter.length) filters.push({mode:'email', value:filter});
 
     ML.api('chat', 'find', {pageStart:CO.offset, pageLength:25, filters:filters, sortBy: CFG._('contact-sort-ts')?'lastTs':'email' }, function (data)
     {
-      if (filter.length && !data.length && r.test(filter))
+      if (filter.length && !data.length && ML.isEmail(filter))
       {
         // filter is ON, but no results found => offer to create a new one
         ul.innerHTML = '<li data-id="new" class="new"><div class="ava"><div class="new img"></div></div><div><div class="name">' + filter + '</div><div class="email"></div></div></li>';
