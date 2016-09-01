@@ -13,7 +13,7 @@ var CR =
 
     for (var i in users)
     {
-      html += '<li data-email="' + users[i].email + '"><div>' + users[i].email + '</div><div class="delete">🗑</div></li>';
+      html += '<li data-email="' + users[i].email + '"><div>' + users[i].email + '</div><div class="delete"></div></li>';
     }
 
     ul.innerHTML = html;
@@ -33,7 +33,7 @@ var CR =
       var email = this.value;
       if (e.keyCode == 13 && ML.isEmail(email))
       {
-        ul.innerHTML += '<li data-email="' + email + '"><div>' + email + '</div><div class="delete">🗑</div></li>';
+        ul.innerHTML += '<li data-email="' + email + '"><div>' + email + '</div><div class="delete"></div></li>';
         this.value = '';
       }
     };
@@ -62,6 +62,8 @@ var CR =
 
   onShow: function ()
   {
+    document.querySelector('#snackbar-menu-roster input').focus();
+
   /*  ML.api('contact', 'find', null, function (data)
     {
       for (var i in data)

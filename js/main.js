@@ -95,7 +95,7 @@ ML.hidePages = function ()
         this.classList.add('toggled');
         menu.style.display = 'block';
 
-        if (type == 'name')
+        if (type == 'roster')
         {
           CR.onShow()
         }
