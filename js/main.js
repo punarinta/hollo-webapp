@@ -255,9 +255,14 @@ ML.hidePages = function ()
     }
   }
 
-  filesList.addEventListener('touchstart', function(e) { tch = e.touches[0] });
-  filesList.addEventListener('touchmove', scrollListener);
-  filesList.addEventListener('wheel', scrollListener);
+  var prevented = [filesList, document.querySelector('#snackbar-menu-roster ul')];
+
+  for (var i in prevented)
+  {
+    prevented[i].addEventListener('touchstart', function (e) { tch = e.touches[0] });
+    prevented[i].addEventListener('touchmove', scrollListener);
+    prevented[i].addEventListener('wheel', scrollListener);
+  }
 
   filesList.onclick = function (e)
   {
