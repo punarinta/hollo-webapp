@@ -15,11 +15,6 @@ var CR =
 
   init: function (users)
   {
-    if (CR.loaded)
-    {
-      return
-    }
-
     var html = '', roster = document.getElementById('snackbar-menu-roster'), ul = roster.querySelector('ul');
 
     for (var i in users) html += CR.addUser(users[i]);
@@ -64,12 +59,15 @@ var CR =
 
       // document.querySelector('#snackbar .roster.sub').dispatchEvent(new Event('click'));
     };
-
-    CR.loaded = 1
   },
 
   onShow: function ()
   {
+    if (CR.loaded)
+    {
+      return
+    }
+
     document.querySelector('#snackbar-menu-roster input').focus();
 
   /*  ML.api('contact', 'find', null, function (data)
@@ -79,5 +77,7 @@ var CR =
 
       }
     });*/
+
+    CR.loaded = 1
   }
 };
