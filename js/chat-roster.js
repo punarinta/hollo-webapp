@@ -2,6 +2,17 @@ var CR =
 {
   loaded: 0,
 
+  addUser: function (user)
+  {
+    var xname = CO.xname({users:[user]}), name = xname[0], nc = xname[1];
+
+    return ('<li data-email="' + user.email + '">' +
+    '<div class="ava"><div class="img" style="background:' + ML.colorHash(user.email + '') + '">' + nc + '</div></div>' +
+    '<div class="hujava"><div class="name">' + name + '</div><div class="email">' + user.email + '</div></div>' +
+    '<div class="delete"></div>' +
+    '</li>');
+  },
+
   init: function (users)
   {
     if (CR.loaded)
@@ -11,10 +22,7 @@ var CR =
 
     var html = '', roster = document.getElementById('snackbar-menu-roster'), ul = roster.querySelector('ul');
 
-    for (var i in users)
-    {
-      html += '<li data-email="' + users[i].email + '"><div>' + users[i].email + '</div><div class="delete"></div></li>';
-    }
+    for (var i in users) html += CR.addUser(users[i]);
 
     ul.innerHTML = html;
 
@@ -33,7 +41,7 @@ var CR =
       var email = this.value;
       if (e.keyCode == 13 && ML.isEmail(email))
       {
-        ul.innerHTML += '<li data-email="' + email + '"><div>' + email + '</div><div class="delete"></div></li>';
+        ul.innerHTML += CR.addUser({name:email, email:email});
         this.value = '';
       }
     };

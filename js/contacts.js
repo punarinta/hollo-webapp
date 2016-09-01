@@ -49,7 +49,7 @@ CO.add = function (data)
   for (var i in data)
   {
     var unread = data[i].read ? '' : ' unread';
-    var xname = CO.xname(data[i]), name=xname[0], nc=xname[1];
+    var xname = CO.xname(data[i]), name = xname[0], nc = xname[1];
 
     html +=
       '<li data-id="' + data[i].id + '">' +

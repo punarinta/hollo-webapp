@@ -124,17 +124,36 @@
   ul
     li
       display flex
-      flex-flow row wrap
-      font-size 18px
-      height 48px
+      flex-flow row nowrap
+      font-size 16px
+      align-items center
       div
         display flex
         align-items center
+      .ava
+        margin 6px
+        width 48px
+        height 48px
+      .hujava
+        display flex
+        flex-flow row wrap
+        padding-left 6px
+      .img
+        border-radius 50%
+        width 48px
+        height 48px
+        display flex
+        justify-content center
+        align-items center
+        color #fff
+        text-transform uppercase
+        font 18px sans-serif
+        background-size cover
       .delete
         cursor pointer
         padding 10px
         margin-left auto
-        background url('/gfx/color/clear.svg') no-repeat 0 6px
+        background url('/gfx/color/clear.svg')
   input
     margin 10px
     padding 5px
