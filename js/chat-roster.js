@@ -63,12 +63,12 @@ var CR =
 
   onShow: function ()
   {
+    document.querySelector('#snackbar-menu-roster input').focus();
+
     if (CR.loaded)
     {
       return
     }
-
-    document.querySelector('#snackbar-menu-roster input').focus();
 
   /*  ML.api('contact', 'find', null, function (data)
     {
