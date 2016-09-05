@@ -180,7 +180,7 @@ MS.add = function (data, pos, status)
   }
 };
 
-MS.xname = function (contact)
+/*MS.xname = function (contact)
 {
   var name = contact.name;
   if (name)
@@ -192,7 +192,7 @@ MS.xname = function (contact)
   {
     return contact.email.split('@')[0];
   }
-};
+};*/
 
 MS.show = function (id)
 {
