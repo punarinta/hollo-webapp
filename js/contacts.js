@@ -37,6 +37,7 @@ CO.xname = function(chat, shorty)
     name = chat.users[0].name ? chat.users[0].name : chat.users[0].email.split('@')[0];
     nc = name.split(' ');
     nc = nc.length == 1 ? nc[0].charAt(0) : (nc[0].charAt(0) + nc[1].charAt(0));
+    if (chat.name) name = chat.name
   }
 
   return [name, nc]
