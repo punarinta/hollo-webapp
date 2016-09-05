@@ -140,7 +140,6 @@ ML.hidePages = function ()
             MS.chat.name = name;
             snackbar.querySelector('.roster').innerText = CO.xname(MS.chat)[0]
           }
-          else ML.mbox('Name cannot be empty')
         });
       }
     });
