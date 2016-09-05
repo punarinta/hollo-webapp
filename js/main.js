@@ -138,7 +138,7 @@ ML.hidePages = function ()
           if (name.length)
           {
             MS.chat.name = name;
-            snackbar.querySelector('.name').innerText = MS.xname(MS.chat)
+            snackbar.querySelector('.roster').innerText = CO.xname(MS.chat)[0]
           }
           else ML.mbox('Name cannot be empty')
         });
@@ -182,53 +182,8 @@ ML.hidePages = function ()
   {
     MS.filter(0)
   };
-  
-  /*snackbar.querySelector('.name').onclick = function ()
-  {
-    var html = '', container = document.createElement('div'), chatEmails = [];
-    container.innerHTML = document.getElementById('cont-user-picker').innerHTML;
-
-    // build a list of chat participants emails
-    for (var i in MS.chat.users)
-    {
-      chatEmails.push(MS.chat.users[i].email)
-    }
-
-    ML.api('contact', 'find', null, function (users)
-    {
-      // fill in users
-      for (var i in users)
-      {
-        var email = users[i].email;
-
-        html += '<li><input type="checkbox"'
-             + (chatEmails.indexOf(email) != -1 ? ' checked' : '')
-             + ' data-email="' + email + '">'
-             + (users[i].name || email) + '</li>';
-      }
-
-      container.querySelector('ul').innerHTML = html;
-
-      var x = ML.mbox(container.innerHTML, 0, function ()
-      {
-        var newChatEmails = [];
-
-        Array.prototype.forEach.call(x.querySelectorAll('input:checked'), function (el)
-        {
-          newChatEmails.push(el.dataset.email);
-        });
-
-        // create a chat with current users and added users (or just emails) and switch to that chat
-        ML.api('chat', 'add', {emails: newChatEmails}, function (data)
-        {
-          ML.go('chat/' + data.id);
-        });
-      })
-    });
-  };*/
 
   // prevent scrolling of the main screen by files list
-
   var tch, filesList = document.querySelector('#snackbar-menu-files ul');
 
   function scrollListener(e)
