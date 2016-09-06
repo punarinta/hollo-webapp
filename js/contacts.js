@@ -19,7 +19,7 @@ CO.clearName = function (text)
 
 CO.xname = function(chat, shorty)
 {
-  var count = chat.users.length, name, nc;
+  var name, nc, count = chat.users.length;
 
   if (count > 1)
   {
@@ -50,12 +50,14 @@ CO.xname = function(chat, shorty)
 
 CO.add = function (data)
 {
-  var html = '';
+  var i, html = '';
 
-  for (var i in data)
+  for (i in data)
   {
-    var unread = data[i].read ? '' : ' unread';
-    var xname = CO.xname(data[i]), name = xname[0], nc = xname[1];
+    var unread = data[i].read ? '' : ' unread',
+        xname = CO.xname(data[i]),
+        name = xname[0],
+        nc = xname[1];
 
     html +=
       '<li data-id="' + data[i].id + '">' +
@@ -149,8 +151,8 @@ CO.show = function (mode)
 {
   // === SWIPES ===
   var item, shadow, startX, startY, swipe = 0, action = 0, blockSwipe = 0,
-    conts = document.querySelector('#page-contacts ul'),
-    vw = ML.state.widthMode ? 360 : window.innerWidth, threshold = vw * .3;
+      conts = document.querySelector('#page-contacts ul'),
+      vw = ML.state.widthMode ? 360 : window.innerWidth, threshold = vw * .3;
 
   conts.addEventListener('touchstart', function (e)
   {

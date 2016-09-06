@@ -252,7 +252,7 @@ ML.hidePages = function ()
 
     if (rs[0] == 'chat')
     {
-      MS.show(rs[1]/*, e.state.data*/);
+      MS.show(rs[1]);
     }
     else
     {

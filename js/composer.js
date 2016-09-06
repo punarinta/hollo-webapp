@@ -9,7 +9,7 @@ MS.cmpResize = function ()
 
 MS.send = function ()
 {
-  var cmp = document.getElementById('composer'),
+  var i, cmp = document.getElementById('composer'),
       cmpText = cmp.querySelector('textarea');
 
   // send a message
@@ -28,7 +28,7 @@ MS.send = function ()
   });
 
   // collect emails, all users are known from the very beginning
-  for (var i in MS.chat.users)
+  for (i in MS.chat.users)
   {
     to.push({email: MS.chat.users[i].email})
   }
@@ -104,6 +104,7 @@ MS.send = function ()
     if (/[^a-zA-Z0-9-_]/.test(this.value.slice(-1)) && e.keyCode > 31)
     {
       var that = this, i = 0, w = this.value.trim().split(' ').slice(-1)[0].toLowerCase().replace(/[_\W]+/g, '');
+
       if (typeof EMJ[w] != 'undefined')
       {
         var emBox = document.createElement('div');
@@ -157,10 +158,10 @@ MS.send = function ()
     var h = Math.min(parseInt(e.target.style.height, 10), window.innerHeight * .3), f = MS._upl.length ? 78 : 0;
 
     cmp.style.height = h + 'px';
-    cmp.querySelector('.emojis').style.bottom = f + (h + 41) + 'px';
-    cmp.querySelector('.head').style.bottom = f + (h - 21) + 'px';
-    cmp.querySelector('.send').style.bottom = (f + h - 21)/2 + 'px';
-    cmp.querySelector('.subjects').style.bottom = f + (h + 21) + 'px';
+    cmp.querySelector('.emojis').style.bottom = f + h + 41 + 'px';
+    cmp.querySelector('.head').style.bottom = f + h - 21 + 'px';
+    cmp.querySelector('.send').style.bottom = (f + h - 21) / 2 + 'px';
+    cmp.querySelector('.subjects').style.bottom = f + h + 21 + 'px';
     cmpText.style.bottom = f - 21 + 'px';
   });
 
@@ -220,11 +221,12 @@ MS.send = function ()
 
   document.querySelector('#demo .delete').onclick = function ()
   {
-    var el = cmp.querySelector('.hash-' + ML.state.currentDemo);
+    var i, el = cmp.querySelector('.hash-' + ML.state.currentDemo);
+
     el.parentNode.removeChild(el);
 
     // remove deleted file from _upl array
-    for (var i in MS._upl)
+    for (i in MS._upl)
     {
       if (MS._upl[i] && MS._upl[i].hash == ML.state.currentDemo)
       {
@@ -242,9 +244,9 @@ MS.send = function ()
 
   cmp.querySelector('#upload').onchange = function (e)
   {
-    var files = e.target.files;
+    var i, f, files = e.target.files;
 
-    for (var i = 0, f; f = files[i]; i++)
+    for (i = 0; f = files[i]; i++)
     {
       var reader = new FileReader();
 

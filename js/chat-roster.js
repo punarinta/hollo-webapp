@@ -15,9 +15,9 @@ var CR =
 
   init: function (users)
   {
-    var html = '', roster = document.getElementById('snackbar-menu-roster'), ul = roster.querySelector('ul');
+    var i, html = '', roster = document.getElementById('snackbar-menu-roster'), ul = roster.querySelector('ul');
 
-    for (var i in users) html += CR.addUser(users[i]);
+    for (i in users) html += CR.addUser(users[i]);
 
     ul.innerHTML = html;
 
@@ -49,15 +49,11 @@ var CR =
         chatEmails.push(el.dataset.email);
       });
 
-      console.log(chatEmails);
-
       // create a chat with current users and added users (or just emails) and switch to that chat
       ML.api('chat', 'add', {emails: chatEmails}, function (data)
       {
         ML.go('chat/' + data.id);
       });
-
-      // document.querySelector('#snackbar .roster.sub').dispatchEvent(new Event('click'));
     };
   },
 

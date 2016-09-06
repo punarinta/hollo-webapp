@@ -9,22 +9,22 @@ var MS =
 MS.add = function (data, pos, status)
 {
   var html = '',
-    subj,
-    tags = [],
-    subjects = [],
-    page = document.getElementById('page-msgs'),
-    cmp = document.getElementById('composer'),
-    ul = page.querySelector('ul');
+      subj,
+      tags = [],
+      subjects = [],
+      page = document.getElementById('page-msgs'),
+      cmp = document.getElementById('composer'),
+      ul = page.querySelector('ul');
 
   for (var i in data)
   {
     if (!data[i].from.id) data[i].from = AU.user;
 
     var filesHtml = 0,
-      body = data[i].body || '',
-      mine = data[i].from.email == AU.user.email,
-      whose = mine ? 'mine' : 'yours',
-      sName = data[i].from.name ? data[i].from.name : data[i].from.email;
+        body = data[i].body || '',
+        mine = data[i].from.email == AU.user.email,
+        whose = mine ? 'mine' : 'yours',
+        sName = data[i].from.name ? data[i].from.name : data[i].from.email;
 
     tags = tags.concat(data[i].subject.split(' '));
     subjects.push(data[i].subject);
@@ -179,20 +179,6 @@ MS.add = function (data, pos, status)
     }, 100, ul);
   }
 };
-
-/*MS.xname = function (contact)
-{
-  var name = contact.name;
-  if (name)
-  {
-    name = name.split(' ');
-    return name.length > 1 ? (name[0] + ' ' + name[1].charAt(0)) : name[0];
-  }
-  else
-  {
-    return contact.email.split('@')[0];
-  }
-};*/
 
 MS.show = function (id)
 {
