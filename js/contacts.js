@@ -12,6 +12,11 @@ CO.resetFilter = function ()
   f.dispatchEvent(new Event('keyup'));
 };
 
+CO.clearName = function (text)
+{
+  return text.split('\\"').join('"')
+};
+
 CO.xname = function(chat, shorty)
 {
   var count = chat.users.length, name, nc;
@@ -34,7 +39,7 @@ CO.xname = function(chat, shorty)
   }
   else
   {
-    name = chat.users[0].name ? chat.users[0].name : chat.users[0].email.split('@')[0];
+    name = chat.users[0].name ? CO.clearName(chat.users[0].name) : chat.users[0].email.split('@')[0];
     nc = name.split(' ');
     nc = nc.length == 1 ? nc[0].charAt(0) : (nc[0].charAt(0) + nc[1].charAt(0));
     if (chat.name) name = chat.name
