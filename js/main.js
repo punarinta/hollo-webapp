@@ -40,7 +40,7 @@ ML.hidePages = function ()
 
     head.classList.toggle('mode2', !!filter.length);
 
-    switch (cmd.slice(-1).pop())
+    switch (cmd[0])
     {
       case 'LOGOUT':
         this.value = '';
@@ -48,8 +48,10 @@ ML.hidePages = function ()
         break;
 
       case 'INCARNATE':
+        if (cmd.length < 2)
+          break;
         this.value = '';
-        ML.api('auth', 'incarnate', {userId:cmd[0]}, function (data)
+        ML.api('auth', 'incarnate', { userId: cmd[1] }, function (data)
         {
           AU.init(data);
           that.value = '';
