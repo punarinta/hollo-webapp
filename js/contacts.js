@@ -61,7 +61,7 @@ CO.add = function (data)
 
     html +=
       '<li data-id="' + data[i].id + '">' +
-      '<div class="ava"><div class="img' + unread + '" style="background:' + ML.colorHash(data[i].id + '') + '">' + nc + '</div></div>' +
+      '<div class="ava"><div id="img-gr-' + md5(data[i].users[0].email) + '" class="img' + unread + '" style="background:' + ML.colorHash(data[i].id + '') + '">' + nc + '</div></div>' +
       '<div class="hujava"><div class="name">' + name + '</div><div class="email">' + (data[i].lastMsg || '&mdash;') + '</div></div>' +
       '</li>' +
       '<div class="shadow shad-' + data[i].id + '"><div>' + (ML.state.muted?'un':'') + 'mute</div><div class="markas">mark<br>as ' + (unread?'':'un') + 'read</div></div>';
@@ -69,10 +69,12 @@ CO.add = function (data)
 
   document.querySelector('#page-contacts ul').innerHTML += html;
 
-  /*for (i in data)
+  for (i in data)
   {
-    ML.grava(data[i].email, function (d)
+    ML.grava(data[i].users[0].email, function (d)
     {
+      console.log(d)
+
       if (!d) return;
       var s = document.getElementById('img-gr-' + d.hash);
       if (s)
@@ -81,7 +83,7 @@ CO.add = function (data)
         s.innerHTML = '';
       }
     });
-  }*/
+  }
 };
 
 CO.show = function (mode)
