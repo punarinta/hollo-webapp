@@ -73,8 +73,6 @@ CO.add = function (data)
   {
     ML.grava(data[i].users[0].email, function (d)
     {
-      console.log(d)
-
       if (!d) return;
       var s = document.getElementById('img-gr-' + d.hash);
       if (s)
