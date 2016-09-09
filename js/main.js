@@ -47,6 +47,10 @@ ML.hidePages = function ()
         ML.go('auth/logout');
         break;
 
+      case 'CSS-01':
+        busybox.classList.remove('hidden');
+        break;
+
       case 'INCARNATE':
         if (cmd.length < 2)
           break;
