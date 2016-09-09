@@ -9,7 +9,7 @@ MS.cmpResize = function ()
 
 MS.send = function ()
 {
-  var i, cmp = document.getElementById('composer'),
+  var u, i, cmp = document.getElementById('composer'),
       cmpText = cmp.querySelector('textarea');
 
   // send a message
@@ -50,7 +50,7 @@ MS.send = function ()
 
   if (MS._upl.length)
   {
-    for (var i = 0, u; u = MS._upl[i]; i++)
+    for (i = 0; u = MS._upl[i]; i++)
     {
       m.files.push(
       {
