@@ -1,7 +1,5 @@
 var CR =
 {
-  loaded: 0,
-
   addUser: function (user)
   {
     var xname = CO.xname({users:[user]}), name = xname[0], nc = xname[1];
@@ -15,7 +13,10 @@ var CR =
 
   init: function (users)
   {
-    var i, html = '', roster = document.getElementById('snackbar-menu-roster'), ul = roster.querySelector('ul');
+    var i, html = '',
+      roster = document.getElementById('snackbar-menu-roster'),
+      ul = roster.querySelector('ul'),
+      modal = document.getElementById('roster-modal');
 
     for (i in users) html += CR.addUser(users[i]);
 
@@ -31,14 +32,39 @@ var CR =
       line.parentNode.removeChild(line);
     };
 
-    roster.querySelector('input').onkeydown = function (e)
+    modal.querySelector('input').onkeyup = function ()
     {
-      var email = this.value;
-      if (e.keyCode == 13 && ML.isEmail(email))
+      var filter = this.value;
+      modal.querySelector('.clear').classList.toggle('hidden', !filter.length);
+      CR.listSuggestions(filter)
+    };
+
+    modal.querySelector('.clear').onclick = function ()
+    {
+      // do no focus input field back
+      modal.querySelector('input').value = '';
+      modal.querySelector('.clear').classList.add('hidden')
+    };
+
+    modal.querySelector('ul').onclick = function (e)
+    {
+      if (e.target.tagName == 'LI')
       {
-        ul.innerHTML += CR.addUser({name:email, email:email});
-        this.value = '';
+        ul.innerHTML += CR.addUser({name:e.target.innerText, email:e.target.innerText});
+        document.getElementById('roster-modal').classList.add('hidden')
       }
+    };
+
+    roster.querySelector('.btn.add').onclick = function ()
+    {
+      document.getElementById('roster-modal').classList.remove('hidden');
+      modal.querySelector('input').focus();
+      CR.listSuggestions();
+    };
+
+    modal.querySelector('.close').onclick = function ()
+    {
+      document.getElementById('roster-modal').classList.add('hidden')
     };
 
     roster.querySelector('.btn.ok').onclick = function ()
@@ -57,23 +83,31 @@ var CR =
     };
   },
 
-  onShow: function ()
+  listSuggestions: function (filter)
   {
-    document.querySelector('#snackbar-menu-roster input').focus();
+    var params = {pageStart: 0, pageLength: 25};
+    if (filter && filter.length) params.filters = [{mode:'email', value:filter}];
 
-    if (CR.loaded)
+    ML.api('contact', 'find', params, function (data)
     {
-      return
-    }
+      var i, html = '', ul = document.getElementById('roster-modal').querySelector('ul');
 
-  /*  ML.api('contact', 'find', null, function (data)
-    {
-      for (var i in data)
+      if (data.length)
       {
-
+        for (i in data)
+        {
+          html += '<li>' + data[i].email + '</li>';
+        }
       }
-    });*/
+      else
+      {
+        html = '<li>' + filter + '</li>';
+      }
 
-    CR.loaded = 1
+      ul.innerHTML = html;
+    });
   }
 };
+
+// TODO: DEBUG!!!
+CR.init();
