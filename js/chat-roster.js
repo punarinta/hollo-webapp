@@ -109,5 +109,4 @@ var CR =
   }
 };
 
-// TODO: DEBUG!!!
 CR.init();
