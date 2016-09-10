@@ -43,7 +43,8 @@ var CR =
     {
       // do no focus input field back
       modal.querySelector('input').value = '';
-      modal.querySelector('.clear').classList.add('hidden')
+      modal.querySelector('.clear').classList.add('hidden');
+      CR.listSuggestions()
     };
 
     modal.querySelector('ul').onclick = function (e)
@@ -99,7 +100,7 @@ var CR =
           html += '<li data-email="' + data[i].email + '" data-name="' + (data[i].name||'') + '">' + data[i].email + '</li>';
         }
       }
-      else
+      else if (ML.isEmail(filter))
       {
         html = '<li data-email="' + filter + '" data-name="' + filter + '">' + filter + '</li>';
       }
