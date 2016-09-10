@@ -50,7 +50,7 @@ var CR =
     {
       if (e.target.tagName == 'LI')
       {
-        ul.innerHTML += CR.addUser({name:e.target.innerText, email:e.target.innerText});
+        ul.innerHTML += CR.addUser({name:e.target.dataset.name, email:e.target.dataset.email});
         document.getElementById('roster-modal').classList.add('hidden')
       }
     };
@@ -96,12 +96,12 @@ var CR =
       {
         for (i in data)
         {
-          html += '<li>' + data[i].email + '</li>';
+          html += '<li data-email="' + data[i].email + '" data-name="' + (data[i].name||'') + '">' + data[i].email + '</li>';
         }
       }
       else
       {
-        html = '<li>' + filter + '</li>';
+        html = '<li data-email="' + filter + '" data-name="' + filter + '">' + filter + '</li>';
       }
 
       ul.innerHTML = html;
