@@ -161,7 +161,7 @@ MS.send = function ()
     cmp.querySelector('.emojis').style.bottom = f + h + 41 + 'px';
     cmp.querySelector('.head').style.bottom = f + h - 21 + 'px';
     cmp.querySelector('.send').style.bottom = (f + h - 21) / 2 + 'px';
-    cmp.querySelector('.subjects').style.bottom = f + h + 21 + 'px';
+    cmp.querySelector('.subjects').style.bottom = f + h + 19 + 'px';
     cmpText.style.bottom = f - 21 + 'px';
   });
 
@@ -183,8 +183,7 @@ MS.send = function ()
 
   cmp.querySelector('.picker').onclick = function ()
   {
-    cmp.querySelector('.subjects').classList.toggle('opened');
-    cmpText.focus();
+    cmp.querySelector('.subjects').classList.toggle('opened')
   };
 
   cmp.querySelector('.subjects').onclick = function (e)
