@@ -96,6 +96,8 @@ MS.add = function (data, pos, status)
       if (!body) body = '[HTML content]';
     }
 
+    body = body.replace(/\[sys:fwd\]/g, '<div class="fwd">Forwarded message</div>');
+
     subj = data[i].subject;
 
     if (!subj.length) subj = '—';

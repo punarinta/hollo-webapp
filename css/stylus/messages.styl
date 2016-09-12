@@ -30,10 +30,12 @@
         border-radius 3px
       .msg
         display inline-block
-        word-break break-all
         @extend $font-bread
         -ms-word-break normal
         word-break normal
+        .fwd
+          border 1px solid #bbb
+          padding 3px 5px
       .cap
         color color-brand
         cursor pointer
@@ -198,7 +200,7 @@
         transform translateY(0)
         bottom 100px
     textarea
-      border-top 0px solid color-bg-grey
+      border-top 0 solid color-bg-grey
 
 #composer .head .picker,
 #composer .head .files
