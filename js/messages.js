@@ -248,6 +248,9 @@ MS.show = function (id)
       ML.loadFiles(MS.chat.users[0].email, 1)
     }
 
+    // mark chat as 'read' in the chat list
+    document.querySelector('#page-contacts ul li[data-id="' + id + '"] .img').classList.remove('unread');
+
     // init chat roster
     CR.init(MS.chat.users)
   });
