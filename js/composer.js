@@ -92,6 +92,7 @@ MS.send = function ()
   cmpText.onclick = function ()
   {
     cmp.classList.add('focused');
+    document.querySelector('#page-msgs > ul').classList.add('padded')
   };
 
   cmpText.onkeyup = function (e)
@@ -174,7 +175,9 @@ MS.send = function ()
   {
     // 'ndf' for 'no defocus'
     if (e.target.classList.contains('ndf')) return;
+
     cmp.classList.remove('focused');
+    document.querySelector('#page-msgs > ul').classList.remove('padded')
   };
 
   // === POSTING ===
