@@ -41,7 +41,7 @@ MS.add = function (data, pos, status)
       body = body.replace(/(?:\r\n\r\n)/g, '</p><p>');
     }
 
-    body = body.replace(exp,"<a href='$1'>$1</a>");
+    body = body.replace(exp,"<a target='_blank' rel='noopener noreferrer' href='$1'>$1</a>");
     body = body.replace(/ -- /g, ' — ');
     body = '<p>' + body + '</p>';
 
@@ -249,7 +249,8 @@ MS.show = function (id)
     }
 
     // mark chat as 'read' in the chat list
-    document.querySelector('#page-contacts ul li[data-id="' + id + '"] .img').classList.remove('unread');
+    var chatItem = document.querySelector('#page-contacts ul li[data-id="' + id + '"] .img');
+    if (chatItem) document.querySelector('#page-contacts ul li[data-id="' + id + '"] .img').classList.remove('unread');
 
     // init chat roster
     CR.init(MS.chat.users)
