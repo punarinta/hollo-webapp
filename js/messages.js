@@ -348,9 +348,16 @@ MS.filter = function (subj)
 {
   document.querySelector('#page-msgs ul').onclick = function (e)
   {
-    if (!e.target.classList.contains('file-icon')) return;
+    if (e.target.classList.contains('file-icon'))
+    {
+      ML.demo(e.target.dataset.url, e.target.dataset.mime)
+    }
 
-    ML.demo(e.target.dataset.url, e.target.dataset.mime)
+    if (e.target.tagName == 'A' && window.self !== window.top)  // if a link is clicked on mobile app
+    {
+      parent.postMessage({cmd: 'openUrl', url: e.target.getAttribute('href', 2), external: true}, '*');
+      return false;
+    }
   };
 
   document.getElementById('msgs-more').onclick = function ()

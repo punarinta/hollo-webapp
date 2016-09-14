@@ -48,7 +48,14 @@ AU.googleStart = function ()
 {
   ML.api('auth', 'getOAuthToken', {redirectUrl: CFG.redirectUrl}, function (data)
   {
-    window.location.href = data;
+    if (window.self !== window.top)
+    {
+      parent.postMessage({cmd: 'openUrl', url: data}, '*');
+    }
+    else
+    {
+      window.location.href = data;
+    }
   });
 };
 
