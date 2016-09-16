@@ -2,7 +2,8 @@ var CO =
 {
   offset: 0,
   more : 0,
-  loaded: 0
+  loaded: 0,
+  yPos: 0
 };
 
 CO.resetFilter = function ()
@@ -93,6 +94,12 @@ CO.show = function (mode)
 
   if (mode & 1)
   {
+    // scrolling hack
+    setTimeout(function (ul)
+    {
+      ul.scrollTop = document.body.scrollTop = CO.yPos || 0;
+    }, 100, ul);
+
     ML.hidePages();
     page.style.display = ML.state.widthMode ? 'inline-block' : 'block';
   }

@@ -217,7 +217,7 @@ ML.hidePages = function ()
 
   var prevented = [filesList, document.querySelector('#snackbar-menu-roster ul')];
 
-  for (var i in prevented)
+  for (i in prevented)
   {
     prevented[i].addEventListener('touchstart', function (e) { tch = e.touches[0] });
     prevented[i].addEventListener('touchmove', scrollListener);

@@ -177,7 +177,9 @@ MS.add = function (data, pos, status)
     // scrolling hack
     setTimeout(function (ul)
     {
-      ul.scrollIntoView(false);
+      // ul.scrollIntoView(false);
+      var r = document.body.getBoundingClientRect(), h = r.bottom - r.top;
+      ul.scrollTop = document.body.scrollTop = h;
     }, 100, ul);
   }
 };
@@ -187,6 +189,9 @@ MS.show = function (id)
   var page = document.getElementById('page-msgs'),
       ul = page.querySelector('ul'),
       snackbar = document.getElementById('snackbar');
+
+  // save contacts list offset
+  CO.yPos = window.pageYOffset || document.querySelector('#page-contacts ul').scrollTop;
 
   if (!CO.loaded && ML.state.widthMode)
   {
