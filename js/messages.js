@@ -161,12 +161,23 @@ MS.add = function (data, pos, status)
   cmp.querySelector('.subjects').innerHTML += html;
 
   // connect subject picker
-  Array.prototype.forEach.call(cmp.querySelectorAll('.subjects li'), function (el)
+  var lis = cmp.querySelectorAll('.subjects li');
+
+  Array.prototype.forEach.call(lis, function (el)
   {
     el.classList.add('ndf');
     el.onclick = function ()
     {
-      cmp.querySelector('.cap').value = this.innerText;
+      var newSubj = this.innerText;
+      Array.prototype.forEach.call(lis, function (el)
+      {
+        el.classList.remove('hidden');
+        if (el.innerText == newSubj)
+        {
+          el.classList.add('hidden')
+        }
+      });
+      cmp.querySelector('.cap').value = newSubj;
       cmp.querySelector('textarea').focus();
       cmp.querySelector('.subjects').classList.remove('opened');
     }
