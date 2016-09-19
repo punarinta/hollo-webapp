@@ -149,7 +149,7 @@ MS.add = function (data, pos, status)
 
     MS.subjects.push(subjects[i]);
 
-    html += '<li>' + subjects[i] + '</li>';
+    html += '<li' + (subjects[i] == subj?' class="hidden"':'') + '>' + subjects[i] + '</li>';
   }
 
   var menuTags = document.querySelector('#snackbar-menu-tags ul');
