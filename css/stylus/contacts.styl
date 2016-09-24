@@ -4,7 +4,7 @@
   background #fff
   .head
     height 128px
-    color #0001f7
+    color color-brand
     background #fff
     position fixed
     width 100%
@@ -61,13 +61,13 @@
       border 0
       width 100%
       background url('/gfx/color/search.svg') no-repeat 40px 15px
-      color #0001f7
+      color color-brand
       font-size 14px
       padding 0 0 0 89px
       &::-webkit-input-placeholder
-        color #0001f7
+        color color-brand
       &::-moz-placeholder
-        color #0001f7
+        color color-brand
   .tabs
     height 48px
     display flex
@@ -104,7 +104,7 @@
       position relative
       &.new
         .name
-          color #0001f7
+          color color-brand
         .img
           background transparent url('/gfx/color/plus.svg') no-repeat center
           display block
@@ -147,7 +147,7 @@
       font 18px sans-serif
       background-size cover
       &.unread
-        border-color #0001f7
+        border-color color-brand
     .name
       @extend $font-heading
       margin-bottom 2px
@@ -156,7 +156,7 @@
     .shadow
       height 72px
       display none
-      background #0001f7
+      background color-brand
       color #fff
       div
         display flex
