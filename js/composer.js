@@ -184,10 +184,7 @@ MS.send = function ()
 
   cmp.querySelector('.send').onclick = MS.send;
 
-  cmp.querySelector('.picker').onclick = function ()
-  {
-    cmp.querySelector('.subjects').classList.toggle('opened')
-  };
+  cmp.querySelector('.picker').onclick = SP.show;
 
   cmp.querySelector('.subjects').onclick = function (e)
   {

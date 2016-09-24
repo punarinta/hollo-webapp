@@ -1,0 +1,41 @@
+#sp-modal
+  top 0
+  z-index 15
+  width 100vw
+  height 100vh
+  background rgba(245, 245, 245, .8)
+  position fixed
+  justify-content center
+  align-items center
+  display flex
+  & > div
+    background #fff
+    border-radius 2px
+    display flex
+    flex-direction column
+    box-shadow 0 2px 4px 0 rgba(0, 0, 0, .12)
+    min-width 90%
+    max-height 95%
+  ul
+    list-style-type none
+    margin 8px
+    padding 0
+    overflow-y scroll
+  li
+    white-space nowrap
+    line-height 48px
+    font-size 15px
+    display flex
+    .mark
+      width 24px
+    .current
+      background url("/gfx/color/subj.svg") no-repeat 1px
+  button
+    width 100%
+    background color-brand
+    color #fff
+    margin 0
+    height 48px
+    border-radius 0
+    border-bottom-left-radius 2px
+    border-bottom-right-radius 2px

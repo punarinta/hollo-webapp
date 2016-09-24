@@ -215,14 +215,12 @@ ML.hidePages = function ()
     }
   }
 
-  var prevented = [filesList, document.querySelector('#snackbar-menu-roster ul')];
-
-  for (i in prevented)
+  Array.prototype.forEach.call(document.querySelectorAll('.prevent-sub-scroll'), function (el)
   {
-    prevented[i].addEventListener('touchstart', function (e) { tch = e.touches[0] });
-    prevented[i].addEventListener('touchmove', scrollListener);
-    prevented[i].addEventListener('wheel', scrollListener);
-  }
+    el.addEventListener('touchstart', function (e) { tch = e.touches[0] });
+    el.addEventListener('touchmove', scrollListener);
+    el.addEventListener('wheel', scrollListener);
+  });
 
   filesList.onclick = function (e)
   {
