@@ -1,6 +1,7 @@
 var CFG =
 {
   apiRoot: 'api.hollo.email',
+  page: document.getElementById('page-cfg'),
   
   reset: function ()
   {
@@ -19,7 +20,7 @@ var CFG =
 
   show: function ()
   {
-    var i, page = document.getElementById('page-cfg'), flags = AU.user.settings.flags;
+    var i, flags = AU.user.settings.flags;
 
     ML.hidePages();
 
@@ -33,26 +34,23 @@ var CFG =
       }
     }
 
-    page.style.display = 'block';
+    CFG.page.style.display = 'block';
   }
 };
 
-
 (function ()
 {
-  var page = document.getElementById('page-cfg');
-
   document.querySelector('#page-contacts .head .ava').onclick = function ()
   {
     ML.go('settings')
   };
 
-  page.querySelector('.bar button').onclick = function ()
+  CFG.page.querySelector('.bar button').onclick = function ()
   {
     ML.go('contacts')
   };
   
-  page.querySelector('.slides').onclick = function (e)
+  CFG.page.querySelector('.slides').onclick = function (e)
   {
     if (e.target.tagName == 'INPUT')
     {
