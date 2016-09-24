@@ -1,5 +1,7 @@
 var CR =
 {
+  modal: document.getElementById('roster-modal'),
+
   addUser: function (user)
   {
     var xname = CO.xname({users:[user]}), name = xname[0], nc = xname[1];
@@ -14,9 +16,8 @@ var CR =
   init: function (users)
   {
     var i, html = '',
-      roster = document.getElementById('snackbar-menu-roster'),
-      ul = roster.querySelector('ul'),
-      modal = document.getElementById('roster-modal');
+        roster = document.getElementById('snackbar-menu-roster'),
+        ul = roster.querySelector('ul');
 
     for (i in users) html += CR.addUser(users[i]);
 
@@ -32,40 +33,40 @@ var CR =
       line.parentNode.removeChild(line);
     };
 
-    modal.querySelector('input').onkeyup = function ()
+    CR.modal.querySelector('input').onkeyup = function ()
     {
       var filter = this.value;
-      modal.querySelector('.clear').classList.toggle('hidden', !filter.length);
+      CR.modal.querySelector('.clear').classList.toggle('hidden', !filter.length);
       CR.listSuggestions(filter)
     };
 
-    modal.querySelector('.clear').onclick = function ()
+    CR.modal.querySelector('.clear').onclick = function ()
     {
       // do no focus input field back
-      modal.querySelector('input').value = '';
-      modal.querySelector('.clear').classList.add('hidden');
+      CR.modal.querySelector('input').value = '';
+      CR.modal.querySelector('.clear').classList.add('hidden');
       CR.listSuggestions()
     };
 
-    modal.querySelector('ul').onclick = function (e)
+    CR.modal.querySelector('ul').onclick = function (e)
     {
       if (e.target.tagName == 'LI')
       {
-        ul.innerHTML += CR.addUser({name:e.target.dataset.name, email:e.target.dataset.email});
-        document.getElementById('roster-modal').classList.add('hidden')
+        ul.innerHTML += CR.addUser({name: e.target.dataset.name, email: e.target.dataset.email});
+        CR.modal.classList.add('hidden')
       }
     };
 
     roster.querySelector('.btn.add').onclick = function ()
     {
-      document.getElementById('roster-modal').classList.remove('hidden');
-      modal.querySelector('input').focus();
+      CR.modal.classList.remove('hidden');
+      CR.modal.querySelector('input').focus();
       CR.listSuggestions();
     };
 
-    modal.querySelector('.close').onclick = function ()
+    CR.modal.querySelector('.close').onclick = function ()
     {
-      document.getElementById('roster-modal').classList.add('hidden')
+      CR.modal.classList.add('hidden')
     };
 
     roster.querySelector('.btn.ok').onclick = function ()
@@ -91,7 +92,7 @@ var CR =
 
     ML.api('contact', 'find', params, function (data)
     {
-      var i, html = '', ul = document.getElementById('roster-modal').querySelector('ul');
+      var i, html = '', ul = CR.modal.querySelector('ul');
 
       if (data.length)
       {
