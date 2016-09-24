@@ -149,7 +149,8 @@ MS.add = function (data, pos, status)
 
     MS.subjects.push(subjects[i]);
 
-    // html += '<li' + (subjects[i] == subj?' class="hidden"':'') + '>' + subjects[i] + '</li>';
+    // filter topics
+    html += '<li' + (subjects[i] == subj?' class="hidden"':'') + '>' + subjects[i] + '</li>';
   }
 
   var menuTags = document.querySelector('#snackbar-menu-tags ul');
@@ -158,7 +159,6 @@ MS.add = function (data, pos, status)
   if (menuTags.innerHTML.indexOf('<div>') != -1 && data.length) menuTags.innerHTML = '';
 
   menuTags.innerHTML += html;
-  cmp.querySelector('.subjects').innerHTML += html;
 
   // connect subject picker
   var lis = cmp.querySelectorAll('.subjects li');
