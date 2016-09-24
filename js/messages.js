@@ -77,20 +77,23 @@ MS.add = function (data, pos, status)
             continue;
           }
 
-          (function (f)
+          if (file.extId)
           {
-            ML.api('file', 'getFileUrl', {extId:file.extId}, function (url)
+            (function (f)
             {
-              var image = document.getElementById('img-file-' + f.extId);
-              if (image)
+              ML.api('file', 'getFileUrl', {extId:file.extId}, function (url)
               {
-                image.innerHTML = '';
-                image.dataset.url = url;
-                image.dataset.mime = f.type;
-                image.style.backgroundImage = 'url(' + url + ')';
-              }
-            })
-          })(file);
+                var image = document.getElementById('img-file-' + f.extId);
+                if (image)
+                {
+                  image.innerHTML = '';
+                  image.dataset.url = url;
+                  image.dataset.mime = f.type;
+                  image.style.backgroundImage = 'url(' + url + ')';
+                }
+              })
+            })(file);
+          }
         }
 
         filesHtml += '<div class="file-icon" id="img-file-'
