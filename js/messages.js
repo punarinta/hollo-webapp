@@ -3,7 +3,8 @@ var MS =
   chat: null,
   _upl: [],
   subjects: [],
-  loaded: 0
+  loaded: 0,
+  page: document.getElementById('page-msgs')
 };
 
 MS.clearBody = function (body)
@@ -36,9 +37,8 @@ MS.add = function (data, pos, status)
       subj,
       tags = [],
       subjects = [],
-      page = document.getElementById('page-msgs'),
       cmp = document.getElementById('composer'),
-      ul = page.querySelector('ul');
+      ul = MS.page.querySelector('ul');
 
   for (var i in data)
   {
@@ -205,8 +205,7 @@ MS.add = function (data, pos, status)
 
 MS.show = function (id)
 {
-  var page = document.getElementById('page-msgs'),
-      ul = page.querySelector('ul'),
+  var ul = MS.page.querySelector('ul'),
       snackbar = document.getElementById('snackbar');
 
   // save contacts list offset
@@ -230,13 +229,13 @@ MS.show = function (id)
 
   snackbar.style.display = 'flex';
 
-  page.style.display = 'inline-block';
+  MS.page.style.display = 'inline-block';
 
   if (MS.chat && id != MS.chat.id)
   {
     // clear all the shit from composer
     MS._upl = [];
-    page.querySelector('textarea').value = '';
+    MS.page.querySelector('textarea').value = '';
     document.querySelector('#uploaded').innerHTML = '';
     MS.cmpResize();
   }
@@ -330,8 +329,7 @@ MS.filter = function (subj)
   var snackTags = document.getElementById('snackbar-menu-tags'),
       filter = document.getElementById('msgs-filter'),
       snackbar = document.getElementById('snackbar'),
-      page = document.getElementById('page-msgs'),
-      ul = page.querySelector('ul');
+      ul = MS.page.querySelector('ul');
   
   if (subj)
   {
@@ -344,7 +342,7 @@ MS.filter = function (subj)
     filter.querySelector('.body').innerText = subj;
     snackbar.querySelector('.icon.tags').classList.remove('toggled');
     snackTags.style.display = 'none';
-    page.classList.add('filtered');
+    MS.page.classList.add('filtered');
     document.getElementById('msgs-more').style.display = 'none';
   }
   else
@@ -355,7 +353,7 @@ MS.filter = function (subj)
     });
 
     filter.style.display = 'none';
-    page.classList.remove('filtered');
+    MS.page.classList.remove('filtered');
     document.getElementById('msgs-more').style.display = 'block';
 
     setTimeout(function (ul)
