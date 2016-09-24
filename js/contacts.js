@@ -92,6 +92,7 @@ CO.show = function (mode)
 
   mode = (CO.loaded == 7) ? mode : 7;
 
+  // noinspection JSBitwiseOperatorUsage
   if (mode & 1)
   {
     // scrolling hack
@@ -104,6 +105,7 @@ CO.show = function (mode)
     CO.page.style.display = ML.state.widthMode ? 'inline-block' : 'block';
   }
 
+  // noinspection JSBitwiseOperatorUsage
   if (mode & 2)
   {
     ul.innerHTML = '<li>Loading...</li>';
@@ -112,6 +114,7 @@ CO.show = function (mode)
     CO.page.querySelector('.head .email').innerHTML = AU.user.email;
   }
 
+  // noinspection JSBitwiseOperatorUsage
   if (mode & 4)
   {
     CO.offset = 0;
