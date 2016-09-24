@@ -29,7 +29,7 @@ var CFG =
     {
       for (i in flags)
       {
-        var x = page.querySelector('#cfg-' + i);
+        var x = CFG.page.querySelector('#cfg-' + i);
         if (x) x.checked = flags[i]
       }
     }
@@ -38,27 +38,27 @@ var CFG =
   }
 };
 
-(function ()
-{
-  document.querySelector('#page-contacts .head .ava').onclick = function ()
-  {
-    ML.go('settings')
-  };
 
-  CFG.page.querySelector('.bar button').onclick = function ()
+// === INIT ===
+
+CO.page.querySelector('.head .ava').onclick = function ()
+{
+  ML.go('settings')
+};
+
+CFG.page.querySelector('.bar button').onclick = function ()
+{
+  ML.go('contacts')
+};
+
+CFG.page.querySelector('.slides').onclick = function (e)
+{
+  if (e.target.tagName == 'INPUT')
   {
-    ML.go('contacts')
-  };
-  
-  CFG.page.querySelector('.slides').onclick = function (e)
-  {
-    if (e.target.tagName == 'INPUT')
+    var key = e.target.id.replace('cfg-', '');
+    ML.api('settings', 'update', {flag: {name: key, value: e.target.checked * 1 }}, function ()
     {
-      var key = e.target.id.replace('cfg-', '');
-      ML.api('settings', 'update', {flag: {name: key, value: e.target.checked * 1 }}, function ()
-      {
-        AU.user.settings['flags'][key] = e.target.checked
-      });
-    }
+      AU.user.settings['flags'][key] = e.target.checked
+    });
   }
-})();
+};

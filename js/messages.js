@@ -240,7 +240,7 @@ MS.show = function (id)
     // clear all the shit from composer
     MS._upl = [];
     MS.page.querySelector('textarea').value = '';
-    document.querySelector('#uploaded').innerHTML = '';
+    document.getElementById('uploaded').innerHTML = '';
     MS.cmpResize();
   }
 
@@ -296,17 +296,16 @@ MS.show = function (id)
     mode = mode || 0;
 
     var fileList = document.querySelector('#snackbar-menu-files ul'),
-         endPoint = mode ? 'findByEmail' : 'findByChatId',
-         params = mode ? {email: index} : {chatId: index};
+        params = mode ? {email: index} : {chatId: index};
 
     fileList.innerHTML = 'Loading ...';
     params.withImageUrl = true;
 
-    ML.api('file', endPoint, params, function (files)
+    ML.api('file', mode ? 'findByEmail' : 'findByChatId', params, function (files)
     {
-      var url, html = '', im, div;
+      var i, url, im, div, html = '';
 
-      for (var i in files)
+      for (i in files)
       {
         if (files[i].type.match('image.*'))
         {
@@ -370,47 +369,47 @@ MS.filter = function (subj)
   }
 };
 
+
 // === INIT ===
 
-(function ()
+MS.page.querySelector('ul').onclick = function (e)
 {
-  MS.page.querySelector('ul').onclick = function (e)
+  if (e.target.classList.contains('file-icon'))
   {
-    if (e.target.classList.contains('file-icon'))
-    {
-      ML.demo(e.target.dataset.url, e.target.dataset.mime)
-    }
+    ML.demo(e.target.dataset.url, e.target.dataset.mime)
+  }
 
-    if (e.target.tagName == 'A' && window.self !== window.top)  // if a link is clicked on mobile app
-    {
-      parent.postMessage({cmd: 'openUrl', url: e.target.getAttribute('href', 2), external: true}, '*');
-      return false;
-    }
-
-    if (e.target.classList.contains('fwd'))
-    {
-      var li = PP.par(e.target, 'li');
-
-      busybox.classList.remove('hidden');
-
-      // replace message contents with original mail body
-      ML.api('message', 'showOriginal', {id: li.dataset.id}, function (data)
-      {
-        li.querySelector('.fwd').outerHTML = MS.clearBody(data);
-        busybox.classList.add('hidden');
-      });
-    }
-  };
-
-  document.getElementById('msgs-more').onclick = function ()
+  if (e.target.tagName == 'A' && window.self !== window.top)  // if a link is clicked on mobile app
   {
-    busybox.classList.add('flex');
-    // can be called only by ID
-    ML.api('message', 'moreByChatId', {chatId: MS.chat.id}, function (data)
+    parent.postMessage({cmd: 'openUrl', url: e.target.getAttribute('href', 2), external: true}, '*');
+    return false;
+  }
+
+  if (e.target.classList.contains('fwd'))
+  {
+    var li = PP.par(e.target, 'li');
+
+    busybox.classList.remove('hidden');
+
+    // replace message contents with original mail body
+    ML.api('message', 'showOriginal', {id: li.dataset.id}, function (data)
     {
-      console.log('More messages requested:', data);
-      MS.add(data, 'top');
-      busybox.classList.remove('flex');
+      li.querySelector('.fwd').outerHTML = MS.clearBody(data);
+      busybox.classList.add('hidden');
     });
-  };
-})();
+  }
+};
+
+document.getElementById('msgs-more').onclick = function ()
+{
+  busybox.classList.add('flex');
+
+  // can be called only by ID
+  ML.api('message', 'moreByChatId', {chatId: MS.chat.id}, function (data)
+  {
+    console.log('More messages requested:', data);
+    MS.add(data, 'top');
+    busybox.classList.remove('flex');
+  });
+};
+

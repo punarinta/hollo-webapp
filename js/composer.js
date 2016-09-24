@@ -83,6 +83,9 @@ MS.send = function ()
   });
 };
 
+
+// === INIT ===
+
 (function ()
 {
   var cmp = document.getElementById('composer'),
