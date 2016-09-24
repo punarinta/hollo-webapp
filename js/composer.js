@@ -57,7 +57,7 @@ MS.send = function ()
         name: u.name,
         type: u.mime,
         size: u.size,
-        extId: 'x',
+        // extId: 'x',  // Is this necessary at all?
         data: u.data
       });
       console.log('File attached: ', MS._upl[i]);
@@ -67,7 +67,7 @@ MS.send = function ()
   busybox.classList.remove('hidden');
   MS.add([m], 'bottom');
 
-  ML.api('message', 'send', {body: msg, messageId: msgId, subject: subj, files: m.files, to: to}, function (json)
+  ML.api('message', 'send', {body: msg, messageId: msgId, subject: subj, files: m.files, to: to, chatId: MS.chat.id}, function (json)
   {
     console.log('send()', json);
 
@@ -79,7 +79,6 @@ MS.send = function ()
     MS.cmpResize();
 
     // close topic picker
-    cmp.querySelector('.subjects').classList.remove('opened');
     busybox.classList.add('hidden');
   });
 };
