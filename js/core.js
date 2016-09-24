@@ -234,7 +234,7 @@ var PP =
   // find first parent of the specified type
   par: function (x, type)
   {
-    while (x.nodeName.toLowerCase() != type)
+    while (x && x.nodeName.toLowerCase() != type)
     {
       if (x == document) break;
       x = x.parentElement;

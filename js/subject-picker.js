@@ -2,9 +2,20 @@ var SP =
 {
   init: function ()
   {
-    document.getElementById('sp-modal').onclick = function (el)
+    document.getElementById('sp-modal').onclick = function (e)
     {
-      if (el.target.classList.contains('closable')) this.classList.add('hidden')
+      if (e.target.classList.contains('closable')) this.classList.add('hidden');
+
+      var li = PP.par(e.target, 'li');
+
+      if (li)
+      {
+        // pick this subject
+        document.querySelector('#composer .head .cap').value = li.dataset.subj;
+        this.classList.add('hidden');
+      }
+
+      e.stopPropagation()
     }
   },
 
@@ -16,7 +27,7 @@ var SP =
 
     for (i in MS.subjects)
     {
-      html += '<li><div class="mark' + (MS.subjects[i] == subj ? ' current' : '') + '"></div><div>' + MS.subjects[i] + '</div></li>';
+      html += '<li data-subj="' + MS.subjects[i] + '"><div class="mark' + (MS.subjects[i] == subj ? ' current' : '') + '"></div><div>' + MS.subjects[i] + '</div></li>';
     }
 
     ul.innerHTML = html;
