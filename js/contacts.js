@@ -3,12 +3,13 @@ var CO =
   offset: 0,
   more : 0,
   loaded: 0,
-  yPos: 0
+  yPos: 0,
+  page: document.getElementById('page-contacts')
 };
 
 CO.resetFilter = function ()
 {
-  var f = document.querySelector('#page-contacts .head .filter');
+  var f = CO.page.querySelector('.head .filter');
   f.value = '';
   f.dispatchEvent(new Event('keyup'));
 };
@@ -68,7 +69,7 @@ CO.add = function (data)
       '<div class="shadow shad-' + data[i].id + '"><div>' + (ML.state.muted?'un':'') + 'mute</div><div class="markas">mark<br>as ' + (unread?'':'un') + 'read</div></div>';
   }
 
-  document.querySelector('#page-contacts ul').innerHTML += html;
+  CO.page.querySelector('ul').innerHTML += html;
 
   for (i in data)
   {
@@ -87,8 +88,7 @@ CO.add = function (data)
 
 CO.show = function (mode)
 {
-  var page = document.getElementById('page-contacts'),
-      ul = page.querySelector('ul');
+  var ul = CO.page.querySelector('ul');
 
   mode = (CO.loaded == 7) ? mode : 7;
 
@@ -101,22 +101,22 @@ CO.show = function (mode)
     }, 100, ul);
 
     ML.hidePages();
-    page.style.display = ML.state.widthMode ? 'inline-block' : 'block';
+    CO.page.style.display = ML.state.widthMode ? 'inline-block' : 'block';
   }
 
   if (mode & 2)
   {
     ul.innerHTML = '<li>Loading...</li>';
-    page.querySelector('.head .ava img').src = AU.user.ava || '/gfx/ava.png';
-    page.querySelector('.head .name').innerHTML = AU.user.name || AU.user.email.split('@')[0];
-    page.querySelector('.head .email').innerHTML = AU.user.email;
+    CO.page.querySelector('.head .ava img').src = AU.user.ava || '/gfx/ava.png';
+    CO.page.querySelector('.head .name').innerHTML = AU.user.name || AU.user.email.split('@')[0];
+    CO.page.querySelector('.head .email').innerHTML = AU.user.email;
   }
 
   if (mode & 4)
   {
     CO.offset = 0;
 
-    var filter = page.querySelector('.head .filter').value,
+    var filter = CO.page.querySelector('.head .filter').value,
         filters = [{mode:'muted', value:ML.state.muted}];
 
     if (filter.length) filters.push({mode:'email', value:filter});
@@ -158,7 +158,7 @@ CO.show = function (mode)
 {
   // === SWIPES ===
   var item, shadow, startX, startY, swipe = 0, action = 0, blockSwipe = 0,
-      conts = document.querySelector('#page-contacts ul'),
+      conts = CO.page.querySelector('ul'),
       vw = ML.state.widthMode ? 360 : window.innerWidth, threshold = vw * .3;
 
   conts.addEventListener('touchstart', function (e)
@@ -277,7 +277,7 @@ CO.show = function (mode)
     }
     else
     {
-      var email = document.querySelector('#page-contacts .filter').value;
+      var email = CO.page.querySelector('.filter').value;
       CO.resetFilter();
 
       ML.api('chat', 'add', {emails:[email]}, function (data)
@@ -291,7 +291,7 @@ CO.show = function (mode)
   {
     if (!CO.more) return;
 
-    var el = document.querySelector('#page-contacts ul li:nth-last-child(2)');
+    var el = CO.page.querySelector('ul li:nth-last-child(2)');
 
     if (el && el.getBoundingClientRect().bottom < screen.height + 50)
     {
@@ -300,7 +300,7 @@ CO.show = function (mode)
 
       console.log('Contacts fetch at offset ' + CO.offset);
 
-      var filter = document.querySelector('#page-contacts .head .filter').value, filters = [{mode:'muted', value:ML.state.muted}];
+      var filter = CO.page.querySelector('.head .filter').value, filters = [{mode:'muted', value:ML.state.muted}];
       if (filter.length) filters.push({mode:'email', value:filter});
 
       ML.api('chat', 'find', { pageStart: CO.offset, pageLength: 25, filters: filters, sortBy: CFG._('contact-sort-ts')?'lastTs':'email' }, function (data)
