@@ -30,7 +30,7 @@ MS.add = function (data, pos, status)
     subjects.push(data[i].subject);
 
     // preprocess body
-    var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i;
+    var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
     
     if (CFG._('newlines'))
     {
@@ -41,7 +41,10 @@ MS.add = function (data, pos, status)
       body = body.replace(/(?:\r\n\r\n)/g, '</p><p>');
     }
 
-    body = body.replace(exp,"<a target='_blank' rel='noopener noreferrer' href='$1'>$1</a>");
+    body = body.replace(exp, function (m)
+    {
+      return '<a target="_blank" rel="noopener noreferrer" href="' + m + '">' + (m.length > 40 ? m.substr(0, 40) + '&hellip;' : m) + '</a>';
+    });
     body = body.replace(/ -- /g, ' — ');
     body = '<p>' + body + '</p>';
 
