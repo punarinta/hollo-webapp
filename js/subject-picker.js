@@ -1,8 +1,11 @@
 var SP =
 {
+  modal: document.getElementById('sp-modal'),
+  subjInput: document.querySelector('#composer .head .cap'),
+
   init: function ()
   {
-    document.getElementById('sp-modal').onclick = function (e)
+    SP.modal.onclick = function (e)
     {
       if (e.target.classList.contains('closable')) this.classList.add('hidden');
 
@@ -11,19 +14,25 @@ var SP =
       if (li)
       {
         // pick this subject
-        document.querySelector('#composer .head .cap').value = li.dataset.subj;
+        SP.subjInput.value = li.dataset.subj;
         this.classList.add('hidden');
       }
 
       e.stopPropagation()
+    };
+
+    SP.modal.querySelector('button').onclick = function ()
+    {
+      SP.subjInput.value = '';
+      SP.subjInput.focus();
+      SP.modal.classList.add('hidden')
     }
   },
 
   show: function ()
   {
-    var i, html = '', subj = document.querySelector('#composer .head .cap').value,
-        sp = document.getElementById('sp-modal'),
-        ul = sp.querySelector('ul');
+    var i, html = '', subj = SP.subjInput.value,
+        ul = SP.modal.querySelector('ul');
 
     for (i in MS.subjects)
     {
@@ -32,7 +41,7 @@ var SP =
 
     ul.innerHTML = html;
 
-    sp.classList.remove('hidden')
+    SP.modal.classList.remove('hidden')
   }
 };
 
