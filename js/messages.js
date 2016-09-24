@@ -113,7 +113,8 @@ MS.add = function (data, pos, status)
 
     if (!subj.length) subj = '—';
 
-    var nc = sName.split(' '), ava = ML.colorHash(data[i].from.email);
+    var nc = sName.split(' '),
+        ava = ML.colorHash(data[i].from.email);
 
     if (mine)
     {
@@ -212,7 +213,7 @@ MS.show = function (id)
       snackbar = document.getElementById('snackbar');
 
   // save contacts list offset
-  CO.yPos = window.pageYOffset || document.querySelector('#page-contacts ul').scrollTop;
+  CO.yPos = window.pageYOffset || CO.page.querySelector('ul').scrollTop;
 
   if (!CO.loaded && ML.state.widthMode)
   {
@@ -274,8 +275,11 @@ MS.show = function (id)
     }
 
     // mark chat as 'read' in the chat list
-    var chatItem = document.querySelector('#page-contacts ul li[data-id="' + id + '"] .img');
-    if (chatItem) document.querySelector('#page-contacts ul li[data-id="' + id + '"] .img').classList.remove('unread');
+    var chatItem = CO.page.querySelector('li[data-id="' + id + '"] .img');
+    if (chatItem)
+    {
+      chatItem.classList.remove('unread');
+    }
 
     // init chat roster
     CR.init(MS.chat.users)
@@ -336,7 +340,7 @@ MS.filter = function (subj)
   
   if (subj)
   {
-    Array.prototype.forEach.call(document.querySelectorAll('#page-msgs > ul li'), function (li)
+    Array.prototype.forEach.call(ul.querySelectorAll('li'), function (li)
     {
       li.style.display = li.querySelector('.cap').innerText == subj ? 'list-item' : 'none';
     });
@@ -350,7 +354,7 @@ MS.filter = function (subj)
   }
   else
   {
-    Array.prototype.forEach.call(document.querySelectorAll('#page-msgs > ul li'), function (li)
+    Array.prototype.forEach.call(ul.querySelectorAll('li'), function (li)
     {
       li.style.display = 'list-item';
     });
@@ -370,7 +374,7 @@ MS.filter = function (subj)
 
 (function ()
 {
-  document.querySelector('#page-msgs ul').onclick = function (e)
+  MS.page.querySelector('ul').onclick = function (e)
   {
     if (e.target.classList.contains('file-icon'))
     {
