@@ -386,10 +386,13 @@ MS.filter = function (subj)
     {
       var li = PP.par(e.target, 'li');
 
+      busybox.classList.remove('hidden');
+
       // replace message contents with original mail body
       ML.api('message', 'showOriginal', {id: li.dataset.id}, function (data)
       {
-        li.querySelector('.fwd').outerHTML = MS.clearBody(data)
+        li.querySelector('.fwd').outerHTML = MS.clearBody(data);
+        busybox.classList.add('hidden');
       });
     }
   };
