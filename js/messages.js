@@ -6,6 +6,30 @@ var MS =
   loaded: 0
 };
 
+MS.clearBody = function (body)
+{
+  // preprocess body
+  var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+
+  if (CFG._('newlines'))
+  {
+    body = body.replace(/(?:\r\n|\r|\n)/g, '<br />');
+  }
+  else
+  {
+    body = body.replace(/(?:\r\n\r\n)/g, '</p><p>');
+  }
+
+  body = body.replace(exp, function (m)
+  {
+    return '<a target="_blank" rel="noopener noreferrer" href="' + m + '">' + (m.length > 40 ? m.substr(0, 40) + '&hellip;' : m) + '</a>';
+  });
+
+  body = body.replace(/ -- /g, ' — ');
+
+  return '<p>' + body + '</p>';
+};
+
 MS.add = function (data, pos, status)
 {
   var html = '',
@@ -21,32 +45,13 @@ MS.add = function (data, pos, status)
     if (!data[i].from.id) data[i].from = AU.user;
 
     var filesHtml = 0,
-        body = data[i].body || '',
+        body = MS.clearBody(data[i].body || ''),
         mine = data[i].from.email == AU.user.email,
         whose = mine ? 'mine' : 'yours',
         sName = data[i].from.name ? data[i].from.name : data[i].from.email;
 
     tags = tags.concat(data[i].subject.split(' '));
     subjects.push(data[i].subject);
-
-    // preprocess body
-    var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-    
-    if (CFG._('newlines'))
-    {
-      body = body.replace(/(?:\r\n|\r|\n)/g, '<br />');
-    }
-    else
-    {
-      body = body.replace(/(?:\r\n\r\n)/g, '</p><p>');
-    }
-
-    body = body.replace(exp, function (m)
-    {
-      return '<a target="_blank" rel="noopener noreferrer" href="' + m + '">' + (m.length > 40 ? m.substr(0, 40) + '&hellip;' : m) + '</a>';
-    });
-    body = body.replace(/ -- /g, ' — ');
-    body = '<p>' + body + '</p>';
 
     if (data[i].files)
     {
@@ -375,6 +380,17 @@ MS.filter = function (subj)
     {
       parent.postMessage({cmd: 'openUrl', url: e.target.getAttribute('href', 2), external: true}, '*');
       return false;
+    }
+
+    if (e.target.classList.contains('fwd'))
+    {
+      var li = PP.par(e.target, 'li');
+
+      // replace message contents with original mail body
+      ML.api('message', 'showOriginal', {id: li.dataset.id}, function (data)
+      {
+        li.querySelector('.fwd').outerHTML = MS.clearBody(data)
+      });
     }
   };
 
