@@ -162,7 +162,7 @@ MS.send = function ()
     cmp.querySelector('.emojis').style.bottom = f + h + 41 + 'px';
     cmp.querySelector('.head').style.bottom = f + h - 21 + 'px';
     cmp.querySelector('.send').style.bottom = (f + h - 21) / 2 + 'px';
-    cmp.querySelector('.subjects').style.bottom = f + h + 19 + 'px';
+    // cmp.querySelector('.subjects').style.bottom = f + h + 19 + 'px';
     cmpText.style.bottom = f - 21 + 'px';
   });
 
@@ -185,23 +185,6 @@ MS.send = function ()
   cmp.querySelector('.send').onclick = MS.send;
 
   cmp.querySelector('.picker').onclick = SP.show;
-
-  cmp.querySelector('.subjects').onclick = function (e)
-  {
-    if (e.target.classList.contains('add'))
-    {
-      var mbox = ML.mbox('<input class="texty"/>', 1, function (ret)
-      {
-        if (ret)
-        {
-          var subj = mbox.querySelector('input').value.trim();
-
-          // do not push to 'MS.subjects'!
-          if (subj.length) cmp.querySelector('.cap').value = subj
-        }
-      });
-    }
-  };
 
   cmp.querySelector('#uploaded').onclick = function (e)
   {

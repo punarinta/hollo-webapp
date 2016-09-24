@@ -219,7 +219,7 @@ MS.show = function (id)
   {
     el.classList.remove('toggled')
   });
-  page.querySelector('.subjects').classList.remove('opened');
+
   snackbar.style.display = 'flex';
 
   page.style.display = 'inline-block';
@@ -249,7 +249,6 @@ MS.show = function (id)
     // reset subject lists
     MS.subjects = [];
     document.querySelector('#snackbar-menu-tags ul').innerHTML = '<div>Here we will list the subjects used in this conversation</div>';
-    page.querySelector('.subjects').innerHTML = '<li class="add">New topic</li>';
 
     ul.innerHTML = '';
     MS.add(data.messages, 'bottom');
