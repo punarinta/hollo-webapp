@@ -136,8 +136,8 @@ MS.add = function (data, pos, status)
       (body ? ('<div class="msg">' + body + '</div>') : '') +
       (filesHtml ? '<div class="files">' + filesHtml + '</div>': '') +
       '</div>' +
-      '<div class="foot"><div class="ava' + (mine ? ' full' : '') + '" style="background:' + ava + '">' + nc +
-      '</div><div class="ts"><span class="status ' + status + '"></span>' + ML.ts(data[i].ts) + '</div></div>' +
+      '<div class="foot"><div class="ava' + (mine ? ' full' : '') + '" style="background:' + ava + '" data-name="' + sName + '">' + nc +
+      '</div><div class="info"><span class="status ' + status + '"></span><span class="ts">' + ML.ts(data[i].ts) + '</span></div></div>' +
       '</div>' +
       '</li>';
   }
@@ -397,6 +397,11 @@ MS.page.querySelector('ul').onclick = function (e)
       li.querySelector('.fwd').outerHTML = MS.clearBody(data);
       busy(0);
     });
+  }
+
+  if (e.target.classList.contains('ava'))
+  {
+    e.target.parentElement.querySelector('.ts').innerText = e.target.dataset.name
   }
 };
 
