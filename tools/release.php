@@ -93,6 +93,9 @@ foreach ($config['post-shell'] as $sh)
     shell_exec(str_replace('$distDir', $distDir, $sh));
 }
 
+echo "Estimated GZIP size: ";
+system('gzip -c dist/index.html | wc -c');
+
 echo "Cleaning up...\n";
 unlink("$distDir/temp.js");
 unlink("$distDir/temp.css");
