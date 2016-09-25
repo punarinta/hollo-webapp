@@ -108,7 +108,7 @@ CO.show = function (mode)
   // noinspection JSBitwiseOperatorUsage
   if (mode & 2)
   {
-    ul.innerHTML = '<li>Loading...</li>';
+    busy(1);
     CO.page.querySelector('.head .ava img').src = AU.user.ava || '/gfx/ava.png';
     CO.page.querySelector('.head .name').innerHTML = AU.user.name || AU.user.email.split('@')[0];
     CO.page.querySelector('.head .email').innerHTML = AU.user.email;
@@ -135,6 +135,8 @@ CO.show = function (mode)
       {
         ul.innerHTML = '';
       }
+
+      busy(0);
       
       CO.add(data);
 

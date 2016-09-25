@@ -64,7 +64,7 @@ MS.send = function ()
     }
   }
 
-  busybox.classList.remove('hidden');
+  busy(1);
   MS.add([m], 'bottom');
 
   ML.api('message', 'send', {body: msg, messageId: msgId, subject: subj, files: m.files, to: to, chatId: MS.chat.id}, function (json)
@@ -79,7 +79,7 @@ MS.send = function ()
     MS.cmpResize();
 
     // close topic picker
-    busybox.classList.add('hidden');
+    busy(0);
   });
 };
 

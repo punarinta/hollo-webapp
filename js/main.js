@@ -1,4 +1,7 @@
-var busybox = document.getElementById('busybox');
+function busy(isBusy)
+{
+  document.getElementById('busybox').classList.toggle('hidden', !isBusy)
+}
 
 ML.hidePages = function ()
 {
@@ -48,7 +51,7 @@ ML.hidePages = function ()
         break;
 
       case 'CSS-01':
-        busybox.classList.remove('hidden');
+        busy(1);
         break;
 
       case 'INCARNATE':

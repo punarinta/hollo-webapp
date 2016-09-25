@@ -389,27 +389,27 @@ MS.page.querySelector('ul').onclick = function (e)
   {
     var li = PP.par(e.target, 'li');
 
-    busybox.classList.remove('hidden');
+    busy(1);
 
     // replace message contents with original mail body
     ML.api('message', 'showOriginal', {id: li.dataset.id}, function (data)
     {
       li.querySelector('.fwd').outerHTML = MS.clearBody(data);
-      busybox.classList.add('hidden');
+      busy(0);
     });
   }
 };
 
 document.getElementById('msgs-more').onclick = function ()
 {
-  busybox.classList.add('flex');
+  busy(1);
 
   // can be called only by ID
   ML.api('message', 'moreByChatId', {chatId: MS.chat.id}, function (data)
   {
     console.log('More messages requested:', data);
     MS.add(data, 'top');
-    busybox.classList.remove('flex');
+    busy(0);
   });
 };
 
