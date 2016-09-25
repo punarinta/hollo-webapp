@@ -128,18 +128,14 @@ MS.add = function (data, pos, status)
 
     status = status || '';
 
-    html +=
-      '<li data-id="' + data[i].id + '" class="' + whose + '">' +
-      '<div>' +
-      '<div class="white">' +
-      '<div class="cap">' + subj + '</div>' +
-      (body ? ('<div class="msg">' + body + '</div>') : '') +
-      (filesHtml ? '<div class="files">' + filesHtml + '</div>': '') +
-      '</div>' +
-      '<div class="foot"><div class="ava' + (mine ? ' full' : '') + '" style="background:' + ava + '" data-name="' + sName + '">' + nc +
-      '</div><div class="info"><span class="status ' + status + '"></span><span class="ts">' + ML.ts(data[i].ts) + '</span></div></div>' +
-      '</div>' +
-      '</li>';
+    html += '<li data-id="' + data[i].id + '" class="' + whose + '"><div><div class="white"><div class="cap">'
+      + subj + '</div>'
+      + (body ? ('<div class="msg">' + body + '</div>') : '')
+      + (filesHtml ? '<div class="files">' + filesHtml + '</div>': '')
+      + '</div><div class="foot"><div class="ava' + (mine ? ' full' : '') + '" style="background:' + ava + '">' + nc
+      + '</div><div class="info"><span class="status ' + status + '"></span><span class="ts">'
+      + ML.ts(data[i].ts) + '</span><span class="name hidden">' + sName
+      + '</span></div></div></div></li>';
   }
 
   if (pos == 'top') ul.innerHTML = html + ul.innerHTML;
@@ -401,7 +397,9 @@ MS.page.querySelector('ul').onclick = function (e)
 
   if (e.target.classList.contains('ava'))
   {
-    e.target.parentElement.querySelector('.ts').innerText = e.target.dataset.name
+    var parent = e.target.parentElement;
+    parent.querySelector('.ts').classList.toggle('hidden');
+    parent.querySelector('.name').classList.toggle('hidden');
   }
 };
 
