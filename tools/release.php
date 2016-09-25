@@ -80,8 +80,8 @@ $replace = ['>', '<', '\\1', ''];
 $html = preg_replace($search, $replace, $html);
 
 $html = strtr($html, ['> ' => '>', ' <' => '<']);
-$html = str_replace('<!-- CSS -->', '<link rel="stylesheet" type="text/css" href="/' . $random . '.css" />', $html);
-$html = str_replace('<!-- JS -->', '<script src="/' . $random . '.js"></script>', $html);
+$html = str_replace('<!-- CSS -->', '<style>' . file_get_contents("$distDir/$random.css") . '</style>', $html);
+$html = str_replace('<!-- JS -->', '<script>' . file_get_contents("$distDir/$random.js") . '</script>', $html);
 $html = str_replace('<!-- VERSION -->dev<!-- /VERSION -->', date('d.m.Y H:i'), $html);
 
 file_put_contents($distDir . '/index.html', $html);
@@ -96,3 +96,5 @@ foreach ($config['post-shell'] as $sh)
 echo "Cleaning up...\n";
 unlink("$distDir/temp.js");
 unlink("$distDir/temp.css");
+unlink("$distDir/$random.css");
+unlink("$distDir/$random.js");
