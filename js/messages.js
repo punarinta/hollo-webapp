@@ -33,14 +33,14 @@ MS.clearBody = function (body)
 
 MS.add = function (data, pos, status)
 {
-  var html = '',
-      subj,
+  var subj, i,
+      html = '',
       tags = [],
       subjects = [],
       cmp = document.getElementById('composer'),
       ul = MS.page.querySelector('ul');
 
-  for (var i in data)
+  for (i in data)
   {
     if (!data[i].from.id) data[i].from = AU.user;
 
