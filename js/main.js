@@ -348,6 +348,10 @@ ML.hidePages = function ()
           if (MS.chat && data.chatId == MS.chat.id)
           {
             // we're inside the target chat, fetch messages
+            ML.api('message', 'getLastChatMessage', {chatId: data.chatId}, function (data)
+            {
+              MS.add([data], 'bottom');
+            });
           }
           else
           {
