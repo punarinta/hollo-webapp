@@ -13,7 +13,7 @@ MS.send = function ()
       cmpText = cmp.querySelector('textarea');
 
   // send a message
-  var msg = cmpText.value, subj = cmp.querySelector('.cap').value, msgId = null, to = [];
+  var msg = cmpText.value, subj = cmp.querySelector('.cap').value, msgId = null;
 
   if (!msg.length && !MS._upl.length)
   {
@@ -26,12 +26,6 @@ MS.send = function ()
   {
     msgId = (el.dataset.id - 0) || msgId
   });
-
-  // collect emails, all users are known from the very beginning
-  for (i in MS.chat.users)
-  {
-    to.push({email: MS.chat.users[i].email})
-  }
 
   console.log('body:', msg);
   console.log('subject:', subj);
@@ -67,7 +61,7 @@ MS.send = function ()
   busy(1);
   MS.add([m], 'bottom');
 
-  ML.api('message', 'send', {body: msg, messageId: msgId, subject: subj, files: m.files, to: to, chatId: MS.chat.id}, function (json)
+  ML.api('message', 'send', {body: msg, messageId: msgId, subject: subj, files: m.files, chatId: MS.chat.id}, function (json)
   {
     console.log('send()', json);
 
