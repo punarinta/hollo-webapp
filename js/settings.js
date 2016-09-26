@@ -2,6 +2,7 @@ var CFG =
 {
   apiRoot: 'api.hollo.email',
   page: document.getElementById('page-cfg'),
+  notifierUrl: 'wss://notify.hollo.email:443/',
   
   reset: function ()
   {
