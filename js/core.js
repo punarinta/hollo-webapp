@@ -37,13 +37,19 @@ var ML =
         else
         {
           console.log('Status:', this.status);
-          if (this.status != 401) ML.mbox(json.errMsg);
+          if (this.status != 401)
+          {
+            ML.mbox(json.errMsg);
+            busy(0);
+          }
         }
       }
       else
       {
         console.log('Not JSON:', r);
         ML.mbox(r);
+        // prevent app lock
+        busy(0);
       }
     };
     r.onerror = function(e)
