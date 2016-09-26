@@ -305,6 +305,27 @@ ML.hidePages = function ()
     }
   }
 
+  // connect to notifier
+
+  ML.ws = new WebSocket(CFG.notifierUrl);
+  ML.ws.onerror = function ()
+  {
+    ML.ws = null
+  };
+
+  ML.ws.onmessage = function (event)
+  {
+    var data = JSON.parse(event.data);
+
+    switch (data.cmd)
+    {
+      case 'update':
+        console.log('update', data);
+        break;
+    }
+  };
+
+
   // NO API CALLS ABOVE THIS LINE
 
   var oauthCode = ML.getQueryVar('code');

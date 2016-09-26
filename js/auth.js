@@ -10,6 +10,7 @@ AU.init = function (data)
   AU.user = data.user;
   CFG.reset();
   localStorage.setItem('sessionId', AU.sessionId);
+  if (ML.ws) ML.ws.send(JSON.stringify({cmd: 'online', userId: data.user.id}));
 };
 
 AU.loginImap = function ()

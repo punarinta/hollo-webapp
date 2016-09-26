@@ -7,3 +7,6 @@ CFG.apiRoot = document.location.hostname.replace('app.', 'api.');
 
 // Redirect for Google login, e.g. 'https://app.hollo.email/oauth/google'
 CFG.redirectUrl = null;
+
+// Instant messaging notifier
+CFG.notifierUrl = 'ws://localhost:1488/';

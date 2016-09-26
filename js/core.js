@@ -9,6 +9,7 @@ var ML =
   _loaded: [],
   _mbox : null,
   _grava: {},
+  ws: null,
 
   api: function (endpoint, method, data, callback)
   {
