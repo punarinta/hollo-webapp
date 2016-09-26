@@ -356,6 +356,10 @@ ML.hidePages = function ()
             li.classList.add('unread');
           }
           break;
+
+        case 'pong':
+          ML.mbox('Echo');
+          break;
       }
     };
   })();
