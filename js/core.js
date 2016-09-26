@@ -10,6 +10,7 @@ var ML =
   _mbox : null,
   _grava: {},
   ws: null,
+  _wsOpened: 0,
 
   api: function (endpoint, method, data, callback)
   {

@@ -54,6 +54,10 @@ ML.hidePages = function ()
         busy(1);
         break;
 
+      case 'SOCKET':
+        ML.ws.send(JSON.stringify({cmd: 'ping'}));
+        break;
+
       case 'INCARNATE':
         if (cmd.length < 2)
           break;
@@ -310,7 +314,13 @@ ML.hidePages = function ()
   ML.ws = new WebSocket(CFG.notifierUrl);
   ML.ws.onerror = function ()
   {
+    // we don't care, just switch IM-mode off
     ML.ws = null
+  };
+
+  ML.ws.onopen = function ()
+  {
+    ML._wsOpened = 1;
   };
 
   ML.ws.onmessage = function (event)
@@ -331,7 +341,6 @@ ML.hidePages = function ()
           // mark the target chat as unread and move it to the top
           var li = CO.page.querySelector('li[data-id="' + data.chatId + '"] .img');
           li.classList.add('unread');
-          li.parentNode.appendChild(li);
         }
         break;
     }
