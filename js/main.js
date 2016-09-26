@@ -311,40 +311,54 @@ ML.hidePages = function ()
 
   // connect to notifier
 
-  ML.ws = new WebSocket(CFG.notifierUrl);
-  ML.ws.onerror = function ()
+  (function mwInit(user)
   {
-    // we don't care, just switch IM-mode off
-    ML.ws = null
-  };
-
-  ML.ws.onopen = function ()
-  {
-    ML._wsOpened = 1;
-  };
-
-  ML.ws.onmessage = function (event)
-  {
-    var data = JSON.parse(event.data);
-
-    switch (data.cmd)
+    ML.ws = new WebSocket(CFG.notifierUrl);
+    ML.ws.onerror = function ()
     {
-      case 'update':
-        console.log('update', data);
+      // we don't care, just switch IM-mode off
+      ML.ws = null
+    };
 
-        if (MS.chat && data.chatId == MS.chat.id)
-        {
-          // we're inside the target chat, fetch messages
-        }
-        else
-        {
-          // mark the target chat as unread and move it to the top
-          var li = CO.page.querySelector('li[data-id="' + data.chatId + '"] .img');
-          li.classList.add('unread');
-        }
-        break;
-    }
-  };
+    ML.ws.onopen = function ()
+    {
+      ML._wsOpened = 1;
+      if (user)
+      {
+        ML.ws.send(JSON.stringify({cmd: 'online', userId: user.id}));
+      }
+    };
+
+    ML.ws.onclose =  function ()
+    {
+      ML._wsOpened = 0;
+      // never close, kurwa!
+      mwInit(AU.user);
+    };
+
+    ML.ws.onmessage = function (event)
+    {
+      var data = JSON.parse(event.data);
+
+      switch (data.cmd)
+      {
+        case 'update':
+          console.log('update', data);
+
+          if (MS.chat && data.chatId == MS.chat.id)
+          {
+            // we're inside the target chat, fetch messages
+          }
+          else
+          {
+            // mark the target chat as unread and move it to the top
+            var li = CO.page.querySelector('li[data-id="' + data.chatId + '"] .img');
+            li.classList.add('unread');
+          }
+          break;
+      }
+    };
+  })();
 
 
   // NO API CALLS ABOVE THIS LINE
