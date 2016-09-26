@@ -321,6 +321,18 @@ ML.hidePages = function ()
     {
       case 'update':
         console.log('update', data);
+
+        if (MS.chat && data.chatId == MS.chat.id)
+        {
+          // we're inside the target chat, fetch messages
+        }
+        else
+        {
+          // mark the target chat as unread and move it to the top
+          var li = CO.page.querySelector('li[data-id="' + data.chatId + '"] .img');
+          li.classList.add('unread');
+          li.parentNode.appendChild(li);
+        }
         break;
     }
   };
