@@ -1,3 +1,4 @@
+// needs to be global
 function busy(isBusy)
 {
   document.getElementById('busybox').classList.toggle('hidden', !isBusy)
@@ -7,7 +8,6 @@ ML.hidePages = function ()
 {
   Array.prototype.forEach.call(document.getElementsByClassName('page'), function (el)
   {
-    // console.log(el.id, ML.state.widthMode, el.className);
     if (ML.state.widthMode == 0 || el.classList.contains('fullhide'))
     {
       el.style.display = 'none';
@@ -55,15 +55,16 @@ ML.hidePages = function ()
         break;
 
       case 'INCARNATE':
-        if (cmd.length < 2)
-          break;
-        this.value = '';
-        ML.api('auth', 'incarnate', { userId: cmd[1] }, function (data)
+        if (cmd.length > 1)
         {
-          AU.init(data);
-          that.value = '';
-          ML.go('contacts');
-        });
+          this.value = '';
+          ML.api('auth', 'incarnate', { userId: cmd[1] }, function (data)
+          {
+            AU.init(data);
+            that.value = '';
+            ML.go('contacts');
+          });
+        }
         break;
     }
 
@@ -132,7 +133,7 @@ ML.hidePages = function ()
 
   snackdrop.querySelector('.rename').onclick = function ()
   {
-    var mbox = ML.mbox('<input class="texty" value="' + (MS.chat.name || '') + '"/>', 1, function (ret)
+    ML.mbox('<input class="texty" value="' + (MS.chat.name || '') + '"/>', 1, function (ret)
     {
       if (ret)
       {
@@ -146,9 +147,7 @@ ML.hidePages = function ()
           }
         });
       }
-    });
-
-    mbox.querySelector('input').focus();
+    }).querySelector('input').focus();
 
     closeSnackbar();
   };
