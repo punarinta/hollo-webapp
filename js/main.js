@@ -329,11 +329,14 @@ ML.hidePages = function ()
       }
     };
 
-    ML.ws.onclose =  function ()
+    ML.ws.onclose = function ()
     {
-      ML._wsOpened = 0;
-      // never close, kurwa!
-      mwInit(AU.user);
+      if (ML._wsOpened)
+      {
+        ML._wsOpened = 0;
+        // never close, kurwa!
+        mwInit(AU.user);
+      }
     };
 
     ML.ws.onmessage = function (event)
