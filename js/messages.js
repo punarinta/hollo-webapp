@@ -116,24 +116,20 @@ MS.add = function (data, pos, status)
     var nc = sName.split(' '),
         ava = ML.colorHash(data[i].from.email);
 
-    if (mine)
+    nc = nc.length == 1 ? nc[0].charAt(0) : (nc[0].charAt(0) + nc[1].charAt(0));
+
+    if (mine && AU.user.ava)
     {
-      ava = AU.user.ava ? '#fff url(\'' + AU.user.ava + '\')' : ava;
+      ava = '#fff url(\'' + AU.user.ava + '\')';
       nc = '';
     }
-    else
-    {
-      nc = nc.length == 1 ? nc[0].charAt(0) : (nc[0].charAt(0) + nc[1].charAt(0));
-    }
-
-    status = status || '';
 
     html += '<li data-id="' + data[i].id + '" class="' + whose + '"><div><div class="white"><div class="cap">'
       + subj + '</div>'
       + (body ? ('<div class="msg">' + body + '</div>') : '')
       + (filesHtml ? '<div class="files">' + filesHtml + '</div>': '')
       + '</div><div class="foot"><div class="ava' + (mine ? ' full' : '') + '" style="background:' + ava + '">' + nc
-      + '</div><div class="info"><span class="status ' + status + '"></span><span class="ts">'
+      + '</div><div class="info"><span class="status ' + (status || '') + '"></span><span class="ts">'
       + ML.ts(data[i].ts) + '</span><span class="name hidden">' + sName
       + '</span></div></div></div></li>';
   }
