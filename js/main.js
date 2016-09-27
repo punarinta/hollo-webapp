@@ -54,10 +54,6 @@ ML.hidePages = function ()
         busy(1);
         break;
 
-      case 'SOCKET':
-        ML.ws.send(JSON.stringify({cmd: 'ping'}));
-        break;
-
       case 'INCARNATE':
         if (cmd.length < 2)
           break;
@@ -107,11 +103,6 @@ ML.hidePages = function ()
       {
         this.classList.add('toggled');
         menu.style.display = 'block';
-/*
-        if (type == 'roster')
-        {
-          CR.onShow()
-        }*/
       }
     }
   });
@@ -362,10 +353,6 @@ ML.hidePages = function ()
             var li = CO.page.querySelector('li[data-id="' + data.chatId + '"] .img');
             li.classList.add('unread');
           }
-          break;
-
-        case 'pong':
-          ML.mbox('Echo');
           break;
       }
     };
