@@ -134,6 +134,11 @@ MS.add = function (data, pos, status)
       + '</span></div></div></div></li>';
   }
 
+  if (data.length == 1)
+  {
+    ul.classList.add('stand-still')
+  }
+
   if (pos == 'top') ul.innerHTML = html + ul.innerHTML;
   else ul.innerHTML += html;
 

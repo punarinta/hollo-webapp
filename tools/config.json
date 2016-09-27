@@ -38,7 +38,8 @@
       ["animation", [0]],
       ["animation-fill-mode", [0]],
       ["animation-timing-function", [0]],
-      ["animation-delay", [0]]
+      ["animation-delay", [0]],
+      ["animation-duration", [0]]
     ]
   },
   "dist": "../dist",
