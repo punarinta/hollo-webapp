@@ -321,7 +321,7 @@ MS.show = function (id)
           div = '<div class="img" style="background:' + ML.colorHash(files[i].type) + '">' + files[i].type.split('/')[1] + '</div>'
         }
 
-        html += '<li>' + div + '<div class="bar"><div></div><div></div></div></li>'
+        html += '<li>' + div + '<div class="bar"><div></div></div></li>'
       }
 
       fileList.innerHTML = html.length ? html : '<div>No files in this chat</div>';
