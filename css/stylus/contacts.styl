@@ -153,6 +153,9 @@
     .name
       @extend $font-heading
       margin-bottom 2px
+      overflow hidden
+      text-overflow ellipsis
+      width calc(100vw - 90px)
       &:first-letter
         text-transform capitalize
     .email
