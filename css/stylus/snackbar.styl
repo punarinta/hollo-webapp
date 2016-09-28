@@ -170,12 +170,17 @@
 
 #snackbar-menu-tags
   right 85px
+  max-width calc(100% - 85px)
   div
     width 152px
     font italic 14px 'Roboto'
     text-align center
     margin 24px 32px
     color rgba(0,0,0,0.56)
+  ul
+    overflow-x hidden
+    overflow-y scroll
+    max-height calc(100vh - 70px)
 
 #snackbar-menu-files
   right 0
