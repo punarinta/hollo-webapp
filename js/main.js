@@ -221,9 +221,24 @@ ML.hidePages = function ()
 
   filesList.onclick = function (e)
   {
-    if (!e.target.classList.contains('img')) return;
+    if (e.target.classList.contains('download'))
+    {
+      var li = PP.par(e.target, 'li');
 
-    ML.demo(e.target.dataset.url, e.target.dataset.mime)
+      if (li.dataset.mime.match('image.*'))
+      {
+        console.log('URL ready:', li.querySelector('.img').dataset.url)
+      }
+      else
+      {
+        console.log('Get URL:', li.dataset.refid, li.dataset.extid)
+      }
+    }
+
+    if (e.target.classList.contains('img'))
+    {
+      ML.demo(e.target.dataset.url, e.target.dataset.mime)
+    }
   };
 
 
@@ -240,7 +255,7 @@ ML.hidePages = function ()
   });
 
   // === DEMO BOX ===
-  document.getElementById('demo').querySelector('.close').onclick = function ()
+  document.querySelector('#demo .close').onclick = function ()
   {
     ML.demo(0)
   };

@@ -289,7 +289,7 @@ MS.show = function (id)
 
     ML.api('file', 'findByChatId', {chatId: index, withImageUrl: true}, function (files)
     {
-      var i, url, im, div, html = '';
+      var i, url, im, internal, html = '';
 
       for (i in files)
       {
@@ -300,15 +300,15 @@ MS.show = function (id)
           // preload
           im = new Image();
           im.src = url;
-          
-          div = '<div class="img" data-url="' + url + '" data-mime="' + files[i].type + '" style="background-image:url(' + url + ')"></div>'
+
+          internal = 'data-url="' + url + '" style="background-image:url(' + url + ')">'
         }
         else
         {
-          div = '<div class="img" style="background:' + ML.colorHash(files[i].type) + '">' + files[i].type.split('/')[1] + '</div>'
+          internal = 'style="background:' + ML.colorHash(files[i].type) + '">' + files[i].type.split('/')[1]
         }
 
-        html += '<li>' + div + '<div class="bar"><div></div></div></li>'
+        html += '<li data-mime="' + files[i].type + '" data-extid="' + files[i].extId + '" data-refid="' + files[i].refId + '"><div class="img" ' + internal + '</div><div class="bar"><div class="download"></div></div></li>'
       }
 
       fileList.innerHTML = html.length ? html : '<div>No files in this chat</div>';
