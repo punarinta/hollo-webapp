@@ -293,7 +293,7 @@ MS.show = function (id)
 
       for (i in files)
       {
-        if (files[i].type.match('image.*'))
+        if (files[i].type.match('image.*') && url)
         {
           url = files[i].url;
           
