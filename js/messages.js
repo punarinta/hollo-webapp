@@ -99,7 +99,7 @@ MS.add = function (data, pos, status)
         filesHtml += '<div class="file-icon" id="img-file-'
           + file.extId + '" data-id="' + file.extId
           + '" data-mime="' + file.type + '" style="background:' + ML.colorHash(file.type)
-          + '">' + file.type.split('/')[1] + '</div>';
+          + '">' + file.type.split('/')[1].substring(0, 8) + '</div>';
       }
     }
     else
