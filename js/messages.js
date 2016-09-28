@@ -81,7 +81,7 @@ MS.add = function (data, pos, status)
           {
             (function (f)
             {
-              ML.api('file', 'getFileUrl', {extId:file.extId}, function (url)
+              ML.api('file', 'getFileUrl', {extId: f.extId, refId: f.refId || 0}, function (url)
               {
                 var image = document.getElementById('img-file-' + f.extId);
                 if (image)
@@ -263,15 +263,7 @@ MS.show = function (id)
     ul.innerHTML = '';
     MS.add(data.messages, 'bottom');
 
-    if (MS.chat.users.length > 1)
-    {
-      ML.loadFiles(MS.chat.id)
-    }
-    else
-    {
-      // load directly by email
-      ML.loadFiles(MS.chat.users[0].email, 1)
-    }
+    ML.loadFiles(MS.chat.id)
 
     // mark chat as 'read' in the chat list
     var chatItem = CO.page.querySelector('li[data-id="' + id + '"] .img');
@@ -288,19 +280,14 @@ MS.show = function (id)
    * Load files by email
    *
    * @param index
-   * @param mode    - 0 -- by chat ID, 1 -- by email
    */
-  ML.loadFiles = function (index, mode)
+  ML.loadFiles = function (index)
   {
-    mode = mode || 0;
-
-    var fileList = document.querySelector('#snackbar-menu-files ul'),
-        params = mode ? {email: index} : {chatId: index};
+    var fileList = document.querySelector('#snackbar-menu-files ul');
 
     fileList.innerHTML = 'Loading ...';
-    params.withImageUrl = true;
 
-    ML.api('file', mode ? 'findByEmail' : 'findByChatId', params, function (files)
+    ML.api('file', 'findByChatId', {chatId: index, withImageUrl: true}, function (files)
     {
       var i, url, im, div, html = '';
 
