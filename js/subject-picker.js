@@ -10,7 +10,7 @@ var SP =
 
     for (i in MS.subjects)
     {
-      html += '<li data-subj="' + MS.subjects[i] + '"><div class="mark' + (MS.subjects[i] == subj ? ' current' : '') + '"></div><div>' + MS.subjects[i] + '</div></li>';
+      html += '<li data-subj="' + MS.subjects[i] + '"><div class="mark' + (MS.subjects[i] == subj ? ' current' : '') + '"></div><div class="body">' + MS.subjects[i] + '</div></li>';
     }
 
     ul.innerHTML = html;
@@ -38,9 +38,14 @@ SP.modal.onclick = function (e)
   e.stopPropagation()
 };
 
-SP.modal.querySelector('button').onclick = function ()
+SP.modal.querySelector('button.new').onclick = function ()
 {
   SP.subjInput.value = '';
   SP.subjInput.focus();
+  SP.modal.classList.add('hidden')
+};
+
+SP.modal.querySelector('button.cancel').onclick = function ()
+{
   SP.modal.classList.add('hidden')
 };
