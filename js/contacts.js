@@ -91,6 +91,7 @@ CO.show = function (mode)
   var ul = CO.page.querySelector('ul');
 
   mode = (CO.loaded == 7) ? mode : 7;
+  MS.chat = null;
 
   // noinspection JSBitwiseOperatorUsage
   if (mode & 1)
