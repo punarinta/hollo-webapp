@@ -65,12 +65,18 @@
             font-size 12px
             display inline-block
             margin -2px 5px 0 0
+            &:before
+              width 9px
+              height 9px
+              content ' '
+              display block
             &.s1
               &:before
-                content '⌛'
+                background-image url('/gfx/gray/clock.svg')
             &.s2
               &:before
-                content '✉'
+                background-image url('/gfx/gray/check.svg')
+                width 12px
 
         .ava
           float right
