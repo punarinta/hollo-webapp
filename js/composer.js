@@ -89,6 +89,14 @@ MS.send = function ()
     document.querySelector('#page-msgs > ul').classList.add('padded')
   };
 
+  cmpText.onfocus = function ()
+  {
+    setTimeout(function ()
+    {
+      MS.page.querySelector('ul li:last-child').scrollIntoView()
+    }, 100);
+  };
+
   cmpText.onkeyup = function (e)
   {
     if (e.keyCode == 13 && e.ctrlKey)
