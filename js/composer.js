@@ -58,8 +58,7 @@ MS.send = function ()
     }
   }
 
-  busy(1);
-  MS.add([m], 'bottom');
+  var lastLi = MS.add([m], 'bottom', 's1');
 
   ML.api('message', 'send', {body: msg, messageId: msgId, subject: subj, files: m.files, chatId: MS.chat.id}, function (json)
   {
@@ -72,8 +71,7 @@ MS.send = function ()
     cmp.classList.remove('focused');
     MS.cmpResize();
 
-    // close topic picker
-    busy(0);
+    lastLi.querySelector('.status').className = 'status s2'
   });
 };
 

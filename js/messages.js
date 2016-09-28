@@ -129,7 +129,7 @@ MS.add = function (data, pos, status)
       + (body ? ('<div class="msg">' + body + '</div>') : '')
       + (filesHtml ? '<div class="files">' + filesHtml + '</div>': '')
       + '</div><div class="foot"><div class="ava' + (mine ? ' full' : '') + '" style="background:' + ava + '">' + nc
-      + '</div><div class="info"><span class="status ' + (status || '') + '"></span><span class="ts">'
+      + '</div><div class="info"><span class="status ' + (status || 's2') + '"></span><span class="ts">'
       + ML.ts(data[i].ts) + '</span><span class="name hidden">' + sName
       + '</span></div></div></div></li>';
   }
@@ -202,6 +202,8 @@ MS.add = function (data, pos, status)
       ul.scrollTop = document.body.scrollTop = h;
     }, 100, ul);
   }
+
+  return ul.querySelector('li:last-child')
 };
 
 MS.show = function (id)
