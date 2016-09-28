@@ -227,11 +227,14 @@ ML.hidePages = function ()
 
       if (li.dataset.mime.match('image.*'))
       {
-        console.log('URL ready:', li.querySelector('.img').dataset.url)
+        window.open(li.querySelector('.img').dataset.url)
       }
       else
       {
-        console.log('Get URL:', li.dataset.refid, li.dataset.extid)
+        ML.api('file', 'getFileUrl', {refId: li.dataset.refid, extId: li.dataset.extid}, function (data)
+        {
+          window.open(data)
+        })
       }
     }
 
