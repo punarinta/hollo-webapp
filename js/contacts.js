@@ -19,14 +19,14 @@ CO.clearName = function (text)
   return text.split('\\"').join('"')
 };
 
-CO.xname = function(chat, shorty)
+CO.xname = function (chat)
 {
-  var name, nc, count = chat.users.length;
+  var n, user, name, nc, count = chat.users.length;
 
   if (count > 1)
   {
-    name = shorty ? [] : ['You'];
-    for (var n = 0, user; n < count; n++)
+    name = [];
+    for (n = 0; n < count; n++)
     {
       if (chat.users[n].name)
         user = chat.users[n].name.split(' ')[0];

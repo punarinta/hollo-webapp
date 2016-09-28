@@ -252,7 +252,7 @@ MS.show = function (id)
   {
     MS.chat = data.chat;
 
-    var xname = CO.xname(MS.chat, 1);
+    var xname = CO.xname(MS.chat);
     snackbar.querySelector('.roster').innerHTML = xname[0];
     document.querySelector('#snackbar-menu-more .mute').innerText = MS.chat.muted ? 'Unmute' : 'Mute';
 
