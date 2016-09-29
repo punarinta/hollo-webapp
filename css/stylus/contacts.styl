@@ -131,7 +131,6 @@
       opacity 0
       animation-mixin(fadeInUp)
     .hujava
-      width 100%
       opacity 0
       animation-mixin(fadeInUp)
     .img
@@ -159,6 +158,9 @@
       &:first-letter
         text-transform capitalize
     .email
+      overflow hidden
+      text-overflow ellipsis
+      width calc(100vw - 90px)
       @extend $font-bread
     .shadow
       height 72px
