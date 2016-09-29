@@ -395,14 +395,14 @@ MS.page.querySelector('ul').onclick = function (e)
 
 document.getElementById('msgs-more').onclick = function ()
 {
-  busy(1);
+  ML.mbox('Sorry, this is a "Pro" version feature');
+  /*busy(1);
 
   // can be called only by ID
   ML.api('message', 'moreByChatId', {chatId: MS.chat.id}, function (data)
   {
-    console.log('More messages requested:', data);
     MS.add(data, 'top');
     busy(0);
-  });
+  });*/
 };
 
