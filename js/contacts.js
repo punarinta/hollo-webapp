@@ -69,8 +69,6 @@ CO.add = function (data)
       '<div class="shadow shad-' + data[i].id + '"><div>' + (ML.state.muted?'un':'') + 'mute</div><div class="markas">mark<br>as ' + (unread?'':'un') + 'read</div></div>';
   }
 
-  CO.page.querySelector('ul').innerHTML += html;
-
   for (i in data)
   {
     ML.grava(data[i].users[0].email, function (d)
@@ -84,6 +82,8 @@ CO.add = function (data)
       }
     });
   }
+
+  return html
 };
 
 CO.show = function (mode)
@@ -116,30 +116,32 @@ CO.show = function (mode)
   }
 
   // noinspection JSBitwiseOperatorUsage
+  if (mode & 8)
+  {
+    ul.classList.add('stand-still')
+  }
+
+  // noinspection JSBitwiseOperatorUsage
   if (mode & 4)
   {
     CO.offset = 0;
 
     var filter = CO.page.querySelector('.head .filter').value,
-        filters = [{mode:'muted', value:ML.state.muted}];
+        filters = [{mode:'muted', value:ML.state.muted}], html = '';
 
     if (filter.length) filters.push({mode:'email', value:filter});
 
-    ML.api('chat', 'find', {pageStart:CO.offset, pageLength:25, filters:filters, sortBy: CFG._('contact-sort-ts')?'lastTs':'email' }, function (data)
+    ML.api('chat', 'find', {pageStart: CO.offset, pageLength: 25, filters: filters, sortBy: CFG._('contact-sort-ts')?'lastTs':'email'}, function (data)
     {
       if (filter.length && !data.length && ML.isEmail(filter))
       {
         // filter is ON, but no results found => offer to create a new one
-        ul.innerHTML = '<li data-id="new" class="new"><div class="ava"><div class="new img"></div></div><div><div class="name">' + filter + '</div><div class="email"></div></div></li>';
-      }
-      else
-      {
-        ul.innerHTML = '';
+        html = '<li data-id="new" class="new"><div class="ava"><div class="new img"></div></div><div><div class="name">' + filter + '</div><div class="email"></div></div></li>';
       }
 
       busy(0);
-      
-      CO.add(data);
+
+      ul.innerHTML = html + CO.add(data);
 
       if (data.length == 25)
       {

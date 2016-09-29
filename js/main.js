@@ -372,7 +372,7 @@ ML.hidePages = function ()
             }
             else
             {
-              CO.show(4)
+              CO.show(12)
             }
           }
           break;
