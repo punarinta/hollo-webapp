@@ -61,6 +61,12 @@ CO.add = function (data)
         name = xname[0],
         nc = xname[1];
 
+    if (ML.isJson(data[i].lastMsg))
+    {
+      // for now we only support calendar invites
+      data[i].lastMsg = '📅';
+    }
+
     html +=
       '<li data-id="' + data[i].id + '">' +
       '<div class="ava"><div id="img-gr-' + md5(data[i].users[0].email) + '" class="img' + unread + '" style="background:' + ML.colorHash(data[i].id + '') + '">' + nc + '</div></div>' +
