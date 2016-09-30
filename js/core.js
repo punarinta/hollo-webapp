@@ -84,9 +84,9 @@ var ML =
     return null;
   },
 
-  ts: function (ts)
+  ts: function (ts, mode)
   {
-    var td = new Date(), pfx,
+    var td = new Date(), pfx = '', mode = mode || 3,
         date = new Date(ts * 1000), gy = date.getYear(),
         year = gy >= 100 ? gy - 100 : gy,
         month = '0' + (date.getMonth() + 1),
@@ -94,10 +94,18 @@ var ML =
         hours = '0' + date.getHours(),
         minutes = '0' + date.getMinutes();
 
-    if (td.getTime() - date.getTime() < 24 * 3600 && td.getDate() == date.getDate()) pfx = 'today';
-    else pfx = day.substr(-2) + '.' + month.substr(-2) + '.' + year;
+    if (mode & 1)
+    {
+      if (td.getTime() - date.getTime() < 24 * 3600 && td.getDate() == date.getDate()) pfx = 'today';
+      else pfx = day.substr(-2) + '.' + month.substr(-2) + '.' + year;
+      pfx += ' '
+    }
+    if (mode & 2)
+    {
+      pfx += ' ' + hours.substr(-2) + ':' + minutes.substr(-2);
+    }
 
-    return pfx + ' ' + hours.substr(-2) + ':' + minutes.substr(-2);
+    return pfx;
   },
 
   uniques: function (arr, sens)
