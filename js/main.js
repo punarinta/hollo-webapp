@@ -36,43 +36,49 @@ ML.hidePages = function ()
   };
 
   // === FILTERS ===
-  var head = document.querySelector('#page-contacts .head'), prevEmailFilter = '';
+  var head = document.querySelector('#page-contacts .head'), prevEmailFilter = '', filterTimer = null;
   head.querySelector('.filter').onkeyup = function ()
   {
-    var filter = this.value.toUpperCase(), cmd = filter.split(' '), that = this;
+    clearTimeout(filterTimer);
 
+    var filter = this.value.toUpperCase();
     head.classList.toggle('mode2', !!filter.length);
 
-    switch (cmd[0])
+    filterTimer = setTimeout(function (that, filter)
     {
-      case 'LOGOUT':
-        this.value = '';
-        ML.go('auth/logout');
-        break;
+      var cmd = filter.split(' ');
 
-      case 'CSS-01':
-        busy(1);
-        break;
+      if (prevEmailFilter != filter)
+      {
+        prevEmailFilter = filter;
+        CO.show(4);
+      }
 
-      case 'INCARNATE':
-        if (cmd.length > 1)
-        {
-          this.value = '';
-          ML.api('auth', 'incarnate', { userId: cmd[1] }, function (data)
+      switch (cmd[0])
+      {
+        case 'LOGOUT':
+          that.value = '';
+          ML.go('auth/logout');
+          break;
+
+        case 'CSS-01':
+          busy(1);
+          break;
+
+        case 'INCARNATE':
+          if (cmd.length > 1)
           {
-            AU.init(data);
             that.value = '';
-            ML.go('contacts');
-          });
-        }
-        break;
-    }
-
-    if (prevEmailFilter != filter)
-    {
-      prevEmailFilter = filter;
-      CO.show(4);
-    }
+            ML.api('auth', 'incarnate', { userId: cmd[1] }, function (data)
+            {
+              AU.init(data);
+              that.value = '';
+              ML.go('contacts');
+            });
+          }
+          break;
+      }
+    }, 500, this, filter);
   };
 
   head.querySelector('.clear').onclick = CO.resetFilter;
