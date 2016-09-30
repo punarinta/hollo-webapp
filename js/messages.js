@@ -12,6 +12,8 @@ MS.clearBody = function (body)
   // preprocess body
   var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 
+  body = body.replace(/(?:[ ]\r\n|[ ]\r|[ ]\n)/g, ' ');
+
   if (CFG._('newlines'))
   {
     body = body.replace(/(?:\r\n|\r|\n)/g, '<br />');
