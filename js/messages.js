@@ -33,9 +33,7 @@ MS.clearBody = function (body)
 
 MS.add = function (data, pos, status)
 {
-  var subj, i,
-      html = '',
-      tags = [],
+  var i, html = '',
       subjects = [],
       cmp = document.getElementById('composer'),
       ul = MS.page.querySelector('ul');
@@ -45,13 +43,38 @@ MS.add = function (data, pos, status)
     if (!data[i].from.id) data[i].from = AU.user;
 
     var filesHtml = 0,
-        body = MS.clearBody(data[i].body || ''),
+        body = data[i].body,
         mine = data[i].from.email == AU.user.email,
         whose = mine ? 'mine' : 'yours',
-        sName = data[i].from.name ? data[i].from.name : data[i].from.email;
+        sName = data[i].from.name ? data[i].from.name : data[i].from.email,
+        subj = data[i].subject;
 
-    tags = tags.concat(data[i].subject.split(' '));
-    subjects.push(data[i].subject);
+    if (ML.isJson(body))
+    {
+      var w = JSON.parse(body);
+      w = w.widget;
+
+      var when = w.from + ' ' + w.to;
+
+      // for now we only support calendars
+      subj = '';
+      body = '<div class="widget event">' +
+        '<div class="b when"><icon></icon><div><div>When</div><div>' + when + '</div></div></div>' +
+        '<div class="b where"><icon></icon><div><div>Where</div><div>' + (w.where || '?') + '</div></div></div>' +
+        '<div class="people">' +
+        '<div class="b org"><icon></icon><div><div>Organizer</div><div>' + w.org + '</div></div></div>' +
+        '<div class="b att"><icon></icon><div><div>Invitees</div><div>' + w.att.join('<br>') + '</div></div></div>' +
+        '</div>' + (w.url?('<div class="open"><a href="' + w.url + '">Open in calendar</a></div>'):'') + ' </div>'
+    }
+    else
+    {
+      body = MS.clearBody(body || '')
+    }
+
+    if (subj.length)
+    {
+      subjects.push(data[i].subject);
+    }
 
     if (data[i].files)
     {
@@ -108,10 +131,6 @@ MS.add = function (data, pos, status)
     }
 
     body = body.replace(/\[sys:fwd\]/g, '<div class="fwd">Forwarded message</div>');
-
-    subj = data[i].subject;
-
-    if (!subj.length) subj = '—';
 
     var nc = sName.split(' '),
         ava = ML.colorHash(data[i].from.email);
