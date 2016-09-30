@@ -51,12 +51,11 @@ MS.add = function (data, pos, status)
         sName = data[i].from.name ? data[i].from.name : data[i].from.email,
         subj = data[i].subject;
 
-    if (ML.isJson(body))
+    if (ML.isJson(body) && body)
     {
-      var w = JSON.parse(body);
-      w = w.widget;
-
-      var when = ML.ts(w.from) + ' – ' + ML.ts(w.to, 2),
+      var w = JSON.parse(body).widget,
+          when = ML.ts(w.from) + ' – ' + ML.ts(w.to, 2),
+          url = w.descr.match(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig),
           atts = w.att.map(function (p)
           {
             return p[1].length ? p[1] : p[0];
@@ -70,7 +69,7 @@ MS.add = function (data, pos, status)
         '<div class="people">' +
         '<div class="b org"><icon></icon><div><div>Organizer</div><div>' + (w.org[1] || w.org[0]) + '</div></div></div>' +
         '<div class="b att"><icon></icon><div><div>Attendees</div><div>' + atts.join('<br>') + '</div></div></div>' +
-        '</div>' + (w.url?('<div class="open"><a href="' + w.url + '">Open in calendar</a></div>'):'') + ' </div>'
+        '</div>' + (url?('<div class="open"><a target="_blank" href="' + url + '">Open in calendar</a></div>'):'') + ' </div>'
     }
     else
     {
