@@ -86,7 +86,11 @@ MS.send = function ()
   cmpText.onclick = function ()
   {
     cmp.classList.add('focused');
-    document.querySelector('#page-msgs > ul').classList.add('padded')
+    document.querySelector('#page-msgs > ul').classList.add('padded');
+    setTimeout(function ()
+    {
+      MS.page.querySelector('ul li:last-child').scrollIntoView()
+    }, 100);
   };
 
   cmpText.onfocus = function ()
