@@ -1,0 +1,13 @@
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <g id="App" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" fill-opacity="0.7">
+        <g id="Meeting-invitation" transform="translate(-24.000000, -76.000000)" fill="#000000">
+            <g id="invitation" transform="translate(8.000000, 8.000000)">
+                <g id="Group-2" transform="translate(16.000000, 52.000000)">
+                    <g id="icon-clock" transform="translate(0.000000, 16.000000)">
+                        <path d="M6,10.8 C8.6509668,10.8 10.8,8.6509668 10.8,6 C10.8,3.3490332 8.6509668,1.2 6,1.2 C3.3490332,1.2 1.2,3.3490332 1.2,6 C1.2,8.6509668 3.3490332,10.8 6,10.8 L6,10.8 Z M6,2.66453526e-16 C7.59129894,1.33226763e-16 9.11742242,0.632141042 10.2426407,1.75735931 C11.367859,2.88257758 12,4.40870106 12,6 C12,9.3137085 9.3137085,12 6,12 C2.682,12 0,9.3 0,6 C-5.32907052e-16,2.6862915 2.6862915,7.99360578e-16 6,0 L6,2.66453526e-16 Z M6.3,3 L6.3,6.15 L9,7.752 L8.55,8.49 L5.4,6.6 L5.4,3 L6.3,3 L6.3,3 Z" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
