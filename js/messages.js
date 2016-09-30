@@ -54,7 +54,10 @@ MS.add = function (data, pos, status)
       var w = JSON.parse(body);
       w = w.widget;
 
-      var when = w.from + ' ' + w.to;
+      var when = w.from + ' ' + w.to, atts = w.att.map(function (p)
+      {
+        return p[1].length ? p[1] : p[0];
+      });
 
       // for now we only support calendars
       subj = '';
@@ -62,8 +65,8 @@ MS.add = function (data, pos, status)
         '<div class="b when"><icon></icon><div><div>When</div><div>' + when + '</div></div></div>' +
         '<div class="b where"><icon></icon><div><div>Where</div><div>' + (w.where || '?') + '</div></div></div>' +
         '<div class="people">' +
-        '<div class="b org"><icon></icon><div><div>Organizer</div><div>' + w.org + '</div></div></div>' +
-        '<div class="b att"><icon></icon><div><div>Invitees</div><div>' + w.att.join('<br>') + '</div></div></div>' +
+        '<div class="b org"><icon></icon><div><div>Organizer</div><div>' + (w.org[1] || w.org[0]) + '</div></div></div>' +
+        '<div class="b att"><icon></icon><div><div>Attendees</div><div>' + atts.join('<br>') + '</div></div></div>' +
         '</div>' + (w.url?('<div class="open"><a href="' + w.url + '">Open in calendar</a></div>'):'') + ' </div>'
     }
     else
