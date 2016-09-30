@@ -62,7 +62,7 @@ MS.add = function (data, pos, status)
           });
 
       // for now we only support calendars
-      subj = '';
+      subj = w.title;
       body = '<div class="widget event">' +
         '<div class="b when"><icon></icon><div><div>When</div><div>' + when + '</div></div></div>' +
         '<div class="b where"><icon></icon><div><div>Where</div><div>' + (w.where || '?') + '</div></div></div>' +
