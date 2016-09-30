@@ -54,10 +54,11 @@ MS.add = function (data, pos, status)
       var w = JSON.parse(body);
       w = w.widget;
 
-      var when = w.from + ' ' + w.to, atts = w.att.map(function (p)
-      {
-        return p[1].length ? p[1] : p[0];
-      });
+      var when = ML.ts(w.from) + ' – ' + ML.ts(w.to, 2),
+          atts = w.att.map(function (p)
+          {
+            return p[1].length ? p[1] : p[0];
+          });
 
       // for now we only support calendars
       subj = '';
