@@ -12,6 +12,11 @@ var ML =
   ws: null,
   _wsOpened: 0,
 
+  isJson: function (testable)
+  {
+    return /^[\],:{}\s]*$/.test(testable.replace(/\\["\\\/bfnrtu]/g, '@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').replace(/(?:^|:|,)(?:\s*\[)+/g, ''));
+  },
+
   api: function (endpoint, method, data, callback)
   {
     var r = new XMLHttpRequest(), ps = null, pl;
@@ -27,7 +32,7 @@ var ML =
     r.onload = function ()
     {
       var r = this.response.toString();
-      if (/^[\],:{}\s]*$/.test(r.replace(/\\["\\\/bfnrtu]/g, '@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').replace(/(?:^|:|,)(?:\s*\[)+/g, '')))
+      if (ML.isJson(r))
       {
         var json = JSON.parse(r);
         if (this.status >= 200 && this.status < 400)
