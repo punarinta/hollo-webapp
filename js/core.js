@@ -17,7 +17,7 @@ var ML =
     return /^[\],:{}\s]*$/.test(testable.replace(/\\["\\\/bfnrtu]/g, '@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').replace(/(?:^|:|,)(?:\s*\[)+/g, ''));
   },
 
-  api: function (endpoint, method, data, callback)
+  api: function (endpoint, method, data, callback, error)
   {
     var r = new XMLHttpRequest(), ps = null, pl;
 
@@ -60,6 +60,7 @@ var ML =
     r.onerror = function(e)
     {
       console.log('onerror()', e.error);
+      if (error) error(e.error)
     };
 
     if (data && typeof data.pageStart != 'undefined')

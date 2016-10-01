@@ -404,6 +404,13 @@ ML.hidePages = function ()
         localStorage.removeItem('sessionId');
         ML.go('auth/login');
       }
+    }, function ()
+    {
+      ML.mbox('Google login API is down. Say what?', 0, function ()
+      {
+        ML.hidePages();
+        document.getElementById('page-login').style.display = 'block';
+      })
     });
   }
 
