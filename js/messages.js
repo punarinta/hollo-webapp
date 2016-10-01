@@ -70,14 +70,14 @@ MS.add = function (data, pos, status)
       }
 
       // for now we only support calendars
-      subj = '';
-      body = '<div class="widget event"><div class="head">' + w.title + '</div>' +
-        '<div class="b when"><icon></icon><div><div>When</div><div>' + when + '</div></div></div>' +
-        '<div class="b where"><icon></icon><div><div>Where</div><div>' + (w.where || '?') + '</div></div></div>' +
-        '<div class="people">' +
-        '<div class="b org"><icon></icon><div><div>Organizer</div><div>' + org + '</div></div></div>' +
-        '<div class="b att"><icon></icon><div><div>Invitees</div><div>' + atts.join('<br>') + '</div></div></div>' +
-        '</div>' + (url?('<div class="open"><a target="_blank" href="' + url + '">Open in calendar</a></div>'):'') + ' </div>'
+      subj = w.title;
+      body = '<div class="widget event">' +
+      '<div class="b when"><icon></icon><div><div>When</div><div>' + when + '</div></div></div>' +
+      (w.where ? ('<div class="b where"><icon></icon><div><div>Where</div><div>' + w.where + '</div></div></div>'):'') +
+      '<div class="people">' +
+      '<div class="b org"><icon></icon><div><div>Organizer</div><div>' + org + '</div></div></div>' +
+      '<div class="b att"><icon></icon><div><div>Invitees</div><div>' + atts.join('<br>') + '</div></div></div>' +
+      '</div>' + (url?('<div class="open"><a target="_blank" href="' + url + '">Open in calendar</a></div>'):'') + ' </div>'
     }
     else
     {
