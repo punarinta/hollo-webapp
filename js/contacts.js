@@ -301,9 +301,9 @@ CO.show = function (mode)
     }
   };
 
-  document.onscroll = function ()
+  document.onscroll = function (e)
   {
-    if (!CO.more) return;
+    if (!CO.more || CO.page.style.display == 'hidden') return;
 
     var el = CO.page.querySelector('ul li:nth-last-child(2)');
 
@@ -312,14 +312,14 @@ CO.show = function (mode)
       CO.more = 0;
       CO.offset += 25;
 
-      console.log('Contacts fetch at offset ' + CO.offset);
+      // console.log('Contacts fetch at offset ' + CO.offset);
 
       var filter = CO.page.querySelector('.head .filter').value, filters = [{mode:'muted', value:ML.state.muted}];
       if (filter.length) filters.push({mode:'email', value:filter});
 
       ML.api('chat', 'find', { pageStart: CO.offset, pageLength: 25, filters: filters, sortBy: CFG._('contact-sort-ts')?'lastTs':'email' }, function (data)
       {
-        CO.add(data);
+        CO.page.querySelector('ul').innerHTML += CO.add(data);
         if (data.length == 25) CO.more = 1;
       });
     }
