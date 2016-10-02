@@ -301,9 +301,9 @@ CO.show = function (mode)
     }
   };
 
-  document.onscroll = function (e)
+  document.onscroll = function ()
   {
-    if (!CO.more || CO.page.style.display == 'hidden') return;
+    if (!CO.more || CO.page.style.display == 'none') return;
 
     var el = CO.page.querySelector('ul li:nth-last-child(2)');
 
