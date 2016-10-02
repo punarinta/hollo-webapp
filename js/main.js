@@ -374,7 +374,7 @@ ML.hidePages = function ()
             var li = CO.page.querySelector('li[data-id="' + data.chatId + '"] .img');
             if (li)
             {
-              li.classList.add('unread');
+              if (!data.noMarks) li.classList.add('unread');
             }
             else
             {
