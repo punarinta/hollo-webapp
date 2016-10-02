@@ -117,7 +117,7 @@ MS.add = function (data, pos, status)
           {
             (function (f)
             {
-              ML.api('file', 'getFileUrl', {extId: f.extId, refId: f.refId || 0}, function (url)
+              ML.api('file', 'getFileUrl', {extId: f.extId, refId: data[i].refId || 0}, function (url)
               {
                 var image = document.getElementById('img-file-' + f.extId);
                 if (image)
@@ -325,10 +325,10 @@ MS.show = function (id)
 
       for (i in files)
       {
+        url = files[i].url;
+
         if (files[i].type.match('image.*') && url)
         {
-          url = files[i].url;
-          
           // preload
           im = new Image();
           im.src = url;
