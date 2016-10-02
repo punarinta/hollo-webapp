@@ -115,7 +115,7 @@ CO.show = function (mode)
   // noinspection JSBitwiseOperatorUsage
   if (mode & 2)
   {
-    busy(1);
+    // busy(1);
     CO.page.querySelector('.head .ava img').src = AU.user.ava || '/gfx/ava.png';
     CO.page.querySelector('.head .name').innerHTML = AU.user.name || AU.user.email.split('@')[0];
     CO.page.querySelector('.head .email').innerHTML = AU.user.email;
@@ -139,13 +139,19 @@ CO.show = function (mode)
 
     ML.api('chat', 'find', {pageStart: CO.offset, pageLength: 25, filters: filters, sortBy: CFG._('contact-sort-ts')?'lastTs':'email'}, function (data)
     {
+      if (!filter.length && !data.length)
+      {
+        ul.innerHTML = '<div class="loading">We are now syncing<br>your app<br>with your mailbox</div>';
+        return
+      }
+
       if (filter.length && !data.length && ML.isEmail(filter))
       {
         // filter is ON, but no results found => offer to create a new one
         html = '<li data-id="new" class="new"><div class="ava"><div class="new img"></div></div><div><div class="name">' + filter + '</div><div class="email"></div></div></li>';
       }
 
-      busy(0);
+      // busy(0);
 
       ul.innerHTML = html + CO.add(data);
 
