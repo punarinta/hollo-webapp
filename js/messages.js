@@ -112,24 +112,6 @@ MS.add = function (data, pos, status)
               + '" style="background:url(' + file.data + ')"></div>';
             continue;
           }
-
-          if (file.extId)
-          {
-            (function (f)
-            {
-              ML.api('file', 'getFileUrl', {extId: f.extId, refId: data[i].refId || 0}, function (url)
-              {
-                var image = document.getElementById('img-file-' + f.extId);
-                if (image)
-                {
-                  image.innerHTML = '';
-                  image.dataset.url = url;
-                  image.dataset.mime = f.type;
-                  image.style.backgroundImage = 'url(' + url + ')';
-                }
-              })
-            })(file);
-          }
         }
 
         filesHtml += '<div class="file-icon" id="img-file-'
@@ -334,6 +316,16 @@ MS.show = function (id)
           im.src = url;
 
           internal = 'data-url="' + url + '" style="background-image:url(' + url + ')">'
+
+          // connect to message images if necessary
+          var image = document.getElementById('img-file-' + files[i].extId);
+          if (image)
+          {
+            image.innerHTML = '';
+            image.dataset.url = url;
+            image.dataset.mime = files[i].type;
+            image.style.backgroundImage = 'url(' + url + ')';
+          }
         }
         else
         {
