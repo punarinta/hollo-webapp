@@ -59,18 +59,21 @@ CO.add = function (data)
     var unread = data[i].read ? '' : ' unread',
         xname = CO.xname(data[i]),
         name = xname[0],
-        nc = xname[1];
+        nc = xname[1],
+        lastMsg = data[i].lastMsg || '';
 
-    if (ML.isJson(data[i].lastMsg))
+    lastMsg = lastMsg.replace(/\[sys:fwd\]/g, '➡️');
+
+    if (ML.isJson(lastMsg))
     {
       // for now we only support calendar invites
-      data[i].lastMsg = '📅';
+      lastMsg = '📅';
     }
 
     html +=
       '<li data-id="' + data[i].id + '">' +
       '<div class="ava"><div id="img-gr-' + md5(data[i].users[0].email) + '" class="img' + unread + '" style="background:' + ML.colorHash(data[i].id + '') + '">' + nc + '</div></div>' +
-      '<div class="hujava"><div class="name">' + name + '</div><div class="email">' + (data[i].lastMsg || '&mdash;') + '</div></div>' +
+      '<div class="hujava"><div class="name">' + name + '</div><div class="email">' + (lastMsg || '&mdash;') + '</div></div>' +
       '</li>' +
       '<div class="shadow shad-' + data[i].id + '"><div>' + (ML.state.muted?'un':'') + 'mute</div><div class="markas">mark<br>as ' + (unread?'':'un') + 'read</div></div>';
   }
