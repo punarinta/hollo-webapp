@@ -44,8 +44,3 @@ SP.modal.querySelector('button.new').onclick = function ()
   SP.subjInput.focus();
   SP.modal.classList.add('hidden')
 };
-
-SP.modal.querySelector('button.cancel').onclick = function ()
-{
-  SP.modal.classList.add('hidden')
-};
