@@ -81,25 +81,23 @@ MS.send = function ()
 (function ()
 {
   var cmp = document.getElementById('composer'),
-      cmpText = cmp.querySelector('textarea');
+      cmpText = cmp.querySelector('textarea'),
+      scrollDown = function ()
+      {
+        setTimeout(function ()
+        {
+          MS.page.querySelector('ul li:last-child').scrollIntoView()
+        }, 200);
+      };
 
   cmpText.onclick = function ()
   {
     cmp.classList.add('focused');
     document.querySelector('#page-msgs > ul').classList.add('padded');
-    setTimeout(function ()
-    {
-      MS.page.querySelector('ul li:last-child').scrollIntoView()
-    }, 100);
+    scrollDown();
   };
 
-  cmpText.onfocus = function ()
-  {
-    setTimeout(function ()
-    {
-      MS.page.querySelector('ul li:last-child').scrollIntoView()
-    }, 100);
-  };
+  cmpText.onfocus = scrollDown;
 
   cmpText.onkeyup = function (e)
   {
