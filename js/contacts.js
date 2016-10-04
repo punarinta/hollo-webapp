@@ -133,6 +133,7 @@ CO.show = function (mode)
   // noinspection JSBitwiseOperatorUsage
   if (mode & 4)
   {
+    // reset it for this mode
     CO.offset = 0;
 
     var filter = CO.page.querySelector('.head .filter').value,
@@ -140,7 +141,7 @@ CO.show = function (mode)
 
     if (filter.length) filters.push({mode:'email', value:filter});
 
-    ML.api('chat', 'find', {pageStart: CO.offset, pageLength: 25, filters: filters, sortBy: CFG._('contact-sort-ts')?'lastTs':'email'}, function (data)
+    ML.api('chat', 'find', {pageStart: 0, pageLength: CO.pageLength, filters: filters, sortBy: CFG._('contact-sort-ts')?'lastTs':'email'}, function (data)
     {
       if (!filter.length && !data.length)
       {
@@ -158,7 +159,7 @@ CO.show = function (mode)
 
       ul.innerHTML = html + CO.add(data);
 
-      if (data.length == 25)
+      if (data.length == CO.pageLength)
       {
         CO.more = 1;
       }
@@ -183,6 +184,9 @@ CO.show = function (mode)
   var item, shadow, startX, startY, swipe = 0, action = 0, blockSwipe = 0,
       conts = CO.page.querySelector('ul'),
       vw = ML.state.widthMode ? 360 : window.innerWidth, threshold = vw * .3;
+
+  // fit 2 screens, ceiling-aligned
+  CO.pageLength = Math.ceil((screen.height - 176) / 36);
 
   conts.addEventListener('touchstart', function (e)
   {
@@ -319,17 +323,17 @@ CO.show = function (mode)
     if (el && el.getBoundingClientRect().bottom < screen.height + 50)
     {
       CO.more = 0;
-      CO.offset += 25;
+      CO.offset += CO.pageLength;
 
       // console.log('Contacts fetch at offset ' + CO.offset);
 
       var filter = CO.page.querySelector('.head .filter').value, filters = [{mode:'muted', value:ML.state.muted}];
       if (filter.length) filters.push({mode:'email', value:filter});
 
-      ML.api('chat', 'find', { pageStart: CO.offset, pageLength: 25, filters: filters, sortBy: CFG._('contact-sort-ts')?'lastTs':'email' }, function (data)
+      ML.api('chat', 'find', { pageStart: CO.offset, pageLength: CO.pageLength, filters: filters, sortBy: CFG._('contact-sort-ts')?'lastTs':'email' }, function (data)
       {
         CO.page.querySelector('ul').innerHTML += CO.add(data);
-        if (data.length == 25) CO.more = 1;
+        if (data.length == CO.pageLength) CO.more = 1;
       });
     }
   };
