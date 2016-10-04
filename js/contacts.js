@@ -261,29 +261,26 @@ CO.show = function (mode)
         case 1:
           item.style.transform = 'translateX(' + vw + 'px)';
 
-          ML.api('chat', 'update', {id: id, muted: !ML.state.muted - 0}, function ()
+          setTimeout(function (e)
           {
-            setTimeout(function (e)
-            {
-              e.parentNode.removeChild(e);
-            }, 800, item);
-            item.style.height = 0;
-            item.style.opacity = 0;
-          });
+            e.parentNode.removeChild(e);
+          }, 800, item);
+          item.style.height = 0;
+          item.style.opacity = 0;
+
+          ML.api('chat', 'update', {id: id, muted: !ML.state.muted - 0});
           break;
 
         case -1:
           item.style.transform = 'translateX(-' + vw + 'px)';
-
-          ML.api('chat', 'update', {id: id, read: item.querySelector('.img').classList.contains('unread') - 0}, function ()
+          var cl = item.querySelector('.img').classList;
+          cl.toggle('unread');
+          setTimeout(function (cl, shadow)
           {
-            var cl = item.querySelector('.img').classList;
-            cl.toggle('unread');
-            setTimeout(function (cl, shadow)
-            {
-              shadow.querySelector('.markas').innerHTML = 'mark<br>as ' + (cl.contains('unread')?'':'un') + 'read';
-            }, 400, cl, shadow);
-          });
+            shadow.querySelector('.markas').innerHTML = 'mark<br>as ' + (cl.contains('unread')?'':'un') + 'read';
+          }, 400, cl, shadow);
+
+          ML.api('chat', 'update', {id: id, read: item.querySelector('.img').classList.contains('unread') - 0});
           break;
 
         default:
