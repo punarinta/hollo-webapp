@@ -11,6 +11,7 @@ from fabric.api import sudo, cd, env, local, put
 DEPLOYED = '/apps/mls-app/{}'
 DEPLOYED_DIR = '/apps/mls-app'
 FILES_DIR = '/apps/files'
+API_DIR_PUBLIC = '/apps/mls-api/current/public'
 packaged = False
 
 # setup function, triggered every time to select environment
@@ -59,6 +60,8 @@ def symlink_current():
     # sudo('ln -s {} {}/data/files'.format(FILES_DIR, current))
     # sudo('rm -rf {}/public/files'.format(current))
     # sudo('ln -s {} {}/public/files'.format(FILES_DIR, current))
+    with cd(current):
+        sudo('ln -s {} dist/api'.format(API_DIR_PUBLIC))
 
 # def build():
     # create a new source distribution as tarball
@@ -82,7 +85,7 @@ def get_git_commit():
 
 def restart():
     # restart services
-    sudo('service nginx restart')
+    sudo('service nginx reload')
 
 
 def cleanup():

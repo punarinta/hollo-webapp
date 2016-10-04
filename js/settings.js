@@ -1,6 +1,6 @@
 var CFG =
 {
-  apiRoot: 'api.hollo.email',
+  apiRoot: 'app.hollo.email',
   page: document.getElementById('page-cfg'),
   notifierUrl: 'wss://notify.hollo.email:443/',
   
