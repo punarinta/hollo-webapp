@@ -186,7 +186,7 @@ CO.show = function (mode)
       vw = ML.state.widthMode ? 360 : window.innerWidth, threshold = vw * .3;
 
   // fit 2 screens, ceiling-aligned
-  CO.pageLength = Math.ceil((screen.height - 176) / 36);
+  CO.pageLength = Math.ceil(2.5 * (screen.height - 176) / 72);
 
   conts.addEventListener('touchstart', function (e)
   {
