@@ -11,6 +11,22 @@ AU.init = function (data)
   CFG.reset();
   localStorage.setItem('sessionId', AU.sessionId);
 
+  if (typeof mixpanel != 'undefined')
+  {
+    mixpanel.identify(data.user.email);
+    mixpanel.people.set(
+    {
+      "$email": data.user.email,
+      "$name": data.user.name,
+      // "$last_login": new Date(),
+      "hollo_id": data.user.id
+    });
+  }
+  else
+  {
+    window.mixpanel = {track: function () {}}
+  }
+
   if (ML.ws)
   {
     if (ML._wsOpened)
