@@ -224,7 +224,7 @@ CO.show = function (mode)
       {
         blockSwipe = 1;
       }
-      else if (Math.abs(distX) > 16 && !blockSwipe)
+      else if (Math.abs(distX) > 32 && !blockSwipe)
       {
         swipe = 1;
         shadow.style.display = 'block';
