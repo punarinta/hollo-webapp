@@ -404,7 +404,7 @@ MS.page.querySelector('ul').onclick = function (e)
     // replace message contents with original mail body
     ML.api('message', 'showOriginal', {id: li.dataset.id}, function (data)
     {
-      li.querySelector('.fwd').outerHTML = MS.clearBody(data);
+      li.querySelector('.msg').innerHTML = MS.clearBody(data);
       busy(0);
     });
   }
