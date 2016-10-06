@@ -52,7 +52,7 @@ var ML =
       else
       {
         console.log('Not JSON:', r);
-        ML.mbox(r);
+        ML.mbox([200, 500].indexOf(this.status) != -1 ? r : ('HTTP ' + this.status));
         // prevent app lock
         busy(0);
       }
