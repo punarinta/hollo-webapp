@@ -78,6 +78,22 @@ $font-heading
 	font-weight 600
 	src local('Work Sans SemiBold'), local('Work-Sans-600'), url("/gfx/WorkSans-SemiBold.woff") format('woff')
 
+/* latin-ext */
+@font-face
+	font-family 'Work Sans'
+	font-style normal
+	font-weight 300
+	src local('Work Sans Light'), local('WorkSans-300'), url("/gfx/WorkSansExt-Light.woff") format('woff')
+	unicode-range U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF
+
+@font-face {
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 300;
+	src: local('Work Sans Light'), local('WorkSans-300'), url("/gfx/OpenSansCyr-Light.woff") format('woff');
+	unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
 *
 	box-sizing border-box
 
