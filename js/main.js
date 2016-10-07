@@ -149,7 +149,10 @@ ML.hidePages = function ()
           if (name.length)
           {
             MS.chat.name = name;
-            snackbar.querySelector('.roster').innerText = CO.xname(MS.chat)[0]
+            snackbar.querySelector('.roster').innerText = name;
+
+            // rename chat in the list too
+            CO.page.querySelector('li[data-id="' + MS.chat.id + '"] .name').innerText = name;
           }
         });
       }
