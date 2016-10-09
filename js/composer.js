@@ -60,18 +60,18 @@ MS.send = function ()
 
   var lastLi = MS.add([m], 'bottom', 's1');
 
+  // reset composer
+  MS._upl = [];
+  cmpText.value = '';
+  document.getElementById('uploaded').innerHTML = '';
+  cmp.classList.remove('focused');
+  MS.cmpResize();
+
+  lastLi.querySelector('.status').className = 'status s2';
+
   ML.api('message', 'send', {body: msg, messageId: msgId, subject: subj, files: m.files, chatId: MS.chat.id}, function (json)
   {
     console.log('send()', json);
-
-    // reset composer
-    MS._upl = [];
-    cmpText.value = '';
-    document.getElementById('uploaded').innerHTML = '';
-    cmp.classList.remove('focused');
-    MS.cmpResize();
-
-    lastLi.querySelector('.status').className = 'status s2'
   });
 };
 
