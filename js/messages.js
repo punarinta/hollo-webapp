@@ -49,7 +49,8 @@ MS.add = function (data, pos, status)
         mine = data[i].from.email == AU.user.email,
         whose = mine ? 'mine' : 'yours',
         sName = data[i].from.name ? data[i].from.name : data[i].from.email,
-        subj = data[i].subject;
+        subj = data[i].subject,
+        email = data[i].from.email;
 
     if (ML.isJson(body) && body)
     {
@@ -128,7 +129,7 @@ MS.add = function (data, pos, status)
     body = body.replace(/\[sys:fwd\]/g, '<div class="fwd">Forwarded message</div>');
 
     var nc = sName.split(' '),
-        ava = ML.colorHash(data[i].from.email);
+        ava = ML.colorHash(email) + ' url(\'/files/avatars/' + email + '\')';
 
     nc = nc.length == 1 ? nc[0].charAt(0) : (nc[0].charAt(0) + nc[1].charAt(0));
 
@@ -137,6 +138,18 @@ MS.add = function (data, pos, status)
       ava = '#fff url(\'' + AU.user.ava + '\')';
       nc = '';
     }
+
+    // if Google avatar is loaded, clear inner text
+    (function (id, email)
+    {
+      var im = new Image;
+      im.onload = function ()
+      {
+        var s = MS.page.querySelector('li[data-id="' + id + '"] .ava');
+        if (s) s.innerHTML = '';
+      };
+      im.src = '/files/avatars/' + email;
+    })(data[i].id, email);
 
     html += '<li data-id="' + data[i].id + '" class="' + whose + '"><div><div class="white"><div class="cap">'
       + subj + '</div>'

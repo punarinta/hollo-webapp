@@ -60,7 +60,9 @@ CO.add = function (data)
         xname = CO.xname(data[i]),
         name = xname[0],
         nc = xname[1],
-        lastMsg = data[i].lastMsg || '';
+        email = data[i].users[0].email,
+        lastMsg = data[i].lastMsg || '',
+        extraAva = data[i].users.length > 1 ? '' : ' url(\'/files/avatars/' + email + '\')';
 
     lastMsg = lastMsg.replace(/\[sys:fwd\]/g, '➡️');
 
@@ -70,9 +72,24 @@ CO.add = function (data)
       lastMsg = '📅';
     }
 
+    if (data[i].users.length < 2)
+    {
+      (function (id, email)
+      {
+        var im = new Image;
+        im.onload = function ()
+        {
+          var s = CO.page.querySelector('li[data-id="' + id + '"] .img');
+          if (s) s.innerHTML = '';
+        };
+        im.src = '/files/avatars/' + email;
+      })(data[i].id, email);
+    }
+
     html +=
       '<li data-id="' + data[i].id + '">' +
-      '<div class="ava"><div id="img-gr-' + md5(data[i].users[0].email) + '" class="img' + unread + '" style="background:' + ML.colorHash(data[i].id + '') + '">' + nc + '</div></div>' +
+      '<div class="ava"><div id="img-gr-' + md5(email) + '" class="img' + unread +
+      '" style="background:' + ML.colorHash(data[i].id + '') + extraAva + '">' + nc + '</div></div>' +
       '<div class="hujava"><div class="name">' + name + '</div><div class="email">' + (lastMsg || '&mdash;') + '</div></div>' +
       '</li>' +
       '<div class="shadow shad-' + data[i].id + '"><div>' + (ML.state.muted?'un':'') + 'mute</div><div class="markas">mark<br>as ' + (unread?'':'un') + 'read</div></div>';
