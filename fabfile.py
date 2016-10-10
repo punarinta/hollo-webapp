@@ -58,8 +58,8 @@ def symlink_current():
     sudo('ln -s {} {}'.format(env.deploy, current))
     # sudo('rm -rf {}/data/files'.format(current)) # Remove the folder recursively as it is the user-folder
     # sudo('ln -s {} {}/data/files'.format(FILES_DIR, current))
-    # sudo('rm -rf {}/public/files'.format(current))
-    # sudo('ln -s {} {}/public/files'.format(FILES_DIR, current))
+    sudo('rm -rf {}/dist/files'.format(current))
+    sudo('ln -s {} {}/dist/files'.format(FILES_DIR, current))
     with cd(current):
         sudo('ln -s {} dist/api'.format(API_DIR_PUBLIC))
 
