@@ -359,6 +359,8 @@ MS.filter = function (subj)
       filter = document.getElementById('msgs-filter'),
       snackbar = document.getElementById('snackbar'),
       ul = MS.page.querySelector('ul');
+
+  mixpanel.track('Message - filter', {subject: subj});
   
   if (subj)
   {
@@ -399,6 +401,7 @@ MS.page.querySelector('ul').onclick = function (e)
 {
   if (e.target.classList.contains('file-icon'))
   {
+    mixpanel.track('Message - attachment tapped');
     ML.demo(e.target.dataset.url, e.target.dataset.mime)
   }
 

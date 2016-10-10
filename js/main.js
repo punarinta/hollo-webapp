@@ -54,6 +54,8 @@ ML.hidePages = function ()
         CO.show(4);
       }
 
+      mixpanel.track('Sys - filter', {keyword: cmd[0]});
+
       switch (cmd[0])
       {
         case 'LOGOUT':
@@ -96,6 +98,8 @@ ML.hidePages = function ()
           menu = document.getElementById('snackbar-menu-' + type),
           toggled = this.classList.contains('toggled');
 
+      mixpanel.track('Sys - menu toggled', {type: type, menu:menu, toggled:toggled});
+
       // close all others
       Array.prototype.forEach.call(snackbar.querySelectorAll('.sub'), function(el)
       {
@@ -114,10 +118,11 @@ ML.hidePages = function ()
     }
   });
 
-  snackbar.querySelector('.back').onclick = function () { ML.go('contacts', 1) };
+  snackbar.querySelector('.back').onclick = function () { mixpanel.track('Sys - navigate back'); ML.go('contacts', 1) };
 
   snackdrop.querySelector('.mute').onclick = function ()
   {
+    mixpanel.track('More - mute', {oldState: MS.chat.muted});
     var t = this;
     ML.api('chat', 'update', {id:MS.chat.id, muted:!MS.chat.muted}, function ()
     {
@@ -134,13 +139,16 @@ ML.hidePages = function ()
 
   snackdrop.querySelector('.unread').onclick = function ()
   {
+    mixpanel.track('More - unread');
     ML.api('chat', 'update', {id:MS.chat.id, read:0}, closeSnackbar);
   };
 
   snackdrop.querySelector('.rename').onclick = function ()
   {
+    mixpanel.track('More - rename');
     ML.mbox('<input class="texty" value="' + (MS.chat.name || '') + '"/>', 1, function (ret)
     {
+      mixpanel.track('More - rename - result', {code: ret});
       if (ret)
       {
         var name = mbox.querySelector('input').value;
@@ -163,14 +171,12 @@ ML.hidePages = function ()
 
   snackdrop.querySelector('.delete').onclick = function ()
   {
-    ML.mbox('Are you sure?', 1, function (code)
+    mixpanel.track('More - leave');
+    ML.mbox('Are you sure?', 1, function (ret)
     {
-      if (code)
+      mixpanel.track('More - leave - result', {code: ret});
+      if (ret)
       {
-        ML.mbox('feature disabled until release');
-
-        // TODO: uncomment before release
-        
         ML.api('chat', 'leave', {id: MS.chat.id}, function ()
         {
           ML.go('contacts')
@@ -232,6 +238,8 @@ ML.hidePages = function ()
   {
     if (e.target.classList.contains('download'))
     {
+      mixpanel.track('Sys - file downloaded');
+
       var li = PP.par(e.target, 'li');
 
       if (li.dataset.mime.match('image.*'))
@@ -269,6 +277,7 @@ ML.hidePages = function ()
   // === DEMO BOX ===
   document.querySelector('#demo .close').onclick = function ()
   {
+    mixpanel.track('Sys - demo box closed');
     ML.demo(0)
   };
 

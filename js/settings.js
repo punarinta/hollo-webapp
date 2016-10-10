@@ -23,6 +23,8 @@ var CFG =
   {
     var i, flags = AU.user.settings.flags;
 
+    mixpanel.track('Sys - show settings');
+
     ML.hidePages();
 
     // go through settings and setup the fields
@@ -57,6 +59,9 @@ CFG.page.querySelector('.slides').onclick = function (e)
   if (e.target.tagName == 'INPUT')
   {
     var key = e.target.id.replace('cfg-', '');
+
+    mixpanel.track('Setting - changed', {name: key, value: e.target.checked * 1});
+
     ML.api('settings', 'update', {flag: {name: key, value: e.target.checked * 1 }}, function ()
     {
       AU.user.settings['flags'][key] = e.target.checked

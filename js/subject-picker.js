@@ -15,7 +15,9 @@ var SP =
 
     ul.innerHTML = html;
 
-    SP.modal.classList.remove('hidden')
+    SP.modal.classList.remove('hidden');
+
+    mixpanel.track('Subject picker - shown');
   }
 };
 
@@ -33,6 +35,7 @@ SP.modal.onclick = function (e)
     // pick this subject
     SP.subjInput.value = li.dataset.subj;
     this.classList.add('hidden');
+    mixpanel.track('Subject picker - chosen');
   }
 
   e.stopPropagation()
@@ -40,6 +43,7 @@ SP.modal.onclick = function (e)
 
 SP.modal.querySelector('button.new').onclick = function ()
 {
+  mixpanel.track('Subject picker - new');
   SP.subjInput.value = '';
   SP.subjInput.focus();
   SP.modal.classList.add('hidden')

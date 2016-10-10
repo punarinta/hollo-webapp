@@ -286,6 +286,7 @@ CO.show = function (mode)
           item.style.transform = 'translateX(' + vw + 'px)';
           item.style.height = 0;
           item.style.opacity = 0;
+          mixpanel.track('Chat - swipe muting');
           break;
 
         case -1:
@@ -299,6 +300,7 @@ CO.show = function (mode)
           {
             shadow.querySelector('.markas').innerHTML = 'mark<br>as ' + (cl.contains('unread')?'':'un') + 'read';
           }, 400, cl, shadow);
+          mixpanel.track('Chat - swipe reading');
           break;
 
         default:
@@ -314,6 +316,7 @@ CO.show = function (mode)
 
     if (id != 'new')
     {
+      mixpanel.track('Chat - enter');
       CO.resetFilter();
       ML.go('chat/' + id);
     }
@@ -321,6 +324,8 @@ CO.show = function (mode)
     {
       var email = CO.page.querySelector('.filter').value;
       CO.resetFilter();
+
+      mixpanel.track('Chat - add');
 
       ML.api('chat', 'add', {emails:[email]}, function (data)
       {
@@ -345,6 +350,8 @@ CO.show = function (mode)
       var filter = CO.page.querySelector('.head .filter').value, filters = [{mode:'muted', value:ML.state.muted}];
       if (filter.length) filters.push({mode:'email', value:filter});
 
+      mixpanel.track('Chat - get more');
+
       ML.api('chat', 'find', { pageStart: CO.offset, pageLength: CO.pageLength, filters: filters, sortBy: CFG._('contact-sort-ts')?'lastTs':'email' }, function (data)
       {
         CO.page.querySelector('ul').innerHTML += CO.add(data);
@@ -363,6 +370,7 @@ CO.show = function (mode)
     btnHolloed.classList.add('sel');
     btnMuted.classList.remove('sel');
     ML.state.muted = 0;
+    mixpanel.track('Sys - show holloed');
     CO.show(4);
   };
   
@@ -371,6 +379,7 @@ CO.show = function (mode)
     btnMuted.classList.add('sel');
     btnHolloed.classList.remove('sel');
     ML.state.muted = 1;
+    mixpanel.track('Sys - show muted');
     CO.show(4);
   };
 })();

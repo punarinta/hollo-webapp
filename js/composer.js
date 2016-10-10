@@ -69,6 +69,8 @@ MS.send = function ()
 
   lastLi.querySelector('.status').className = 'status s2';
 
+  mixpanel.track('Composer - message sent');
+
   ML.api('message', 'send', {body: msg, messageId: msgId, subject: subj, files: m.files, chatId: MS.chat.id}, function (json)
   {
     console.log('send()', json);
@@ -195,6 +197,8 @@ MS.send = function ()
   {
     if (!e.target.classList.contains('file-icon')) return;
 
+    mixpanel.track('Composer - attachment tapped');
+
     for (var i in MS._upl)
     {
       if (MS._upl[i].hash == e.target.dataset.hash)
@@ -270,6 +274,8 @@ MS.send = function ()
             data: b64,
             hash: md5(b64)
           });
+
+          mixpanel.track('Composer - file attached');
 
           MS.cmpResize();
         };
