@@ -11,7 +11,7 @@ AU.init = function (data)
   CFG.reset();
   localStorage.setItem('sessionId', AU.sessionId);
 
-  if (typeof mixpanel != 'undefined')
+  if (typeof mixpanel != 'undefined' && !mixpanel.off)
   {
     mixpanel.identify(data.user.email);
     mixpanel.people.set(
@@ -24,7 +24,7 @@ AU.init = function (data)
   }
   else
   {
-    window.mixpanel = {track: function () {}}
+    window.mixpanel = {track: function () {}, off: 1}
   }
 
   if (ML.ws)
