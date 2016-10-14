@@ -98,7 +98,7 @@ ML.hidePages = function ()
           menu = document.getElementById('snackbar-menu-' + type),
           toggled = this.classList.contains('toggled');
 
-      mixpanel.track('Sys - menu toggled', {type: type, menu:menu, toggled:toggled});
+      mixpanel.track('Sys - menu toggled', {type: type, toggled:toggled});
 
       // close all others
       Array.prototype.forEach.call(snackbar.querySelectorAll('.sub'), function(el)
