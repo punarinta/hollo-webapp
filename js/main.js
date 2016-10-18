@@ -242,17 +242,14 @@ ML.hidePages = function ()
 
       var li = PP.par(e.target, 'li');
 
-      if (li.dataset.mime.match('image.*'))
+  /*    if (li.dataset.mime.match('image.*'))
       {
         window.open(li.querySelector('.img').dataset.url)
       }
       else
-      {
-        ML.api('file', 'getFileUrl', {refId: li.dataset.refid, extId: li.dataset.extid}, function (data)
-        {
-          window.open(data)
-        })
-      }
+      {*/
+        window.open('https://' + CFG.apiRoot + '/api/file?method=download&messageId=' + li.dataset.msgid + '&offset=' + li.dataset.offset)
+  //    }
     }
 
     if (e.target.classList.contains('img'))
