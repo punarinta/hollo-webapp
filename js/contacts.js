@@ -66,7 +66,7 @@ CO.add = function (data)
 
     lastMsg = lastMsg.replace(/\[sys:fwd\]/g, '➡️');
 
-    if (ML.isJson(lastMsg))
+    if (ML.isJson(lastMsg) && lastMsg.charAt(0) == '{')
     {
       // for now we only support calendar invites
       lastMsg = '📅';

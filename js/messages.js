@@ -52,39 +52,33 @@ MS.add = function (data, pos, status)
         subj = data[i].subject,
         email = data[i].from.email;
 
-    if (ML.isJson(body) && body)
+    if (ML.isJson(body) && body && body.charAt(0) == '{')
     {
-      var w = JSON.parse(body).widget;
-
-      if (w)
-      {
-        var j, org = w.org[1] || w.org[0],
+      var w = JSON.parse(body).widget, j,
+          org = w.org[1] || w.org[0],
           when = ML.ts(w.from) + ' – ' + ML.ts(w.to, 2),
           url = w.descr.match(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig),
           atts = [];
-
-        for (j in w.att)
+      for (j in w.att)
+      {
+        if (atts.length == 3)
         {
-          if (atts.length == 3)
-          {
-            atts.push('...');
-            break;
-          }
-          var toAdd = w.att[j][1].length ? w.att[j][1] : w.att[j][0];
-          if (toAdd != org) atts.push(toAdd)
+          atts.push('...');
+          break;
         }
-
-        // for now we only support calendars
-        subj = w.title;
-        body = '<div class="widget event">' +
-          '<div class="b when"><icon></icon><div><div>When</div><div>' + when + '</div></div></div>' +
-          (w.where ? ('<div class="b where"><icon></icon><div><div>Where</div><div>' + w.where + '</div></div></div>'):'') +
-          '<div class="people">' +
-          '<div class="b org"><icon></icon><div><div>Organizer</div><div>' + org + '</div></div></div>' +
-          '<div class="b att"><icon></icon><div><div>Invitees</div><div>' + atts.join('<br>') + '</div></div></div>' +
-          '</div>' + (url?('<div class="open"><a target="_blank" href="' + url + '">Open in calendar</a></div>'):'') + ' </div>'
+        var toAdd = w.att[j][1].length ? w.att[j][1] : w.att[j][0];
+        if (toAdd != org) atts.push(toAdd)
       }
-      else body = MS.clearBody(body || '')
+
+      // for now we only support calendars
+      subj = w.title;
+      body = '<div class="widget event">' +
+      '<div class="b when"><icon></icon><div><div>When</div><div>' + when + '</div></div></div>' +
+      (w.where ? ('<div class="b where"><icon></icon><div><div>Where</div><div>' + w.where + '</div></div></div>'):'') +
+      '<div class="people">' +
+      '<div class="b org"><icon></icon><div><div>Organizer</div><div>' + org + '</div></div></div>' +
+      '<div class="b att"><icon></icon><div><div>Invitees</div><div>' + atts.join('<br>') + '</div></div></div>' +
+      '</div>' + (url?('<div class="open"><a target="_blank" href="' + url + '">Open in calendar</a></div>'):'') + ' </div>'
     }
     else
     {
