@@ -441,3 +441,51 @@ ML.hidePages = function ()
     }
   });
 })();
+
+
+// Object used to send data from parent frame down to application
+
+var parented =
+{
+  fcmNotification: function (data)
+  {
+    if (data.cmd == 'logout')
+    {
+      // absolute event
+      ML.go('auth/logout');
+    }
+
+    if (data.cmd == 'show-chat')
+    {
+      if (data.wasTapped)
+      {
+        // app was off, just go to the chat
+        ML.go('chat/' + data.chatId);
+      }
+      else
+      {
+        if (MS.chat && data.chatId == MS.chat.id)
+        {
+          // we're inside the target chat, fetch messages
+          ML.api('message', 'getLastChatMessage', {chatId: data.chatId}, function (data)
+          {
+            MS.add([data], 'bottom');
+          });
+        }
+        else
+        {
+          // mark the target chat as unread and move it to the top
+          var li = CO.page.querySelector('li[data-id="' + data.chatId + '"] .img');
+          if (li)
+          {
+            li.classList.add('unread');
+          }
+          else
+          {
+            CO.show(12)
+          }
+        }
+      }
+    }
+  }
+};
