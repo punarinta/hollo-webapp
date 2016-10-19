@@ -11,6 +11,9 @@ AU.init = function (data)
   CFG.reset();
   localStorage.setItem('sessionId', AU.sessionId);
 
+  // send auth data to top frame
+  parent.postMessage({cmd: 'onAuth', user: AU.user}, '*');
+
   if (typeof mixpanel != 'undefined' && !mixpanel.off)
   {
     mixpanel.identify(data.user.email);
