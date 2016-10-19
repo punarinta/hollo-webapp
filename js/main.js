@@ -449,6 +449,14 @@ var parented =
 {
   fcmNotification: function (data)
   {
+    console.log('Firebase message:', data);
+
+    // one app may be listening to different accounts, in the future this will be used for accounts switching
+    if (!AU.user || data.authId != AU.user.id)
+    {
+      return
+    }
+
     if (data.cmd == 'logout')
     {
       // absolute event
