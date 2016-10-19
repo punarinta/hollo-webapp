@@ -87,7 +87,7 @@ CO.add = function (data)
     }
 
     html +=
-      '<li data-id="' + data[i].id + '">' +
+      `<li data-id="${data[i].id}">` +
       '<div class="ava"><div id="img-gr-' + md5(email) + '" class="img' + unread +
       '" style="background:' + ML.colorHash(data[i].id + '') + extraAva + '">' + nc + '</div></div>' +
       '<div class="hujava"><div class="name">' + name + '</div><div class="email">' + (lastMsg || '&mdash;') + '</div></div>' +
