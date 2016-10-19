@@ -3,17 +3,17 @@
   "index": "index.html",
   "js":
   [
-    "js/vendy/md5",
-    "js/autosize",
-    "js/core",
-    "js/auth",
-    "js/contacts",
-    "js/chat-roster",
-    "js/subject-picker",
-    "js/messages",
-    "js/composer",
-    "js/settings",
-    "js/main"
+    "js-transpiled/vendy/md5",
+    "js-transpiled/autosize",
+    "js-transpiled/core",
+    "js-transpiled/auth",
+    "js-transpiled/contacts",
+    "js-transpiled/chat-roster",
+    "js-transpiled/subject-picker",
+    "js-transpiled/messages",
+    "js-transpiled/composer",
+    "js-transpiled/settings",
+    "js-transpiled/main"
   ],
   "mods":
   [
@@ -45,12 +45,14 @@
   "dist": "../dist",
   "pre-shell":
   [
+    "npm run build",
     "stylus css/stylus/main.styl -o css/main.css"
   ],
   "post-shell":
   [
     "cp favicon.ico $distDir/favicon.ico",
     "cp -R gfx $distDir/gfx",
-    "cp -R favicon $distDir/favicon"
+    "cp -R favicon $distDir/favicon",
+    "rm -rf js-transpiled"
   ]
 }
