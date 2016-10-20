@@ -21,7 +21,7 @@ var ML =
   {
     var r = new XMLHttpRequest(), ps = null, pl;
 
-    r.open('POST', 'https://' + CFG.apiRoot + '/api/' + endpoint, true);
+    r.open('POST', `https://${CFG.apiRoot}/api/${endpoint}`, true);
     r.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 
     if (AU.sessionId)
@@ -87,7 +87,9 @@ var ML =
 
   ts: function (ts, mode)
   {
-    var td = new Date(), pfx = '', mode = mode || 3,
+    mode = mode || 3;
+
+    var td = new Date(), pfx = '',
         date = new Date(ts * 1000), gy = date.getYear(),
         year = gy >= 100 ? gy - 100 : gy,
         month = '0' + (date.getMonth() + 1),
@@ -95,12 +97,15 @@ var ML =
         hours = '0' + date.getHours(),
         minutes = '0' + date.getMinutes();
 
+    // noinspection JSBitwiseOperatorUsage
     if (mode & 1)
     {
       if (td.getTime() - date.getTime() < 24 * 3600 && td.getDate() == date.getDate()) pfx = 'today';
       else pfx = day.substr(-2) + '.' + month.substr(-2) + '.' + year;
       pfx += ' '
     }
+
+    // noinspection JSBitwiseOperatorUsage
     if (mode & 2)
     {
       pfx += ' ' + hours.substr(-2) + ':' + minutes.substr(-2);
