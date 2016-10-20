@@ -10,7 +10,7 @@ var SP =
 
     for (i in MS.subjects)
     {
-      html += '<li data-subj="' + MS.subjects[i] + '"><div class="mark' + (MS.subjects[i] == subj ? ' current' : '') + '"></div><div class="body">' + MS.subjects[i] + '</div></li>';
+      html += `<li data-subj="${MS.subjects[i]}"><div class="mark ${MS.subjects[i] == subj ? 'current' : ''}"></div><div class="body">${MS.subjects[i]}</div></li>`;
     }
 
     ul.innerHTML = html;

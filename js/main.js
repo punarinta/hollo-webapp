@@ -146,7 +146,7 @@ ML.hidePages = function ()
   snackdrop.querySelector('.rename').onclick = function ()
   {
     mixpanel.track('More - rename');
-    ML.mbox('<input class="texty" value="' + (MS.chat.name || '') + '"/>', 1, function (ret)
+    ML.mbox(`<input class="texty" value="${MS.chat.name || ''}"/>`, 1, function (ret)
     {
       mixpanel.track('More - rename - result', {code: ret});
       if (ret)
@@ -160,7 +160,7 @@ ML.hidePages = function ()
             snackbar.querySelector('.roster').innerText = name;
 
             // rename chat in the list too
-            CO.page.querySelector('li[data-id="' + MS.chat.id + '"] .name').innerText = name;
+            CO.page.querySelector(`li[data-id="${MS.chat.id}"] .name`).innerText = name;
           }
         });
       }
@@ -380,7 +380,7 @@ ML.hidePages = function ()
           else
           {
             // mark the target chat as unread and move it to the top
-            var li = CO.page.querySelector('li[data-id="' + data.chatId + '"] .img');
+            var li = CO.page.querySelector(`li[data-id="${data.chatId}"] .img`);
             if (li)
             {
               if (!data.noMarks) li.classList.add('unread');
@@ -483,7 +483,7 @@ var parented =
         else
         {
           // mark the target chat as unread and move it to the top
-          var li = CO.page.querySelector('li[data-id="' + data.chatId + '"] .img');
+          var li = CO.page.querySelector(`li[data-id="${data.chatId}"] .img`);
           if (li)
           {
             li.classList.add('unread');

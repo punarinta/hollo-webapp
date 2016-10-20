@@ -6,11 +6,17 @@ var CR =
   {
     var xname = CO.xname({users:[user]}), name = xname[0], nc = xname[1];
 
-    return ('<li data-email="' + user.email + '">' +
-    '<div class="ava"><div class="img" style="background:' + ML.colorHash(user.email + '') + '">' + nc + '</div></div>' +
-    '<div class="hujava"><div class="name">' + name + '</div><div class="email">' + user.email + '</div></div>' +
-    '<div class="delete"></div>' +
-    '</li>');
+    return (
+    `<li data-email="${user.email}">
+      <div class="ava">
+        <div class="img" style="background:${ML.colorHash(user.email + '')}">${nc}</div>
+      </div>
+      <div class="hujava">
+        <div class="name">${name}</div>
+        <div class="email">${user.email}</div>
+      </div>
+      <div class="delete"></div>
+    </li>`);
   },
 
   init: function (users)
@@ -98,12 +104,12 @@ var CR =
       {
         for (i in data)
         {
-          html += '<li data-email="' + data[i].email + '" data-name="' + (data[i].name||'') + '">' + data[i].email + '</li>';
+          html += `<li data-email="${data[i].email}" data-name="${data[i].name || ''}">${data[i].email}</li>`;
         }
       }
       else if (ML.isEmail(filter))
       {
-        html = '<li data-email="' + filter + '" data-name="' + filter + '">' + filter + '</li>';
+        html = `<li data-email="${filter}" data-name="${filter}">${filter}</li>`;
       }
 
       ul.innerHTML = html;
