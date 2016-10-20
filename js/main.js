@@ -248,7 +248,7 @@ ML.hidePages = function ()
       }
       else
       {*/
-        window.open('https://' + CFG.apiRoot + '/api/file?method=download&messageId=' + li.dataset.msgid + '&offset=' + li.dataset.offset)
+        window.open(`https://${CFG.apiRoot}/api/file?method=download&messageId=${li.dataset.msgid}&offset=${li.dataset.offset}`);
   //    }
     }
 
