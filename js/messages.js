@@ -141,7 +141,7 @@ MS.add = function (data, pos, status)
 
     body = body.replace(/\[sys:fwd\]/g, '<div class="fwd">Forwarded message</div>');
 
-    var nc = sName.split(' '),
+    var nc = CO.clearName(sName).split(' '),
         ava = ML.colorHash(email) + ` url('/files/avatars/${email}')`;
 
     nc = nc.length == 1 ? nc[0].charAt(0) : (nc[0].charAt(0) + nc[1].charAt(0));

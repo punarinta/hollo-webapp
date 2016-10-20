@@ -16,7 +16,7 @@ CO.resetFilter = function ()
 
 CO.clearName = function (text)
 {
-  return text.split('\\"').join('"')
+  return text.replace(/\W/g, ' ').replace(/\s{2,}/g, ' ').split('\\"').join('"')
 };
 
 CO.xname = function (chat)
@@ -56,7 +56,7 @@ CO.add = function (data)
 
   for (i in data)
   {
-    var unread = data[i].read ? '' : ' unread',
+    var unread = data[i].read ? '' : 'unread',
         xname = CO.xname(data[i]),
         name = xname[0],
         nc = xname[1],
@@ -89,7 +89,7 @@ CO.add = function (data)
     html +=
       `<li data-id="${data[i].id}">
         <div class="ava">
-            <div id="img-gr-${md5(email)}" class="img${unread}" style="background:${ML.colorHash(data[i].id + '')} ${extraAva}">${nc}</div>
+            <div id="img-gr-${md5(email)}" class="img ${unread}" style="background:${ML.colorHash(data[i].id + '')} ${extraAva}">${nc}</div>
         </div>
         <div class="hujava">
           <div class="name">${name}</div>
