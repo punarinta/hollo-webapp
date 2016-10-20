@@ -60,7 +60,7 @@ foreach ($config['js'] as $file)
     echo "Script '$file.js'...\n";
     shell_exec("yui-compressor $file.js -o $distDir/temp.js");
     $js = file_get_contents("$distDir/temp.js");
-    $js = preg_replace('#[\x5C]n\s{2,}<#', ' ', $js);
+    $js = preg_replace('#[\x5C]n\s{2,}#', ' ', $js);
     file_put_contents("$distDir/$random.js", $js, FILE_APPEND);
 }
 foreach ($config['mods'] as $file)
