@@ -51,7 +51,8 @@ CO.page.querySelector('.head .ava').onclick = function ()
 
 CFG.page.querySelector('.bar button').onclick = function ()
 {
-  ML.go('contacts')
+  ML.hidePages();
+  CO.show(1)
 };
 
 CFG.page.querySelector('.slides').onclick = function (e)
