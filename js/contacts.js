@@ -62,7 +62,7 @@ CO.add = function (data)
         nc = xname[1],
         email = data[i].users[0].email,
         lastMsg = data[i].lastMsg || '',
-        extraAva = data[i].users.length > 1 ? '' : ' url(\'/files/avatars/' + email + '\')';
+        extraAva = data[i].users.length > 1 ? '' : `url('/files/avatars/${email}')`;
 
     lastMsg = lastMsg.replace(/\[sys:fwd\]/g, '➡️');
 
@@ -79,7 +79,7 @@ CO.add = function (data)
         var im = new Image;
         im.onload = function ()
         {
-          var s = CO.page.querySelector('li[data-id="' + id + '"] .img');
+          var s = CO.page.querySelector(`li[data-id="${id}"] .img`);
           if (s) s.innerHTML = '';
         };
         im.src = '/files/avatars/' + email;
@@ -87,12 +87,19 @@ CO.add = function (data)
     }
 
     html +=
-      `<li data-id="${data[i].id}">` +
-      '<div class="ava"><div id="img-gr-' + md5(email) + '" class="img' + unread +
-      '" style="background:' + ML.colorHash(data[i].id + '') + extraAva + '">' + nc + '</div></div>' +
-      '<div class="hujava"><div class="name">' + name + '</div><div class="email">' + (lastMsg || '&mdash;') + '</div></div>' +
-      '</li>' +
-      '<div class="shadow shad-' + data[i].id + '"><div>' + (ML.state.muted?'un':'') + 'mute</div><div class="markas">mark<br>as ' + (unread?'':'un') + 'read</div></div>';
+      `<li data-id="${data[i].id}">
+        <div class="ava">
+            <div id="img-gr-${md5(email)}" class="img${unread}" style="background:${ML.colorHash(data[i].id + '')} ${extraAva}">${nc}</div>
+        </div>
+        <div class="hujava">
+          <div class="name">${name}</div>
+          <div class="email">${lastMsg || '&mdash;'}</div>
+        </div>
+      </li>
+      <div class="shadow shad-${data[i].id}">
+        <div>${ML.state.muted ? 'un' : ''}mute</div>
+        <div class="markas">mark<br>as ${unread ? '' : 'un'}read</div>
+      </div>`;
   }
 
   for (i in data)
@@ -103,7 +110,7 @@ CO.add = function (data)
       var s = document.getElementById('img-gr-' + d.hash);
       if (s)
       {
-        s.style.backgroundImage = 'url(' + d.thumbnailUrl + '?s=48)';
+        s.style.backgroundImage = `url(${d.thumbnailUrl}?s=48)`;
         s.innerHTML = '';
       }
     });
@@ -169,10 +176,17 @@ CO.show = function (mode)
       if (filter.length && !data.length && ML.isEmail(filter))
       {
         // filter is ON, but no results found => offer to create a new one
-        html = '<li data-id="new" class="new"><div class="ava"><div class="new img"></div></div><div><div class="name">' + filter + '</div><div class="email"></div></div></li>';
+        html =
+          `<li data-id="new" class="new">
+            <div class="ava">
+              <div class="new img"></div>
+              </div>
+            <div>
+              <div class="name">${filter}</div>
+              <div class="email"></div>
+            </div>
+          </li>`;
       }
-
-      // busy(0);
 
       ul.innerHTML = html + CO.add(data);
 
@@ -226,7 +240,7 @@ CO.show = function (mode)
     if (swipe)
     {
       // item.style.left = distX + 'px';
-      item.style.transform = 'translateX(' + distX + 'px)';
+      item.style.transform = `translateX(${distX}px)`;
       e.preventDefault();
 
       if (distX > threshold) action = 1;
@@ -283,7 +297,7 @@ CO.show = function (mode)
             e.parentNode.removeChild(e);
           }, 800, item);
 
-          item.style.transform = 'translateX(' + vw + 'px)';
+          item.style.transform = `translateX(${vw}px)`;
           item.style.height = 0;
           item.style.opacity = 0;
           mixpanel.track('Chat - swipe muting');
@@ -292,13 +306,13 @@ CO.show = function (mode)
         case -1:
           ML.api('chat', 'update', {id: id, read: item.querySelector('.img').classList.contains('unread') - 0});
 
-          item.style.transform = 'translateX(-' + vw + 'px)';
+          item.style.transform = `translateX(-${vw}px)`;
           var cl = item.querySelector('.img').classList;
           cl.toggle('unread');
 
           setTimeout(function (cl, shadow)
           {
-            shadow.querySelector('.markas').innerHTML = 'mark<br>as ' + (cl.contains('unread')?'':'un') + 'read';
+            shadow.querySelector('.markas').innerHTML = `mark<br>as ${cl.contains('unread')?'':'un'}read`;
           }, 400, cl, shadow);
           mixpanel.track('Chat - swipe reading');
           break;

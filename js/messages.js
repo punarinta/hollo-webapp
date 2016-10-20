@@ -14,14 +14,8 @@ MS.clearBody = function (body)
 
   body = body.replace(/(?:[ ]\r\n|[ ]\r|[ ]\n)/g, ' ');
 
-  if (CFG._('newlines'))
-  {
-    body = body.replace(/(?:\r\n|\r|\n)/g, '<br />');
-  }
-  else
-  {
-    body = body.replace(/(?:\r\n\r\n)/g, '</p><p>');
-  }
+  if (CFG._('newlines')) body = body.replace(/(?:\r\n|\r|\n)/g, '<br />');
+  else body = body.replace(/(?:\r\n\r\n)/g, '</p><p>');
 
   body = body.replace(exp, function (m)
   {
@@ -59,6 +53,7 @@ MS.add = function (data, pos, status)
           when = ML.ts(w.from) + ' – ' + ML.ts(w.to, 2),
           url = w.descr.match(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig),
           atts = [];
+
       for (j in w.att)
       {
         if (atts.length == 3)
@@ -72,13 +67,33 @@ MS.add = function (data, pos, status)
 
       // for now we only support calendars
       subj = w.title;
-      body = '<div class="widget event">' +
-      '<div class="b when"><icon></icon><div><div>When</div><div>' + when + '</div></div></div>' +
-      (w.where ? ('<div class="b where"><icon></icon><div><div>Where</div><div>' + w.where + '</div></div></div>'):'') +
-      '<div class="people">' +
-      '<div class="b org"><icon></icon><div><div>Organizer</div><div>' + org + '</div></div></div>' +
-      '<div class="b att"><icon></icon><div><div>Invitees</div><div>' + atts.join('<br>') + '</div></div></div>' +
-      '</div>' + (url?('<div class="open"><a target="_blank" href="' + url + '">Open in calendar</a></div>'):'') + ' </div>'
+      body =
+        `<div class="widget event">
+          <div class="b when">
+            <icon></icon>
+            <div>
+              <div>When</div>
+              <div>${when}</div>
+            </div>
+          </div>
+          ${w.where ? (`<div class="b where"><icon></icon><div><div>Where</div><div>${w.where}</div></div></div>`):''}
+          <div class="people">
+            <div class="b org">
+              <icon></icon>
+              <div>
+                <div>Organizer</div>
+                <div>${org}</div>
+              </div>
+            </div>
+            <div class="b att">
+              <icon></icon>
+              <div>
+                <div>Invitees</div>
+                <div>${atts.join(`<br>`)}</div>
+              </div>
+            </div>
+          </div>${url?(`<div class="open"><a target="_blank" href="${url}">Open in calendar</a></div>`):''}
+        </div>`
     }
     else
     {
@@ -93,6 +108,7 @@ MS.add = function (data, pos, status)
     if (data[i].files)
     {
       filesHtml = '';
+      var offset = 0;
       
       for (var fi in data[i].files)
       {
@@ -102,23 +118,20 @@ MS.add = function (data, pos, status)
         {
           if (file.data)
           {
-            filesHtml += '<div class="file-icon ' + (data[i].files.length == 1 ? ' full' : '') + '" id="img-file-'
-              + file.extId
-              + '" data-id="'
-              + file.extId
-              + '" data-url="'
-              + file.data
-              + '" data-mime="'
-              + file.type
-              + '" style="background:url(' + file.data + ')"></div>';
+            filesHtml += `<div class="file-icon ${data[i].files.length == 1 ? ' full' : ''}"
+              data-url="${file.data}"
+              data-mime="${file.type}"
+              style="background:url(${file.data})"></div>`;
             continue;
           }
         }
 
-        filesHtml += '<div class="file-icon" id="img-file-'
-          + file.extId + '" data-id="' + file.extId
-          + '" data-mime="' + file.type + '" style="background:' + ML.colorHash(file.type)
-          + '">' + file.type.split('/')[1].substring(0, 8) + '</div>';
+        filesHtml +=
+          `<div class="file-icon" data-msgid="${data[i].id}" data-offset="${offset}" data-mime="${file.type}" style="background:${ML.colorHash(file.type)}">
+            ${file.type.split('/')[1].substring(0, 8)}
+          </div>`;
+
+        ++offset;
       }
     }
     else
@@ -129,13 +142,13 @@ MS.add = function (data, pos, status)
     body = body.replace(/\[sys:fwd\]/g, '<div class="fwd">Forwarded message</div>');
 
     var nc = sName.split(' '),
-        ava = ML.colorHash(email) + ' url(\'/files/avatars/' + email + '\')';
+        ava = ML.colorHash(email) + ` url('/files/avatars/${email}')`;
 
     nc = nc.length == 1 ? nc[0].charAt(0) : (nc[0].charAt(0) + nc[1].charAt(0));
 
     if (mine && AU.user.ava)
     {
-      ava = '#fff url(\'' + AU.user.ava + '\')';
+      ava = `#fff url(${AU.user.ava})`;
       nc = '';
     }
 
@@ -145,20 +158,30 @@ MS.add = function (data, pos, status)
       var im = new Image;
       im.onload = function ()
       {
-        var s = MS.page.querySelector('li[data-id="' + id + '"] .ava');
+        var s = MS.page.querySelector(`li[data-id="${id}"] .ava`);
         if (s) s.innerHTML = '';
       };
       im.src = '/files/avatars/' + email;
     })(data[i].id, email);
 
-    html += '<li data-id="' + data[i].id + '" class="' + whose + '"><div><div class="white"><div class="cap">'
-      + subj + '</div>'
-      + (body ? ('<div class="msg">' + body + '</div>') : '')
-      + (filesHtml ? '<div class="files">' + filesHtml + '</div>': '')
-      + '</div><div class="foot"><div class="ava' + (mine ? ' full' : '') + '" style="background:' + ava + '">' + nc
-      + '</div><div class="info"><span class="status ' + (status || 's2') + '"></span><span class="ts">'
-      + ML.ts(data[i].ts) + '</span><span class="name hidden">' + sName
-      + '</span></div></div></div></li>';
+    html +=
+      `<li data-id="${data[i].id}" class="${whose}">
+        <div>
+        <div class="white">
+          <div class="cap">${subj}</div>
+            ${(body ? (`<div class="msg">${body}</div>`) : '')}
+            ${(filesHtml ? `<div class="files">${filesHtml}</div>`: '')}
+          </div>
+          <div class="foot">
+            <div class="ava ${mine ? 'full' : ''}" style="background:${ava}">${nc}</div>
+            <div class="info">
+              <span class="status ${status || 's2'}"></span>
+              <span class="ts">${ML.ts(data[i].ts)}</span>
+              <span class="name hidden">${sName}</span>
+            </div>
+          </div>
+        </div>
+      </li>`;
   }
 
   if (data.length == 1)
@@ -186,7 +209,7 @@ MS.add = function (data, pos, status)
     MS.subjects.push(subjects[i]);
 
     // filter topics
-    html += '<li>' + subjects[i] + '</li>';
+    html += `<li>${subjects[i]}</li>`;
   }
 
   var menuTags = document.querySelector('#snackbar-menu-tags ul');
@@ -290,10 +313,11 @@ MS.show = function (id)
     ul.innerHTML = '';
     MS.add(data.messages, 'bottom');
 
-    ML.loadFiles(MS.chat.id)
+    ML.loadFiles(MS.chat.id);
 
     // mark chat as 'read' in the chat list
-    var chatItem = CO.page.querySelector('li[data-id="' + id + '"] .img');
+    var chatItem = CO.page.querySelector(`li[data-id="${id}"] .img`);
+
     if (chatItem)
     {
       chatItem.classList.remove('unread');
@@ -342,10 +366,10 @@ MS.show = function (id)
         }
         else
         {*/
-          internal = 'style="background:' + ML.colorHash(files[i].type) + '">' + files[i].type.split('/')[1]
+          internal = `style="background:${ML.colorHash(files[i].type)}">` + files[i].type.split('/')[1];
       //  }
 
-        html += '<li data-mime="' + files[i].type + '" data-msgid="' + files[i].msgId + '" data-offset="' + offset + '"><div class="img" ' + internal + '</div><div class="bar"><div class="download"></div></div></li>'
+        html += `<li data-mime="${files[i].type}" data-msgid="${files[i].msgId}" data-offset="${offset}"><div class="img" ${internal}</div><div class="bar"><div class="download"></div></div></li>`
 
         ++offset
       }
