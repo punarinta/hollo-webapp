@@ -42,7 +42,7 @@ MS.add = function (data, pos, status)
         body = data[i].body,
         mine = data[i].from.email == AU.user.email,
         whose = mine ? 'mine' : 'yours',
-        sName = data[i].from.name ? data[i].from.name : data[i].from.email,
+        [name, nc] = CO.xname({users:[data[i].from]}),
         subj = data[i].subject,
         email = data[i].from.email;
 
@@ -141,10 +141,7 @@ MS.add = function (data, pos, status)
 
     body = body.replace(/\[sys:fwd\]/g, '<div class="fwd">Forwarded message</div>');
 
-    var nc = CO.clearName(sName).split(' '),
-        ava = `${ML.colorHash(email)} url('/files/avatars/${email}')`;
-
-    nc = nc.length == 1 ? nc[0].charAt(0) : (nc[0].charAt(0) + nc[1].charAt(0));
+    var ava = `${ML.colorHash(email)} url('/files/avatars/${email}')`;
 
     if (mine && AU.user.ava)
     {
@@ -177,7 +174,7 @@ MS.add = function (data, pos, status)
             <div class="info">
               <span class="status ${status || 's2'}"></span>
               <span class="ts">${ML.ts(data[i].ts)}</span>
-              <span class="name hidden">${sName}</span>
+              <span class="name hidden">${name}</span>
             </div>
           </div>
         </div>
