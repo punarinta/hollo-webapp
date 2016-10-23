@@ -57,9 +57,7 @@ CO.add = function (data)
   for (i in data)
   {
     var unread = data[i].read ? '' : 'unread',
-        xname = CO.xname(data[i]),
-        name = xname[0],
-        nc = xname[1],
+        [name, nc] = CO.xname(data[i]),
         email = data[i].users[0].email,
         lastMsg = data[i].lastMsg || '',
         extraAva = data[i].users.length > 1 ? '' : `url('/files/avatars/${email}')`;
@@ -89,7 +87,7 @@ CO.add = function (data)
     html +=
       `<li data-id="${data[i].id}">
         <div class="ava">
-            <div id="img-gr-${md5(email)}" class="img ${unread}" style="background:${ML.colorHash(data[i].id + '')} ${extraAva}">${nc}</div>
+            <div id="img-gr-${md5(email)}" class="img ${unread}" style="background:${ML.colorHash(email + '')} ${extraAva}">${nc}</div>
         </div>
         <div class="hujava">
           <div class="name">${name}</div>
