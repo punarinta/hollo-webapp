@@ -64,7 +64,7 @@ CO.add = function (data)
         lastMsg = data[i].lastMsg || '',
         extraAva = data[i].users.length > 1 ? '' : `url('/files/avatars/${email}')`;
 
-    lastMsg = lastMsg.replace(/\[sys:fwd\]/g, '➡️');
+    lastMsg = lastMsg.replace(/\[sys:fwd\]/g, '➡️').replace(/(<([^>]+)>)/ig, '').substring(0, 60);
 
     if (ML.isJson(lastMsg) && lastMsg.charAt(0) == '{')
     {
