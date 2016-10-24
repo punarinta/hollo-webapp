@@ -469,6 +469,8 @@ var parented =
       {
         // app was off, just go to the chat
         ML.go('chat/' + data.chatId);
+
+        // TODO: update contact list
       }
       else
       {

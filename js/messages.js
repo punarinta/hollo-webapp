@@ -186,8 +186,11 @@ MS.add = function (data, pos, status)
     ul.classList.add('stand-still')
   }
 
-  if (pos == 'top') ul.innerHTML = html + ul.innerHTML;
-  else ul.innerHTML += html;
+  if (html.length)
+  {
+    if (pos == 'top') ul.innerHTML = html + ul.innerHTML;
+    else ul.innerHTML += html;
+  }
 
   // caption for a composer topic suggester
   cmp.querySelector('.cap').value = subj || 'New topic';
@@ -307,7 +310,8 @@ MS.show = function (id)
     MS.subjects = [];
     document.querySelector('#snackbar-menu-tags ul').innerHTML = '<div>Here we will list the subjects used in this conversation</div>';
 
-    ul.innerHTML = '';
+    ul.innerHTML = data.messages.length ? '' : '<div class="loading">No messages?<br><br>We only keep those<br>from last 6 months.</div>';
+
     MS.add(data.messages, 'bottom');
 
     ML.loadFiles(MS.chat.id);
