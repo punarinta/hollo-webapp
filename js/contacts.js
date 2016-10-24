@@ -155,6 +155,11 @@ CO.show = function (mode)
   // noinspection JSBitwiseOperatorUsage
   if (mode & 4)
   {
+    if (mode & 16)
+    {
+      busy(1);
+    }
+
     // reset it for this mode
     CO.offset = 0;
 
@@ -193,6 +198,8 @@ CO.show = function (mode)
         CO.more = 1;
       }
 
+      busy(0);
+
       // load the first contact on laptop
       if (ML.state.widthMode == 1 && data.length && !MS.loaded)
       {
@@ -210,7 +217,7 @@ CO.show = function (mode)
 (function ()
 {
   // === SWIPES ===
-  var item, shadow, startX, startY, swipe = 0, action = 0, blockSwipe = 0,
+  var item, shadow, startX, startY, swipe = 0, action = 0, blockSwipe = 0, pull = 0,
       conts = CO.page.querySelector('ul'),
       vw = ML.state.widthMode ? 360 : window.innerWidth, threshold = vw * .3;
 
@@ -252,6 +259,13 @@ CO.show = function (mode)
       if (Math.abs(distY) > 16)
       {
         blockSwipe = 1;
+
+        if (distY > 0)
+        {
+          pull = 1;
+          distY = Math.min(distY, 144);
+          conts.style.transform = `translateY(${distY}px)`;
+        }
       }
       else if (Math.abs(distX) > 32 && !blockSwipe)
       {
@@ -266,6 +280,14 @@ CO.show = function (mode)
   conts.addEventListener('touchend', function ()
   {
     blockSwipe = 0;
+
+    conts.style.transform = `translateY(0)`;
+
+    if (pull)
+    {
+      pull = 0;
+      CO.show(20);
+    }
 
     if (swipe)
     {
