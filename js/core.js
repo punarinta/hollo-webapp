@@ -85,10 +85,8 @@ var ML =
     return null;
   },
 
-  ts: function (ts, mode)
+  ts: function (ts, mode = 3)
   {
-    mode = mode || 3;
-
     var td = new Date(), pfx = '',
         date = new Date(ts * 1000), gy = date.getYear(),
         year = gy >= 100 ? gy - 100 : gy,
@@ -210,7 +208,7 @@ var ML =
     {
       if (mime.split('/')[0] == 'image')
       {
-        viewer.style.background = 'transparent url(' + data + ') no-repeat center';
+        viewer.style.background = `transparent url(${data}) no-repeat center`;
         viewer.innerHTML = '';
       }
       else
@@ -239,7 +237,7 @@ var ML =
 
     ncc = [(r >> 1) + 96, (g >> 1) + 96, (b >> 1) + 96].join(',');
     
-    return 'rgb(' + ncc + ')';
+    return `rgb(${ncc})`;
   },
 
   unpush: function (array, index)
