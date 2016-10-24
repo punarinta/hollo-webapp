@@ -121,7 +121,7 @@ CO.show = function (mode)
 {
   var ul = CO.page.querySelector('ul');
 
-  mode = (CO.loaded & 7) ? mode : 7;
+  mode = CO.loaded & 7 ? mode : 7;
   MS.chat = null;
 
   // noinspection JSBitwiseOperatorUsage
@@ -260,10 +260,10 @@ CO.show = function (mode)
       {
         blockSwipe = 1;
 
-        if (distY > 0)
+        if (distY > 72)
         {
           pull = 1;
-          distY = Math.min(distY, 144);
+          distY = Math.min(distY, 216);
           conts.style.transform = `translateY(${distY}px)`;
         }
       }
