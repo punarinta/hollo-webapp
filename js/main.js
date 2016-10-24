@@ -44,7 +44,7 @@ ML.hidePages = function ()
     var filter = this.value.toUpperCase();
     head.classList.toggle('mode2', !!filter.length);
 
-    filterTimer = setTimeout(function (that, filter)
+    filterTimer = setTimeout(filter =>
     {
       var cmd = filter.split(' ');
 
@@ -59,7 +59,7 @@ ML.hidePages = function ()
       switch (cmd[0])
       {
         case 'LOGOUT':
-          that.value = '';
+          this.value = '';
           ML.go('auth/logout');
           break;
 
@@ -70,17 +70,16 @@ ML.hidePages = function ()
         case 'INCARNATE':
           if (cmd.length > 1)
           {
-            that.value = '';
+            this.value = '';
             ML.api('auth', 'incarnate', { userId: cmd[1] }, function (data)
             {
               AU.init(data);
-              that.value = '';
               ML.go('contacts');
             });
           }
           break;
       }
-    }, 500, this, filter);
+    }, 500, filter);
   };
 
   head.querySelector('.clear').onclick = CO.resetFilter;
