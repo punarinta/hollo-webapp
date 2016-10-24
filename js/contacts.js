@@ -16,7 +16,7 @@ CO.resetFilter = function ()
 
 CO.clearName = function (text)
 {
-  return text.replace(/\W/g, ' ').replace(/\s{2,}/g, ' ').split('\\"').join('"')
+  return text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ' ').replace(/\s{2,}/g, ' ').split('\\"').join('"')
 };
 
 CO.xname = function (chat)
