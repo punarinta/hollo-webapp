@@ -8,10 +8,10 @@ var AU =
     AU.sessionId = data.sessionId;
     AU.user = data.user;
     CFG.reset();
-    localStorage.setItem('sessionId', AU.sessionId);
+    localStorage.setItem('sessionId', this.sessionId);
 
     // send auth data to top frame
-    parent.postMessage({cmd: 'onAuth', user: AU.user}, '*');
+    parent.postMessage({cmd: 'onAuth', user: this.user}, '*');
 
     if (typeof mixpanel != 'undefined' && !mixpanel.off)
     {
@@ -70,7 +70,7 @@ var AU =
       'identity': user,
       'credential': pass
     },
-    function (data)
+    data =>
     {
       // memorize login
       localStorage.setItem('imapLogin', user);
@@ -106,7 +106,7 @@ var AU =
 
 (function ()
 {
-  var page = document.getElementById('page-login'),
+  let page = document.getElementById('page-login'),
       btnLogin = page.querySelector('.login');
 
   page.querySelector('.username').onkeydown = function (e)

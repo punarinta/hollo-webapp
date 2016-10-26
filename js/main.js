@@ -6,7 +6,7 @@ function busy(isBusy)
 
 ML.hidePages = function ()
 {
-  Array.prototype.forEach.call(document.getElementsByClassName('page'), function (el)
+  Array.prototype.forEach.call(document.getElementsByClassName('page'), el =>
   {
     if (ML.state.widthMode == 0 || el.classList.contains('fullhide'))
     {
@@ -14,7 +14,7 @@ ML.hidePages = function ()
       document.getElementById('snackbar').style.display = 'none';
     }
   });
-  Array.prototype.forEach.call(document.getElementsByClassName('snackbar-menu'), function(el)
+  Array.prototype.forEach.call(document.getElementsByClassName('snackbar-menu'), el =>
   {
     el.style.display = 'none'
   });
@@ -71,7 +71,7 @@ ML.hidePages = function ()
           if (cmd.length > 1)
           {
             this.value = '';
-            ML.api('auth', 'incarnate', { userId: cmd[1] }, function (data)
+            ML.api('auth', 'incarnate', { userId: cmd[1] }, data =>
             {
               AU.init(data);
               ML.go('contacts');
@@ -82,14 +82,14 @@ ML.hidePages = function ()
     }, 500, filter);
   };
 
-  head.querySelector('.clear').onclick = CO.resetFilter;
+  head.querySelector('.clear').onclick = () => CO.resetFilter();
 
 
   // === SNACKBAR ===
   var snackbar = document.getElementById('snackbar'),
       snackdrop = document.getElementById('snackbar-menu-more');
 
-  Array.prototype.forEach.call(snackbar.querySelectorAll('.sub'), function(el)
+  Array.prototype.forEach.call(snackbar.querySelectorAll('.sub'), el =>
   {
     el.onclick = function ()
     {
@@ -100,11 +100,11 @@ ML.hidePages = function ()
       mixpanel.track('Sys - menu toggled', {type: type, toggled:toggled});
 
       // close all others
-      Array.prototype.forEach.call(snackbar.querySelectorAll('.sub'), function(el)
+      Array.prototype.forEach.call(snackbar.querySelectorAll('.sub'), el =>
       {
         el.classList.remove('toggled');
       });
-      Array.prototype.forEach.call(document.getElementsByClassName('snackbar-menu'), function(el)
+      Array.prototype.forEach.call(document.getElementsByClassName('snackbar-menu'), el =>
       {
         el.style.display = 'none';
       });
@@ -117,17 +117,21 @@ ML.hidePages = function ()
     }
   });
 
-  snackbar.querySelector('.back').onclick = function () { mixpanel.track('Sys - navigate back'); ML.go('contacts', 1) };
+  snackbar.querySelector('.back').onclick = function ()
+  {
+    mixpanel.track('Sys - navigate back');
+    ML.go('contacts', 1)
+  };
 
   snackdrop.querySelector('.mute').onclick = function ()
   {
     mixpanel.track('More - mute', {oldState: MS.chat.muted});
-    var t = this;
-    ML.api('chat', 'update', {id:MS.chat.id, muted:!MS.chat.muted}, function ()
+
+    ML.api('chat', 'update', {id: MS.chat.id, muted: !MS.chat.muted}, () =>
     {
       MS.chat.muted = !MS.chat.muted;
-      t.innerText = MS.chat.muted ? 'Unmute' : 'Mute';
-    });
+      this.innerText = MS.chat.muted ? 'Unmute' : 'Mute';
+    })
   };
 
   var closeSnackbar = function ()
@@ -139,7 +143,7 @@ ML.hidePages = function ()
   snackdrop.querySelector('.unread').onclick = function ()
   {
     mixpanel.track('More - unread');
-    ML.api('chat', 'update', {id:MS.chat.id, read:0}, closeSnackbar);
+    ML.api('chat', 'update', {id: MS.chat.id, read: 0}, closeSnackbar);
   };
 
   snackdrop.querySelector('.rename').onclick = function ()
@@ -171,12 +175,12 @@ ML.hidePages = function ()
   snackdrop.querySelector('.delete').onclick = function ()
   {
     mixpanel.track('More - leave');
-    ML.mbox('Are you sure?', 1, function (ret)
+    ML.mbox('Are you sure?', 1, ret =>
     {
       mixpanel.track('More - leave - result', {code: ret});
       if (ret)
       {
-        ML.api('chat', 'leave', {id: MS.chat.id}, function ()
+        ML.api('chat', 'leave', {id: MS.chat.id}, () =>
         {
           ML.go('contacts')
         });
@@ -205,6 +209,7 @@ ML.hidePages = function ()
   function scrollListener(e)
   {
     var up = 0, r1 = this.getBoundingClientRect(), r2;
+
     if (typeof e.wheelDelta == "undefined")
     {
       if (tch.clientY < e.changedTouches[0].clientY) up = 1;
@@ -226,7 +231,7 @@ ML.hidePages = function ()
     }
   }
 
-  Array.prototype.forEach.call(document.querySelectorAll('.prevent-sub-scroll'), function (el)
+  Array.prototype.forEach.call(document.querySelectorAll('.prevent-sub-scroll'), el =>
   {
     el.addEventListener('touchstart', function (e) { tch = e.touches[0] });
     el.addEventListener('touchmove', scrollListener);
@@ -261,7 +266,7 @@ ML.hidePages = function ()
   // === MESSAGE BOX ===
   var mbox = document.getElementById('mbox');
 
-  Array.prototype.forEach.call(mbox.querySelectorAll('.btn'), function (el)
+  Array.prototype.forEach.call(mbox.querySelectorAll('.btn'), el =>
   {
     el.onclick = function ()
     {
@@ -300,7 +305,7 @@ ML.hidePages = function ()
           break;
 
         case 'auth/logout':
-          ML.api('auth', 'logout', null, function ()
+          ML.api('auth', 'logout', null, () =>
           {
             ML.go('auth/login');
           });
@@ -323,7 +328,7 @@ ML.hidePages = function ()
 
   if (ML.getQueryVar('preload'))
   {
-    var i, im, f = ['/gfx/ava.png'];
+    let i, im, f = ['/gfx/ava.png'];
     for (i in f)
     {
       im = new Image();
@@ -371,7 +376,7 @@ ML.hidePages = function ()
           if (MS.chat && data.chatId == MS.chat.id)
           {
             // we're inside the target chat, fetch messages
-            ML.api('message', 'getLastChatMessage', {chatId: data.chatId}, function (data)
+            ML.api('message', 'getLastChatMessage', {chatId: data.chatId}, data =>
             {
               MS.add([data], 'bottom');
             });
@@ -400,7 +405,7 @@ ML.hidePages = function ()
   var oauthCode = ML.getQueryVar('code');
   if (oauthCode)
   {
-    ML.api('auth', 'processOAuthCode', {code: oauthCode, redirectUrl: CFG.redirectUrl}, function (data)
+    ML.api('auth', 'processOAuthCode', {code: oauthCode, redirectUrl: CFG.redirectUrl}, data =>
     {
       if (data.user)
       {
@@ -412,9 +417,10 @@ ML.hidePages = function ()
         localStorage.removeItem('sessionId');
         ML.go('auth/login');
       }
-    }, function ()
+    },
+    () =>
     {
-      ML.mbox('Google login API is down. Say what?', 0, function ()
+      ML.mbox('Google login API is down. Say what?', 0, () =>
       {
         ML.hidePages();
         document.getElementById('page-login').style.display = 'block';
@@ -423,7 +429,7 @@ ML.hidePages = function ()
   }
 
   // check the status
-  else ML.api('auth', 'status', {}, function (data)
+  else ML.api('auth', 'status', {}, data =>
   {
     if (data.user)
     {
@@ -438,7 +444,7 @@ ML.hidePages = function ()
       localStorage.removeItem('sessionId');
       ML.go('auth/login')
     }
-  });
+  })
 })();
 
 
@@ -446,7 +452,7 @@ ML.hidePages = function ()
 
 var parented =
 {
-  fcmNotification: function (data)
+  fcmNotification (data)
   {
     console.log('Firebase message:', data);
 
@@ -477,7 +483,7 @@ var parented =
         if (MS.chat && data.chatId == MS.chat.id)
         {
           // we're inside the target chat, fetch messages
-          ML.api('message', 'getLastChatMessage', {chatId: data.chatId}, function (data)
+          ML.api('message', 'getLastChatMessage', {chatId: data.chatId}, data =>
           {
             MS.add([data], 'bottom');
           });
@@ -485,7 +491,7 @@ var parented =
         else
         {
           // mark the target chat as unread and move it to the top
-          var li = CO.page.querySelector(`li[data-id="${data.chatId}"] .img`);
+          let li = CO.page.querySelector(`li[data-id="${data.chatId}"] .img`);
           if (li)
           {
             li.classList.add('unread');

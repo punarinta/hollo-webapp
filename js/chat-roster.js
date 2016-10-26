@@ -2,9 +2,9 @@ var CR =
 {
   modal: document.getElementById('roster-modal'),
 
-  addUser: function (user)
+  addUser (user)
   {
-    var xname = CO.xname({users:[user]}), name = xname[0], nc = xname[1];
+    let xname = CO.xname({users:[user]}), name = xname[0], nc = xname[1];
 
     return (
     `<li data-email="${user.email}">
@@ -19,13 +19,13 @@ var CR =
     </li>`);
   },
 
-  init: function (users)
+  init (users)
   {
-    var i, html = '',
+    let i, html = '',
         roster = document.getElementById('snackbar-menu-roster'),
         ul = roster.querySelector('ul');
 
-    for (i in users) html += CR.addUser(users[i]);
+    for (i in users) html += this.addUser(users[i]);
 
     ul.innerHTML = html;
 
@@ -35,13 +35,13 @@ var CR =
       if (!e.target.classList.contains('delete')) return;
 
       // kill this line
-      var line = PP.par(e.target, 'li');
+      let line = PP.par(e.target, 'li');
       line.parentNode.removeChild(line);
     };
 
     CR.modal.querySelector('input').onkeyup = function ()
     {
-      var filter = this.value;
+      let filter = this.value;
       CR.modal.querySelector('.clear').classList.toggle('hidden', !filter.length);
       CR.listSuggestions(filter)
     };
@@ -77,28 +77,28 @@ var CR =
 
     roster.querySelector('.btn.ok').onclick = function ()
     {
-      var chatEmails = [];
+      let chatEmails = [];
       Array.prototype.forEach.call(ul.querySelectorAll('li'), function (el)
       {
         chatEmails.push(el.dataset.email);
       });
 
       // create a chat with current users and added users (or just emails) and switch to that chat
-      ML.api('chat', 'add', {emails: chatEmails}, function (data)
+      ML.api('chat', 'add', {emails: chatEmails}, data =>
       {
         ML.go('chat/' + data.id);
       });
     };
   },
 
-  listSuggestions: function (filter)
+  listSuggestions (filter)
   {
-    var params = {pageStart: 0, pageLength: 25};
+    let params = {pageStart: 0, pageLength: 25};
     if (filter && filter.length) params.filters = [{mode:'email', value:filter}];
 
-    ML.api('contact', 'find', params, function (data)
+    ML.api('contact', 'find', params, data =>
     {
-      var i, html = '', ul = CR.modal.querySelector('ul');
+      let i, html = '', ul = CR.modal.querySelector('ul');
 
       if (data.length)
       {

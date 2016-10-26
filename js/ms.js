@@ -464,7 +464,7 @@ var MS =
 
     if (this._upl.length)
     {
-      for (i = 0; u = this._upl[i]; i++)
+      for (i = 0; u = this._upl[i], i < this._upl; i++)
       {
         m.files.push(
         {
@@ -494,6 +494,5 @@ var MS =
     {
       console.log('send()', json);
     });
-
   }
 };

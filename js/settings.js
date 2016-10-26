@@ -7,9 +7,9 @@ var CFG =
   reset ()
   {
     if (!AU.user.settings.flags) AU.user.settings.flags = {};
-    CFG._('emojis-replace', 0);
-    CFG._('newlines', 1);
-    CFG._('contact-sort-ts', 1);
+    this._('emojis-replace', 0);
+    this._('newlines', 1);
+    this._('contact-sort-ts', 1);
   },
 
   _: (key, value) =>
@@ -32,7 +32,7 @@ var CFG =
     {
       for (i in flags)
       {
-        var x = CFG.page.querySelector('#cfg-' + i);
+        var x = this.page.querySelector('#cfg-' + i);
         if (x) x.checked = flags[i]
       }
     }
@@ -63,7 +63,7 @@ CFG.page.querySelector('.slides').onclick = function (e)
 
     mixpanel.track('Setting - changed', {name: key, value: e.target.checked * 1});
 
-    ML.api('settings', 'update', {flag: {name: key, value: e.target.checked * 1 }}, function ()
+    ML.api('settings', 'update', {flag: {name: key, value: e.target.checked * 1 }}, () =>
     {
       AU.user.settings['flags'][key] = e.target.checked
     });

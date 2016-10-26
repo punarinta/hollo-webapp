@@ -3,10 +3,10 @@ var SP =
   modal: document.getElementById('sp-modal'),
   subjInput: document.querySelector('#composer .head .cap'),
 
-  show: function ()
+  show ()
   {
-    var i, html = '', subj = SP.subjInput.value,
-        ul = SP.modal.querySelector('ul');
+    let i, html = '', subj = this.subjInput.value,
+        ul = this.modal.querySelector('ul');
 
     for (i in MS.subjects)
     {
@@ -15,7 +15,7 @@ var SP =
 
     ul.innerHTML = html;
 
-    SP.modal.classList.remove('hidden');
+    this.modal.classList.remove('hidden');
 
     mixpanel.track('Subject picker - shown');
   }
@@ -28,7 +28,7 @@ SP.modal.onclick = function (e)
 {
   if (e.target.classList.contains('closable')) this.classList.add('hidden');
 
-  var li = PP.par(e.target, 'li');
+  let li = PP.par(e.target, 'li');
 
   if (li)
   {

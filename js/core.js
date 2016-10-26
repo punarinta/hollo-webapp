@@ -12,14 +12,14 @@ var ML =
   ws: null,
   _wsOpened: 0,
 
-  isJson: function (testable)
+  isJson (testable)
   {
     return testable && /^[\],:{}\s]*$/.test(testable.replace(/\\["\\\/bfnrtu]/g, '@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').replace(/(?:^|:|,)(?:\s*\[)+/g, ''));
   },
 
-  api: function (endpoint, method, data, callback, error)
+  api (endpoint, method, data, callback, error)
   {
-    var r = new XMLHttpRequest(), ps = null, pl;
+    let r = new XMLHttpRequest(), ps = null, pl;
 
     r.open('POST', `https://${CFG.apiRoot}/api/${endpoint}`, true);
     r.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
@@ -57,7 +57,7 @@ var ML =
         busy(0);
       }
     };
-    r.onerror = function(e)
+    r.onerror = function (e)
     {
       console.log('onerror()', e.error);
       if (error) error(e.error)
@@ -72,9 +72,9 @@ var ML =
     r.send(JSON.stringify({ 'method': method, 'data': data, 'pageStart': ps, 'pageLength': pl }));
   },
 
-  getQueryVar: function (v)
+  getQueryVar (v)
   {
-    var q = window.location.search.substring(1),
+    let q = window.location.search.substring(1),
         i, p, vs = q.split('&');
 
     for (i = 0; i < vs.length; i++)
@@ -85,9 +85,9 @@ var ML =
     return null;
   },
 
-  ts: function (ts, mode = 3)
+  ts (ts, mode = 3)
   {
-    var td = new Date(), pfx = '',
+    let td = new Date(), pfx = '',
         date = new Date(ts * 1000), gy = date.getYear(),
         year = gy >= 100 ? gy - 100 : gy,
         month = '0' + (date.getMonth() + 1),
@@ -112,9 +112,9 @@ var ML =
     return pfx;
   },
 
-  uniques: function (arr, sens)
+  uniques (arr, sens)
   {
-    var i = 0, a = [], l = arr.length;
+    let i = 0, a = [], l = arr.length;
     if (sens)
     {
       for (; i<l; i++)
@@ -130,11 +130,11 @@ var ML =
     return a;
   },
 
-  load: function (fn)
+  load (fn)
   {
-    if (typeof ML._loaded[fn] != 'undefined') return;
+    if (typeof this._loaded[fn] != 'undefined') return;
     ML._loaded[fn] = 1;
-    var f = document.createElement('script');
+    let f = document.createElement('script');
     f.setAttribute('type', 'text/javascript');
     f.setAttribute('src', '/' + fn + '.js');
     document.querySelector('head').appendChild(f)
@@ -144,7 +144,7 @@ var ML =
   {
     if (!json.entry.length) return;
 
-    var h = json.entry[0].hash,
+    let h = json.entry[0].hash,
         s = document.getElementById('grava-' + h);
 
     if (s) s.parentNode.removeChild(s);
@@ -152,17 +152,23 @@ var ML =
     if (typeof ML._grava[h] != 'undefined')
     {
       ML._grava[h].data = json.entry[0];
-      if (typeof ML._grava[h].cb == 'function') ML._grava[h].cb(json.entry[0])
+      if (typeof ML._grava[h].cb == 'function')
+      {
+        ML._grava[h].cb(json.entry[0])
+      }
     }
   },
 
-  grava: function (m, cb)
+  grava (m, cb)
   {
-    var f = document.createElement('script'), h = md5(m);
+    let f = document.createElement('script'), h = md5(m);
 
-    if (typeof ML._grava[h] != 'undefined')
+    if (typeof this._grava[h] != 'undefined')
     {
-      if (typeof ML._grava[h].cb == 'function') ML._grava[h].cb(ML._grava[h].data);
+      if (typeof this._grava[h].cb == 'function')
+      {
+        this._grava[h].cb(this._grava[h].data);
+      }
       return h
     }
 
@@ -179,7 +185,7 @@ var ML =
     return h;
   },
   
-  mbox: function (msg, mode, cb)
+  mbox (msg, mode, cb)
   {
     /*
     Modes:
@@ -187,7 +193,7 @@ var ML =
     1 - OK, Cancel
      */
     
-    var m = document.getElementById('mbox');
+    let m = document.getElementById('mbox');
     m.querySelector('.ok').style.display = 'block';
     m.querySelector('.cancel').style.display = mode ? 'block' : 'none';
     m.style.display = 'flex';
@@ -197,7 +203,7 @@ var ML =
     return m;
   },
   
-  demo: function (data, mime, canDelete)
+  demo (data, mime, canDelete)
   {
     var box = document.getElementById('demo'),
         viewer = box.querySelector('.img');
@@ -213,7 +219,7 @@ var ML =
       }
       else
       {
-        viewer.style.background = ML.colorHash(mime);
+        viewer.style.background = this.colorHash(mime);
         viewer.innerHTML = mime.split('/')[1];
         data = 1;
       }
@@ -222,15 +228,17 @@ var ML =
     box.style.display = data ? 'flex' : 'none';
   },
   
-  go: function (r, d)
+  go (r, d)
   {
-    for (var i = 2; i--;)
+    for (let i = 2; i--;)
+    {
       history.pushState({route: r, data: d}, '', '/' + r);
+    }
 
     history.go(-1)
   },
 
-  colorHash: function (input)
+  colorHash (input)
   {
     var ncc = parseInt(md5(input).substr(0, 6), 16),
         b = ncc & 0xFF, g = (ncc >> 8) & 0xFF, r = ncc >> 16;
@@ -240,24 +248,23 @@ var ML =
     return `rgb(${ncc})`;
   },
 
-  unpush: function (array, index)
+  unpush (array, index)
   {
     var rest = array.slice(index + 1 || array.length);
     this.length = index < 0 ? array.length + index : index;
     return array.push.apply(array, rest);
   },
 
-  isEmail: function (email)
+  isEmail (email)
   {
-    var r = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return r.test(email);
+    return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
   }
 };
 
 var PP =
 {
   // find first parent of the specified type
-  par: function (x, type)
+  par (x, type)
   {
     while (x && x.nodeName.toLowerCase() != type)
     {

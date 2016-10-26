@@ -108,9 +108,9 @@
 
   // === POSTING ===
 
-  cmp.querySelector('.send').onclick = MS.send;
+  cmp.querySelector('.send').onclick = () => MS.send();
 
-  cmp.querySelector('.picker').onclick = SP.show;
+  cmp.querySelector('.picker').onclick = () => SP.show();
 
   cmp.querySelector('#uploaded').onclick = function (e)
   {

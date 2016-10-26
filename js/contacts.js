@@ -8,7 +8,7 @@ var CO =
 
   resetFilter ()
   {
-    var f = CO.page.querySelector('.head .filter');
+    var f = this.page.querySelector('.head .filter');
     f.value = '';
     f.dispatchEvent(new Event('keyup'));
   },
@@ -40,7 +40,7 @@ var CO =
     }
     else
     {
-      name = chat.users[0].name ? CO.clearName(chat.users[0].name) : chat.users[0].email.split('@')[0];
+      name = chat.users[0].name ? this.clearName(chat.users[0].name) : chat.users[0].email.split('@')[0];
       nc = name.split(' ');
       nc = nc.length == 1 ? nc[0].charAt(0) : (nc[0].charAt(0) + nc[1].charAt(0));
       if (chat.name) name = chat.name
@@ -56,7 +56,7 @@ var CO =
     for (i in data)
     {
       var unread = data[i].read ? '' : 'unread',
-          [name, nc] = CO.xname(data[i]),
+          [name, nc] = this.xname(data[i]),
           email = data[i].users[0].email,
           lastMsg = data[i].lastMsg || '',
           extraAva = data[i].users.length > 1 ? '' : `url('/files/avatars/${email}')`;
@@ -101,10 +101,10 @@ var CO =
 
     for (i in data)
     {
-      ML.grava(data[i].users[0].email, (d) =>
+      ML.grava(data[i].users[0].email, d =>
       {
         if (!d) return;
-        var s = document.getElementById('img-gr-' + d.hash);
+        let s = document.getElementById('img-gr-' + d.hash);
         if (s)
         {
           s.style.backgroundImage = `url(${d.thumbnailUrl}?s=48)`;
@@ -118,14 +118,13 @@ var CO =
 
   show (mode)
   {
-    var ul = CO.page.querySelector('ul');
+    var ul = this.page.querySelector('ul');
 
     // noinspection JSBitwiseOperatorUsage
-    mode = CO.loaded & 7 ? mode : 7;
+    mode = this.loaded & 7 ? mode : 7;
 
     MS.chat = null;
 
-    // noinspection JSBitwiseOperatorUsage
     if (mode & 1)
     {
       // scrolling hack
@@ -138,22 +137,18 @@ var CO =
       CO.page.style.display = ML.state.widthMode ? 'inline-block' : 'block';
     }
 
-    // noinspection JSBitwiseOperatorUsage
     if (mode & 2)
     {
-      // busy(1);
-      CO.page.querySelector('.head .ava img').src = AU.user.ava || '/gfx/ava.png';
-      CO.page.querySelector('.head .name').innerHTML = AU.user.name || AU.user.email.split('@')[0];
-      CO.page.querySelector('.head .email').innerHTML = AU.user.email;
+      this.page.querySelector('.head .ava img').src = AU.user.ava || '/gfx/ava.png';
+      this.page.querySelector('.head .name').innerHTML = AU.user.name || AU.user.email.split('@')[0];
+      this.page.querySelector('.head .email').innerHTML = AU.user.email;
     }
 
-    // noinspection JSBitwiseOperatorUsage
     if (mode & 8)
     {
       ul.classList.add('stand-still')
     }
 
-    // noinspection JSBitwiseOperatorUsage
     if (mode & 4)
     {
       if (mode & 16)
@@ -164,7 +159,7 @@ var CO =
       // reset it for this mode
       CO.offset = 0;
 
-      var filter = CO.page.querySelector('.head .filter').value,
+      var filter = this.page.querySelector('.head .filter').value,
           filters = [{mode:'muted', value:ML.state.muted}], html = '';
 
       if (filter.length)
@@ -172,7 +167,7 @@ var CO =
         filters.push({mode:'email', value:filter});
       }
 
-      ML.api('chat', 'find', {pageStart: 0, pageLength: CO.pageLength, filters: filters, sortBy: CFG._('contact-sort-ts')?'lastTs':'email'}, function (data)
+      ML.api('chat', 'find', {pageStart: 0, pageLength: this.pageLength, filters: filters, sortBy: CFG._('contact-sort-ts')?'lastTs':'email'}, function (data)
       {
         if (!filter.length && !data.length)
         {
