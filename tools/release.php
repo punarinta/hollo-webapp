@@ -58,8 +58,8 @@ foreach ($config['pre-shell'] as $sh)
 foreach ($config['js'] as $file)
 {
     echo "Script '$file.js'...\n";
-    shell_exec("yui-compressor $file.js -o $distDir/temp.js");
-    $js = file_get_contents("$distDir/temp.js");
+    //shell_exec("yui-compressor $file.js -o $distDir/temp.js");
+    $js = file_get_contents("$file.js");
     $js = preg_replace('#[\x5C]n\s{2,}#', ' ', $js);
     file_put_contents("$distDir/$random.js", $js, FILE_APPEND);
 }
@@ -104,7 +104,7 @@ echo "Estimated GZIP size: ";
 system('gzip -c dist/index.html | wc -c');
 
 echo "Cleaning up...\n";
-unlink("$distDir/temp.js");
+//unlink("$distDir/temp.js");
 unlink("$distDir/temp.css");
 unlink("$distDir/$random.css");
 unlink("$distDir/$random.js");

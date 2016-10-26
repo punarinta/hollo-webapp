@@ -11,4 +11,4 @@ css/*.css
 api
 files
 node_modules
-js-transpiled
+temp

@@ -14,4 +14,4 @@ css/stylus
 css/oldcss
 files
 node_modules
-js-transpiled
+temp
