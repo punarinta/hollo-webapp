@@ -10,8 +10,9 @@
     "temp/contacts",
     "temp/chat-roster",
     "temp/subject-picker",
-    "temp/messages",
-    "temp/composer",
+    "temp/ms",
+    "temp/ms-init",
+    "temp/ms-init-composer",
     "temp/settings",
     "temp/main"
   ],

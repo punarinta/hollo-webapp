@@ -1,92 +1,9 @@
-// === INIT ===
-
-MS.cmpResize = function ()
-{
-  var cmpText = document.querySelector('#composer textarea');
-  cmpText.dispatchEvent(new Event('autosize:update'));
-  cmpText.dispatchEvent(new Event('autosize:resized'));
-};
-
-MS.send = function ()
-{
-  var u, i, cmp = document.getElementById('composer'),
-      cmpText = cmp.querySelector('textarea');
-
-  // send a message
-  var msg = cmpText.value, subj = cmp.querySelector('.cap').value, msgId = null;
-
-  if (!msg.length && !MS._upl.length)
-  {
-    ML.mbox('Nothing to send');
-    return;
-  }
-
-  // try to find last message with real id
-  Array.prototype.forEach.call(document.querySelectorAll('#page-msgs > ul li'), function (el)
-  {
-    msgId = (el.dataset.id - 0) || msgId
-  });
-
-  console.log('body:', msg);
-  console.log('subject:', subj);
-  console.log('messageId:', msgId);
-
-  // push data to the bottom
-  var m =
-  {
-    body: msg,
-    subject: subj,
-    from: AU.user,
-    ts: new Date().getTime() / 1000,
-    id: 0, // ?,
-    files: []
-  };
-
-  if (MS._upl.length)
-  {
-    for (i = 0; u = MS._upl[i]; i++)
-    {
-      m.files.push(
-      {
-        name: u.name,
-        type: u.mime,
-        size: u.size,
-        // extId: 'x',  // Is this necessary at all?
-        data: u.data
-      });
-      console.log('File attached: ', MS._upl[i]);
-    }
-  }
-
-  var lastLi = MS.add([m], 'bottom', 's1');
-
-  // reset composer
-  MS._upl = [];
-  cmpText.value = '';
-  document.getElementById('uploaded').innerHTML = '';
-  cmp.classList.remove('focused');
-  MS.cmpResize();
-
-  lastLi.querySelector('.status').className = 'status s2';
-
-  mixpanel.track('Composer - message sent');
-
-  ML.api('message', 'send', {body: msg, messageId: msgId, subject: subj, files: m.files, chatId: MS.chat.id}, function (json)
-  {
-    console.log('send()', json);
-  });
-};
-
-
-// === INIT ===
-
-(function ()
 {
   var cmp = document.getElementById('composer'),
       cmpText = cmp.querySelector('textarea'),
       scrollDown = function ()
       {
-        setTimeout(function ()
+        setTimeout( () =>
         {
           MS.page.querySelector('ul li:last-child').scrollIntoView()
         }, 200);
@@ -122,11 +39,13 @@ MS.send = function ()
           em.innerText = EMJ[w][i];
           em.dataset.w = w;
           em.className = 'emoji emj-' + w;
-          setTimeout(function(o)
+
+          setTimeout(o =>
           {
             if (o.parentNode) o.parentNode.removeChild(o);
           }, 5000, em);
-          (function(em)
+
+          (function (em)
           {
             em.onclick = function (e)
             {
@@ -141,7 +60,7 @@ MS.send = function ()
                 that.value += this.innerText + ' ';
               }
 
-              Array.prototype.forEach.call(document.querySelectorAll('.emj-' + w), function(el)
+              Array.prototype.forEach.call(document.querySelectorAll('.emj-' + w), el =>
               {
                 el.parentNode.removeChild(el);
               });
@@ -173,7 +92,7 @@ MS.send = function ()
     cmpText.style.bottom = f - extra + 'px';
   });
 
-  Array.prototype.forEach.call(cmp.querySelectorAll('*'), function (el)
+  Array.prototype.forEach.call(cmp.querySelectorAll('*'), el =>
   {
     el.classList.add('ndf');
   });
@@ -199,7 +118,7 @@ MS.send = function ()
 
     mixpanel.track('Composer - attachment tapped');
 
-    for (var i in MS._upl)
+    for (let i in MS._upl)
     {
       if (MS._upl[i].hash == e.target.dataset.hash)
       {
@@ -287,4 +206,4 @@ MS.send = function ()
 
     this.value = '';
   };
-})();
+}

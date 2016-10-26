@@ -6,7 +6,7 @@ var MS =
   loaded: 0,
   page: document.getElementById('page-msgs'),
 
-  clearBody (body)
+  clearBody (body = '')
   {
     // preprocess body
     var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
@@ -16,14 +16,14 @@ var MS =
     if (CFG._('newlines')) body = body.replace(/(?:\r\n|\r|\n)/g, '<br />');
     else body = body.replace(/(?:\r\n\r\n)/g, '</p><p>');
 
-    body = body.replace(exp, (m) =>
+    body = body.replace(exp, m =>
     {
-      return '<a target="_blank" rel="noopener noreferrer" href="' + m + '">' + (m.length > 40 ? m.substr(0, 40) + '&hellip;' : m) + '</a>';
+      return `<a target="_blank" rel="noopener noreferrer" href="${m}">${m.length > 40 ? m.substr(0, 40) + '&hellip;' : m}</a>`;
     });
 
     body = body.replace(/ -- /g, ' — ');
 
-    return '<p>' + body + '</p>';
+    return `<p>${body}</p>`;
   },
 
   add (data, pos, status)
@@ -31,9 +31,9 @@ var MS =
     var i, html = '',
         subjects = [],
         cmp = document.getElementById('composer'),
-        ul = MS.page.querySelector('ul');
+        ul = this.page.querySelector('ul');
 
-    for (i in data)
+    for (let i = 0; i < data.length; i++)
     {
       if (!data[i].from.id) data[i].from = AU.user;
 
@@ -47,20 +47,20 @@ var MS =
 
       if (ML.isJson(body) && body && body.charAt(0) == '{')
       {
-        var w = JSON.parse(body).widget, j,
+        var w = JSON.parse(body).widget,
             org = w.org[1] || w.org[0],
             when = ML.ts(w.from) + ' – ' + ML.ts(w.to, 2),
             url = w.descr.match(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig),
             atts = [];
 
-        for (j in w.att)
+        for (let j = 0; j < w.att.length; j++)
         {
           if (atts.length == 3)
           {
             atts.push('...');
             break;
           }
-          var toAdd = w.att[j][1].length ? w.att[j][1] : w.att[j][0];
+          let toAdd = w.att[j][1].length ? w.att[j][1] : w.att[j][0];
           if (toAdd != org) atts.push(toAdd)
         }
 
@@ -91,12 +91,12 @@ var MS =
                   <div>${atts.join(`<br>`)}</div>
                 </div>
               </div>
-            </div>${url?(`<div class="open"><a target="_blank" href="${url}">Open in calendar</a></div>`):''}
+            </div>${url ? (`<div class="open"><a target="_blank" href="${url}">Open in calendar</a></div>`) : ''}
           </div>`
       }
       else
       {
-        body = MS.clearBody(body || '')
+        body = this.clearBody(body)
       }
 
       if (subj.length)
@@ -106,18 +106,18 @@ var MS =
 
       if (data[i].files)
       {
+        let offset = 0;
         filesHtml = '';
-        var offset = 0;
 
-        for (var fi in data[i].files)
+        for (let fi = 0; fi < data[i].files.length; fi++)
         {
-          var file = data[i].files[fi];
+          let file = data[i].files[fi];
 
           if (file.type.match('image.*'))
           {
             if (file.data)
             {
-              filesHtml += `<div class="file-icon ${data[i].files.length == 1 ? ' full' : ''}"
+              filesHtml += `<div class="file-icon ${data[i].files.length == 1 ? 'full' : ''}"
                 data-url="${file.data}"
                 data-mime="${file.type}"
                 style="background:url(${file.data})"></div>`;
@@ -200,12 +200,12 @@ var MS =
     for (i in subjects)
     {
       // check if subject was already added before
-      if (MS.subjects.indexOf(subjects[i]) != -1)
+      if (this.subjects.indexOf(subjects[i]) != -1)
       {
         continue;
       }
 
-      MS.subjects.push(subjects[i]);
+      this.subjects.push(subjects[i]);
 
       // filter topics
       html += `<li>${subjects[i]}</li>`;
@@ -221,13 +221,13 @@ var MS =
     // connect subject picker
     var lis = cmp.querySelectorAll('.subjects li');
 
-    Array.prototype.forEach.call(lis, function (el)
+    Array.prototype.forEach.call(lis, el =>
     {
       el.classList.add('ndf');
       el.onclick = function ()
       {
         var newSubj = this.innerText;
-        Array.prototype.forEach.call(lis, function (el)
+        Array.prototype.forEach.call(lis, el =>
         {
           el.classList.remove('hidden');
           if (el.innerText == newSubj)
@@ -257,7 +257,7 @@ var MS =
 
   show (id)
   {
-    var ul = MS.page.querySelector('ul'),
+    var ul = this.page.querySelector('ul'),
         snackbar = document.getElementById('snackbar');
 
     // save contacts list offset
@@ -274,7 +274,7 @@ var MS =
     ML.hidePages();
     ul.innerHTML = '';
     snackbar.querySelector('.roster').innerHTML = '';
-    Array.prototype.forEach.call(snackbar.querySelectorAll('.sub'), function (el)
+    Array.prototype.forEach.call(snackbar.querySelectorAll('.sub'), el =>
     {
       el.classList.remove('toggled')
     });
@@ -283,21 +283,21 @@ var MS =
 
     MS.page.style.display = 'inline-block';
 
-    if (MS.chat && id != MS.chat.id)
+    if (this.chat && id != this.chat.id)
     {
       // clear all the shit from composer
       MS._upl = [];
       MS.page.querySelector('textarea').value = '';
       document.getElementById('uploaded').innerHTML = '';
-      MS.cmpResize();
+      this.cmpResize();
     }
 
     ML.load('modules/emojis');
 
     // reset filter
-    MS.filter(0);
+    this.filter(0);
 
-    ML.api('message', 'findByChatId', {chatId: id}, (data) =>
+    ML.api('message', 'findByChatId', {chatId: id}, data =>
     {
       MS.chat = data.chat;
 
@@ -313,7 +313,7 @@ var MS =
 
       MS.add(data.messages, 'bottom');
 
-      ML.loadFiles(MS.chat.id);
+      MS.loadFiles(MS.chat.id);
 
       // mark chat as 'read' in the chat list
       var chatItem = CO.page.querySelector(`li[data-id="${id}"] .img`);
@@ -326,57 +326,57 @@ var MS =
       // init chat roster
       CR.init(MS.chat.users)
     });
+  },
 
-    /**
-     * Load files by email
-     *
-     * @param index
-     */
-    ML.loadFiles = function (index)
+  /**
+   * Load files by email
+   *
+   * @param index
+   */
+  loadFiles (index)
+  {
+    var fileList = document.querySelector('#snackbar-menu-files ul');
+
+    fileList.innerHTML = 'Loading ...';
+
+    ML.api('file', 'findByChatId', {chatId: index, withImageUrl: true}, files =>
     {
-      var fileList = document.querySelector('#snackbar-menu-files ul');
+      var i, url, im, internal, html = '', offset = 0;
 
-      fileList.innerHTML = 'Loading ...';
-
-      ML.api('file', 'findByChatId', {chatId: index, withImageUrl: true}, (files) =>
+      for (i in files)
       {
-        var i, url, im, internal, html = '', offset = 0;
-
-        for (i in files)
-        {
-          url = files[i].url;
+        url = files[i].url;
 
         /*  if (files[i].type.match('image.*') && url)
-          {
-            // preload
-            im = new Image();
-            im.src = url;
+         {
+         // preload
+         im = new Image();
+         im.src = url;
 
-            internal = 'data-url="' + url + '" style="background-image:url(' + url + ')">'
+         internal = 'data-url="' + url + '" style="background-image:url(' + url + ')">'
 
-            // connect to message images if necessary
-            var image = document.getElementById('img-file-' + files[i].extId);
-            if (image)
-            {
-              image.innerHTML = '';
-              image.dataset.url = url;
-              image.dataset.mime = files[i].type;
-              image.style.backgroundImage = 'url(' + url + ')';
-            }
-          }
-          else
-          {*/
-            internal = `style="background:${ML.colorHash(files[i].type)}">` + files[i].type.split('/')[1];
+         // connect to message images if necessary
+         var image = document.getElementById('img-file-' + files[i].extId);
+         if (image)
+         {
+         image.innerHTML = '';
+         image.dataset.url = url;
+         image.dataset.mime = files[i].type;
+         image.style.backgroundImage = 'url(' + url + ')';
+         }
+         }
+         else
+         {*/
+        internal = `style="background:${ML.colorHash(files[i].type)}">` + files[i].type.split('/')[1];
         //  }
 
-          html += `<li data-mime="${files[i].type}" data-msgid="${files[i].msgId}" data-offset="${offset}"><div class="img" ${internal}</div><div class="bar"><div class="download"></div></div></li>`
+        html += `<li data-mime="${files[i].type}" data-msgid="${files[i].msgId}" data-offset="${offset}"><div class="img" ${internal}</div><div class="bar"><div class="download"></div></div></li>`
 
-          ++offset
-        }
+        ++offset
+      }
 
-        fileList.innerHTML = html.length ? html : '<div>No files in this chat</div>';
-      })
-    }
+      fileList.innerHTML = html.length ? html : '<div>No files in this chat</div>';
+    })
   },
 
   filter (subj)
@@ -384,13 +384,13 @@ var MS =
     var snackTags = document.getElementById('snackbar-menu-tags'),
         filter = document.getElementById('msgs-filter'),
         snackbar = document.getElementById('snackbar'),
-        ul = MS.page.querySelector('ul');
+        ul = this.page.querySelector('ul');
 
     mixpanel.track('Message - filter', {subject: subj});
 
     if (subj)
     {
-      Array.prototype.forEach.call(ul.querySelectorAll('li'), function (li)
+      Array.prototype.forEach.call(ul.querySelectorAll('li'), li =>
       {
         li.style.display = li.querySelector('.cap').innerText == subj ? 'list-item' : 'none';
       });
@@ -399,18 +399,18 @@ var MS =
       filter.querySelector('.body').innerText = subj;
       snackbar.querySelector('.icon.tags').classList.remove('toggled');
       snackTags.style.display = 'none';
-      MS.page.classList.add('filtered');
+      this.page.classList.add('filtered');
       document.getElementById('msgs-more').style.display = 'none';
     }
     else
     {
-      Array.prototype.forEach.call(ul.querySelectorAll('li'), function (li)
+      Array.prototype.forEach.call(ul.querySelectorAll('li'), li =>
       {
        li.style.display = 'list-item';
       });
 
       filter.style.display = 'none';
-      MS.page.classList.remove('filtered');
+      this.page.classList.remove('filtered');
       document.getElementById('msgs-more').style.display = 'block';
 
       setTimeout( () =>
@@ -418,57 +418,82 @@ var MS =
         ul.scrollIntoView(false);
       }, 100);
     }
-  }
-};
+  },
 
-// === INIT ===
-
-MS.page.querySelector('ul').onclick = function (e)
-{
-  if (e.target.classList.contains('file-icon'))
+  cmpResize ()
   {
-    mixpanel.track('Message - attachment tapped');
-    ML.demo(e.target.dataset.url, e.target.dataset.mime)
-  }
+    var cmpText = document.querySelector('#composer textarea');
+    cmpText.dispatchEvent(new Event('autosize:update'));
+    cmpText.dispatchEvent(new Event('autosize:resized'));
+  },
 
-  if (e.target.tagName == 'A' && window.self !== window.top)  // if a link is clicked on mobile app
+  send ()
   {
-    parent.postMessage({cmd: 'openUrl', url: e.target.getAttribute('href', 2), external: true}, '*');
-    return false;
-  }
+    var u, i, cmp = document.getElementById('composer'),
+        cmpText = cmp.querySelector('textarea');
 
-  if (e.target.classList.contains('fwd'))
-  {
-    var li = PP.par(e.target, 'li');
+    // send a message
+    var msg = cmpText.value, subj = cmp.querySelector('.cap').value, msgId = null;
 
-    busy(1);
-
-    // replace message contents with original mail body
-    ML.api('message', 'showOriginal', {id: li.dataset.id}, function (data)
+    if (!msg.length && !this._upl.length)
     {
-      li.querySelector('.msg').innerHTML = MS.clearBody(data);
-      busy(0);
+      ML.mbox('Nothing to send');
+      return;
+    }
+
+    // try to find last message with real id
+    Array.prototype.forEach.call(document.querySelectorAll('#page-msgs > ul li'), el =>
+    {
+      msgId = (el.dataset.id - 0) || msgId
     });
-  }
 
-  if (e.target.classList.contains('ava'))
-  {
-    var parent = e.target.parentElement;
-    parent.querySelector('.ts').classList.toggle('hidden');
-    parent.querySelector('.name').classList.toggle('hidden');
+    console.log('body:', msg);
+    console.log('subject:', subj);
+    console.log('messageId:', msgId);
+
+    // push data to the bottom
+    var m =
+    {
+      body: msg,
+      subject: subj,
+      from: AU.user,
+      ts: new Date().getTime() / 1000,
+      id: 0, // ?,
+      files: []
+    };
+
+    if (this._upl.length)
+    {
+      for (i = 0; u = this._upl[i]; i++)
+      {
+        m.files.push(
+        {
+          name: u.name,
+          type: u.mime,
+          size: u.size,
+          data: u.data
+        });
+        console.log('File attached: ', this._upl[i]);
+      }
+    }
+
+    var lastLi = this.add([m], 'bottom', 's1');
+
+    // reset composer
+    MS._upl = [];
+    cmpText.value = '';
+    document.getElementById('uploaded').innerHTML = '';
+    cmp.classList.remove('focused');
+    this.cmpResize();
+
+    lastLi.querySelector('.status').className = 'status s2';
+
+    mixpanel.track('Composer - message sent');
+
+    ML.api('message', 'send', {body: msg, messageId: msgId, subject: subj, files: m.files, chatId: MS.chat.id}, json =>
+    {
+      console.log('send()', json);
+    });
+
   }
 };
-
-document.getElementById('msgs-more').onclick = function ()
-{
-  ML.mbox('Sorry, this is a "Pro" version feature');
-  /*busy(1);
-
-  // can be called only by ID
-  ML.api('message', 'moreByChatId', {chatId: MS.chat.id}, function (data)
-  {
-    MS.add(data, 'top');
-    busy(0);
-  });*/
-};
-
