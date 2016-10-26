@@ -370,7 +370,7 @@ var MS =
         internal = `style="background:${ML.colorHash(files[i].type)}">` + files[i].type.split('/')[1];
         //  }
 
-        html += `<li data-mime="${files[i].type}" data-msgid="${files[i].msgId}" data-offset="${offset}"><div class="img" ${internal}</div><div class="bar"><div class="download"></div></div></li>`
+        html += `<li data-mime="${files[i].type}" data-msgid="${files[i].msgId}" data-offset="${offset}"><div class="img" ${internal}</div><div class="bar"><div class="download"></div></div></li>`;
 
         ++offset
       }
@@ -430,10 +430,8 @@ var MS =
   send ()
   {
     var u, i, cmp = document.getElementById('composer'),
-        cmpText = cmp.querySelector('textarea');
-
-    // send a message
-    var msg = cmpText.value, subj = cmp.querySelector('.cap').value, msgId = null;
+        cmpText = cmp.querySelector('textarea'), msgId = null,
+        msg = cmpText.value, subj = cmp.querySelector('.cap').value;
 
     if (!msg.length && !this._upl.length)
     {
@@ -490,7 +488,7 @@ var MS =
 
     mixpanel.track('Composer - message sent');
 
-    ML.api('message', 'send', {body: msg, messageId: msgId, subject: subj, files: m.files, chatId: MS.chat.id}, json =>
+    ML.api('message', 'send', {body: msg, messageId: msgId, subject: subj, files: m.files, chatId: this.chat.id}, json =>
     {
       console.log('send()', json);
     });
