@@ -1,105 +1,104 @@
 var AU =
 {
   sessionId: null,
-  user: null
-};
+  user: null,
 
-AU.init = function (data)
-{
-  AU.sessionId = data.sessionId;
-  AU.user = data.user;
-  CFG.reset();
-  localStorage.setItem('sessionId', AU.sessionId);
-
-  // send auth data to top frame
-  parent.postMessage({cmd: 'onAuth', user: AU.user}, '*');
-
-  if (typeof mixpanel != 'undefined' && !mixpanel.off)
+  init (data)
   {
-    mixpanel.identify(data.user.email);
-    mixpanel.people.set(
-    {
-      "$email": data.user.email,
-      "$name": data.user.name,
-      // "$last_login": new Date(),
-      "hollo_id": data.user.id
-    });
-  }
-  else
-  {
-    window.mixpanel = {track: function () {}, off: 1}
-  }
+    AU.sessionId = data.sessionId;
+    AU.user = data.user;
+    CFG.reset();
+    localStorage.setItem('sessionId', AU.sessionId);
 
-  if (ML.ws)
-  {
-    if (ML._wsOpened)
+    // send auth data to top frame
+    parent.postMessage({cmd: 'onAuth', user: AU.user}, '*');
+
+    if (typeof mixpanel != 'undefined' && !mixpanel.off)
     {
-      ML.ws.send(JSON.stringify({cmd: 'online', userId: data.user.id}));
-    }
-    else
-    {
-      (function (data)
+      mixpanel.identify(data.user.email);
+      mixpanel.people.set(
       {
-        ML.ws.onopen = function ()
-        {
-          ML.ws.send(JSON.stringify({cmd: 'online', userId: data.user.id}));
-        };
-      })(data);
-    }
-  }
-};
-
-AU.loginImap = function ()
-{
-  var user = document.querySelector('#page-login .username').value,
-      pass = document.querySelector('#page-login .password').value;
-
-  if (!user.length || !pass.length)
-  {
-    ML.mbox('Input both email and password');
-    return;
-  }
-
-  // disallow Gmail login here
-  if (user.split('@')[1] == 'gmail.com')
-  {
-    ML.mbox('Use "Sign in with Google" button');
-    return;
-  }
-
-  ML.api('auth', 'loginImap',
-  {
-    'identity': user,
-    'credential': pass
-  },
-  function (data)
-  {
-    // memorize login
-    localStorage.setItem('imapLogin', user);
-    AU.init(data);
-    ML.go('contacts');
-  });
-};
-
-AU.googleStart = function ()
-{
-  ML.api('auth', 'getOAuthToken', {redirectUrl: CFG.redirectUrl}, function (data)
-  {
-    if (window.self !== window.top)
-    {
-      parent.postMessage({cmd: 'openUrl', url: data}, '*');
+        '$email':   data.user.email,
+        '$name':    data.user.name,
+        'hollo_id': data.user.id
+      });
     }
     else
     {
-      window.location.href = data;
+      window.mixpanel = {track: () => {}, off: 1}
     }
-  });
-};
 
-AU.showLogin = function ()
-{
-  ML.hidePages();
-  document.getElementById('page-login').style.display = 'block';
+    if (ML.ws)
+    {
+      if (ML._wsOpened)
+      {
+        ML.ws.send(JSON.stringify({cmd: 'online', userId: data.user.id}));
+      }
+      else
+      {
+        (function (data)
+        {
+          ML.ws.onopen = function ()
+          {
+            ML.ws.send(JSON.stringify({cmd: 'online', userId: data.user.id}));
+          };
+        })(data);
+      }
+    }
+  },
+
+  loginImap ()
+  {
+    var user = document.querySelector('#page-login .username').value,
+        pass = document.querySelector('#page-login .password').value;
+
+    if (!user.length || !pass.length)
+    {
+      ML.mbox('Input both email and password');
+      return;
+    }
+
+    // disallow Gmail login here
+    if (user.split('@')[1] == 'gmail.com')
+    {
+      ML.mbox('Use "Sign in with Google" button');
+      return;
+    }
+
+    ML.api('auth', 'loginImap',
+    {
+      'identity': user,
+      'credential': pass
+    },
+    function (data)
+    {
+      // memorize login
+      localStorage.setItem('imapLogin', user);
+      AU.init(data);
+      ML.go('contacts');
+    });
+  },
+
+  googleStart ()
+  {
+    ML.api('auth', 'getOAuthToken', {redirectUrl: CFG.redirectUrl}, (data) =>
+    {
+      if (window.self !== window.top)
+      {
+        parent.postMessage({cmd: 'openUrl', url: data}, '*');
+      }
+      else
+      {
+        window.location.href = data;
+      }
+    });
+  },
+
+  showLogin ()
+  {
+    ML.hidePages();
+    document.getElementById('page-login').style.display = 'block';
+  }
 };
 
 

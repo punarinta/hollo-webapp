@@ -4,7 +4,7 @@ var CFG =
   page: document.getElementById('page-cfg'),
   notifierUrl: 'wss://notify.hollo.email:443/',
   
-  reset: function ()
+  reset ()
   {
     if (!AU.user.settings.flags) AU.user.settings.flags = {};
     CFG._('emojis-replace', 0);
@@ -12,14 +12,14 @@ var CFG =
     CFG._('contact-sort-ts', 1);
   },
 
-  _: function (key, value)
+  _: (key, value) =>
   {
     if (typeof AU.user.settings.flags[key] == 'undefined' && value) AU.user.settings.flags[key] = value;
 
     return AU.user.settings.flags[key];
   },
 
-  show: function ()
+  show ()
   {
     var i, flags = AU.user.settings.flags;
 
