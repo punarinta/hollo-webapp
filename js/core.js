@@ -37,7 +37,7 @@ var ML =
         var json = JSON.parse(r);
         if (this.status >= 200 && this.status < 400)
         {
-          callback(json.data);
+          if (callback) callback(json.data);
         }
         else
         {
