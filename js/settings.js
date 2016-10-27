@@ -55,6 +55,14 @@ CFG.page.querySelector('.bar button').onclick = function ()
   CO.show(1)
 };
 
+CFG.page.querySelector('.test-notify').onclick = function ()
+{
+  ML.mbox('After you close this message you will have 5 seconds to switch off your display', 0, () =>
+  {
+    ML.api('settings', 'testNotification');
+  })
+};
+
 CFG.page.querySelector('.slides').onclick = function (e)
 {
   if (e.target.tagName == 'INPUT')

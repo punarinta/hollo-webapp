@@ -468,6 +468,12 @@ var parented =
       ML.go('auth/logout');
     }
 
+    if (data.cmd == 'ping')
+    {
+      // absolute event
+      ML.mbox('Ping signal received');
+    }
+
     if (data.cmd == 'show-chat')
     {
       if (data.wasTapped)
