@@ -58,15 +58,17 @@ var CO =
       var unread = data[i].read ? '' : 'unread',
           [name, nc] = this.xname(data[i]),
           email = data[i].users[0].email,
-          lastMsg = data[i].lastMsg || '',
+          lastMsg = data[i].last.msg || '',
           extraAva = data[i].users.length > 1 ? '' : `url('/files/avatars/${email}')`;
-
-      lastMsg = lastMsg.replace(/\[sys:fwd\]/g, '➡️').replace(/(<([^>]+)>)/ig, '').substring(0, 60);
 
       if (lastMsg.charAt(0) == '{')
       {
         // for now we only support calendar invites
-        lastMsg = '📅';
+        lastMsg = '📅 ' + JSON.parse(lastMsg).widget.title;
+      }
+      else
+      {
+        lastMsg = lastMsg.replace(/\[sys:fwd\]/g, '➡️ ' + data[i].last.subj).replace(/(<([^>]+)>)/ig, '').substring(0, 60);
       }
 
       if (data[i].users.length < 2)
