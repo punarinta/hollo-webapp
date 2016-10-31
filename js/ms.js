@@ -8,19 +8,21 @@ var MS =
 
   clearBody (body = '')
   {
-    // preprocess body
-    var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-
     body = body.replace(/(?:[ ]\r\n|[ ]\r|[ ]\n)/g, ' ');
 
     if (CFG._('newlines')) body = body.replace(/(?:\r\n|\r|\n)/g, '<br />');
     else body = body.replace(/(?:\r\n\r\n)/g, '</p><p>');
 
-    body = body.replace(exp, m =>
+    // URLs
+    body = body.replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, m =>
     {
       return `<a target="_blank" rel="noopener noreferrer" href="${m}">${m.length > 40 ? m.substr(0, 40) + '&hellip;' : m}</a>`;
     });
 
+    // mailto: links
+    body = body.replace(/(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim, '<a target="_blank" rel="noopener noreferrer" href="mailto:$1">$1</a>');
+
+    body = body.replace('/mailto:/g', '');
     body = body.replace(/ -- /g, ' — ');
 
     return `<p>${body}</p>`;
