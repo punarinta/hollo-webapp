@@ -72,16 +72,17 @@ var ML =
     r.send(JSON.stringify({ 'method': method, 'data': data, 'pageStart': ps, 'pageLength': pl }));
   },
 
-  getQueryVar (v)
+  getQueryVar (v, hashed = 0)
   {
-    let q = window.location.search.substring(1),
-        i, p, vs = q.split('&');
+    let q = hashed ? window.location.hash : window.location.search,
+        i, p, vs = q.substring(1).split('&');
 
     for (i = 0; i < vs.length; i++)
     {
       p = vs[i].split('=');
       if (p[0] == v) return p[1];
     }
+
     return null;
   },
 
