@@ -92,7 +92,7 @@ var AU =
     {
       ML.api('auth', 'getOAuthToken', {redirectUrl: CFG.redirectUrl + 'Mobile'}, (data) =>
       {
-        parent.postMessage({cmd: 'googleAuth', url: data}, '*');
+        parent.postMessage({cmd: 'openUrl', url: data}, '*');
       });
     }
   },
