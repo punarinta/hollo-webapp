@@ -81,17 +81,20 @@ var AU =
 
   googleStart ()
   {
-    ML.api('auth', 'getOAuthToken', {redirectUrl: CFG.redirectUrl}, (data) =>
+    if (window.self === window.top)
     {
-      if (window.self !== window.top)
-      {
-        parent.postMessage({cmd: 'openUrl', url: data}, '*');
-      }
-      else
+      ML.api('auth', 'getOAuthToken', {redirectUrl: CFG.redirectUrl}, (data) =>
       {
         window.location.href = data;
-      }
-    });
+      });
+    }
+    else
+    {
+      ML.api('auth', 'getOAuthToken', {redirectUrl: CFG.redirectUrl + 'Mobile'}, (data) =>
+      {
+        parent.postMessage({cmd: 'googleAuth', url: data}, '*');
+      });
+    }
   },
 
   showLogin ()

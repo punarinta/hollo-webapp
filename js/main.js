@@ -405,12 +405,22 @@ ML.hidePages = function ()
   var oauthCode = ML.getQueryVar('code');
   if (oauthCode)
   {
-    ML.api('auth', 'processOAuthCode', {code: oauthCode, redirectUrl: CFG.redirectUrl}, data =>
+    let isMobile = window.location.pathname == '/oauth/googleMobile';
+
+    ML.api('auth', 'processOAuthCode', {code: oauthCode, redirectUrl: CFG.redirectUrl + (isMobile?'Mobile':'')}, data =>
     {
       if (data.user)
       {
         AU.init(data);
-        ML.go('contacts')
+
+        if (isMobile)
+        {
+          history.go(1 - history.length);
+        }
+        else
+        {
+          ML.go('contacts')
+        }
       }
       else
       {

@@ -3,7 +3,8 @@ var CFG =
   apiRoot: 'app.hollo.email',
   page: document.getElementById('page-cfg'),
   notifierUrl: 'wss://notify.hollo.email:443/',
-  
+  redirectUrl: 'https://app.hollo.email/oauth/google',
+
   reset ()
   {
     if (!AU.user.settings.flags) AU.user.settings.flags = {};
