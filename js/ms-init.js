@@ -8,7 +8,7 @@ MS.page.querySelector('ul').onclick = function (e)
 
   if (e.target.tagName == 'A' && window.self !== window.top)  // if a link is clicked on mobile app
   {
-    parent.postMessage({cmd: 'openUrl', url: e.target.getAttribute('href', 2), external: true}, '*');
+    window.parent.postMessage({cmd: 'openUrl', url: e.target.getAttribute('href', 2), external: true}, '*');
     return false;
   }
 
