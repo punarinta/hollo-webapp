@@ -487,7 +487,7 @@ var MS =
     this.cmpResize();
     this.scrollBottom(50);
 
-    ML.api('message', 'send', {body: msg, messageId: msgId, subject: subj, files: m.files, chatId: this.chat.id}, json =>
+    ML.api('message', 'send', {body: msg, messageId: msgId, subject: subj, files: m.files, chatId: MS.chat.id}, json =>
     {
       // mark it as delivered to mail/DB
       MS.ul.querySelector('li:nth-last-child(1) .status').className = 'status s2';
