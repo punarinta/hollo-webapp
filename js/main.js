@@ -378,7 +378,8 @@ ML.hidePages = function ()
             // we're inside the target chat, fetch messages
             ML.api('message', 'getLastChatMessage', {chatId: data.chatId}, data =>
             {
-              MS.add([data], 'bottom');
+              MS.ul.innerHTML += MS.add([data]);
+              MS.scrollBottom();
             });
           }
           else
@@ -510,7 +511,8 @@ var parented =
           // we're inside the target chat, fetch messages
           ML.api('message', 'getLastChatMessage', {chatId: data.chatId}, data =>
           {
-            MS.add([data], 'bottom');
+            MS.ul.innerHTML += MS.add([data]);
+            MS.scrollBottom();
           });
         }
         else

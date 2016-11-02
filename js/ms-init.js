@@ -1,3 +1,6 @@
+MS.ul = MS.page.querySelector('ul');
+MS.pageLength = 25; // limit mostly for mobile
+
 MS.page.querySelector('ul').onclick = function (e)
 {
   if (e.target.classList.contains('file-icon'))

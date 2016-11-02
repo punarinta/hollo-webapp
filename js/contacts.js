@@ -372,33 +372,48 @@ var CO =
 
   document.onscroll = function ()
   {
-    if (!CO.more || CO.page.style.display == 'none')
+    if (CO.more && CO.page.style.display != 'none')
     {
-      return;
+      let el = CO.page.querySelector('ul li:nth-last-child(2)');
+
+      if (el && el.getBoundingClientRect().bottom < screen.height + 50)
+      {
+        CO.more = 0;
+        CO.offset += CO.pageLength;
+
+        let filter = CO.page.querySelector('.head .filter').value, filters = [{mode:'muted', value:ML.state.muted}];
+        if (filter.length)
+        {
+          filters.push({mode:'email', value:filter});
+        }
+
+        ML.api('chat', 'find', { pageStart: CO.offset, pageLength: CO.pageLength, filters: filters, sortBy: CFG._('contact-sort-ts')?'lastTs':'email' }, (data) =>
+        {
+          CO.page.querySelector('ul').innerHTML += CO.add(data);
+          if (data.length == CO.pageLength) CO.more = 1;
+        });
+
+        mixpanel.track('Chat - get more');
+      }
     }
 
-    var el = CO.page.querySelector('ul li:nth-last-child(2)');
-
-    if (el && el.getBoundingClientRect().bottom < screen.height + 50)
+    if (MS.more && MS.page.style.display != 'none')
     {
-      CO.more = 0;
-      CO.offset += CO.pageLength;
+      let el = MS.ul.querySelector('li:nth-child(2)');
 
-      // console.log('Contacts fetch at offset ' + CO.offset);
-
-      var filter = CO.page.querySelector('.head .filter').value, filters = [{mode:'muted', value:ML.state.muted}];
-      if (filter.length)
+      if (el && el.getBoundingClientRect().top > 0)
       {
-        filters.push({mode:'email', value:filter});
+        MS.more = 0;
+        MS.offset += MS.pageLength;
+
+        // console.log('Messages fetch at offset ' + MS.offset);
+
+        if (MS.chat) ML.api('message', 'findByChatId', { chatId: MS.chat.id, pageStart: MS.offset, pageLength: MS.pageLength}, (data) =>
+        {
+          MS.ul.innerHTML = MS.add(data.messages) + MS.ul.innerHTML;
+          if (data.messages.length == MS.pageLength) MS.more = 1;
+        });
       }
-
-      mixpanel.track('Chat - get more');
-
-      ML.api('chat', 'find', { pageStart: CO.offset, pageLength: CO.pageLength, filters: filters, sortBy: CFG._('contact-sort-ts')?'lastTs':'email' }, (data) =>
-      {
-        CO.page.querySelector('ul').innerHTML += CO.add(data);
-        if (data.length == CO.pageLength) CO.more = 1;
-      });
     }
   };
 

@@ -3,7 +3,10 @@ var MS =
   chat: null,
   _upl: [],
   subjects: [],
+  offset: 0,
+  more: 0,
   loaded: 0,
+  pageLength: 10,
   page: document.getElementById('page-msgs'),
 
   clearBody (body = '')
@@ -28,14 +31,14 @@ var MS =
     return `<p>${body}</p>`;
   },
 
-  add (data, pos, status)
+  add (data, status)
   {
     var i, html = '',
         subjects = [],
         cmp = document.getElementById('composer'),
         ul = this.page.querySelector('ul');
 
-    for (let i = 0; i < data.length; i++)
+    for (let i = data.length - 1; i >= 0; i--)
     {
       if (!data[i].from.id) data[i].from = AU.user;
 
@@ -187,18 +190,13 @@ var MS =
       ul.classList.add('stand-still')
     }
 
-    if (html.length)
-    {
-      if (pos == 'top') ul.innerHTML = html + ul.innerHTML;
-      else ul.innerHTML += html;
-    }
-
     // caption for a composer topic suggester
     cmp.querySelector('.cap').value = subj || 'New topic';
 
     // fill in subjects
-    html = '';
+    let subjectsHtml = '';
     subjects = ML.uniques(subjects, true);
+
     for (i in subjects)
     {
       // check if subject was already added before
@@ -210,7 +208,7 @@ var MS =
       this.subjects.push(subjects[i]);
 
       // filter topics
-      html += `<li>${subjects[i]}</li>`;
+      subjectsHtml += `<li>${subjects[i]}</li>`;
     }
 
     var menuTags = document.querySelector('#snackbar-menu-tags ul');
@@ -218,7 +216,7 @@ var MS =
     // reset placeholder
     if (menuTags.innerHTML.indexOf('<div>') != -1 && data.length) menuTags.innerHTML = '';
 
-    menuTags.innerHTML += html;
+    menuTags.innerHTML += subjectsHtml;
 
     // connect subject picker
     var lis = cmp.querySelectorAll('.subjects li');
@@ -243,24 +241,22 @@ var MS =
       }
     });
 
-    if (pos != 'top')
-    {
-      // scrolling hack
-      setTimeout( () =>
-      {
-        // ul.scrollIntoView(false);
-        let r = document.body.getBoundingClientRect(), h = r.bottom - r.top;
-        ul.scrollTop = document.body.scrollTop = h;
-      }, 100);
-    }
+    return html;
+  },
 
-    return ul.querySelector('li:last-child')
+  scrollBottom (offset = 0)
+  {
+    setTimeout( () =>
+    {
+      let r = document.body.getBoundingClientRect(),
+          h = r.bottom - r.top - (offset ? (screen.height + offset) : 0);
+      MS.ul.scrollTop = document.body.scrollTop = h;
+    }, 100);
   },
 
   show (id)
   {
-    var ul = this.page.querySelector('ul'),
-        snackbar = document.getElementById('snackbar');
+    var snackbar = document.getElementById('snackbar');
 
     // save contacts list offset
     CO.yPos = window.pageYOffset || CO.page.querySelector('ul').scrollTop;
@@ -274,7 +270,7 @@ var MS =
     MS.loaded = 1;
 
     ML.hidePages();
-    ul.innerHTML = '';
+    MS.ul.innerHTML = '';
     snackbar.querySelector('.roster').innerHTML = '';
     Array.prototype.forEach.call(snackbar.querySelectorAll('.sub'), el =>
     {
@@ -299,11 +295,11 @@ var MS =
     // reset filter
     this.filter(0);
 
-    ML.api('message', 'findByChatId', {chatId: id}, data =>
+    ML.api('message', 'findByChatId', {chatId: id, pageStart: MS.offset, pageLength: MS.pageLength}, data =>
     {
       MS.chat = data.chat;
 
-      var xname = CO.xname(MS.chat);
+      let xname = CO.xname(MS.chat);
       snackbar.querySelector('.roster').innerHTML = xname[0];
       document.querySelector('#snackbar-menu-more .mute').innerText = MS.chat.muted ? 'Unmute' : 'Mute';
 
@@ -311,9 +307,13 @@ var MS =
       MS.subjects = [];
       document.querySelector('#snackbar-menu-tags ul').innerHTML = '<div>Here we will list the subjects used in this conversation</div>';
 
-      ul.innerHTML = data.messages.length ? '' : '<div class="loading">No messages?<br><br>We only keep those<br>from last 6 months.</div>';
+      MS.ul.innerHTML = data.messages.length ? MS.add(data.messages) : '<div class="loading">No messages?<br><br>We only keep those<br>from last 6 months.</div>';
+      MS.scrollBottom();
 
-      MS.add(data.messages, 'bottom');
+      if (data.messages.length == MS.pageLength)
+      {
+        MS.more = 1;
+      }
 
       MS.loadFiles(MS.chat.id);
 
@@ -385,14 +385,13 @@ var MS =
   {
     var snackTags = document.getElementById('snackbar-menu-tags'),
         filter = document.getElementById('msgs-filter'),
-        snackbar = document.getElementById('snackbar'),
-        ul = this.page.querySelector('ul');
+        snackbar = document.getElementById('snackbar');
 
     mixpanel.track('Message - filter', {subject: subj});
 
     if (subj)
     {
-      Array.prototype.forEach.call(ul.querySelectorAll('li'), li =>
+      Array.prototype.forEach.call(MS.ul.querySelectorAll('li'), li =>
       {
         li.style.display = li.querySelector('.cap').innerText == subj ? 'list-item' : 'none';
       });
@@ -406,7 +405,7 @@ var MS =
     }
     else
     {
-      Array.prototype.forEach.call(ul.querySelectorAll('li'), li =>
+      Array.prototype.forEach.call(MS.ul.querySelectorAll('li'), li =>
       {
        li.style.display = 'list-item';
       });
@@ -417,7 +416,7 @@ var MS =
 
       setTimeout( () =>
       {
-        ul.scrollIntoView(false);
+        MS.ul.scrollIntoView(false);
       }, 100);
     }
   },
@@ -442,7 +441,7 @@ var MS =
     }
 
     // try to find last message with real id
-    Array.prototype.forEach.call(document.querySelectorAll('#page-msgs > ul li'), el =>
+    Array.prototype.forEach.call(MS.ul.querySelectorAll('li'), el =>
     {
       msgId = (el.dataset.id - 0) || msgId
     });
@@ -477,22 +476,24 @@ var MS =
       }
     }
 
-    var lastLi = this.add([m], 'bottom', 's1');
+    this.ul.innerHTML += this.add([m], 's1');
 
     // reset composer
     MS._upl = [];
     cmpText.value = '';
     document.getElementById('uploaded').innerHTML = '';
     cmp.classList.remove('focused');
+
     this.cmpResize();
-
-    lastLi.querySelector('.status').className = 'status s2';
-
-    mixpanel.track('Composer - message sent');
+    this.scrollBottom(50);
 
     ML.api('message', 'send', {body: msg, messageId: msgId, subject: subj, files: m.files, chatId: this.chat.id}, json =>
     {
+      // mark it as delivered to mail/DB
+      MS.ul.querySelector('li:nth-last-child(1) .status').className = 'status s2';
       console.log('send()', json);
     });
+
+    mixpanel.track('Composer - message sent');
   }
 };
