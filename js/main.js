@@ -454,7 +454,16 @@ ML.hidePages = function ()
       localStorage.removeItem('sessionId');
       ML.go('auth/login')
     }
-  })
+  });
+
+  // check for Anrdoid
+  if (navigator.userAgent.toLowerCase().indexOf('android') > -1 && window.self === window.top)
+  {
+    ML.mbox('Do you want to get Hollo for Android?', 1, (x) =>
+    {
+      if (x) window.location.href = 'market://details?id=email.hollo.app';
+    })
+  }
 })();
 
 
