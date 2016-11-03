@@ -68,7 +68,7 @@ var CO =
       }
       else
       {
-        lastMsg = lastMsg.replace(/\[sys:fwd\]/g, '➡️ ' + data[i].last.subj).replace(/(<([^>]+)>)/ig, '').substring(0, 60);
+        lastMsg = lastMsg.replace(/\[sys:fwd\]/g, ' ➡️ ' + data[i].last.subj).replace(/(<([^>]+)>)/ig, '').substring(0, 60).trim();
       }
 
       if (data[i].users.length < 2)
