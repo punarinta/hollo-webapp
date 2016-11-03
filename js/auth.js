@@ -99,7 +99,7 @@ var AU =
 
   showLogin ()
   {
-    ML.hidePages();
+    ML.hidePages(1);
     document.getElementById('page-login').style.display = 'block';
   }
 };

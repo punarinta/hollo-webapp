@@ -4,11 +4,11 @@ function busy(isBusy)
   document.getElementById('busybox').classList.toggle('hidden', !isBusy)
 }
 
-ML.hidePages = function ()
+ML.hidePages = function (all = 0)
 {
   Array.prototype.forEach.call(document.getElementsByClassName('page'), el =>
   {
-    if (ML.state.widthMode == 0 || el.classList.contains('fullhide'))
+    if (ML.state.widthMode == 0 || el.classList.contains('fullhide') || all)
     {
       el.style.display = 'none';
       document.getElementById('snackbar').style.display = 'none';
