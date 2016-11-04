@@ -309,7 +309,7 @@ var MS =
 
       if (data.messages.length)
       {
-        MS.ul.innerHTML = '';
+        MS.ul.innerHTML = MS.add(data.messages);
         MS.page.classList.remove('empty');
       }
       else
