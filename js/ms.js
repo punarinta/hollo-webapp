@@ -307,7 +307,17 @@ var MS =
       MS.subjects = [];
       document.querySelector('#snackbar-menu-tags ul').innerHTML = '<div>Here we will list the subjects used in this conversation</div>';
 
-      MS.ul.innerHTML = data.messages.length ? MS.add(data.messages) : '<div class="loading">No messages?<br><br>We only keep those<br>from last 6 months.</div>';
+      if (data.messages.length)
+      {
+        MS.ul.innerHTML = '';
+        MS.page.classList.remove('empty');
+      }
+      else
+      {
+        MS.ul.innerHTML = '<div>No messages?<br><br>We only keep those<br>from last 6 months.</div>';
+        MS.page.classList.add('empty');
+      }
+
       MS.scrollBottom();
 
       if (data.messages.length == MS.pageLength)
