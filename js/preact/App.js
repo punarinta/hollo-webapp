@@ -146,4 +146,5 @@ class App extends Component
   }
 }
 
+document.body.innerHTML = '';
 render(h(App), document.body);
