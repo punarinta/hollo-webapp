@@ -139,7 +139,7 @@ class ChatRow extends Component
               ML.xname(chat)[0]
             ),
             h('div', {className: 'email'},
-              lastMsg || '&mdash;'
+              lastMsg || '—'
             )
           )
         ),

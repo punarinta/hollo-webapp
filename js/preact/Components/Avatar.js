@@ -24,7 +24,7 @@ class Avatar extends Component
         // try loading Gravatar if Gmail avatar failed
         ML.grava(chat.users[0].email, d =>
         {
-          this.setState({nc: '', bgImage: `url(${d.thumbnailUrl}?s=${this.state.size})`});
+          this.setState({nc: '', bgImage: `url(${(d || {}).thumbnailUrl}?s=${this.state.size})`});
         });
       };
       im.src = '/files/avatars/' + chat.users[0].email;

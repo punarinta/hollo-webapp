@@ -144,7 +144,7 @@ var ML =
     if (typeof ML._grava[h] != 'undefined')
     {
       ML._grava[h].data = json.entry[0];
-      if (typeof ML._grava[h].cb == 'function' && json.entry[0])
+      if (typeof ML._grava[h].cb == 'function')
       {
         ML._grava[h].cb(json.entry[0])
       }
