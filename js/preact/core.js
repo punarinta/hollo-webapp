@@ -1,11 +1,5 @@
 var ML =
 {
-  state:
-  {
-    muted: 0,
-    currentDemo: null,
-    widthMode: window.innerWidth > 768
-  },
   _loaded: [],
   _mbox : null,
   _grava: {},
@@ -24,12 +18,8 @@ var ML =
 
     r.open('POST', `https://${CFG.apiRoot}/api/${endpoint}`, true);
     r.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+    r.setRequestHeader('Token', ML.sessionId ? ML.sessionId.toString() : '-');
 
-    if (ML.sessionId)
-    {
-      r.setRequestHeader('Token', ML.sessionId.toString());
-    }
-    
     r.onload = function ()
     {
       var r = this.response.toString();
