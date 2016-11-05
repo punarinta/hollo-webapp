@@ -95,6 +95,11 @@ class ChatsPage extends Component
     }
   }
 
+  showProfile()
+  {
+    ML.go('profile')
+  }
+
   render()
   {
     let chats = [];
@@ -109,6 +114,11 @@ class ChatsPage extends Component
       h('chats-page', {ontouchstart: this.touchStart.bind(this), ontouchmove: this.touchMove.bind(this), ontouchend: this.touchEnd.bind(this)},
         h('ul', null,
           chats
+        ),
+        h(BottomBar, null,
+          h(BarIcon, {caption: 'Profile', img: 'white/close.svg', onclick: this.showProfile}),
+          h(BarIcon, {caption: 'Hollo`d', img: 'white/close.svg'}),
+          h(BarIcon, {caption: 'Muted', img: 'white/close.svg'})
         )
       )
     );
