@@ -1,0 +1,200 @@
+#page-contacts
+  padding 0
+  min-height calc(100vh - 176px)
+  background #fff
+  .head
+    height 128px
+    color color-brand
+    background #fff
+    position fixed
+    width 100%
+    top 0
+    left 0
+    z-index 9
+    .ava
+      float left
+      padding 15px 16px 15px 24px
+      cursor pointer
+    img
+      border-radius 50%
+      border-image 0
+      width 48px
+      height 48px
+    .name
+      padding-top 13px
+      @extend $font-heading
+      color color-brand
+      font-weight 500
+    .email
+      @extend $font-bread
+      color color-brand
+    .clear
+      width 20px
+      height 20px
+      background url('/gfx/color/clear.svg')
+      position fixed
+      top 94px
+      right 10px
+      display none
+      cursor pointer
+    &.mode2
+      .clear
+        display block
+      .accounts
+        display none
+      .hint
+        display flex
+  .accounts
+    overflow hidden
+    height 80px
+    white-space nowrap
+    display flex
+  .hint
+    height 80px
+    display none
+    justify-content center
+    align-items center
+    font-size 14px
+    text-align center
+    animation-mixin(fadeInUp)
+  .search
+    input
+      height 48px
+      border 0
+      width 100%
+      background url('/gfx/color/search.svg') no-repeat 40px 15px
+      color color-brand
+      font-size 14px
+      padding 0 0 0 89px
+      &::-webkit-input-placeholder
+        color color-brand
+      &::-moz-placeholder
+        color color-brand
+  .tabs
+    height 48px
+    display flex
+    background #fff
+    z-index 10
+    @extend $font-clickable-bold
+    div
+      border-bottom 1px color-bg-grey solid
+      flex 1 0 0
+      text-align center
+      padding-top 14px
+      cursor pointer
+      span
+        border 0 solid
+      &.sel
+        span
+          border-width 0 0 2px
+  ul
+    list-style-type none
+    margin 176px 0 0
+    padding 0
+    overflow-x hidden
+    transition-mixin(transform)
+    .loading
+      display flex
+      justify-content center
+      min-height calc(100vh - 190px)
+      align-items center
+      text-align center
+      font-weight 300
+      font-size 24px
+      color rgba(0,0,0,.8)
+      line-height 150%
+    li
+      overflow hidden
+      height 72px
+      white-space nowrap
+      display flex
+      padding-left 8px
+      width 100vw
+      transition height .8s ease-in, opacity .8s ease-in
+      cursor pointer
+      background #fff
+      align-items center
+      position relative
+      &.new
+        .name
+          color color-brand
+        .img
+          background transparent url('/gfx/color/plus.svg') no-repeat center
+          display block
+      &:nth-child(n
+        & + 3):after
+          content ''
+          top 0
+          display block
+          position absolute
+          background-color color-bg-grey
+          height 1px
+          width calc(100% - 40px)
+          left 20px
+      &.travel
+        transition all .4s ease-in
+    .ava
+      float left
+      margin 12px
+      width 48px
+      min-width 48px
+      height 48px
+      opacity 0
+      animation-mixin(fadeInUp)
+    .hujava
+      opacity 0
+      animation-mixin(fadeInUp)
+    .img
+      border-radius 50%
+      width 48px
+      height 48px
+      display flex
+      justify-content center
+      align-items center
+      // border 3px transparent solid
+      transition border-color .5s
+      transition-delay .5s
+      color #fff
+      text-transform uppercase
+      font 18px sans-serif
+      background-size cover !important
+      &.unread
+        border 3px color-brand solid
+        // border-color color-brand
+    .name
+      @extend $font-heading
+      margin-bottom 2px
+      overflow hidden
+      text-overflow ellipsis
+      width calc(100vw - 90px)
+      &:first-letter
+        text-transform capitalize
+    .email
+      overflow hidden
+      text-overflow ellipsis
+      width calc(100vw - 90px)
+      @extend $font-bread
+    .shadow
+      height 72px
+      display none
+      background color-brand
+      color #fff
+      div
+        display flex
+        justify-content center
+        align-items center
+        height 100%
+        width 80px
+        font-size 15px
+        text-align center
+        &:first-child
+          float left
+        &:last-child
+          float right
+          margin-right 12px
+
+#show-holloed
+  padding-left 24px
+
+#show-muted
+  padding-right 24px

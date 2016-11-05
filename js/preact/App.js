@@ -4,29 +4,145 @@ class App extends Component
   {
     super();
     this.state.page = 'loading';
+    this.state.pageMode = 0;
+
+    this.state.muted = 0;
+    this.state.currentDemo = null;
+    this.state.widthMode = window.innerWidth > 768;
   }
 
   componentDidMount()
   {
-    // update time every second
-    this.timer = setTimeout(() =>
+    if (localStorage.getItem('sessionId'))
     {
-      this.setState({ page: 'login' });
-    }, 1000);
+      ML.sessionId = localStorage.getItem('sessionId');
+    }
+
+
+    // === ROUTER ===
+    window.onpopstate = (e) =>
+    {
+      let r = e.state.route, rs = r.split('/');
+
+      if (rs[0] == 'chat')
+      {
+        this.setState({page: 'chat', pageMode: rs[1]});
+      }
+      else
+      {
+        switch (r)
+        {
+          case 'contacts':
+            // if (AU.user) CO.show(e.state.data || 7);
+            this.setState({page: 'contacts', pageMode: e.state.data || 7});
+            break;
+
+          case 'auth/login':
+            this.setState({page: 'login'});
+            break;
+
+          case 'auth/logout':
+            ML.api('auth', 'logout', null, () =>
+            {
+              this.setState({page: 'login'});
+            });
+            break;
+
+          case 'profile':
+            this.setState({page: 'profile'});
+            break;
+
+          case 'demo':
+            ML.go('contacts');
+        }
+      }
+    };
+
+    let oauthCode = ML.getQueryVar('code');
+    if (oauthCode)
+    {
+      let isMobile = window.location.pathname == '/oauth/googleMobile';
+
+      ML.api('auth', 'processOAuthCode', {code: oauthCode, redirectUrl: CFG.redirectUrl + (isMobile?'Mobile':'')}, data =>
+        {
+          if (data.user)
+          {
+            // AU.init(data);
+
+            if (isMobile)
+            {
+              history.go(1 - history.length);
+            }
+            else
+            {
+              ML.go('contacts')
+            }
+          }
+          else
+          {
+            localStorage.removeItem('sessionId');
+            ML.go('auth/login');
+          }
+        },
+        () =>
+        {
+          ML.mbox('Google login API is down. Say what?', 0, () =>
+          {
+            this.setState({page: 'login'});
+          })
+        });
+    }
+    else ML.api('auth', 'status', {}, data =>
+    {
+      if (data.user)
+      {
+        // AU.init(data);
+
+        let p = document.location.pathname;
+        if (p == '/') ML.go('contacts');
+        else ML.go(p.substring(1))
+      }
+      else
+      {
+        localStorage.removeItem('sessionId');
+        ML.go('auth/login')
+      }
+    });
   }
 
   render()
   {
     // place here the logic of page switching
-    let page = this.state.page == 'loading' ? h(LoadingPage) : h(LoginPage);
+    let pages = [];
 
-    return (
+    switch (this.state.page)
+    {
+      case 'loading':
+        pages = h(LoadingPage);
+        break;
 
-      h(
-        'div', { id: 'app' },
-        page
-      )
-    );
+      case 'login':
+        pages = h(LoginPage);
+        break;
+
+      case 'contacts':
+        pages = [h(ChatsPage, {mode: this.state.pageMode})];
+        if (this.state.widthMode)
+        {
+          pages.push(h(MessagesPage))
+        }
+        break;
+
+      case 'chat':
+        pages = [h(MessagesPage, {mode: this.state.pageMode})];
+        if (this.state.widthMode)
+        {
+          pages.unshift(h(ChatsPage))
+        }
+        break;
+    }
+
+    return h('div', { id: 'app' }, pages);
   }
 }
 

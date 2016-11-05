@@ -1,4 +1,4 @@
-class WavyLoader extends Component
+class HolloLoaderBig extends Component
 {
   render()
   {
@@ -10,7 +10,7 @@ class WavyLoader extends Component
     return (
 
       h(
-        'wavy-loader', {className: 'hollo-loader-big'},
+        'hollo-loader-big', null,
         items
       )
     );

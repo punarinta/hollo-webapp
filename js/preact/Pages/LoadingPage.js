@@ -4,12 +4,10 @@ class LoadingPage extends Component
   {
     return (
 
-      h(
-        'app-loader', null,
-        h(
-          'div', {id: 'page-loader', className: 'page fullhide'},
-          h('img', {className: 'logo', src: '/gfx/white/logo.svg'}),
-          h(WavyLoader)
+      h('app-loader', null,
+        h('div', {style: {display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}},
+          h('img', {src: '/gfx/white/logo.svg'}),
+          h(HolloLoaderBig)
         )
       )
     );

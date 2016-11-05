@@ -1,0 +1,50 @@
+chat-row
+  overflow hidden
+  height 72px
+  white-space nowrap
+  display flex
+  padding-left 4px
+  transition height .8s ease-in, opacity .8s ease-in
+  cursor pointer
+  background #fff
+  align-items center
+  position relative
+  avatar
+    margin 12px
+  &>div
+    display flex
+  .name
+    @extend $font-heading
+    margin-bottom 2px
+    overflow hidden
+    text-overflow ellipsis
+    width calc(100vw - 90px)
+    font-size 22px
+    &:first-letter
+      text-transform capitalize
+  .email
+    overflow hidden
+    text-overflow ellipsis
+    width calc(100vw - 90px)
+    font-size 14px
+    @extend $font-bread
+  .info
+    padding-top 12px
+  .shadow
+    height 72px
+    display none
+    background color-brand
+    color #fff
+    div
+      display flex
+      justify-content center
+      align-items center
+      height 100%
+      width 80px
+      font-size 15px
+      text-align center
+      &:first-child
+        float left
+      &:last-child
+        float right
+        margin-right 12px
