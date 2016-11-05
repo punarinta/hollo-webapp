@@ -5,10 +5,23 @@ class App extends Component
     super();
     this.state.page = 'loading';
     this.state.pageMode = 0;
-
-    this.state.muted = 0;
     this.state.currentDemo = null;
     this.state.widthMode = window.innerWidth > 768;
+
+    if (typeof mixpanel != 'undefined' && !mixpanel.off)
+    {
+      mixpanel.identify(data.user.email);
+      mixpanel.people.set(
+      {
+        '$email':   data.user.email,
+        '$name':    data.user.name,
+        'hollo_id': data.user.id
+      });
+    }
+    else
+    {
+      window.mixpanel = {track: () => {}, off: 1}
+    }
   }
 
   componentDidMount()
