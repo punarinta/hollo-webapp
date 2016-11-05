@@ -6,13 +6,16 @@ chat-row
   padding-left 4px
   transition height .8s ease-in, opacity .8s ease-in
   cursor pointer
-  background #fff
   align-items center
   position relative
   avatar
     margin 12px
   &>div
     display flex
+    background color-bg-grey
+    width 100%
+    &.travel
+      transition all .4s ease-in
   .name
     @extend $font-heading
     margin-bottom 2px
@@ -33,6 +36,7 @@ chat-row
   .shadow
     height 72px
     display none
+    width 100%
     background color-brand
     color #fff
     div
