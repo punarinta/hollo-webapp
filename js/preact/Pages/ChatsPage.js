@@ -5,30 +5,48 @@ class ChatsPage extends Component
     super();
     this.pageLength = Math.ceil(2.5 * (screen.height - 176) / 72);
     this.pageStart = 0;
+    this.filterTimer = null;
+    this.emailFilter = '';
+    this.canLoadMore = 0;
+    this.muted = 0;
 
-    this.state.muted = 0;
     this.state.chats = [];
     this.state.blockSwipe = 0;
   }
 
   componentDidMount()
   {
-    let filters = [{mode: 'muted', value: this.state.muted}];
     window.addEventListener('scroll', this.scroll.bind(this));
-
-    ML.api('chat', 'find', {pageStart: 0, pageLength: this.pageLength, filters: filters, sortBy: 'lastTs'}, (data) =>
-    {
-      if (data.length == this.pageLength)
-      {
-        this.more = 1;
-      }
-      this.setState({chats: data})
-    });
+    this.callFind();
   }
 
   componentWillUnmount()
   {
     window.removeEventListener('scroll', this.scroll.bind(this));
+  }
+
+  callFind(shouldAdd = 0)
+  {
+    let filters = [{mode: 'muted', value: this.muted}];
+
+    if (this.emailFilter.length)
+    {
+      filters.push({mode:'email', value: this.emailFilter});
+    }
+
+    ML.api('chat', 'find', {pageStart: 0, pageLength: this.pageLength, filters: filters, sortBy: 'lastTs'}, (data) =>
+    {
+      this.canLoadMore = (data.length == this.pageLength);
+
+      if (shouldAdd)
+      {
+        this.setState({chats: this.state.chats.concat(data)});
+      }
+      else
+      {
+        this.setState({chats: data})
+      }
+    });
   }
 
   touchStart(e)
@@ -44,7 +62,10 @@ class ChatsPage extends Component
 
     if (Math.abs(distY) > 16)
     {
-      this.setState({blockSwipe: true});
+      if (!this.state.blockSwipe)
+      {
+        this.setState({blockSwipe: true});
+      }
 
       if (distY > 72)
       {
@@ -56,18 +77,21 @@ class ChatsPage extends Component
 
   touchEnd()
   {
-    this.setState({blockSwipe: false});
-    this.ul.style.transform = 'translateY(0)';
-
-    if (this.pull)
+    if (this.state.blockSwipe)
     {
-      //CO.show(20);
+      this.setState({blockSwipe: false});
+      this.ul.style.transform = 'translateY(0)';
+
+      if (this.pull)
+      {
+        this.callFind(0);
+      }
     }
   }
 
   scroll()
   {
-    if (!this.more)
+    if (!this.canLoadMore)
     {
       return;
     }
@@ -76,28 +100,40 @@ class ChatsPage extends Component
 
     if (el && el.getBoundingClientRect().bottom < screen.height + 50)
     {
-      this.more = 0;
+      this.canLoadMore = 0;
       this.pageStart += this.pageLength;
-
-      let filters = [{mode: 'muted', value: this.state.muted}];
-
-      ML.api('chat', 'find', { pageStart: this.pageStart, pageLength: this.pageLength, filters: filters, sortBy: 'lastTs'}, (data) =>
-      {
-        if (data.length == this.pageLength)
-        {
-          this.more = 1;
-        }
-
-        this.setState({chats: this.state.chats.concat(data)});
-      });
+      this.callFind(1);
 
       mixpanel.track('Chat - get more');
     }
   }
 
-  showProfile()
+  filterChanged(filter)
   {
-    ML.go('profile')
+    clearTimeout(this.filterTimer);
+
+    this.filterTimer = setTimeout( () =>
+    {
+      if (this.emailFilter != filter)
+      {
+        this.emailFilter = filter;
+        this.callFind(0);
+      }
+
+      mixpanel.track('Sys - filter', {keyword: filter});
+    }, 500);
+  }
+
+  showHolloed()
+  {
+    this.muted = 0;
+    this.callFind(0);
+  }
+
+  showMuted()
+  {
+    this.muted = 1;
+    this.callFind(0);
   }
 
   render()
@@ -112,13 +148,14 @@ class ChatsPage extends Component
     return (
 
       h('chats-page', {ontouchstart: this.touchStart.bind(this), ontouchmove: this.touchMove.bind(this), ontouchend: this.touchEnd.bind(this)},
+        h(SearchBar, {placeholder: 'Search chat or start new', onchange: this.filterChanged.bind(this)}),
         h('ul', null,
           chats
         ),
         h(BottomBar, null,
-          h(BarIcon, {caption: 'Profile', img: 'white/close.svg', onclick: this.showProfile}),
-          h(BarIcon, {caption: 'Hollo`d', img: 'white/close.svg'}),
-          h(BarIcon, {caption: 'Muted', img: 'white/close.svg'})
+          h(BarIcon, {caption: 'Profile', img: 'white/profile_new.svg', onclick: () => ML.go('profile')}),
+          h(BarIcon, {caption: 'Hollo`d', img: 'white/email_new.svg', onclick: this.showHolloed.bind(this)}),
+          h(BarIcon, {caption: 'Muted', img: 'white/muted_new.svg', onclick: this.showMuted.bind(this)})
         )
       )
     );

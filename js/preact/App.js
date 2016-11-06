@@ -138,6 +138,10 @@ class App extends Component
         pages = h(LoginPage);
         break;
 
+      case 'profile':
+        pages = h(ProfilePage);
+        break;
+
       case 'contacts':
         pages = [h(ChatsPage, {mode: this.state.pageMode})];
         if (this.state.widthMode)
