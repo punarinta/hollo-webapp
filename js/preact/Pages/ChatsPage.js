@@ -84,7 +84,7 @@ class ChatsPage extends Component
 
       if (this.pull)
       {
-        this.callFind(0);
+        this.callFind();
       }
     }
   }
@@ -117,7 +117,7 @@ class ChatsPage extends Component
       if (this.emailFilter != filter)
       {
         this.emailFilter = filter;
-        this.callFind(0);
+        this.callFind();
       }
 
       mixpanel.track('Sys - filter', {keyword: filter});
@@ -127,13 +127,13 @@ class ChatsPage extends Component
   showHolloed()
   {
     this.muted = 0;
-    this.callFind(0);
+    this.callFind();
   }
 
   showMuted()
   {
     this.muted = 1;
-    this.callFind(0);
+    this.callFind();
   }
 
   render()
