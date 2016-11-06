@@ -136,13 +136,18 @@ class ChatsPage extends Component
     this.callFind();
   }
 
+  onClick(chat)
+  {
+    console.log(chat.id);
+  }
+
   render()
   {
     let chats = [];
 
     for (let i in this.state.chats)
     {
-      chats.push(h(ChatRow, {chat: this.state.chats[i], canSwipe: !this.state.blockSwipe}))
+      chats.push(h(ChatRow, {chat: this.state.chats[i], canSwipe: !this.state.blockSwipe, onclick: this.onClick.bind(this)}))
     }
 
     return (

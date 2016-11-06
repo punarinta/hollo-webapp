@@ -136,7 +136,12 @@ class ChatRow extends Component
 
     return (
 
-      h('chat-row', {ontouchstart: this.touchStart.bind(this), ontouchmove: this.touchMove.bind(this), ontouchend: this.touchEnd.bind(this)},
+      h('chat-row', {
+          ontouchstart: this.touchStart.bind(this),
+          ontouchmove: this.touchMove.bind(this),
+          ontouchend: this.touchEnd.bind(this),
+          onclick: () => this.props.onclick(this.state.chat)
+        },
         h('div', null,
           h(Avatar, {chat}),
           h('div', {className: 'info'},
