@@ -10,6 +10,11 @@ class ChatRow extends Component
     this.state.chat = this.props.chat;
   }
 
+  componentWillReceiveProps(nextProps)
+  {
+    this.setState({chat: nextProps.chat});
+  }
+
   touchStart(e)
   {
     let t = e.changedTouches[0];

@@ -2,15 +2,25 @@ class Avatar extends Component
 {
   componentWillMount()
   {
-    let chat = this.props.chat,
+    this.loadGraphics(this.props);
+  }
+
+  componentWillReceiveProps(nextProps)
+  {
+    this.loadGraphics(nextProps);
+  }
+
+  loadGraphics(props)
+  {
+    let chat = props.chat,
         email = chat.users[0].email;
 
-    this.state =
+    this.setState(
     {
       nc: ML.xname(chat)[1],
       bgImage: '',
-      size: this.props.size || '48px'
-    };
+      size: props.size || '48px'
+    });
 
     if (chat.users.length < 2)
     {
@@ -24,10 +34,13 @@ class Avatar extends Component
         // try loading Gravatar if Gmail avatar failed
         ML.grava(chat.users[0].email, d =>
         {
-          this.setState({nc: '', bgImage: `url(${(d || {}).thumbnailUrl}?s=${this.state.size})`});
+          if (d)
+          {
+            this.setState({nc: '', bgImage: `url(${d.thumbnailUrl}?s=${this.state.size})`});
+          }
         });
       };
-      im.src = '/files/avatars/' + chat.users[0].email;
+      im.src = '/files/avatars/' + email;
     }
   }
 
