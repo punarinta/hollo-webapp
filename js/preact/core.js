@@ -6,6 +6,51 @@ var ML =
   ws: null,
   _wsOpened: 0,
   sessionId: null,
+  user: null,
+
+  initUser (data)
+  {
+    ML.sessionId = data.sessionId;
+    ML.user = data.user;
+    // CFG.reset();
+    localStorage.setItem('sessionId', this.sessionId);
+
+    // send auth data to top frame
+    parent.postMessage({cmd: 'onAuth', user: this.user}, '*');
+
+    if (typeof mixpanel != 'undefined' && !mixpanel.off)
+    {
+      mixpanel.identify(data.user.email);
+      mixpanel.people.set(
+        {
+          '$email':   data.user.email,
+          '$name':    data.user.name,
+          'hollo_id': data.user.id
+        });
+    }
+    else
+    {
+      window.mixpanel = {track: () => {}, off: 1}
+    }
+
+    if (ML.ws)
+    {
+      if (ML._wsOpened)
+      {
+        ML.ws.send(JSON.stringify({cmd: 'online', userId: data.user.id}));
+      }
+      else
+      {
+        (function (data)
+        {
+          ML.ws.onopen = function ()
+          {
+            ML.ws.send(JSON.stringify({cmd: 'online', userId: data.user.id}));
+          };
+        })(data);
+      }
+    }
+  },
 
   isJson (testable)
   {

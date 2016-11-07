@@ -60,7 +60,7 @@ class Avatar extends Component
 
     return (
 
-      h('avatar', {className: chat.read ? '' : 'unread', style},
+      h('avatar', {className: chat.read ? '' : 'unread', style, onclick: this.props.onclick},
         this.state.nc
       )
     );

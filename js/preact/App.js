@@ -8,21 +8,6 @@ class App extends Component
     this.state.pagePayload = null;
     this.state.currentDemo = null;
     this.state.widthMode = window.innerWidth > 768;
-
-    if (typeof mixpanel != 'undefined' && !mixpanel.off)
-    {
-      mixpanel.identify(data.user.email);
-      mixpanel.people.set(
-      {
-        '$email':   data.user.email,
-        '$name':    data.user.name,
-        'hollo_id': data.user.id
-      });
-    }
-    else
-    {
-      window.mixpanel = {track: () => {}, off: 1}
-    }
   }
 
   componentDidMount()
@@ -47,7 +32,6 @@ class App extends Component
         switch (r)
         {
           case 'contacts':
-            // if (AU.user) CO.show(e.state.data || 7);
             this.setState({page: 'contacts', pageMode: e.state.data || 7});
             break;
 
@@ -67,6 +51,7 @@ class App extends Component
             break;
 
           case 'demo':
+            // used to keep history
             ML.go('contacts');
         }
       }
@@ -81,7 +66,7 @@ class App extends Component
       {
         if (data.user)
         {
-          // AU.init(data);
+          ML.initUser(data);
 
           if (isMobile)
           {
@@ -110,7 +95,7 @@ class App extends Component
     {
       if (data.user)
       {
-        // AU.init(data);
+        ML.initUser(data);
 
         let p = document.location.pathname;
         if (p == '/') ML.go('contacts');

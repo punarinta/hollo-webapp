@@ -1,0 +1,97 @@
+message-bubble
+  display block
+  overflow auto
+  width calc(100vw - 10px)
+  animation-mixin(fadeInUp)
+  opacity 0
+  animation-delay 1s
+  for num in (1..12) // Makes content show up in read order
+    &:nth-last-of-type({num})
+      animation-delay num * 0.05s
+  & > div
+    overflow auto
+    margin 5px 3px
+    min-width 200px
+    max-width 100%
+  .white
+    background-color #fff
+    padding 10px 12px 2px
+    border-radius 3px
+  .msg
+    display inline-block
+    @extend $font-bread
+    -ms-word-break normal
+    word-break normal
+    width 100%
+    overflow hidden
+    text-overflow ellipsis
+    .fwd
+      border 1px solid color-brand
+      background color-brand
+      color #fff
+      border-radius 2px
+      padding 3px 5px
+      cursor pointer
+    p
+      text-align justify
+  .cap
+    color color-brand
+    cursor pointer
+    font 15px 'Work Sans'
+    background url('/gfx/color/subj_new.svg') no-repeat 1px
+    padding-left 24px
+  .files
+    display flex
+    overflow-x auto
+    margin-bottom 10px
+    & > div
+      overflow hidden
+      white-space nowrap
+      margin-right 3px
+      &.full
+        width 80vw
+        height 50vw
+  .foot
+    .info
+      float right
+      margin 6px 25px 0
+      font-size 10px
+      color rgba(0,0,0,0.3)
+      font-family Roboto
+      .status
+        font-size 12px
+        display inline-block
+        margin -2px 5px 0 0
+        &:before
+          width 9px
+          height 9px
+          content ' '
+          display block
+        &.s1
+          &:before
+            background url('/gfx/gray/clock.svg') no-repeat
+        &.s2
+          &:before
+            background url('/gfx/gray/check.svg') no-repeat
+            width 12px
+  &.yours
+    .foot
+      avatar
+        float left
+        left 16px
+      .info
+        float left
+        margin-left 21px
+    & > div
+      float left
+      margin-right 15px
+  &.mine
+    & > div
+      float right
+      margin-left 15px
+  avatar
+    float right
+    position relative
+    top -9px
+    left -16px
+    font 15px sans-serif
