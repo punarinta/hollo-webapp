@@ -5,6 +5,7 @@ class App extends Component
     super();
     this.state.page = 'loading';
     this.state.pageMode = 0;
+    this.state.pagePayload = null;
     this.state.currentDemo = null;
     this.state.widthMode = window.innerWidth > 768;
 
@@ -39,7 +40,7 @@ class App extends Component
 
       if (rs[0] == 'chat')
       {
-        this.setState({page: 'chat', pageMode: rs[1]});
+        this.setState({page: 'chat', pagePayload: rs[1]});
       }
       else
       {
@@ -77,33 +78,33 @@ class App extends Component
       let isMobile = window.location.pathname == '/oauth/googleMobile';
 
       ML.api('auth', 'processOAuthCode', {code: oauthCode, redirectUrl: CFG.redirectUrl + (isMobile?'Mobile':'')}, data =>
+      {
+        if (data.user)
         {
-          if (data.user)
-          {
-            // AU.init(data);
+          // AU.init(data);
 
-            if (isMobile)
-            {
-              history.go(1 - history.length);
-            }
-            else
-            {
-              ML.go('contacts')
-            }
+          if (isMobile)
+          {
+            history.go(1 - history.length);
           }
           else
           {
-            localStorage.removeItem('sessionId');
-            ML.go('auth/login');
+            ML.go('contacts')
           }
-        },
-        () =>
+        }
+        else
         {
-          ML.mbox('Google login API is down. Say what?', 0, () =>
-          {
-            this.setState({page: 'login'});
-          })
-        });
+          localStorage.removeItem('sessionId');
+          ML.go('auth/login');
+        }
+      },
+      () =>
+      {
+        ML.mbox('Google login API is down. Say what?', 0, () =>
+        {
+          this.setState({page: 'login'});
+        })
+      });
     }
     else ML.api('auth', 'status', {}, data =>
     {
@@ -146,12 +147,12 @@ class App extends Component
         pages = [h(ChatsPage, {mode: this.state.pageMode})];
         if (this.state.widthMode)
         {
-          pages.push(h(MessagesPage))
+          pages.push(h(MessagesPage, {chatId: this.state.pagePayload}))
         }
         break;
 
       case 'chat':
-        pages = [h(MessagesPage, {mode: this.state.pageMode})];
+        pages = [h(MessagesPage, {chatId: this.state.pagePayload, mode: this.state.pageMode})];
         if (this.state.widthMode)
         {
           pages.unshift(h(ChatsPage))
