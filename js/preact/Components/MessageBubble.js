@@ -21,12 +21,12 @@ class MessageBubble extends Component
     this.setState({showName: !this.state.showName});
   }
 
-  clearBody (body = '')
+  clearBody(body = '')
   {
     body = body.replace(/(?:[ ]\r\n|[ ]\r|[ ]\n)/g, ' ');
 
-    /*if (CFG._('newlines'))*/ body = body.replace(/(?:\r\n|\r|\n)/g, '<br />');
-    //else body = body.replace(/(?:\r\n\r\n)/g, '</p><p>');
+    body = body.replace('/mailto:/g', '');
+    body = body.replace(/ -- /g, ' — ');
 
     // URLs
     body = body.replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, m =>
@@ -37,10 +37,11 @@ class MessageBubble extends Component
     // mailto: links
     body = body.replace(/(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim, '<a target="_blank" rel="noopener noreferrer" href="mailto:$1">$1</a>');
 
-    body = body.replace('/mailto:/g', '');
-    body = body.replace(/ -- /g, ' — ');
+    body = body.replace(/(?:\r\n|\r\r|\n\n)/g, '</p><p>');
 
-    return h('p', null, body);
+    body = body.replace(/\[sys:fwd\]/g, '<div class="fwd">Forwarded message</div>');
+
+    return h(MessageBody, {html: `<p>${body}</p>`});
   }
 
   render()
@@ -65,8 +66,22 @@ class MessageBubble extends Component
       body = this.clearBody(body)
     }
 
-    let msgBody = body ? h('div', {className: 'msg'}, body) : '',
-        filesBody = '';
+    let filesBody = '',
+        msgBody = body ? h('div', {className: 'msg'}, body) : '';
+
+    if (message.files)
+    {
+      let files = [];
+
+      for (let i in message.files)
+      {
+        files.push(h(FilePlate, {file: message.files[i]}));
+      }
+
+      filesBody = h('div', {className: 'files'},
+        files
+      )
+    }
 
     return (
 
