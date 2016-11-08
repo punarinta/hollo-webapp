@@ -2,7 +2,6 @@ var ML =
 {
   _loaded: [],
   _mbox : null,
-  _grava: {},
   ws: null,
   _wsOpened: 0,
   sessionId: null,
@@ -177,51 +176,6 @@ var ML =
     document.querySelector('head').appendChild(f)
   },
 
-  gravaCb: function (json)
-  {
-    if (!json.entry.length) return;
-
-    let h = json.entry[0].hash,
-        s = document.getElementById('grava-' + h);
-
-    if (s) s.parentNode.removeChild(s);
-
-    if (typeof ML._grava[h] != 'undefined')
-    {
-      ML._grava[h].data = json.entry[0];
-      if (typeof ML._grava[h].cb == 'function')
-      {
-        ML._grava[h].cb(json.entry[0])
-      }
-    }
-  },
-
-  grava (m, cb)
-  {
-    let f = document.createElement('script'), h = md5(m);
-
-    if (typeof this._grava[h] != 'undefined')
-    {
-      if (typeof this._grava[h].cb == 'function')
-      {
-        this._grava[h].cb(this._grava[h].data);
-      }
-      return h
-    }
-
-    f.setAttribute('type', 'text/javascript');
-    f.setAttribute('src', 'https://en.gravatar.com/' + h + '.json?callback=ML.gravaCb');
-    f.setAttribute('id', 'grava-' + h);
-    ML._grava[h] =
-    {
-      cb: cb,
-      data: null
-    };
-    document.querySelector('head').appendChild(f);
-
-    return h;
-  },
-  
   mbox (msg, mode, cb)
   {
     /*

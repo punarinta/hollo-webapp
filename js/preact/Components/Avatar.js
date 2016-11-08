@@ -32,7 +32,7 @@ class Avatar extends Component
       im.onerror = () =>
       {
         // try loading Gravatar if Gmail avatar failed
-        ML.grava(chat.users[0].email, d =>
+        Gravatar.load(chat.users[0].email, d =>
         {
           if (d)
           {
