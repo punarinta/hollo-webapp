@@ -13,13 +13,14 @@ class MessagesPage extends Component
 
   componentDidMount()
   {
-    window.addEventListener('scroll', this.scroll.bind(this));
+    this.scrollReference = this.scroll.bind(this);
+    window.addEventListener('scroll', this.scrollReference);
     this.callFind();
   }
 
   componentWillUnmount()
   {
-    window.removeEventListener('scroll', this.scroll.bind(this));
+    window.removeEventListener('scroll', this.scrollReference);
   }
 
   callFind(shouldAdd = 0)
