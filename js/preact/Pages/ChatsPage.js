@@ -12,6 +12,7 @@ class ChatsPage extends Component
 
     this.state.chats = [];
     this.state.blockSwipe = 0;
+    this.state.filterActive = 0;
   }
 
   componentDidMount()
@@ -35,12 +36,13 @@ class ChatsPage extends Component
       filters.push({mode:'email', value: this.emailFilter});
     }
 
-    ML.api('chat', 'find', {pageStart: 0, pageLength: this.pageLength, filters: filters, sortBy: 'lastTs'}, (data) =>
+    ML.api('chat', 'find', {pageStart: this.pageStart, pageLength: this.pageLength, filters: filters, sortBy: 'lastTs'}, (data) =>
     {
       this.canLoadMore = (data.length == this.pageLength);
 
       if (shouldAdd)
       {
+        this.pageStart += data.length;
         this.setState({chats: this.state.chats.concat(data)});
       }
       else
@@ -125,6 +127,11 @@ class ChatsPage extends Component
     }, 500);
   }
 
+  filterFocusChanged(focus)
+  {
+    this.setState({filterActive: focus})
+  }
+
   showHolloed()
   {
     this.muted = 0;
@@ -146,18 +153,35 @@ class ChatsPage extends Component
       chats.push(h(ChatRow, {chat: this.state.chats[i], canSwipe: !this.state.blockSwipe, onclick: (chat) => ML.go('chat/' + chat.id)}))
     }
 
+    let normalPart =
+    [
+      h('ul', null,
+        chats
+      ),
+      h(BottomBar, null,
+        h(BarIcon, {caption: 'Profile', img: 'white/profile_new.svg', onclick: () => ML.go('profile')}),
+        h(BarIcon, {caption: 'Hollo`d', img: 'white/email_new.svg', onclick: this.showHolloed.bind(this)}),
+        h(BarIcon, {caption: 'Muted', img: 'white/muted_new.svg', onclick: this.showMuted.bind(this)})
+      )
+    ];
+
     return (
 
       h('chats-page', {ontouchstart: this.touchStart.bind(this), ontouchmove: this.touchMove.bind(this), ontouchend: this.touchEnd.bind(this)},
-        h(SearchBar, {placeholder: 'Search chat or start new', onchange: this.filterChanged.bind(this)}),
-        h('ul', null,
-          chats
-        ),
-        h(BottomBar, null,
-          h(BarIcon, {caption: 'Profile', img: 'white/profile_new.svg', onclick: () => ML.go('profile')}),
-          h(BarIcon, {caption: 'Hollo`d', img: 'white/email_new.svg', onclick: this.showHolloed.bind(this)}),
-          h(BarIcon, {caption: 'Muted', img: 'white/muted_new.svg', onclick: this.showMuted.bind(this)})
-        )
+        h(SearchBar,
+        {
+          placeholder: 'Search chat or start new',
+          onchange: this.filterChanged.bind(this),
+          onfocuschange: this.filterFocusChanged.bind(this),
+          className: this.state.filterActive ? 'focused' : ''
+        }),
+        this.state.filterActive && !this.emailFilter.length ? h('div', {className: 'filter-hint'},
+          'To start a new',
+          h('br'),
+          'conversation type in',
+          h('br'),
+          'an email address.'
+        ) : normalPart
       )
     );
   }

@@ -25,14 +25,15 @@ class MessagesPage extends Component
 
   callFind(shouldAdd = 0)
   {
-    ML.api('message', 'findByChatId', {chatId: this.props.chatId, pageStart: 0, pageLength: this.pageLength}, (data) =>
+    ML.api('message', 'findByChatId', {chatId: this.props.chatId, pageStart: this.pageStart, pageLength: this.pageLength}, (data) =>
     {
-      this.canLoadMore = (data.length == this.pageLength);
+      this.canLoadMore = (data.messages.length == this.pageLength);
 
       data.messages = data.messages.reverse();
 
       if (shouldAdd)
       {
+        this.pageStart += data.messages.length;
         this.setState({messages: data.messages.concat(this.state.messages)});
       }
       else

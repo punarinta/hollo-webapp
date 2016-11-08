@@ -1,17 +1,35 @@
 chats-page
   width 100vw
-  height calc(100vh - 56px)
   background-color color-bg-grey
   display block
+  top 0
+  position fixed
   search-bar
     position fixed
     top 0
     width 100%
     background-color color-bg-grey
     z-index 10
+    &.focused
+      margin 0 20px
+      border-bottom 2px solid color-brand
+      width calc(100% - 40px)
+      input
+        padding-left 0
+        background 0
   ul
+    height calc(100vh - 56px)
     padding 0
     list-style-type none
     margin 56px 0
     overflow-x hidden
     transition-mixin(transform)
+  .filter-hint
+    display flex
+    justify-content center
+    align-items center
+    text-align center
+    height 100vh
+    line-height 20px
+    color: rgba(0, 0, 0, .4)
+    font-size 15px

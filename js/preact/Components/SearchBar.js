@@ -4,11 +4,13 @@ class SearchBar extends Component
   {
     super();
     this.state.value = '';
+    this.state.focus = 1;
   }
 
   componentWillMount()
   {
     this.onchange = this.props.onchange || (() => {});
+    this.onfocuschange = this.props.onfocuschange || (() => {});
   }
 
   onKeyUp(e)
@@ -16,6 +18,18 @@ class SearchBar extends Component
     let value = e.target.value;
     this.setState({value});
     this.onchange(value);
+  }
+
+  onFocus()
+  {
+    this.setState({focus: 1});
+    this.onfocuschange(1)
+  }
+
+  onBlur()
+  {
+    this.setState({focus: 0});
+    this.onfocuschange(0)
   }
 
   clear()
@@ -28,9 +42,17 @@ class SearchBar extends Component
   {
     return (
 
-      h('search-bar', null,
-        h('input', {type: 'text', value: this.state.value, onkeyup: this.onKeyUp.bind(this), placeholder: props.placeholder}),
-        h('div', {onclick: this.clear.bind(this), style: {display: this.state.value.length ? 'block' : 'none'}})
+      h('search-bar', {className: this.props.className},
+        h('input',
+        {
+          type: 'text',
+          value: this.state.value,
+          onkeyup: this.onKeyUp.bind(this),
+          onfocus: this.onFocus.bind(this),
+          onblur: this.onBlur.bind(this),
+          placeholder: props.placeholder
+        }),
+        h('div', {onclick: this.clear.bind(this), style: {display: this.state.focus ? 'block' : 'none'}})
       )
     );
   }
