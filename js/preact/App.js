@@ -11,6 +11,7 @@ class App extends Component
     this.state.widthMode = window.innerWidth > 768;
     this.state.demoBox = null;
     this.state.messageBox = null;
+    this.state.user = null;
   }
 
   componentDidMount()
@@ -22,6 +23,7 @@ class App extends Component
 
     window.addEventListener('hollo:demobox', this.showDemoBox.bind(this));
     window.addEventListener('hollo:messagebox', this.showMessageBox.bind(this));
+    window.addEventListener('hollo:inituser', this.initUser.bind(this));
 
     // === ROUTER ===
     window.onpopstate = (e) =>
@@ -67,7 +69,7 @@ class App extends Component
       {
         if (data.user)
         {
-          ML.initUser(data);
+          ML.emit('inituser', {data});
 
           if (isMobile)
           {
@@ -96,7 +98,7 @@ class App extends Component
     {
       if (data.user)
       {
-        ML.initUser(data);
+        ML.emit('inituser', {data});
 
         let p = document.location.pathname;
         if (p == '/') ML.go('chats');
@@ -108,6 +110,52 @@ class App extends Component
         ML.go('auth/login')
       }
     });
+  }
+
+  initUser(e)
+  {
+    let data = e.payload.data;
+
+    ML.sessionId = data.sessionId;
+    localStorage.setItem('sessionId', data.sessionId);
+
+    // send auth data to top frame
+    parent.postMessage({cmd: 'onAuth', user: data.user}, '*');
+
+    if (typeof mixpanel != 'undefined' && !mixpanel.off)
+    {
+      mixpanel.identify(data.user.email);
+      mixpanel.people.set(
+      {
+        '$email':   data.user.email,
+        '$name':    data.user.name,
+        'hollo_id': data.user.id
+      });
+    }
+    else
+    {
+      window.mixpanel = {track: () => {}, off: 1}
+    }
+
+    if (ML.ws)
+    {
+      if (ML._wsOpened)
+      {
+        ML.ws.send(JSON.stringify({cmd: 'online', userId: data.user.id}));
+      }
+      else
+      {
+        (function (data)
+        {
+          ML.ws.onopen = function ()
+          {
+            ML.ws.send(JSON.stringify({cmd: 'online', userId: data.user.id}));
+          };
+        })(data);
+      }
+    }
+
+    this.setState({user: data.user})
   }
 
   showDemoBox(e)
@@ -150,7 +198,7 @@ class App extends Component
         break;
 
       case 'profile':
-        pages.push(h(ProfilePage));
+        pages.push(h(ProfilePage, {user: this.state.user}));
         break;
 
       case 'chats':
