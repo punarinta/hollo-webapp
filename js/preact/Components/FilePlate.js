@@ -1,18 +1,14 @@
 class FilePlate extends Component
 {
-  onClick()
-  {
-    // show a preview
-  }
-
   render()
   {
-    let size = this.props.size || '72px',
-        nc = this.props.file.type.split('/')[1].substring(0, 8);
+    let file = this.props.file,
+        size = this.props.size || '72px',
+        nc = file.type.split('/')[1].substring(0, 8);
 
     let style =
     {
-      backgroundColor: ML.colorHash(this.props.file.type),
+      backgroundColor: ML.colorHash(file.type),
       width: size,
       minWidth: size,
       height: size
@@ -20,7 +16,7 @@ class FilePlate extends Component
 
     return (
 
-      h('file-plate', {style, onclick: this.onClick.bind(this)},
+      h('file-plate', {style, onclick: () => this.props.onclick(file, this.props.offset)},
         nc
       )
     );

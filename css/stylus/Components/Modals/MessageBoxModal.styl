@@ -1,0 +1,25 @@
+message-box-modal
+	top 0
+	z-index 100
+	width 100vw
+	height 100vh
+	background alpha(color-brand, .7)
+	position fixed
+	& > div
+		background #fff
+		display flex
+		flex-direction column
+		margin 5% auto
+		width 90%
+		align-self center
+		max-width 480px
+	.body
+		padding 16px 16px 8px
+		font-size 16px
+	.foot
+		display flex
+	input[type="text"]
+		width calc(100% - 16px)
+	button
+		display none
+		margin 8px auto

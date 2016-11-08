@@ -8,6 +8,8 @@ class App extends Component
     this.state.pagePayload = null;
     this.state.currentDemo = null;
     this.state.widthMode = window.innerWidth > 768;
+    this.state.demoBox = null;
+    this.state.messageBox = null;
   }
 
   componentDidMount()
@@ -17,6 +19,8 @@ class App extends Component
       ML.sessionId = localStorage.getItem('sessionId');
     }
 
+    window.addEventListener('hollo:demobox', this.showDemoBox.bind(this));
+    window.addEventListener('hollo:messagebox', this.showMessageBox.bind(this));
 
     // === ROUTER ===
     window.onpopstate = (e) =>
@@ -32,7 +36,7 @@ class App extends Component
         switch (r)
         {
           case 'contacts':
-            this.setState({page: 'contacts', pageMode: e.state.data || 7});
+            this.setState({page: 'contacts'});
             break;
 
           case 'auth/login':
@@ -49,10 +53,6 @@ class App extends Component
           case 'profile':
             this.setState({page: 'profile'});
             break;
-
-          case 'demo':
-            // used to keep history
-            ML.go('contacts');
         }
       }
     };
@@ -109,27 +109,51 @@ class App extends Component
     });
   }
 
+  showDemoBox(e)
+  {
+    this.setState({demoBox: e.payload});
+  }
+
+  closeDemoBox()
+  {
+    this.setState({demoBox: null});
+  }
+
+  showMessageBox(e)
+  {
+    this.setState({messageBox: e.payload});
+  }
+
+  closeMessageBox()
+  {
+    this.setState({messageBox: null});
+  }
+
   render()
   {
     // place here the logic of page switching
     let pages = [];
 
+    // modals
+    if (this.state.demoBox)    pages.push(h(DemoBoxModal,    {data: this.state.demoBox,    onclose: this.closeDemoBox.bind(this)    }));
+    if (this.state.messageBox) pages.push(h(MessageBoxModal, {data: this.state.messageBox, onclose: this.closeMessageBox.bind(this) }));
+
     switch (this.state.page)
     {
       case 'loading':
-        pages = h(LoadingPage);
+        pages.push(h(LoadingPage));
         break;
 
       case 'login':
-        pages = h(LoginPage);
+        pages.push(h(LoginPage));
         break;
 
       case 'profile':
-        pages = h(ProfilePage);
+        pages.push(h(ProfilePage));
         break;
 
       case 'contacts':
-        pages = [h(ChatsPage, {mode: this.state.pageMode})];
+        pages.push(h(ChatsPage, {mode: this.state.pageMode}));
         if (this.state.widthMode)
         {
           pages.push(h(MessagesPage, {chatId: this.state.pagePayload}))
@@ -137,7 +161,7 @@ class App extends Component
         break;
 
       case 'chat':
-        pages = [h(MessagesPage, {chatId: this.state.pagePayload, mode: this.state.pageMode})];
+        pages.push(h(MessagesPage, {chatId: this.state.pagePayload, mode: this.state.pageMode}));
         if (this.state.widthMode)
         {
           pages.unshift(h(ChatsPage))

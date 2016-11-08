@@ -239,32 +239,7 @@ var ML =
 
     return m;
   },
-  
-  demo (data, mime, canDelete)
-  {
-    var box = document.getElementById('demo'),
-        viewer = box.querySelector('.img');
 
-    box.querySelector('.bar').style.display = canDelete ? 'flex' : 'none';
-
-    if (mime)
-    {
-      if (mime.split('/')[0] == 'image')
-      {
-        viewer.style.background = `transparent url(${data}) no-repeat center`;
-        viewer.innerHTML = '';
-      }
-      else
-      {
-        viewer.style.background = this.colorHash(mime);
-        viewer.innerHTML = mime.split('/')[1];
-        data = 1;
-      }
-    }
-
-    box.style.display = data ? 'flex' : 'none';
-  },
-  
   go (r, d)
   {
     for (let i = 2; i--;)
@@ -273,6 +248,13 @@ var ML =
     }
 
     history.go(-1)
+  },
+
+  emit(eventName, payload)
+  {
+    let e = new Event(eventName);
+    e.payload = payload;
+    window.dispatchEvent(e);
   },
 
   colorHash (input)

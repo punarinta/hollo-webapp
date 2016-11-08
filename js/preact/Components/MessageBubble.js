@@ -44,6 +44,14 @@ class MessageBubble extends Component
     return h(MessageBody, {html: `<p>${body}</p>`});
   }
 
+  previewFile(file, offset)
+  {
+    if (file.type.split('/')[0] == 'image')
+    {
+      ML.emit('hollo:demobox', [this.state.message.id, offset])
+    }
+  }
+
   render()
   {
     let message = this.state.message,
@@ -75,7 +83,7 @@ class MessageBubble extends Component
 
       for (let i in message.files)
       {
-        files.push(h(FilePlate, {file: message.files[i]}));
+        files.push(h(FilePlate, {file: message.files[i], offset: i, onclick: this.previewFile.bind(this)}));
       }
 
       filesBody = h('div', {className: 'files'},
