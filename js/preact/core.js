@@ -1,55 +1,9 @@
 var ML =
 {
   _loaded: [],
-  _mbox : null,
   ws: null,
   _wsOpened: 0,
   sessionId: null,
-  user: null,
-
-  initUser (data)
-  {
-    ML.sessionId = data.sessionId;
-    ML.user = data.user;
-    // CFG.reset();
-    localStorage.setItem('sessionId', this.sessionId);
-
-    // send auth data to top frame
-    parent.postMessage({cmd: 'onAuth', user: this.user}, '*');
-
-    if (typeof mixpanel != 'undefined' && !mixpanel.off)
-    {
-      mixpanel.identify(data.user.email);
-      mixpanel.people.set(
-        {
-          '$email':   data.user.email,
-          '$name':    data.user.name,
-          'hollo_id': data.user.id
-        });
-    }
-    else
-    {
-      window.mixpanel = {track: () => {}, off: 1}
-    }
-
-    if (ML.ws)
-    {
-      if (ML._wsOpened)
-      {
-        ML.ws.send(JSON.stringify({cmd: 'online', userId: data.user.id}));
-      }
-      else
-      {
-        (function (data)
-        {
-          ML.ws.onopen = function ()
-          {
-            ML.ws.send(JSON.stringify({cmd: 'online', userId: data.user.id}));
-          };
-        })(data);
-      }
-    }
-  },
 
   isJson (testable)
   {
@@ -62,7 +16,10 @@ var ML =
 
     r.open('POST', `https://${CFG.apiRoot}/api/${endpoint}`, true);
     r.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-    r.setRequestHeader('Token', ML.sessionId ? ML.sessionId.toString() : '-');
+    if (typeof ML.sessionId == 'string')
+    {
+      r.setRequestHeader('Token', ML.sessionId);
+    }
 
     r.onload = function ()
     {
@@ -174,24 +131,6 @@ var ML =
     f.setAttribute('type', 'text/javascript');
     f.setAttribute('src', '/' + fn + '.js');
     document.querySelector('head').appendChild(f)
-  },
-
-  mbox (msg, mode, cb)
-  {
-    /*
-    Modes:
-    0 - OK
-    1 - OK, Cancel
-     */
-    
-    let m = document.getElementById('mbox');
-    m.querySelector('.ok').style.display = 'block';
-    m.querySelector('.cancel').style.display = mode ? 'block' : 'none';
-    m.style.display = 'flex';
-    m.querySelector('.body').innerHTML = msg;
-    ML._mbox = cb || function () {};
-
-    return m;
   },
 
   go (r, d)
