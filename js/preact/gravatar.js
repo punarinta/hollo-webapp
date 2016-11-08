@@ -1,6 +1,6 @@
 var Gravatar =
 {
-  callback: {},
+  callbacks: {},
 
   jsonp: function (json)
   {
@@ -11,12 +11,12 @@ var Gravatar =
 
     if (s) s.parentNode.removeChild(s);
 
-    if (typeof Gravatar.callback[h] != 'undefined')
+    if (typeof Gravatar.callbacks[h] != 'undefined')
     {
-      Gravatar.callback[h].data = json.entry[0];
-      if (typeof Gravatar.callback[h].cb == 'function')
+      Gravatar.callbacks[h].data = json.entry[0];
+      if (typeof Gravatar.callbacks[h].cb == 'function')
       {
-        Gravatar.callback[h].cb(json.entry[0])
+        Gravatar.callbacks[h].cb(json.entry[0])
       }
     }
   },
@@ -25,11 +25,11 @@ var Gravatar =
   {
     let h = md5(email);
 
-    if (typeof Gravatar.callback[h] != 'undefined')
+    if (typeof Gravatar.callbacks[h] != 'undefined')
     {
-      if (typeof Gravatar.callback[h].cb == 'function')
+      if (typeof Gravatar.callbacks[h].cb == 'function')
       {
-        Gravatar.callback[h].cb(Gravatar.callback[h].data);
+        Gravatar.callbacks[h].cb(Gravatar.callbacks[h].data);
       }
 
       return h
@@ -41,7 +41,7 @@ var Gravatar =
     f.setAttribute('src', `https://en.gravatar.com/${h}.json?callback=Gravatar.jsonp`);
     f.setAttribute('id', 'grava-' + h);
 
-    Gravatar.callback[h] =
+    Gravatar.callbacks[h] =
     {
       cb: cb,
       data: null
