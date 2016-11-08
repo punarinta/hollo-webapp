@@ -48,7 +48,7 @@ class MessageBubble extends Component
   {
     if (file.type.split('/')[0] == 'image')
     {
-      ML.emit('hollo:demobox', [this.state.message.id, offset])
+      ML.emit('hollo:demobox', {messageId: this.state.message.id, offset, file})
     }
   }
 

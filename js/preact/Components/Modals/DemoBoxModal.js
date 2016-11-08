@@ -2,7 +2,8 @@ class DemoBoxModal extends Component
 {
   render()
   {
-    let url = `/api/file?method=download&messageId=${this.props.data[0]}&offset=${this.props.data[0]}`;
+    let data = this.props.data,
+        url = `/api/file?method=download&messageId=${data.messageId}&offset=${data.offset}`;
 
     return h('demo-box-modal', null,
       h('div', null,
@@ -17,11 +18,11 @@ class DemoBoxModal extends Component
         h('div', {className: 'img', style: {background: `transparent url(${url}) no-repeat center`}},
           ''
         ),
-        h('div', {className: 'bar', style: {display: this.props.canDelete ? 'flex' : 'none'}},
+        h('div', {className: 'bar'},
           h('div', {className: 'name'},
-            ''
+            data.file.name
           ),
-          h('div', {className: 'delete', onclick: this.props.ondelete})
+          h('div', {className: 'delete', style: {display: data.canDelete ? 'flex' : 'none'}, onclick: this.props.ondelete})
         )
       )
     );
