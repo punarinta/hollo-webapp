@@ -52,7 +52,7 @@ class LoginPage extends Component
       // memorize login
       localStorage.setItem('imapLogin', user);
     //  AU.init(data);
-      ML.go('contacts');
+      ML.go('chats');
     });
   }
 

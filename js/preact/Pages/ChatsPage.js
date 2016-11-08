@@ -8,7 +8,6 @@ class ChatsPage extends Component
     this.filterTimer = null;
     this.emailFilter = '';
     this.canLoadMore = 0;
-    this.muted = 0;
 
     this.state.chats = [];
     this.state.blockSwipe = 0;
@@ -17,6 +16,7 @@ class ChatsPage extends Component
 
   componentDidMount()
   {
+    this.muted = this.props.data ? this.props.data.muted || 0 : 0;
     this.scrollReference = this.scroll.bind(this);
     window.addEventListener('scroll', this.scrollReference);
     this.callFind();

@@ -25,7 +25,7 @@ class MessagesPage extends Component
 
   callFind(shouldAdd = 0)
   {
-    ML.api('message', 'findByChatId', {chatId: this.props.chatId, pageStart: this.pageStart, pageLength: this.pageLength}, (data) =>
+    ML.api('message', 'findByChatId', {chatId: this.props.data.chatId, pageStart: this.pageStart, pageLength: this.pageLength}, (data) =>
     {
       this.canLoadMore = (data.messages.length == this.pageLength);
 

@@ -4,7 +4,8 @@ class App extends Component
   {
     super();
     this.state.page = 'loading';
-    this.state.pageMode = 0;
+    this.state.chatsPageData = {};
+    this.state.messagesPageData = {};
     this.state.pagePayload = null;
     this.state.currentDemo = null;
     this.state.widthMode = window.innerWidth > 768;
@@ -29,14 +30,14 @@ class App extends Component
 
       if (rs[0] == 'chat')
       {
-        this.setState({page: 'chat', pagePayload: rs[1]});
+        this.setState({page: 'chat', messagesPageData: {chatId: rs[1]}});
       }
       else
       {
         switch (r)
         {
-          case 'contacts':
-            this.setState({page: 'contacts'});
+          case 'chats':
+            this.setState({page: 'chats', chatsPageData: e.state.data});
             break;
 
           case 'auth/login':
@@ -74,7 +75,7 @@ class App extends Component
           }
           else
           {
-            ML.go('contacts')
+            ML.go('chats')
           }
         }
         else
@@ -98,7 +99,7 @@ class App extends Component
         ML.initUser(data);
 
         let p = document.location.pathname;
-        if (p == '/') ML.go('contacts');
+        if (p == '/') ML.go('chats');
         else ML.go(p.substring(1))
       }
       else
@@ -152,19 +153,19 @@ class App extends Component
         pages.push(h(ProfilePage));
         break;
 
-      case 'contacts':
-        pages.push(h(ChatsPage, {mode: this.state.pageMode}));
+      case 'chats':
+        pages.push(h(ChatsPage, {data: this.state.chatsPageData}));
         if (this.state.widthMode)
         {
-          pages.push(h(MessagesPage, {chatId: this.state.pagePayload}))
+          pages.push(h(MessagesPage, {data: this.state.messagesPageData}))
         }
         break;
 
       case 'chat':
-        pages.push(h(MessagesPage, {chatId: this.state.pagePayload, mode: this.state.pageMode}));
+        pages.push(h(MessagesPage, {data: this.state.messagesPageData}));
         if (this.state.widthMode)
         {
-          pages.unshift(h(ChatsPage))
+          pages.unshift(h(ChatsPage, {data: this.state.chatsPageData}))
         }
         break;
     }
