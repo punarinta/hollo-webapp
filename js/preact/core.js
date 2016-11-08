@@ -240,12 +240,12 @@ var ML =
 
   xname (chat)
   {
-    var n, user, name, nc, count = chat.users.length;
+    let user, name, nc, count = chat.users.length;
 
     if (count > 1)
     {
       name = [];
-      for (n = 0; n < count; n++)
+      for (let n = 0; n < count; n++)
       {
         if (chat.users[n].name)
           user = chat.users[n].name.split(' ')[0];
@@ -267,11 +267,8 @@ var ML =
     }
 
     return [name, nc]
-  }
-};
+  },
 
-var PP =
-{
   // find first parent of the specified type
   par (x, type)
   {
