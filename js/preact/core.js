@@ -206,7 +206,7 @@ var ML =
 
   emit(eventName, payload)
   {
-    let e = new Event(eventName);
+    let e = new Event('hollo:' + eventName);
     e.payload = payload;
     window.dispatchEvent(e);
   },
