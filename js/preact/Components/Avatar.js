@@ -12,7 +12,7 @@ class Avatar extends Component
 
   loadGraphics(props)
   {
-    let chat = props.chat,
+    let chat = props.chat || {users: [props.user], read: 1},
         email = chat.users[0].email;
 
     this.setState(
@@ -46,7 +46,7 @@ class Avatar extends Component
 
   render(props)
   {
-    let chat = props.chat,
+    let chat = props.chat || {users: [props.user], read: 1},
         size = this.state.size,
         email = chat.users[0].email,
         style =
