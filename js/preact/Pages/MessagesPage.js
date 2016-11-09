@@ -78,7 +78,7 @@ class MessagesPage extends Component
 
       h('messages-page', null,
         h('snackbar', null,
-          h(BarIcon, {img: 'color/arrow-back', onclick: () => history.go(-1)}),
+          h(BarIcon, {img: 'color/arrow-back', onclick: () => ML.go('chats')}),
           h('div', {className: 'name'}, name),
           h(BarIcon, {img: 'color/subjs', width: 40, height: 40, onclick: () => {} }),
           h(BarIcon, {img: 'color/clip', width: 40, height: 40, onclick: () => {} }),
