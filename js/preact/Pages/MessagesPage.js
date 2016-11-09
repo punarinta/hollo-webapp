@@ -10,7 +10,9 @@ class MessagesPage extends Component
     this.chat = null;
 
     this.state.h = 64;
+    this.state.canSend = 0;
     this.state.messages = [];
+    this.state.files = [];
   }
 
   componentDidMount()
@@ -18,23 +20,11 @@ class MessagesPage extends Component
     this.scrollReference = this.scroll.bind(this);
     window.addEventListener('scroll', this.scrollReference);
     this.callFind();
-
-    /*let cmpText = this.base.querySelector('textarea');
-
-    autosize(cmpText);
-    cmpText.addEventListener('autosize:resized', (e) =>
-    {
-      let h = Math.min(parseInt(e.target.style.height, 10), window.innerHeight * .3);
-
-      this.setState({h});
-    });*/
   }
 
   componentWillUnmount()
   {
     window.removeEventListener('scroll', this.scrollReference);
-
-    //this.base.querySelector('textarea').dispatchEvent(new Event('autosize:destroy'));
   }
 
   callFind(shouldAdd = 0)
@@ -81,17 +71,36 @@ class MessagesPage extends Component
   {
     let t = e.target;
     t.style.height = 'auto';
-    t.style.height = t.scrollHeight + 3 + 'px';
+    let h = t.scrollHeight + 3;
+    t.style.height = h + 'px';
+    this.setState({h, canSend: !!t.value.length});
+  }
+
+  send()
+  {
+    console.log('Sent!')
   }
 
   render()
   {
     let messages = [],
+        uploadedFiles = null,
         name = this.chat ? ML.xname(this.chat)[0] : '';
 
     for (let i in this.state.messages)
     {
       messages.push(h(MessageBubble, {message: this.state.messages[i], user: this.props.user}))
+    }
+
+    if (this.state.files.length)
+    {
+      let filePlates = [];
+
+      for (let i in this.state.files)
+      {
+        filePlates.push(h(FilePlate, {file: this.state.files[i]}))
+      }
+      uploadedFiles = h('div', null, filePlates);
     }
 
     return (
@@ -108,7 +117,9 @@ class MessagesPage extends Component
           messages
         ),
         h('composer', null,
-          h('textarea', {rows:1, placeholder: 'Write a new hollo...', onkeyup: this.composerTextChanged.bind(this)})
+          h('textarea', {rows: 1, placeholder: 'Write a new hollo...', onkeyup: this.composerTextChanged.bind(this) }),
+          this.state.canSend ? h(BarIcon, {fullHeight: 1, width: 40, img: 'color/send', height: this.state.h, onclick: this.send.bind(this) }) : '',
+          uploadedFiles
         )
       )
     );
