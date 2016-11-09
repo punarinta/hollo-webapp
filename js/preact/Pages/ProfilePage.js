@@ -2,7 +2,12 @@ class ProfilePage extends Component
 {
   optEmojiChanged(value)
   {
-    CFG.hungryEmojis = value;
+    value *= 1;
+
+    ML.api('settings', 'update', {flag: {name: 'emojis-replace', value}}, () =>
+    {
+      CFG.hungryEmojis = value;
+    });
   }
 
   render()
