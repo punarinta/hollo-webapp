@@ -21,7 +21,7 @@ class ProfilePage extends Component
         ),
         h('div', null, 'Settings'),
         h('ul', null,
-          h(CheckBox, {caption: 'Emojis replace words', checked: CFG.hungryEmojis})
+          h(Checkbox, {caption: 'Emojis replace words', checked: CFG.hungryEmojis})
         ),
         h(BottomBar, null,
           h(BarIcon, {caption: 'Profile', img: 'white/profile_new.svg'}),
