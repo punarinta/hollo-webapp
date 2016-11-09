@@ -205,12 +205,12 @@ class App extends Component
         pages.push(h(ChatsPage, {data: this.state.chatsPageData}));
         if (this.state.widthMode)
         {
-          pages.push(h(MessagesPage, {data: this.state.messagesPageData}))
+          pages.push(h(MessagesPage, {data: this.state.messagesPageData, user: this.state.user}))
         }
         break;
 
       case 'chat':
-        pages.push(h(MessagesPage, {data: this.state.messagesPageData}));
+        pages.push(h(MessagesPage, {data: this.state.messagesPageData, user: this.state.user}));
         if (this.state.widthMode)
         {
           pages.unshift(h(ChatsPage, {data: this.state.chatsPageData}))

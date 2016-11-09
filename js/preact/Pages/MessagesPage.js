@@ -68,15 +68,23 @@ class MessagesPage extends Component
 
     for (let i in this.state.messages)
     {
-      messages.push(h(MessageBubble, {message: this.state.messages[i]}))
+      messages.push(h(MessageBubble, {message: this.state.messages[i], user: this.props.user}))
     }
 
     return (
 
       h('messages-page', null,
+        h('snackbar', null,
+          h(BarIcon, {img: 'color/arrow-back', onclick: () => history.go(-1)}),
+          h('div', {className: 'name'}, 'Hello'),
+          h(BarIcon, {img: 'color/subjs', width: 40, height: 40, onclick: () => {} }),
+          h(BarIcon, {img: 'color/clip', width: 40, height: 40, onclick: () => {} }),
+          h(BarIcon, {img: 'color/more-vert', width: 40, height: 40, onclick: () => {} })
+        ),
         h('ul', null,
           messages
-        )
+        ),
+        h('composer')
       )
     );
   }

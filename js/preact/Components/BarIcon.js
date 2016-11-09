@@ -2,7 +2,7 @@ class BarIcon extends Component
 {
   render(props)
   {
-    let caption = props.caption.length ? h('div', null, props.caption) : null;
+    let caption = props.caption ? h('div', null, props.caption) : null;
 
     return (
 

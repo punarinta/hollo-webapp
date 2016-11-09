@@ -55,7 +55,7 @@ class MessageBubble extends Component
   render()
   {
     let message = this.state.message,
-        mine = message.from.email == ML.user.email,
+        mine = message.from.email == this.props.user.email,
         subject = message.subject,
         body = message.body;
 
