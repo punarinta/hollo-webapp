@@ -1,0 +1,32 @@
+<svg width="22px" height="30px" viewBox="0 0 22 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <path d="M3,24 C3,24 2.09990108,24 0.998956561,24 L2.00104344,24 C0.895897664,24 0,23.1029738 0,21.9950534 L0,2.00494659 C0,0.897645164 0.894513756,0 1.99406028,0 L14.0059397,0 C15.1072288,0 16,0.893899798 16,2.0048815 L16,2.9951185" id="path-1"></path>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="16" height="24" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <path d="M3,24 C3,24 2.09990108,24 0.998956561,24 L2.00104344,24 C0.895897664,24 0,23.1029738 0,21.9950534 L0,2.00494659 C0,0.897645164 0.894513756,0 1.99406028,0 L14.0059397,0 C15.1072288,0 16,0.893899798 16,2.0048815 L16,2.9951185" id="path-3"></path>
+        <mask id="mask-4" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="16" height="24" fill="white">
+            <use xlink:href="#path-3"></use>
+        </mask>
+        <rect id="path-5" x="0" y="0" width="16" height="24" rx="2"></rect>
+        <mask id="mask-6" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="16" height="24" fill="white">
+            <use xlink:href="#path-5"></use>
+        </mask>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon-subjects" transform="translate(-13.000000, -9.000000)">
+            <g id="icon-subjects-color" transform="translate(13.000000, 9.000000)">
+                <g id="icon-subject" stroke="#0001F7" stroke-width="2">
+                    <use id="Combined-Shape" mask="url(#mask-2)" xlink:href="#path-1"></use>
+                </g>
+                <g id="icon-subject" transform="translate(3.000000, 3.000000)" stroke="#0001F7" stroke-width="2">
+                    <use id="Combined-Shape" mask="url(#mask-4)" xlink:href="#path-3"></use>
+                </g>
+                <g id="icon-subject" transform="translate(6.000000, 6.000000)">
+                    <use id="Combined-Shape" stroke="#0001F7" mask="url(#mask-6)" stroke-width="2" xlink:href="#path-5"></use>
+                    <path d="M7.992,18.224 C10.728,18.224 12.344,16.576 12.344,14.64 C12.344,12.928 11.4,12.016 9.96,11.424 L8.408,10.768 C7.4,10.368 6.552,10.064 6.552,9.216 C6.552,8.432 7.224,7.968 8.264,7.968 C9.24,7.968 10.024,8.32 10.776,8.944 L11.976,7.456 C11.016,6.48 9.64,5.936 8.264,5.936 C5.864,5.936 4.168,7.424 4.168,9.36 C4.168,11.088 5.368,12.048 6.568,12.544 L8.152,13.216 C9.208,13.664 9.928,13.936 9.928,14.816 C9.928,15.648 9.272,16.176 8.04,16.176 C7,16.176 5.88,15.648 5.032,14.864 L3.672,16.496 C4.824,17.6 6.408,18.224 7.992,18.224 L7.992,18.224 Z" id="S" fill="#0001F7"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
