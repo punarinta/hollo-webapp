@@ -5,7 +5,7 @@ messages-page
   display block
   ul
     list-style-type none
-    padding 0 5px
+    padding 5px
     height calc(100vh - 56px)
     margin 56px 0
   snackbar
@@ -29,3 +29,30 @@ messages-page
       height 56px
       max-width 40px
       min-width 40px
+  composer
+    position fixed
+    bottom 0
+    height 64px
+    textarea
+      border 0
+      border-top 1px solid color-bg-grey
+      margin 0
+      position fixed
+      left 0
+      bottom 0
+      max-height 30vh
+      font 15px Roboto
+      width 100%
+      height 64px
+      transition height 0.4s
+      padding 20px 40px 20px 20px
+      font-size 18px
+      resize none
+      &::-webkit-input-placeholder
+        font-style italic
+        font-family 'Work Sans', sans-serif
+        font-weight 300
+      &::-moz-placeholder
+        font-style italic
+        font-family 'Work Sans', sans-serif
+        font-weight 300

@@ -9,6 +9,7 @@ class MessagesPage extends Component
     this.canLoadMore = 0;
     this.chat = null;
 
+    this.state.h = 64;
     this.state.messages = [];
   }
 
@@ -17,11 +18,23 @@ class MessagesPage extends Component
     this.scrollReference = this.scroll.bind(this);
     window.addEventListener('scroll', this.scrollReference);
     this.callFind();
+
+    /*let cmpText = this.base.querySelector('textarea');
+
+    autosize(cmpText);
+    cmpText.addEventListener('autosize:resized', (e) =>
+    {
+      let h = Math.min(parseInt(e.target.style.height, 10), window.innerHeight * .3);
+
+      this.setState({h});
+    });*/
   }
 
   componentWillUnmount()
   {
     window.removeEventListener('scroll', this.scrollReference);
+
+    //this.base.querySelector('textarea').dispatchEvent(new Event('autosize:destroy'));
   }
 
   callFind(shouldAdd = 0)
@@ -64,6 +77,13 @@ class MessagesPage extends Component
     }
   }
 
+  composerTextChanged(e)
+  {
+    let t = e.target;
+    t.style.height = 'auto';
+    t.style.height = t.scrollHeight + 3 + 'px';
+  }
+
   render()
   {
     let messages = [],
@@ -87,7 +107,9 @@ class MessagesPage extends Component
         h('ul', null,
           messages
         ),
-        h('composer')
+        h('composer', null,
+          h('textarea', {rows:1, placeholder: 'Write a new hollo...', onkeyup: this.composerTextChanged.bind(this)})
+        )
       )
     );
   }
