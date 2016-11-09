@@ -4,7 +4,7 @@ class SearchBar extends Component
   {
     super();
     this.state.value = '';
-    this.state.focus = 1;
+    this.state.focus = 0;
   }
 
   componentWillMount()
