@@ -1,5 +1,10 @@
 class ProfilePage extends Component
 {
+  optEmojiChanged(value)
+  {
+    CFG.hungryEmojis = value;
+  }
+
   render()
   {
     let user = this.props.user;
@@ -21,7 +26,7 @@ class ProfilePage extends Component
         h('button', {onclick: () => ML.go('auth/logout')}, 'Logout'),
         h('div', {className: 'group'}, 'Settings'),
         h('ul', null,
-          h(Checkbox, {caption: 'Emojis replace words', checked: CFG.hungryEmojis})
+          h(Checkbox, {caption: 'Emojis replace words', checked: CFG.hungryEmojis, onchange: this.optEmojiChanged.bind(this)})
         ),
         h(BottomBar, null,
           h(BarIcon, {caption: 'Profile', img: 'white/profile'}),
