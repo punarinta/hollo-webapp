@@ -7,6 +7,7 @@ class MessagesPage extends Component
     this.pageLength = 20;
     this.subjectFilter = '';
     this.canLoadMore = 0;
+    this.chat = null;
 
     this.state.messages = [];
   }
@@ -28,6 +29,7 @@ class MessagesPage extends Component
     ML.api('message', 'findByChatId', {chatId: this.props.data.chatId, pageStart: this.pageStart, pageLength: this.pageLength}, (data) =>
     {
       this.canLoadMore = (data.messages.length == this.pageLength);
+      this.chat = data.chat;
 
       data.messages = data.messages.reverse();
 
@@ -64,7 +66,8 @@ class MessagesPage extends Component
 
   render()
   {
-    let messages = [];
+    let messages = [],
+        name = this.chat ? ML.xname(this.chat)[0] : '';
 
     for (let i in this.state.messages)
     {
@@ -76,7 +79,7 @@ class MessagesPage extends Component
       h('messages-page', null,
         h('snackbar', null,
           h(BarIcon, {img: 'color/arrow-back', onclick: () => history.go(-1)}),
-          h('div', {className: 'name'}, 'Hello'),
+          h('div', {className: 'name'}, name),
           h(BarIcon, {img: 'color/subjs', width: 40, height: 40, onclick: () => {} }),
           h(BarIcon, {img: 'color/clip', width: 40, height: 40, onclick: () => {} }),
           h(BarIcon, {img: 'color/more-vert', width: 40, height: 40, onclick: () => {} })
