@@ -5,6 +5,11 @@ class MessageBody extends Component
     this.base.innerHTML = this.props.html;
   }
 
+  componentDidUpdate()
+  {
+    this.base.innerHTML = this.props.html;
+  }
+
   render()
   {
     return h('message-body')
