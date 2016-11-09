@@ -7,19 +7,19 @@ class ProfilePage extends Component
     return (
 
       h('profile-page', null,
-        h('div', null,
+        h('div', {className: 'head'},
           h(Avatar, {user: user}),
           h('div', null,
-            h('div', null,
+            h('div', {className: 'name'},
               user.name
             ),
-            h('div', null,
+            h('div', {className: 'email'},
               user.email
             )
-          ),
-          h('button', {onclick: () => ML.go('auth/logout')}, 'Logout')
+          )
         ),
-        h('div', null, 'Settings'),
+        h('button', {onclick: () => ML.go('auth/logout')}, 'Logout'),
+        h('div', {className: 'group'}, 'Settings'),
         h('ul', null,
           h(Checkbox, {caption: 'Emojis replace words', checked: CFG.hungryEmojis})
         ),
