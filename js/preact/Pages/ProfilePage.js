@@ -24,9 +24,9 @@ class ProfilePage extends Component
           h(Checkbox, {caption: 'Emojis replace words', checked: CFG.hungryEmojis})
         ),
         h(BottomBar, null,
-          h(BarIcon, {caption: 'Profile', img: 'white/profile_new.svg'}),
-          h(BarIcon, {caption: 'Hollo`d', img: 'white/email_new.svg', onclick: () => ML.go('chats')}),
-          h(BarIcon, {caption: 'Muted', img: 'white/muted_new.svg', onclick: () => ML.go('chats', {muted: 1})})
+          h(BarIcon, {caption: 'Profile', img: 'white/profile'}),
+          h(BarIcon, {caption: 'Hollo`d', img: 'white/email', onclick: () => ML.go('chats')}),
+          h(BarIcon, {caption: 'Muted', img: 'white/muted', onclick: () => ML.go('chats', {muted: 1})})
         )
       )
     );

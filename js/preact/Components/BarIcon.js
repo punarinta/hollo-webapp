@@ -7,7 +7,7 @@ class BarIcon extends Component
     return (
 
       h('bar-icon', {onclick: this.props.onclick},
-        h('svg', {style: {backgroundImage: `url('/gfx/${props.img}')`, width: props.width, height: props.height }}),
+        h('svg', {style: {backgroundImage: `url('/gfx/${props.img}.svg')`, width: props.width, height: props.height }}),
         caption
       )
     );
