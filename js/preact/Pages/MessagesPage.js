@@ -102,8 +102,6 @@ class MessagesPage extends Component
       {
         return (e) =>
         {
-          console.log('File read:', f, e);
-
           let files = this.state.files;
 
           files.push(
@@ -111,7 +109,7 @@ class MessagesPage extends Component
             name: f.name,
             type: f.type,
             size: f.size,
-            b64: f.type.match('image.*') ? e.target.result : null
+            b64:  f.type.match('image.*') ? e.target.result : null
           });
 
           this.setState({files});
@@ -125,6 +123,18 @@ class MessagesPage extends Component
     }
 
     e.target.value = '';
+  }
+
+  previewFile(file)
+  {
+    ML.emit('demobox', {file, canDelete: 1, ondelete: this.removeFile.bind(this)})
+  }
+
+  removeFile(file)
+  {
+    let files = this.state.files;
+    files.splice(file.i, 1);
+    this.setState({files});
   }
 
   send()
@@ -153,7 +163,9 @@ class MessagesPage extends Component
 
       for (let i in this.state.files)
       {
-        filePlates.push(h(FilePlate, {file: this.state.files[i]}))
+        let file = this.state.files[i];
+        file.i = i;
+        filePlates.push(h(FilePlate, {file, onclick: this.previewFile.bind(this)}))
       }
 
       uploadedFiles = h('div', {className: 'files'}, filePlates);
