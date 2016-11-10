@@ -14,6 +14,7 @@ class MessagesPage extends Component
     this.state.compFocus = 0;
     this.state.messages = [];
     this.state.files = [];
+    this.state.currentSubject = 'My subject';
   }
 
   componentDidMount()
@@ -47,7 +48,7 @@ class MessagesPage extends Component
       }
       else
       {
-        this.setState({messages: data.messages})
+        this.setState({messages: data.messages, currentSubject: data.messages[data.messages.length - 1].subject})
       }
     });
   }
@@ -87,6 +88,53 @@ class MessagesPage extends Component
     {
       this.setState({compFocus: 0})
     }
+  }
+
+  getUniqueSubjects()
+  {
+    let subjects = [];
+
+    for (let i in this.state.messages)
+    {
+      subjects.push(this.state.messages[i].subject)
+    }
+
+    return ML.uniques(subjects);
+  }
+
+  showUsers()
+  {
+
+  }
+
+  showSubjects()
+  {
+    let subjects = this.getUniqueSubjects(), subjectRows = [];
+
+    for (let i in subjects)
+    {
+      let currentSubject = subjects[i];
+      subjectRows.push(h('li', {className: subjects[i] == this.state.currentSubject ? 'sel' : '', onclick: () => this.setState({currentSubject})}, currentSubject))
+    }
+
+    let children =
+    [
+      h('ul', null, subjectRows),
+      h('button', {onclick: this.newSubject.bind(this)}, 'New Subject')
+    ];
+
+    ML.emit('custombox', {className: 'subjects-modal', children})
+  }
+
+  newSubject()
+  {
+    this.setState({currentSubject: ''});
+    setTimeout(() => this.base.querySelector('input.subj').focus(), 50)
+  }
+
+  inputSubject(e)
+  {
+    this.setState({currentSubject: e.target.value});
   }
 
   uploadFiles(e)
@@ -177,7 +225,7 @@ class MessagesPage extends Component
       h('messages-page', null,
         h('snackbar', null,
           h(BarIcon, {img: 'color/arrow-back', onclick: () => ML.go('chats')}),
-          h('div', {className: 'name'}, name),
+          h('div', {className: 'name', onclick: this.showUsers.bind(this)}, name),
           h(BarIcon, {img: 'color/subjs', width: 40, height: 40, onclick: () => {} }),
           h(BarIcon, {img: 'color/clip', width: 40, height: 40, onclick: () => {} }),
           h(BarIcon, {img: 'color/more-vert', width: 40, height: 40, onclick: () => {} })
@@ -187,9 +235,9 @@ class MessagesPage extends Component
         ),
         h('composer', {style: {height: composerHeight + 'px'}},
           this.state.compFocus ? h('bar', null,
-            h(BarIcon, {img: 'color/subj', width: 40, height: 40}),
-            h('input', {className: 'subj', type: 'text', value: 'My subject'}),
-            h(BarIcon, {img: 'color/updown', width: 40, height: 40, onclick: () => {} }),
+            h(BarIcon, {img: 'color/subj', width: 40, height: 40, onclick: this.showSubjects.bind(this)}),
+            h('input', {className: 'subj', type: 'text', value: this.state.currentSubject, onkeyup: this.inputSubject.bind(this)}),
+            h(BarIcon, {img: 'color/updown', width: 40, height: 40, onclick: this.showSubjects.bind(this)}),
             h(BarIcon, {img: 'color/clip', width: 40, height: 40}),
             h('input', {className: 'uploader', type: 'file', multiple: 'multiple', onchange: this.uploadFiles.bind(this)})
           ) : '',
