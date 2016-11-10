@@ -89,6 +89,44 @@ class MessagesPage extends Component
     }
   }
 
+  uploadFiles(e)
+  {
+    let i, f, files = e.target.files;
+
+    for (i = 0; f = files[i]; i++)
+    {
+      let reader = new FileReader();
+
+      // Closure to capture the file information.
+      reader.onload = ( (f) =>
+      {
+        return (e) =>
+        {
+          console.log('File read:', f, e);
+
+          let files = this.state.files;
+
+          files.push(
+          {
+            name: f.name,
+            type: f.type,
+            size: f.size,
+            b64: f.type.match('image.*') ? e.target.result : null
+          });
+
+          this.setState({files});
+
+          mixpanel.track('Composer - file attached');
+        };
+      })(f);
+
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(f);
+    }
+
+    e.target.value = '';
+  }
+
   send()
   {
     console.log('Sent!')
@@ -143,7 +181,7 @@ class MessagesPage extends Component
             h('input', {className: 'subj', type: 'text', value: 'My subject'}),
             h(BarIcon, {img: 'color/updown', width: 40, height: 40, onclick: () => {} }),
             h(BarIcon, {img: 'color/clip', width: 40, height: 40}),
-            h('input', {className: 'uploader', type: 'file', multiple: 'multiple'})
+            h('input', {className: 'uploader', type: 'file', multiple: 'multiple', onchange: this.uploadFiles.bind(this)})
           ) : '',
           h('textarea',
           {
