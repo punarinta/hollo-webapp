@@ -97,7 +97,7 @@ var ML =
     return pfx;
   },
 
-  uniques (arr, sens)
+  uniques (arr, sens = 1)
   {
     let i = 0, a = [], l = arr.length;
     if (sens)
