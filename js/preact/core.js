@@ -1,14 +1,9 @@
 var ML =
 {
+  sessionId: null,
   _loaded: [],
   ws: null,
   _wsOpened: 0,
-  sessionId: null,
-
-  isJson (testable)
-  {
-    return testable && /^[\],:{}\s]*$/.test(testable.replace(/\\["\\\/bfnrtu]/g, '@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').replace(/(?:^|:|,)(?:\s*\[)+/g, ''));
-  },
 
   api (endpoint, method, data, callback, error)
   {
@@ -23,10 +18,10 @@ var ML =
 
     r.onload = function ()
     {
-      var r = this.response.toString();
+      let r = this.response.toString();
       if (ML.isJson(r))
       {
-        var json = JSON.parse(r);
+        let json = JSON.parse(r);
         if (this.status >= 200 && this.status < 400)
         {
           if (callback) callback(json.data);
@@ -36,17 +31,14 @@ var ML =
           console.log('Status:', this.status);
           if (this.status != 401)
           {
-            ML.mbox(json.errMsg);
-            busy(0);
+            // ML.mbox(json.errMsg);
           }
         }
       }
       else
       {
         console.log('Not JSON:', r);
-        ML.mbox([200, 500].indexOf(this.status) != -1 ? r : ('HTTP ' + this.status));
-        // prevent app lock
-        busy(0);
+        // ML.mbox([200, 500].indexOf(this.status) != -1 ? r : ('HTTP ' + this.status));
       }
     };
     r.onerror = function (e)
@@ -158,6 +150,11 @@ var ML =
     ncc = [(r >> 1) + 96, (g >> 1) + 96, (b >> 1) + 96].join(',');
     
     return `rgb(${ncc})`;
+  },
+
+  isJson (testable)
+  {
+    return testable && /^[\],:{}\s]*$/.test(testable.replace(/\\["\\\/bfnrtu]/g, '@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').replace(/(?:^|:|,)(?:\s*\[)+/g, ''));
   },
 
   isEmail (email)

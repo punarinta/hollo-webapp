@@ -150,8 +150,6 @@ class MessagesPage extends Component
         composerHeight = this.state.compFocus ? this.state.h + 40 : this.state.h,
         sendHeight = this.state.h;
 
-    // this.state.files = [{name:'qq',size:11,type:'data/data'}];
-
     for (let i in this.state.messages)
     {
       messages.push(h(MessageBubble, {message: this.state.messages[i], user: this.props.user}))
