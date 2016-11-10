@@ -11,20 +11,24 @@ class MessagesPage extends Component
 
     this.state.h = 64;
     this.state.canSend = 0;
+    this.state.compFocus = 0;
     this.state.messages = [];
     this.state.files = [];
   }
 
   componentDidMount()
   {
-    this.scrollReference = this.scroll.bind(this);
-    window.addEventListener('scroll', this.scrollReference);
+    this.scrollRef = this.scroll.bind(this);
+    this.tryBlurringRef = this.tryBlurring.bind(this);
+    window.addEventListener('scroll', this.scrollRef);
+    this.base.addEventListener('click', this.tryBlurringRef);
     this.callFind();
   }
 
   componentWillUnmount()
   {
-    window.removeEventListener('scroll', this.scrollReference);
+    window.removeEventListener('scroll', this.scrollRef);
+    this.base.removeEventListener('click', this.tryBlurringRef);
   }
 
   callFind(shouldAdd = 0)
@@ -77,6 +81,14 @@ class MessagesPage extends Component
     this.setState({h, canSend: !!t.value.length});
   }
 
+  tryBlurring(e)
+  {
+    if (!ML.par(e.target, 'composer'))
+    {
+      this.setState({compFocus: 0})
+    }
+  }
+
   send()
   {
     console.log('Sent!')
@@ -86,7 +98,11 @@ class MessagesPage extends Component
   {
     let messages = [],
         uploadedFiles = null,
-        name = this.chat ? ML.xname(this.chat)[0] : '';
+        name = this.chat ? ML.xname(this.chat)[0] : '',
+        composerHeight = this.state.compFocus ? this.state.h + 40 : this.state.h,
+        sendHeight = this.state.h;
+
+    // this.state.files = [{name:'qq',size:11,type:'data/data'}];
 
     for (let i in this.state.messages)
     {
@@ -101,7 +117,11 @@ class MessagesPage extends Component
       {
         filePlates.push(h(FilePlate, {file: this.state.files[i]}))
       }
-      uploadedFiles = h('div', null, filePlates);
+
+      uploadedFiles = h('div', {className: 'files'}, filePlates);
+      composerHeight += 76;
+      sendHeight += 76;
+      this.state.canSend = 1;
     }
 
     return (
@@ -117,9 +137,22 @@ class MessagesPage extends Component
         h('ul', null,
           messages
         ),
-        h('composer', null,
-          h('textarea', {rows: 1, placeholder: 'Write a new hollo...', onkeyup: this.composerTextChanged.bind(this) }),
-          this.state.canSend ? h(BarIcon, {fullHeight: 1, width: 40, img: 'color/send', height: this.state.h, onclick: this.send.bind(this) }) : '',
+        h('composer', {style: {height: composerHeight + 'px'}},
+          this.state.compFocus ? h('bar', null,
+            h(BarIcon, {img: 'color/subj', width: 40, height: 40}),
+            h('input', {className: 'subj', type: 'text', value: 'My subject'}),
+            h(BarIcon, {img: 'color/updown', width: 40, height: 40, onclick: () => {} }),
+            h(BarIcon, {img: 'color/clip', width: 40, height: 40}),
+            h('input', {className: 'uploader', type: 'file', multiple: 'multiple'})
+          ) : '',
+          h('textarea',
+          {
+            rows: 1,
+            placeholder: 'Write a new hollo...',
+            onkeyup: this.composerTextChanged.bind(this),
+            onfocus: (e) => {this.setState({compFocus: 1}); setTimeout(() => e.target.focus(), 50)}
+          }),
+          this.state.canSend ? h(BarIcon, {fullHeight: 1, width: 40, img: 'color/send', height: sendHeight, onclick: this.send.bind(this) }) : '',
           uploadedFiles
         )
       )

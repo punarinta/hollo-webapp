@@ -32,8 +32,21 @@ messages-page
   composer
     position fixed
     bottom 0
-    height 64px
-    bar-icon
+    width 100%
+    background #fff
+    bar
+      height 40px
+      display flex
+      width 100%
+      .subj
+        flex-grow 4
+        border 0
+        color color-brand
+        font 15px 'Work Sans'
+      bar-icon
+        min-width 40px
+        max-width 40px
+    & > bar-icon
       position fixed
       right 0
       bottom 0
@@ -41,14 +54,9 @@ messages-page
     textarea
       border 0
       border-top 1px solid color-bg-grey
-      margin 0
-      position fixed
-      left 0
-      bottom 0
       max-height 30vh
       font 15px Roboto
       width 100%
-      height 64px
       transition height 0.4s
       padding 20px 40px 20px 20px
       font-size 18px
@@ -61,3 +69,14 @@ messages-page
         font-style italic
         font-family 'Work Sans', sans-serif
         font-weight 300
+    .files
+      position fixed
+      bottom 0
+      file-plate
+        margin 3px
+    .uploader
+      opacity 0
+      position fixed
+      right 0
+      height 40px
+      width 40px
