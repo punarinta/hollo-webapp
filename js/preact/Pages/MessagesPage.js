@@ -73,6 +73,7 @@ class MessagesPage extends Component
     t.style.height = 'auto';
     let h = t.scrollHeight + 3;
     t.style.height = h + 'px';
+    h = Math.min(parseInt(e.target.style.height, 10), window.innerHeight * .3);
     this.setState({h, canSend: !!t.value.length});
   }
 
