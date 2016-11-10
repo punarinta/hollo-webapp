@@ -73,9 +73,9 @@ class LoginPage extends Component
   {
     return (
 
-      h('login-page', {style: {paddingTop: '15vh'}},
-        h('img', {src:'/gfx/white/logo.svg', style: {margin: '0 auto 14vh', display: 'block'}}),
-        h('div', {className: 'text'}, 'sign in'),
+      h('login-page', null,
+        h('img', {src:'/gfx/color/logo.svg'}),
+        h('div', {className: 'text'}, 'Sign in'),
         h('button', {className: 'google', onClick: this.loginWithGoogle.bind(this)}, 'Sign in with Google'),
         h('div', {className: 'text'}, 'or'),
         h('div', {className: 'input'},
