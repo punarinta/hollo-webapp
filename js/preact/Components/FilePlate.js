@@ -14,6 +14,12 @@ class FilePlate extends Component
       height: size
     };
 
+    if (file.b64)
+    {
+      style.background = `url("data:${file.b64}")`
+      nc = '';
+    }
+
     return (
 
       h('file-plate', {style, onclick: () => this.props.onclick(file, this.props.offset)},
