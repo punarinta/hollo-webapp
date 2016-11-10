@@ -11,6 +11,7 @@ class App extends Component
     this.state.widthMode = window.innerWidth > 768;
     this.state.demoBox = null;
     this.state.messageBox = null;
+    this.state.customBox = null;
     this.state.user = null;
   }
 
@@ -23,6 +24,7 @@ class App extends Component
 
     window.addEventListener('hollo:demobox', this.showDemoBox.bind(this));
     window.addEventListener('hollo:messagebox', this.showMessageBox.bind(this));
+    window.addEventListener('hollo:custombox', this.showCustomBox.bind(this));
     window.addEventListener('hollo:inituser', this.initUser.bind(this));
 
     // === ROUTER ===
@@ -158,16 +160,6 @@ class App extends Component
     this.setState({user: data.user})
   }
 
-  showDemoBox(e)
-  {
-    this.setState({demoBox: e.payload});
-  }
-
-  closeDemoBox()
-  {
-    this.setState({demoBox: null});
-  }
-
   showMessageBox(e)
   {
     this.setState({messageBox: e.payload});
@@ -178,6 +170,26 @@ class App extends Component
     this.setState({messageBox: null});
   }
 
+  showDemoBox(e)
+  {
+    this.setState({demoBox: e.payload});
+  }
+
+  closeDemoBox()
+  {
+    this.setState({demoBox: null});
+  }
+
+  showCustomBox(e)
+  {
+    this.setState({customBox: e.payload});
+  }
+
+  closeCustomBox()
+  {
+    this.setState({customBox: null});
+  }
+
   render()
   {
     // place here the logic of page switching
@@ -186,6 +198,7 @@ class App extends Component
     // modals
     if (this.state.demoBox)    pages.push(h(DemoBoxModal,    {data: this.state.demoBox,    onclose: this.closeDemoBox.bind(this)    }));
     if (this.state.messageBox) pages.push(h(MessageBoxModal, {data: this.state.messageBox, onclose: this.closeMessageBox.bind(this) }));
+    if (this.state.customBox)  pages.push(h(CustomBoxModal,  {data: this.state.customBox,  onclose: this.closeCustomBox.bind(this)  }));
 
     switch (this.state.page)
     {
