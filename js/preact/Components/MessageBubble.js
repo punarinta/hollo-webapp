@@ -46,7 +46,7 @@ class MessageBubble extends Component
 
   previewFile(file, offset)
   {
-    if (file.type.split('/')[0] == 'image')
+    if (file.type.match('image.*'))
     {
       ML.emit('demobox', {messageId: this.state.message.id, offset, file})
     }
