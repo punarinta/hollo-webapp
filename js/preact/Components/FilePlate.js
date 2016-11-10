@@ -16,7 +16,7 @@ class FilePlate extends Component
 
     if (file.b64)
     {
-      style.background = `url("data:${file.b64}")`
+      style.background = `url("data:${file.b64}")`;
       nc = '';
     }
 
