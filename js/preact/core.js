@@ -173,18 +173,23 @@ var ML =
 
     if (count > 1)
     {
-      name = [];
-      for (let n = 0; n < count; n++)
+      if (chat.name) name = chat.name;
+      else
       {
-        if (chat.users[n].name)
-          user = chat.users[n].name.split(' ')[0];
-        else
-          user = chat.users[n].email.split('@')[0].split('.')[0];
+        name = [];
+        for (let n = 0; n < count; n++)
+        {
+          if (chat.users[n].name)
+            user = chat.users[n].name.split(' ')[0];
+          else
+            user = chat.users[n].email.split('@')[0].split('.')[0];
 
-        name.push(user.charAt(0).toUpperCase() + user.slice(1));
+          name.push(user.charAt(0).toUpperCase() + user.slice(1));
+        }
+
+        name = name.join(', ');
       }
 
-      name = name.join(', ');
       nc = '+' + count;
     }
     else
@@ -192,7 +197,6 @@ var ML =
       name = chat.users[0].name ? ML.clearName(chat.users[0].name) : chat.users[0].email.split('@')[0];
       nc = name.split(' ');
       nc = nc.length == 1 ? nc[0].charAt(0) : (nc[0].charAt(0) + nc[1].charAt(0));
-      if (chat.name) name = chat.name
     }
 
     return [name, nc]
