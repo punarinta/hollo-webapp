@@ -8,6 +8,7 @@ class MessagesPage extends Component
     this.subjectFilter = '';
     this.canLoadMore = 0;
     this.chat = null;
+    this.scrollTop = 0;
 
     this.state.h = 64;
     this.state.canSend = 0;
@@ -16,6 +17,7 @@ class MessagesPage extends Component
     this.state.files = [];
     this.state.currentSubject = '';
     this.state.currentComposed = '';
+    this.state.menuModalShown = 0;
   }
 
   componentDidMount()
@@ -54,12 +56,15 @@ class MessagesPage extends Component
       {
         let currentSubject = data.messages.length ? data.messages[data.messages.length - 1].subject : 'New subject';
         this.setState({messages: data.messages, currentSubject});
+        this.reposition(1)
       }
     });
   }
 
-  scroll()
+  scroll(e)
   {
+    this.scrollTop = e.target.scrollTop;
+
     if (!this.canLoadMore)
     {
       return;
@@ -100,6 +105,10 @@ class MessagesPage extends Component
     {
       this.setState({compFocus: 0})
     }
+    if (!ML.par(e.target, 'menu-modal') && !ML.par(e.target, 'snackbar'))
+    {
+      this.setState({menuModalShown: 0})
+    }
   }
 
   getUniqueSubjects()
@@ -114,17 +123,27 @@ class MessagesPage extends Component
     return ML.uniques(subjects);
   }
 
-  reposition()
+  reposition(mode = 0)
   {
+    // modes: 0 - keep ul's scrollTop, 1 - scroll down
     setTimeout( () =>
     {
-      this.base.querySelector('message-bubble:last-child').scrollIntoView();
+      if (mode == 0)
+      {
+        this.base.querySelector('ul').scrollTop = this.scrollTop;
+      }
+      if (mode == 1)
+      {
+        this.base.querySelector('message-bubble:last-child').scrollIntoView();
+        this.scrollTop = this.base.querySelector('ul').scrollTop;
+      }
     }, 50);
   }
 
-  showUsers()
+  toggleMenu(menuId = 0)
   {
-
+    if (this.state.menuModalShown == menuId) menuId = 0;
+    this.setState({menuModalShown: menuId});
   }
 
   showSubjects()
@@ -228,6 +247,7 @@ class MessagesPage extends Component
 
     messages.push(m);
     this.setState({files: [], messages, compFocus: 0, currentComposed: ''});
+    this.reposition(1);
 
     console.log('Sending:', msg, msgId, m.subject, m.files, this.chat.id);
 
@@ -244,6 +264,7 @@ class MessagesPage extends Component
   render()
   {
     let messages = [],
+        menuModal = null,
         uploadedFiles = null,
         name = this.chat ? ML.xname(this.chat)[0] : '',
         composerHeight = this.state.compFocus ? this.state.h + 40 : this.state.h,
@@ -276,12 +297,13 @@ class MessagesPage extends Component
     return (
 
       h('messages-page', null,
+        menuModal,
         h('snackbar', null,
           h(BarIcon, {img: 'color/arrow-back', onclick: () => ML.go('chats')}),
-          h('div', {className: 'name', onclick: this.showUsers.bind(this)}, name),
-          h(BarIcon, {img: 'color/subjs', width: 40, height: 40, onclick: () => {} }),
-          h(BarIcon, {img: 'color/clip', width: 40, height: 40, onclick: () => {} }),
-          h(BarIcon, {img: 'color/more-vert', width: 40, height: 40, onclick: () => {} })
+          h('div', {className: 'name' + (this.state.menuModalShown == 1 ? ' toggled' : ''), onclick: () => this.toggleMenu(1) }, name),
+          h(BarIcon, {className: this.state.menuModalShown == 2 ? 'toggled' : '', img: 'color/subjs', width: 40, height: 40, onclick: () => this.toggleMenu(2) }),
+          h(BarIcon, {className: this.state.menuModalShown == 3 ? 'toggled' : '', img: 'color/clip', width: 40, height: 40, onclick: () => this.toggleMenu(3) }),
+          h(BarIcon, {className: this.state.menuModalShown == 4 ? 'toggled' : '', img: 'color/more-vert', width: 40, height: 40, onclick: () => this.toggleMenu(4) })
         ),
         h('ul', {style: {bottom: composerHeight + 'px'}},
           messages
