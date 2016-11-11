@@ -14,7 +14,7 @@ class MessagesPage extends Component
     this.state.compFocus = 0;
     this.state.messages = [];
     this.state.files = [];
-    this.state.currentSubject = 'New subject';
+    this.state.currentSubject = '';
   }
 
   componentDidMount()
@@ -49,7 +49,8 @@ class MessagesPage extends Component
       }
       else
       {
-        this.setState({messages: data.messages, currentSubject: data.messages[data.messages.length - 1].subject});
+        let currentSubject = data.messages.length ? data.messages[data.messages.length - 1].subject : 'New subject';
+        this.setState({messages: data.messages, currentSubject});
         this.reposition();
       }
     });
