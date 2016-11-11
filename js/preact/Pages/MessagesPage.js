@@ -14,21 +14,21 @@ class MessagesPage extends Component
     this.state.compFocus = 0;
     this.state.messages = [];
     this.state.files = [];
-    this.state.currentSubject = 'My subject';
+    this.state.currentSubject = 'New subject';
   }
 
   componentDidMount()
   {
     this.scrollRef = this.scroll.bind(this);
     this.tryBlurringRef = this.tryBlurring.bind(this);
-    window.addEventListener('scroll', this.scrollRef);
+    this.base.querySelector('ul').addEventListener('scroll', this.scrollRef);
     this.base.addEventListener('click', this.tryBlurringRef);
     this.callFind();
   }
 
   componentWillUnmount()
   {
-    window.removeEventListener('scroll', this.scrollRef);
+    this.base.querySelector('ul').removeEventListener('scroll', this.scrollRef);
     this.base.removeEventListener('click', this.tryBlurringRef);
   }
 
