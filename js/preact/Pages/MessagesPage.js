@@ -29,6 +29,12 @@ class MessagesPage extends Component
     this.callFind();
   }
 
+  componentWillReceiveProps(nextProps)
+  {
+    this.props.data.chatId = nextProps.data.chatId;
+    this.callFind();
+  }
+
   componentWillUnmount()
   {
     this.base.querySelector('ul').removeEventListener('scroll', this.scrollRef);
@@ -183,6 +189,63 @@ class MessagesPage extends Component
     this.setState({currentSubject: e.target.value});
   }
 
+  addUser()
+  {
+
+  }
+
+  removeUser(user)
+  {
+    let emails = [];
+
+    for (let i in this.chat.users) if (this.chat.users[i].email != user.email) emails.push(this.chat.users[i].email);
+
+    ML.api('chat', 'add', {emails}, data =>
+    {
+      this.setState({menuModalShown: 0});
+      ML.go('chat/' + data.id);
+    });
+  }
+
+  muteChat()
+  {
+    this.chat.muted = !this.chat.muted;
+    ML.api('chat', 'update', {id: this.chat.id, muted: this.chat.muted}, () => this.setState({menuModalShown: 0}));
+  }
+
+  unreadChat()
+  {
+    this.chat.read = !this.chat.read;
+    ML.api('chat', 'update', {id: this.chat.id, read: this.chat.read}, () => this.setState({menuModalShown: 0}));
+  }
+
+  renameChat()
+  {
+    ML.emit('messagebox', {type: 1, html: 'Enter new name:', input: this.chat.name, cb: (code, text) =>
+    {
+      this.setState({menuModalShown: 0});
+      if (code)
+      {
+        this.chat.name = text;
+        ML.api('chat', 'update', { id: this.chat.id, name: text }, () => this.render());
+      }
+    }});
+  }
+
+  leaveChat()
+  {
+    ML.emit('messagebox', {type: 1, html: 'Are you sure?', cb: (code) =>
+    {
+      if (code)
+      {
+        ML.api('chat', 'leave', {id: this.chat.id}, () =>
+        {
+          ML.go('chats');
+        });
+      }
+    }})
+  }
+
   uploadFiles(e)
   {
     let i, f, files = e.target.files;
@@ -316,7 +379,7 @@ class MessagesPage extends Component
               this.chat.users[i].email
             )
           ),
-          h(BarIcon, {img: 'color/close', onclick: () => {} })
+          this.chat.users.length > 1 ? h(BarIcon, {img: 'color/close', onclick: () => this.removeUser(this.chat.users[i]) }) : ''
         ))
       }
 
@@ -326,7 +389,7 @@ class MessagesPage extends Component
         ),
         h('bar', null,
           h('button', {onclick: () => this.setState({menuModalShown: 0})}, 'OK'),
-          h('button', {onclick: () => {} }, 'Add more')
+          h('button', {onclick: this.addUser.bind(this) }, 'Add more')
         )
       )
     }
@@ -372,10 +435,10 @@ class MessagesPage extends Component
     {
       menuModal = h('menu-modal', {className: 'menu-more'},
         h('ul', null,
-          h('li', null, 'Mute'),
-          h('li', null, `Mark as ${this.chat.read ? 'un' : ''}read`),
-          h('li', null, 'Rename chat'),
-          h('li', null, 'Leave chat')
+          h('li', {onclick: this.muteChat.bind(this)}, this.chat.muted ? 'Unmute' : 'Mute'),
+          h('li', {onclick: this.unreadChat.bind(this)}, `Mark as ${this.chat.read ? 'un' : ''}read`),
+          h('li', {onclick: this.renameChat.bind(this)}, 'Rename chat'),
+          h('li', {onclick: this.leaveChat.bind(this)}, 'Leave chat')
         )
       )
     }
