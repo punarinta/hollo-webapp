@@ -191,7 +191,7 @@ class MessagesPage extends Component
 
   addUser()
   {
-
+    // ML.emit('custombox', {className: 'users-modal', children})
   }
 
   removeUser(user)
@@ -221,9 +221,9 @@ class MessagesPage extends Component
 
   renameChat()
   {
+    this.setState({menuModalShown: 0});
     ML.emit('messagebox', {type: 1, html: 'Enter new name:', input: this.chat.name, cb: (code, text) =>
     {
-      this.setState({menuModalShown: 0});
       if (code)
       {
         this.chat.name = text;
@@ -234,6 +234,7 @@ class MessagesPage extends Component
 
   leaveChat()
   {
+    this.setState({menuModalShown: 0});
     ML.emit('messagebox', {type: 1, html: 'Are you sure?', cb: (code) =>
     {
       if (code)
@@ -321,12 +322,15 @@ class MessagesPage extends Component
 
     console.log('Sending:', msg, msgId, m.subject, m.files, this.chat.id);
 
-    /*ML.api('message', 'send', {body: msg, messageId: msgId, subject: m.subject, files: m.files, chatId: this.chat.id}, json =>
+    let statusClass = this.base.querySelector('message-bubble:last-child .status').className;
+    statusClass = 'status s1';
+
+    ML.api('message', 'send', {body: msg, messageId: msgId, subject: m.subject, files: m.files, chatId: this.chat.id}, json =>
     {
       // mark it as delivered to mail/DB
-      MS.ul.querySelector('li:nth-last-child(1) .status').className = 'status s2';
+      statusClass = 'status s2';
       console.log('send()', json);
-    });*/
+    });
 
     mixpanel.track('Composer - message sent');
   }

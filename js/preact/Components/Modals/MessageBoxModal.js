@@ -15,12 +15,14 @@ class MessageBoxModal extends Component
     let data = this.props.data,
         buttons = [h('button', {className: 'btn ok', onclick: () => this.onClick(1)}, 'OK')];
 
+    if (!data) return h('message-box-modal', {style: {display: 'none'}});
+
     if (data.type == 1)
     {
       buttons.push(h('button', {className: 'btn cancel', onclick: () => this.onClick(0)}, 'Cancel'))
     }
 
-    return h('message-box-modal', null,
+    return h('message-box-modal', {onclick: (e) => {if (e.target.nodeName.toLowerCase() == 'message-box-modal') this.onClick(0)} },
       h('div', null,
         h(MessageBody, {html: data.html}),
         typeof data.input == 'undefined' ? '' : h('input', {value: data.input, type: 'text', autofocus: 'autofocus'}),

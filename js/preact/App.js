@@ -193,12 +193,12 @@ class App extends Component
   render()
   {
     // place here the logic of page switching
-    let pages = [];
-
-    // modals
-    if (this.state.demoBox)    pages.push(h(DemoBoxModal,    {data: this.state.demoBox,    onclose: this.closeDemoBox.bind(this)    }));
-    if (this.state.messageBox) pages.push(h(MessageBoxModal, {data: this.state.messageBox, onclose: this.closeMessageBox.bind(this) }));
-    if (this.state.customBox)  pages.push(h(CustomBoxModal,  {data: this.state.customBox,  onclose: this.closeCustomBox.bind(this)  }));
+    let pages =
+    [
+      h(DemoBoxModal,    {data: this.state.demoBox,    onclose: this.closeDemoBox.bind(this)    }),
+      h(MessageBoxModal, {data: this.state.messageBox, onclose: this.closeMessageBox.bind(this) }),
+      h(CustomBoxModal,  {data: this.state.customBox,  onclose: this.closeCustomBox.bind(this)  })
+    ];
 
     switch (this.state.page)
     {

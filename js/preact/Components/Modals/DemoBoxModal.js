@@ -12,6 +12,8 @@ class DemoBoxModal extends Component
   {
     let data = this.props.data, url = '', style, nc;
 
+    if (!data) return h('demo-box-modal', {style: {display: 'none'}});
+
     if (data.file.type.match('image.*'))
     {
       if (data.messageId)
@@ -31,7 +33,7 @@ class DemoBoxModal extends Component
       style = {background: ML.colorHash(data.file.type),}
     }
 
-    return h('demo-box-modal', null,
+    return h('demo-box-modal', {onclick: this.props.onclose},
       h('div', null,
         h('div', {className: 'head'},
           h('div', null,
