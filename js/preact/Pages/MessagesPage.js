@@ -264,8 +264,6 @@ class MessagesPage extends Component
 
   render()
   {
-    console.log('render()');
-
     let messages = [],
         menuModal = h('menu-modal', {style: {display: 'none'}}),
         uploadedFiles = null,
@@ -315,10 +313,22 @@ class MessagesPage extends Component
 
     if (this.state.menuModalShown == 3)
     {
+      let filePlates = [];
+
+      for (let i in this.state.messages)
+      {
+        let m = this.state.messages[i];
+        if (m.files) for (let j in m.files)
+        {
+          filePlates.push(h('li', null,
+            h(FilePlate, {file: m.files[j], size: '47vw'}),
+            h(BarIcon, {img: 'color/download', onclick: () => window.open(`https://${CFG.apiRoot}/api/file?method=download&messageId=${m.id}&offset=${j}`) })
+          ))
+        }
+      }
+
       menuModal = h('menu-modal', {className: 'menu-files'},
-        h('ul', null,
-          'files'
-        )
+        h('ul', null, filePlates)
       )
     }
 
