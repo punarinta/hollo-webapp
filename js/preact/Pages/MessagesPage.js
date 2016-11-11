@@ -360,7 +360,7 @@ class MessagesPage extends Component
       }
 
       menuModal = h('menu-modal', {className: 'menu-files'},
-        h('ul', null, filePlates)
+        filePlates.length ? h('ul', null, filePlates) : h('div', null, 'No files in this chat')
       )
     }
 
