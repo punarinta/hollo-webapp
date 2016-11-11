@@ -230,7 +230,7 @@ class MessagesPage extends Component
           h(BarIcon, {img: 'color/clip', width: 40, height: 40, onclick: () => {} }),
           h(BarIcon, {img: 'color/more-vert', width: 40, height: 40, onclick: () => {} })
         ),
-        h('ul', null,
+        h('ul', {style: {bottom: composerHeight + 'px'}},
           messages
         ),
         h('composer', {style: {height: composerHeight + 'px'}},
