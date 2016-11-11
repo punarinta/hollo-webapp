@@ -323,6 +323,10 @@ class MessagesPage extends Component
       menuModal = h('menu-modal', {className: 'menu-users'},
         h('ul', null,
           users
+        ),
+        h('bar', null,
+          h('button', {onclick: () => this.setState({menuModalShown: 0})}, 'OK'),
+          h('button', {onclick: () => {} }, 'Add more')
         )
       )
     }
