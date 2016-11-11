@@ -124,6 +124,12 @@ class MessagesPage extends Component
     return ML.uniques(subjects);
   }
 
+  filterMessages(filter)
+  {
+    console.log(filter)
+    this.setState({menuModalShown: 0})
+  }
+
   reposition(mode = 0)
   {
     // modes: 0 - keep ul's scrollTop, 1 - scroll down
@@ -295,18 +301,44 @@ class MessagesPage extends Component
 
     if (this.state.menuModalShown == 1)
     {
+      let users = [];
+
+      for (let i in this.chat.users)
+      {
+        let u = this.chat.users[i];
+        users.push(h('li', null,
+          h(Avatar, {user: u}),
+          h('div', null,
+            h('div', {className: 'name'},
+              this.chat.users[i].name
+            ),
+            h('div', {className: 'email'},
+              this.chat.users[i].email
+            )
+          ),
+          h(BarIcon, {img: 'color/close', onclick: () => {} })
+        ))
+      }
+
       menuModal = h('menu-modal', {className: 'menu-users'},
         h('ul', null,
-          'users'
+          users
         )
       )
     }
 
     if (this.state.menuModalShown == 2)
     {
+      let subjectLines = [], subjects = this.getUniqueSubjects();
+
+      for (let i in subjects)
+      {
+        subjectLines.push(h('li', {onclick: () => this.filterMessages(subjects[i])}, subjects[i]))
+      }
+
       menuModal = h('menu-modal', {className: 'menu-subjects'},
         h('ul', null,
-          'subjects'
+          subjectLines
         )
       )
     }

@@ -47,8 +47,24 @@ menu-modal
 .menu-subjects
   &:before
     right 85px
+  ul
+    overflow auto
+    max-height calc(100vh - 76px)
 
 .menu-users
   right initial
+  width 98%
+  left 1%
   &:before
     left 41px
+  li
+    display flex
+    height 80px
+    align-items center
+    & > div
+      padding 6px 0 0 10px
+      flex 4
+    bar-icon
+      min-width 48px
+      max-width 48px
+      height 80px
