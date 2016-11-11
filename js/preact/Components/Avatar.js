@@ -12,6 +12,11 @@ class Avatar extends Component
 
   loadGraphics(props)
   {
+    if (this.state.bgImage)
+    {
+      return
+    }
+
     let chat = props.chat || {users: [props.user], read: 1},
         email = chat.users[0].email;
 
