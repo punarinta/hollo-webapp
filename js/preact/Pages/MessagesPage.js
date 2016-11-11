@@ -15,6 +15,7 @@ class MessagesPage extends Component
     this.state.messages = [];
     this.state.files = [];
     this.state.currentSubject = '';
+    this.state.currentComposed = '';
   }
 
   componentDidMount()
@@ -46,12 +47,13 @@ class MessagesPage extends Component
         // adds messages to the top
         this.pageStart += data.messages.length;
         this.setState({messages: data.messages.concat(this.state.messages)});
+
+        // TODO: configure repositioning
       }
       else
       {
         let currentSubject = data.messages.length ? data.messages[data.messages.length - 1].subject : 'New subject';
         this.setState({messages: data.messages, currentSubject});
-        this.reposition();
       }
     });
   }
@@ -82,12 +84,14 @@ class MessagesPage extends Component
     let h = t.scrollHeight + 3;
     t.style.height = h + 'px';
     h = Math.min(parseInt(h, 10), window.innerHeight * .3);
+    let state = {canSend: !!t.value.trim().length, currentComposed: t.value};
 
     if (h != this.state.h)
     {
-      this.setState({h, canSend: !!t.value.length});
-      this.reposition();
+      state.h = h;
     }
+
+    this.setState(state)
   }
 
   tryBlurring(e)
@@ -146,13 +150,11 @@ class MessagesPage extends Component
   {
     this.setState({currentSubject: ''});
     setTimeout(() => this.base.querySelector('input.subj').focus(), 50);
-    this.reposition();
   }
 
   inputSubject(e)
   {
     this.setState({currentSubject: e.target.value});
-    this.reposition();
   }
 
   uploadFiles(e)
@@ -175,11 +177,10 @@ class MessagesPage extends Component
             name: f.name,
             type: f.type,
             size: f.size,
-            b64:  f.type.match('image.*') ? e.target.result : null
+            b64:  e.target.result // we need to store this to be able to send
           });
 
           this.setState({files});
-          this.reposition();
 
           mixpanel.track('Composer - file attached');
         };
@@ -202,12 +203,42 @@ class MessagesPage extends Component
     let files = this.state.files;
     files.splice(file.i, 1);
     this.setState({files});
-    this.reposition();
   }
 
   send()
   {
-    console.log('Sent!')
+    let msgId = null, messages = this.state.messages,
+        msg = this.base.querySelector('textarea').value.trim();
+
+    // try to find last message with real id
+    for (let i in this.state.messages)
+    {
+      msgId = (this.state.messages[i].id - 0) || msgId
+    }
+
+    let m =
+    {
+      id: 0,
+      ts: new Date().getTime() / 1000,
+      body: msg,
+      from: this.props.user,
+      files: this.state.files,
+      subject: this.state.currentSubject
+     };
+
+    messages.push(m);
+    this.setState({files: [], messages, compFocus: 0, currentComposed: ''});
+
+    console.log('Sending:', msg, msgId, m.subject, m.files, this.chat.id);
+
+    /*ML.api('message', 'send', {body: msg, messageId: msgId, subject: m.subject, files: m.files, chatId: this.chat.id}, json =>
+    {
+      // mark it as delivered to mail/DB
+      MS.ul.querySelector('li:nth-last-child(1) .status').className = 'status s2';
+      console.log('send()', json);
+    });*/
+
+    mixpanel.track('Composer - message sent');
   }
 
   render()
@@ -240,6 +271,8 @@ class MessagesPage extends Component
       this.state.canSend = 1;
     }
 
+    this.reposition();
+
     return (
 
       h('messages-page', null,
@@ -266,7 +299,8 @@ class MessagesPage extends Component
             rows: 1,
             placeholder: 'Write a new hollo...',
             onkeyup: this.composerTextChanged.bind(this),
-            onfocus: (e) => {this.setState({compFocus: 1}); this.reposition(); setTimeout(() => e.target.focus(), 50)}
+            onfocus: (e) => {this.setState({compFocus: 1}); setTimeout(() => e.target.focus(), 50)},
+            value: this.state.currentComposed
           }),
           this.state.canSend ? h(BarIcon, {fullHeight: 1, width: 40, img: 'color/send', height: sendHeight, onclick: this.send.bind(this) }) : '',
           uploadedFiles
