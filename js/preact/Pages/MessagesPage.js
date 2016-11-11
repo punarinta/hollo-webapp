@@ -145,12 +145,14 @@ class MessagesPage extends Component
   newSubject()
   {
     this.setState({currentSubject: ''});
-    setTimeout(() => this.base.querySelector('input.subj').focus(), 50)
+    setTimeout(() => this.base.querySelector('input.subj').focus(), 50);
+    this.reposition();
   }
 
   inputSubject(e)
   {
     this.setState({currentSubject: e.target.value});
+    this.reposition();
   }
 
   uploadFiles(e)
