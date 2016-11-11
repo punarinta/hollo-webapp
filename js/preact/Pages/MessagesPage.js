@@ -267,7 +267,7 @@ class MessagesPage extends Component
     console.log('render()');
 
     let messages = [],
-        menuModal = h('menu-modal', {className: 'menu-null'}),
+        menuModal = h('menu-modal', {style: {display: 'none'}}),
         uploadedFiles = null,
         name = this.chat ? ML.xname(this.chat)[0] : '',
         composerHeight = this.state.compFocus ? this.state.h + 40 : this.state.h,
