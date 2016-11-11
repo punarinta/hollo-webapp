@@ -41,6 +41,7 @@ class MessagesPage extends Component
     {
       this.canLoadMore = (data.messages.length == this.pageLength);
       this.chat = data.chat;
+      this.chat.read = 1;
 
       data.messages = data.messages.reverse();
 
@@ -101,11 +102,11 @@ class MessagesPage extends Component
 
   tryBlurring(e)
   {
-    if (!ML.par(e.target, 'composer'))
+    if (!ML.par(e.target, 'composer') && this.state.compFocus)
     {
       this.setState({compFocus: 0})
     }
-    if (!ML.par(e.target, 'menu-modal') && !ML.par(e.target, 'snackbar'))
+    if (!ML.par(e.target, 'menu-modal') && !ML.par(e.target, 'snackbar') && this.state.menuModalShown)
     {
       this.setState({menuModalShown: 0})
     }
@@ -126,7 +127,7 @@ class MessagesPage extends Component
   reposition(mode = 0)
   {
     // modes: 0 - keep ul's scrollTop, 1 - scroll down
-    setTimeout( () =>
+    if (this.state.messages.length) setTimeout( () =>
     {
       if (mode == 0)
       {
@@ -263,8 +264,10 @@ class MessagesPage extends Component
 
   render()
   {
+    console.log('render()');
+
     let messages = [],
-        menuModal = null,
+        menuModal = h('menu-modal', {className: 'menu-null'}),
         uploadedFiles = null,
         name = this.chat ? ML.xname(this.chat)[0] : '',
         composerHeight = this.state.compFocus ? this.state.h + 40 : this.state.h,
@@ -290,6 +293,45 @@ class MessagesPage extends Component
       composerHeight += 76;
       sendHeight += 76;
       this.state.canSend = 1;
+    }
+
+    if (this.state.menuModalShown == 1)
+    {
+      menuModal = h('menu-modal', {className: 'menu-users'},
+        h('ul', null,
+          'users'
+        )
+      )
+    }
+
+    if (this.state.menuModalShown == 2)
+    {
+      menuModal = h('menu-modal', {className: 'menu-subjects'},
+        h('ul', null,
+          'subjects'
+        )
+      )
+    }
+
+    if (this.state.menuModalShown == 3)
+    {
+      menuModal = h('menu-modal', {className: 'menu-files'},
+        h('ul', null,
+          'files'
+        )
+      )
+    }
+
+    if (this.state.menuModalShown == 4)
+    {
+      menuModal = h('menu-modal', {className: 'menu-more'},
+        h('ul', null,
+          h('li', null, 'Mute'),
+          h('li', null, `Mark as ${this.chat.read ? 'un' : ''}read`),
+          h('li', null, 'Rename chat'),
+          h('li', null, 'Leave chat')
+        )
+      )
     }
 
     this.reposition();

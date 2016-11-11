@@ -1,0 +1,43 @@
+menu-modal
+  position fixed
+  display block
+  z-index 10
+  right 3px
+  top 62px
+  background-color #fff
+  border 2px solid color-bg-grey
+  &:before
+    right 5px
+    border-color transparent transparent #fff transparent
+    content ''
+    position absolute
+    top -10px
+    width 0
+    height 0
+    border-style solid
+    border-width 0 10px 10px
+    z-index 10
+  ul
+    list-style-type none
+    padding 2px 0
+    margin 0
+    li
+      padding 10px 14px
+      cursor pointer
+      font-size 15px
+
+.menu-null
+  display none
+
+.menu-files
+  &:before
+    right 45px
+
+.menu-subjects
+  &:before
+    right 85px
+
+.menu-users
+  right initial
+  &:before
+    left 41px

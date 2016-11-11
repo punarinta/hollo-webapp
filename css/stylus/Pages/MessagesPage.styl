@@ -2,7 +2,7 @@ messages-page
   width 100vw
   height 100vh
   display block
-  ul
+  & > ul
     list-style-type none
     padding 5px
     position absolute
@@ -29,6 +29,9 @@ messages-page
       white-space nowrap
       overflow hidden
       text-overflow ellipsis
+      &.toggled
+        border-radius 2px
+        background-color color-bg-grey
     bar-icon
       height 56px
       max-width 40px
