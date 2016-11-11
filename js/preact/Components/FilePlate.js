@@ -14,7 +14,7 @@ class FilePlate extends Component
       height: size
     };
 
-    if (file.b64)
+    if (file.type.match('image.*') && file.b64)
     {
       style.background = `url("data:${file.b64}")`;
       nc = '';
