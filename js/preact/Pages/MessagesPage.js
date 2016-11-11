@@ -43,12 +43,14 @@ class MessagesPage extends Component
 
       if (shouldAdd)
       {
+        // adds messages to the top
         this.pageStart += data.messages.length;
         this.setState({messages: data.messages.concat(this.state.messages)});
       }
       else
       {
-        this.setState({messages: data.messages, currentSubject: data.messages[data.messages.length - 1].subject})
+        this.setState({messages: data.messages, currentSubject: data.messages[data.messages.length - 1].subject});
+        this.reposition();
       }
     });
   }
@@ -79,7 +81,12 @@ class MessagesPage extends Component
     let h = t.scrollHeight + 3;
     t.style.height = h + 'px';
     h = Math.min(parseInt(h, 10), window.innerHeight * .3);
-    this.setState({h, canSend: !!t.value.length});
+
+    if (h != this.state.h)
+    {
+      this.setState({h, canSend: !!t.value.length});
+      this.reposition();
+    }
   }
 
   tryBlurring(e)
@@ -100,6 +107,14 @@ class MessagesPage extends Component
     }
 
     return ML.uniques(subjects);
+  }
+
+  reposition()
+  {
+    setTimeout( () =>
+    {
+      this.base.querySelector('message-bubble:last-child').scrollIntoView();
+    }, 50);
   }
 
   showUsers()
@@ -161,6 +176,7 @@ class MessagesPage extends Component
           });
 
           this.setState({files});
+          this.reposition();
 
           mixpanel.track('Composer - file attached');
         };
@@ -183,6 +199,7 @@ class MessagesPage extends Component
     let files = this.state.files;
     files.splice(file.i, 1);
     this.setState({files});
+    this.reposition();
   }
 
   send()
@@ -246,7 +263,7 @@ class MessagesPage extends Component
             rows: 1,
             placeholder: 'Write a new hollo...',
             onkeyup: this.composerTextChanged.bind(this),
-            onfocus: (e) => {this.setState({compFocus: 1}); setTimeout(() => e.target.focus(), 50)}
+            onfocus: (e) => {this.setState({compFocus: 1}); this.reposition(); setTimeout(() => e.target.focus(), 50)}
           }),
           this.state.canSend ? h(BarIcon, {fullHeight: 1, width: 40, img: 'color/send', height: sendHeight, onclick: this.send.bind(this) }) : '',
           uploadedFiles
