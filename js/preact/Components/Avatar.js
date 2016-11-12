@@ -7,6 +7,10 @@ class Avatar extends Component
 
   componentWillReceiveProps(nextProps)
   {
+    if (this.props.user != nextProps.user)
+    {
+      this.setState({bgImage: null})
+    }
     this.loadGraphics(nextProps);
   }
 
