@@ -3,6 +3,8 @@ class UserPickerModal extends Component
   constructor()
   {
     super();
+    this.filterTimer = null;
+    this.emailFilter = '';
     this.state.users = [];
   }
 
@@ -14,12 +16,26 @@ class UserPickerModal extends Component
   callFind()
   {
     let params = {pageStart: 0, pageLength: 25};
-    // if (filter && filter.length) params.filters = [{mode:'email', value:filter}];
+    if (this.emailFilter.length) params.filters = [{mode: 'email', value: this.emailFilter}];
 
     ML.api('contact', 'find', params, (users) =>
     {
       this.setState({users})
     })
+  }
+
+  filterChanged(filter)
+  {
+    clearTimeout(this.filterTimer);
+
+    this.filterTimer = setTimeout( () =>
+    {
+      if (this.emailFilter != filter)
+      {
+        this.emailFilter = filter;
+        this.callFind();
+      }
+    }, 500);
   }
 
   onBgClick(e)
@@ -54,7 +70,11 @@ class UserPickerModal extends Component
 
     return h('user-picker-modal', {onclick: this.onBgClick.bind(this)},
       h('div', null,
-        h(SearchBar),
+        h(SearchBar,
+        {
+          placeholder: 'Search for contact',
+          onchange: this.filterChanged.bind(this)
+        }),
         h('ul', null,
           userRows
         )
