@@ -48,7 +48,7 @@ class UserPickerModal extends Component
 
       userRows.push(h('li', {onclick: () => this.onSelect(user)},
         h(Avatar, {size: 32, user}),
-        h('div', null, user.name)
+        h('div', null, user.name || user.email)
       ))
     }
 

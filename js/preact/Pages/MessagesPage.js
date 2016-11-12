@@ -200,11 +200,13 @@ class MessagesPage extends Component
     let emails = [user.email];
     for (let i in this.chat.users) emails.push(this.chat.users[i].email);
 
-    ML.api('chat', 'add', {emails}, data =>
+    console.log(emails);
+
+    /*ML.api('chat', 'add', {emails}, data =>
     {
       this.setState({menuModalShown: 0});
       ML.go('chat/' + data.id);
-    });
+    });*/
   }
 
   removeUser(user)
