@@ -5,7 +5,6 @@ class MessagesPage extends Component
     super();
     this.pageStart = 0;
     this.pageLength = 20;
-    this.subjectFilter = '';
     this.canLoadMore = 0;
     this.chat = null;
     this.scrollTop = 0;
@@ -15,6 +14,7 @@ class MessagesPage extends Component
     this.state.compFocus = 0;
     this.state.messages = [];
     this.state.files = [];
+    this.state.subjectFilter = 0;
     this.state.currentSubject = '';
     this.state.currentComposed = '';
     this.state.menuModalShown = 0;
@@ -130,10 +130,9 @@ class MessagesPage extends Component
     return ML.uniques(subjects);
   }
 
-  filterMessages(filter)
+  filterMessages(subjectFilter)
   {
-    console.log(filter)
-    this.setState({menuModalShown: 0})
+    this.setState({menuModalShown: 0, subjectFilter});
   }
 
   reposition(mode = 0)
@@ -447,11 +446,20 @@ class MessagesPage extends Component
       )
     }
 
+    let filterModal = h('filter-modal', {style: {display: this.state.subjectFilter ? 'flex' : 'none'}},
+      h('div', null,
+        h('div', {className: 'caption'}, 'Filtering by subject'),
+        h('div', {className: 'filter'}, this.state.subjectFilter)
+      ),
+      h(BarIcon, {img: 'color/circled-cross', onclick: () => this.filterMessages(0)})
+    );
+
     this.reposition();
 
     return (
 
       h('messages-page', null,
+        filterModal,
         menuModal,
         h('snackbar', null,
           h(BarIcon, {img: 'color/arrow-back', onclick: () => ML.go('chats')}),
