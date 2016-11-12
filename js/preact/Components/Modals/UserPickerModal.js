@@ -30,6 +30,12 @@ class UserPickerModal extends Component
     }
   }
 
+  onSelect(user)
+  {
+    this.props.onclose();
+    if (typeof this.props.data.onselect == 'function') this.props.data.onselect(user)
+  }
+
   render()
   {
     if (!this.props.data) return h('user-picker-modal', {style: {display: 'none'}});
@@ -38,9 +44,11 @@ class UserPickerModal extends Component
 
     for (let i in this.state.users)
     {
-      userRows.push(h('li', null,
-        h(Avatar, {size: 32, user: this.state.users[i]}),
-        h('div', null, this.state.users[i].name)
+      let user = this.state.users[i];
+
+      userRows.push(h('li', {onclick: () => this.onSelect(user)},
+        h(Avatar, {size: 32, user}),
+        h('div', null, user.name)
       ))
     }
 
