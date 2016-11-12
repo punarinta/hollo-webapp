@@ -133,6 +133,7 @@ class MessagesPage extends Component
   filterMessages(subjectFilter)
   {
     this.setState({menuModalShown: 0, subjectFilter});
+    this.reposition(1)
   }
 
   reposition(mode = 0)
@@ -345,6 +346,10 @@ class MessagesPage extends Component
 
     for (let i in this.state.messages)
     {
+      if (this.state.subjectFilter)
+      {
+        if (this.state.messages[i].subject != this.state.subjectFilter) continue;
+      }
       messages.push(h(MessageBubble, {message: this.state.messages[i], user: this.props.user}))
     }
 
@@ -468,7 +473,7 @@ class MessagesPage extends Component
           h(BarIcon, {className: this.state.menuModalShown == 3 ? 'toggled' : '', img: 'color/clip', width: 40, height: 40, onclick: () => this.toggleMenu(3) }),
           h(BarIcon, {className: this.state.menuModalShown == 4 ? 'toggled' : '', img: 'color/more-vert', width: 40, height: 40, onclick: () => this.toggleMenu(4) })
         ),
-        h('ul', {style: {bottom: composerHeight + 'px'}},
+        h('ul', {style: {bottom: composerHeight + 'px', paddingTop: this.state.subjectFilter ? '72px' : 0}},
           messages
         ),
         h('composer', {style: {height: composerHeight + 'px'}},
