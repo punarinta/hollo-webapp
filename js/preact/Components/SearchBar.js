@@ -5,6 +5,7 @@ class SearchBar extends Component
     super();
     this.state.value = '';
     this.state.focus = 0;
+    this.state.showCross = 0;
   }
 
   componentWillMount()
@@ -22,7 +23,7 @@ class SearchBar extends Component
 
   onFocus()
   {
-    this.setState({focus: 1});
+    this.setState({focus: 1, showCross: 1});
     this.onfocuschange(1)
   }
 
@@ -36,6 +37,8 @@ class SearchBar extends Component
   {
     this.setState({value: ''});
     this.onchange('');
+    // fukken bug fix
+    setTimeout(() => this.setState({showCross: 0}), 50)
   }
 
   render(props)
@@ -52,7 +55,7 @@ class SearchBar extends Component
           onblur: this.onBlur.bind(this),
           placeholder: props.placeholder
         }),
-        h('div', {onclick: this.clear.bind(this), style: {display: this.state.focus ? 'block' : 'none'}})
+        h('div', {onclick: this.clear.bind(this), style: {display: this.state.showCross ? 'block' : 'none'}})
       )
     );
   }
