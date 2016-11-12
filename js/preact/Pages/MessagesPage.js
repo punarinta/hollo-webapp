@@ -189,9 +189,22 @@ class MessagesPage extends Component
     this.setState({currentSubject: e.target.value});
   }
 
-  addUser()
+  addUserStart()
   {
-    // ML.emit('custombox', {className: 'users-modal', children})
+    ML.emit('userpicker', {onselect: this.addUser.bind(this)});
+    this.setState({menuModalShown: 0})
+  }
+
+  addUser(user)
+  {
+    let emails = [user.email];
+    for (let i in this.chat.users) emails.push(this.chat.users[i].email);
+
+    ML.api('chat', 'add', {emails}, data =>
+    {
+      this.setState({menuModalShown: 0});
+      ML.go('chat/' + data.id);
+    });
   }
 
   removeUser(user)
@@ -397,7 +410,7 @@ class MessagesPage extends Component
         ),
         h('bar', null,
           h('button', {onclick: () => this.setState({menuModalShown: 0})}, 'OK'),
-          h('button', {onclick: this.addUser.bind(this) }, 'Add more')
+          h('button', {onclick: this.addUserStart.bind(this) }, 'Add more')
         )
       )
     }

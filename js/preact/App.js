@@ -12,6 +12,7 @@ class App extends Component
     this.state.demoBox = null;
     this.state.messageBox = null;
     this.state.customBox = null;
+    this.state.userPicker = null;
     this.state.user = null;
   }
 
@@ -25,6 +26,7 @@ class App extends Component
     window.addEventListener('hollo:demobox', this.showDemoBox.bind(this));
     window.addEventListener('hollo:messagebox', this.showMessageBox.bind(this));
     window.addEventListener('hollo:custombox', this.showCustomBox.bind(this));
+    window.addEventListener('hollo:userpicker', this.showUserPicker.bind(this));
     window.addEventListener('hollo:inituser', this.initUser.bind(this));
 
     // === ROUTER ===
@@ -190,6 +192,16 @@ class App extends Component
     this.setState({customBox: null});
   }
 
+  showUserPicker(e)
+  {
+    this.setState({userPicker: e.payload});
+  }
+
+  closeUserPicker()
+  {
+    this.setState({userPicker: null});
+  }
+
   render()
   {
     // place here the logic of page switching
@@ -197,6 +209,7 @@ class App extends Component
     [
       h(DemoBoxModal,    {data: this.state.demoBox,    onclose: this.closeDemoBox.bind(this)    }),
       h(MessageBoxModal, {data: this.state.messageBox, onclose: this.closeMessageBox.bind(this) }),
+      h(UserPickerModal, {data: this.state.userPicker, onclose: this.closeUserPicker.bind(this) }),
       h(CustomBoxModal,  {data: this.state.customBox,  onclose: this.closeCustomBox.bind(this)  })
     ];
 

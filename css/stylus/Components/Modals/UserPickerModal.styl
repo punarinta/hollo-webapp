@@ -1,0 +1,40 @@
+user-picker-modal
+  display block
+  width 100vw
+  height 100vh
+  z-index 20
+  background rgba(245, 245, 245, .8)
+  position fixed
+  flex-direction column
+  top 0
+  left 0
+  & > div
+    display flex
+    width calc(100vw - 16px)
+    position fixed
+    left 8px
+    top 72px
+    background #fff
+    max-height calc(100vh - 160px)
+    border-radius 2px
+    box-shadow 0 2px 4px 0 rgba(0, 0, 0, .12)
+    flex-direction column
+  search-bar
+    input
+      padding-left 50px
+      background-position-x 14px
+  ul
+    padding 0
+    margin 0
+    overflow auto
+  li
+    display flex
+    list-style none
+    align-items center
+    height 48px
+    avatar
+      margin 8px
+    div
+      display flex
+      align-items center
+      font 300 22px 'Work Sans'
