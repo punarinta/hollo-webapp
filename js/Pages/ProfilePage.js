@@ -10,6 +10,14 @@ class ProfilePage extends Component
     });
   }
 
+  testNotifications()
+  {
+    ML.emit('messagebox', {html: 'After you close this message you will have 5 seconds to switch off your display', cb: () =>
+    {
+      ML.api('settings', 'testNotification');
+    }})
+  }
+
   render()
   {
     let user = this.props.user;
@@ -29,6 +37,8 @@ class ProfilePage extends Component
           )
         ),
         h('button', {onclick: () => ML.go('auth/logout')}, 'Logout'),
+        h('br'),
+        h('button', {onclick: this.testNotifications.bind(this)}, 'Test notifications'),
         h('div', {className: 'group'}, 'Settings'),
         h('ul', null,
           h(Checkbox, {caption: 'Emojis replace words', checked: CFG.hungryEmojis, onchange: this.optEmojiChanged.bind(this)})
