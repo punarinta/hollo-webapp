@@ -7,6 +7,7 @@ class ChatRow extends Component
     this.blockSwipe = 0;
     this.vw = window.innerWidth > 768 ? 360 : window.innerWidth;
     this.threshold = this.vw * .3;
+    this.canUpdate = true;
     this.state.chat = this.props.chat;
   }
 
@@ -105,6 +106,7 @@ class ChatRow extends Component
 
           setTimeout( () =>
           {
+            this.canUpdate = true;
             this.setState({chat})
           }, 400);
 
@@ -118,8 +120,15 @@ class ChatRow extends Component
     }
   }
 
+  shouldComponentUpdate()
+  {
+    return this.canUpdate;
+  }
+
   render()
   {
+    this.canUpdate = false;
+
     let chat = this.state.chat,
         email = chat.users[0].email,
         lastMsg = chat.last.msg || '';

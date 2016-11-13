@@ -17,14 +17,14 @@ class ChatsPage extends Component
   componentDidMount()
   {
     this.muted = this.props.data ? this.props.data.muted || 0 : 0;
-    // this.scrollReference = this.scroll.bind(this);
-    // this.base.querySelector('ul').addEventListener('scroll', this.scrollReference);
+    this.scrollReference = this.scroll.bind(this);
+    this.base.querySelector('ul').addEventListener('scroll', this.scrollReference);
     this.callFind();
   }
 
   componentWillUnmount()
   {
-    // this.base.querySelector('ul').removeEventListener('scroll', this.scrollReference);
+    this.base.querySelector('ul').removeEventListener('scroll', this.scrollReference);
   }
 
   callFind(shouldAdd = 0)
@@ -70,11 +70,11 @@ class ChatsPage extends Component
         this.setState({blockSwipe: true});
       }
 
-      if (distY > 72)
+    /*  if (distY > 72)
       {
         this.pull = 1;
         this.ul.style.transform = `translateY(${Math.min(distY, 216)}px)`;
-      }
+      }*/
     }
   }
 
