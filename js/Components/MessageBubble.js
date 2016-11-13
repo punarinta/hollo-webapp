@@ -52,6 +52,12 @@ class MessageBubble extends Component
     }
   }
 
+  shouldComponentUpdate()
+  {
+    // TODO: control this from outside (?)
+    return false;
+  }
+
   render()
   {
     let message = this.state.message,
