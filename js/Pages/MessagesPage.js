@@ -27,6 +27,7 @@ class MessagesPage extends Component
     this.base.querySelector('ul').addEventListener('scroll', this.scrollRef);
     this.base.addEventListener('click', this.tryBlurringRef);
     this.callFind();
+    ML.load('modules/emojis');
   }
 
   componentWillReceiveProps(nextProps)
@@ -101,6 +102,11 @@ class MessagesPage extends Component
     if (h != this.state.h)
     {
       state.h = h;
+    }
+
+    if (e.keyCode == 13 && e.ctrlKey)
+    {
+      this.send()
     }
 
     this.setState(state)
@@ -312,6 +318,12 @@ class MessagesPage extends Component
   {
     let msgId = null, messages = this.state.messages,
         msg = this.base.querySelector('textarea').value.trim();
+
+    if (!msg.length && !this.state.files.length)
+    {
+      ML.emit('messagebox', {html: 'Nothing to send'});
+      return;
+    }
 
     // try to find last message with real id
     for (let i in this.state.messages)
