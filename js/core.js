@@ -1,3 +1,5 @@
+//  MUST BE IN ES5
+
 var ML =
 {
   sessionId: null,
@@ -5,11 +7,11 @@ var ML =
   ws: null,
   _wsOpened: 0,
 
-  api (endpoint, method, data, callback, error)
+  api: function (endpoint, method, data, callback, error)
   {
-    let r = new XMLHttpRequest(), ps = null, pl;
+    var r = new XMLHttpRequest(), ps = null, pl;
 
-    r.open('POST', `https://${CFG.apiRoot}/api/${endpoint}`, true);
+    r.open('POST', 'https://' + CFG.apiRoot + '/api/' + endpoint, true);
     r.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
     if (typeof ML.sessionId == 'string')
     {
@@ -18,10 +20,10 @@ var ML =
 
     r.onload = function ()
     {
-      let r = this.response.toString();
+      var r = this.response.toString();
       if (ML.isJson(r))
       {
-        let json = JSON.parse(r);
+        var json = JSON.parse(r);
         if (this.status >= 200 && this.status < 400)
         {
           if (callback) callback(json.data);
@@ -56,9 +58,11 @@ var ML =
     r.send(JSON.stringify({ 'method': method, 'data': data, 'pageStart': ps, 'pageLength': pl }));
   },
 
-  getQueryVar (v, hashed = 0)
+  getQueryVar: function (v, hashed)
   {
-    let q = hashed ? window.location.hash : window.location.search,
+    hashed = hashed || 0;
+
+    var q = hashed ? window.location.hash : window.location.search,
         i, p, vs = q.substring(1).split('&');
 
     for (i = 0; i < vs.length; i++)
@@ -70,9 +74,11 @@ var ML =
     return null;
   },
 
-  ts (ts, mode = 3)
+  ts: function (ts, mode)
   {
-    let td = new Date(), pfx = '',
+    mode = mode || 3;
+
+    var td = new Date(), pfx = '',
         date = new Date(ts * 1000), gy = date.getYear(),
         year = gy >= 100 ? gy - 100 : gy,
         month = '0' + (date.getMonth() + 1),
@@ -97,9 +103,11 @@ var ML =
     return pfx;
   },
 
-  uniques (arr, sens = 1)
+  uniques: function (arr, sens)
   {
-    let i = 0, a = [], l = arr.length;
+    sens = sens || 1;
+
+    var i = 0, a = [], l = arr.length;
     if (sens)
     {
       for (; i<l; i++)
@@ -115,19 +123,19 @@ var ML =
     return a;
   },
 
-  load (fn)
+  load: function (fn)
   {
     if (typeof this._loaded[fn] != 'undefined') return;
     ML._loaded[fn] = 1;
-    let f = document.createElement('script');
+    var f = document.createElement('script');
     f.setAttribute('type', 'text/javascript');
     f.setAttribute('src', '/' + fn + '.js');
     document.querySelector('head').appendChild(f)
   },
 
-  go (r, d)
+  go: function  (r, d)
   {
-    for (let i = 2; i--;)
+    for (var i = 2; i--;)
     {
       history.pushState({route: r, data: d}, '', '/' + r);
     }
@@ -135,41 +143,41 @@ var ML =
     history.go(-1)
   },
 
-  emit(eventName, payload)
+  emit: function (eventName, payload)
   {
-    let e = new Event('hollo:' + eventName);
+    var e = new Event('hollo:' + eventName);
     e.payload = payload;
     window.dispatchEvent(e);
   },
 
-  colorHash (input)
+  colorHash: function (input)
   {
-    let ncc = parseInt(md5(input).substr(0, 6), 16),
+    var ncc = parseInt(md5(input).substr(0, 6), 16),
         b = ncc & 0xFF, g = (ncc >> 8) & 0xFF, r = ncc >> 16;
 
     ncc = [(r >> 1) + 96, (g >> 1) + 96, (b >> 1) + 96].join(',');
     
-    return `rgb(${ncc})`;
+    return 'rgb(' + ncc + ')';
   },
 
-  isJson (testable)
+  isJson: function (testable)
   {
     return testable && /^[\],:{}\s]*$/.test(testable.replace(/\\["\\\/bfnrtu]/g, '@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').replace(/(?:^|:|,)(?:\s*\[)+/g, ''));
   },
 
-  isEmail (email)
+  isEmail: function (email)
   {
     return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
   },
 
-  clearName (text)
+  clearName: function (text)
   {
     return text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ' ').replace(/\s{2,}/g, ' ').split('\\"').join('"')
   },
 
-  xname (chat)
+  xname: function (chat)
   {
-    let user, name, nc, count = chat.users.length;
+    var user, name, nc, count = chat.users.length;
 
     if (count > 1)
     {
@@ -177,7 +185,7 @@ var ML =
       else
       {
         name = [];
-        for (let n = 0; n < count; n++)
+        for (var n = 0; n < count; n++)
         {
           if (chat.users[n].name)
             user = chat.users[n].name.split(' ')[0];
@@ -203,7 +211,7 @@ var ML =
   },
 
   // find first parent of the specified type
-  par (x, type)
+  par: function (x, type)
   {
     while (x && x.nodeName.toLowerCase() != type)
     {

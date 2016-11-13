@@ -1,3 +1,5 @@
+//  MUST BE IN ES5
+
 var CFG =
 {
   apiRoot: 'app.hollo.email',

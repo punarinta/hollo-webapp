@@ -1,8 +1,10 @@
-let md5 = (function (v)
+//  MUST BE IN ES5
+
+var md5 = (function (v)
 {
   function md5cycle(x, k)
   {
-    let a = x[0], b = x[1], c = x[2], d = x[3];
+    var a = x[0], b = x[1], c = x[2], d = x[3];
 
     a = ff(a, b, c, d, k[0], 7, -680876936);
     d = ff(d, a, b, c, k[1], 12, -389564586);
@@ -107,14 +109,14 @@ let md5 = (function (v)
 
   function md51(s)
   {
-    let n = s.length, state = [1732584193, -271733879, -1732584194, 271733878], i;
+    var n = s.length, state = [1732584193, -271733879, -1732584194, 271733878], i;
     
     for (i=64; i<=s.length; i+=64)
     {
       md5cycle(state, md5blk(s.substring(i-64, i)));
     }
     s = s.substring(i-64);
-    let tail = [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0];
+    var tail = [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0];
     for (i=0; i<s.length; i++)
       tail[i>>2] |= s.charCodeAt(i) << ((i%4) << 3);
     tail[i>>2] |= 0x80 << ((i%4) << 3);
@@ -144,7 +146,7 @@ let md5 = (function (v)
    * 8-bit unsigned value arrays.
    */
   function md5blk(s) { /* I figured global was faster.   */
-    let md5blks = [], i; /* Andy King said do it this way. */
+    var md5blks = [], i; /* Andy King said do it this way. */
     for (i=0; i<64; i+=4)
     {
       md5blks[i>>2] = s.charCodeAt(i)
@@ -155,11 +157,11 @@ let md5 = (function (v)
     return md5blks;
   }
 
-  let hex_chr = '0123456789abcdef'.split('');
+  var hex_chr = '0123456789abcdef'.split('');
 
   function rhex(n)
   {
-    let s='', j=0;
+    var s='', j=0;
     for(; j<4; j++)
       s += hex_chr[(n >> (j * 8 + 4)) & 0x0F]
         + hex_chr[(n >> (j * 8)) & 0x0F];
@@ -168,7 +170,7 @@ let md5 = (function (v)
 
   function hex(x)
   {
-    for (let i=0; i<x.length; i++)
+    for (var i=0; i<x.length; i++)
       x[i] = rhex(x[i]);
     return x.join('');
   }
@@ -186,7 +188,7 @@ let md5 = (function (v)
 
   /*if (hex(md51('hello')) != '5d41402abc4b2a76b9719d911017c592') {
     function add32(x, y) {
-      let lsw = (x & 0xFFFF) + (y & 0xFFFF),
+      var lsw = (x & 0xFFFF) + (y & 0xFFFF),
         msw = (x >> 16) + (y >> 16) + (lsw >> 16);
       return (msw << 16) | (lsw & 0xFFFF);
     }
