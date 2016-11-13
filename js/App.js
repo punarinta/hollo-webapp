@@ -92,10 +92,10 @@ class App extends Component
       },
       () =>
       {
-        ML.mbox('Google login API is down. Say what?', 0, () =>
+        ML.emit('messagebox', {html: 'Google login API is down. Say what?', cb: () =>
         {
           this.setState({page: 'login'});
-        })
+        }});
       });
     }
     else ML.api('auth', 'status', {}, data =>

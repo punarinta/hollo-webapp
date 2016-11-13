@@ -26,19 +26,19 @@ class LoginPage extends Component
 
   loginWithImap()
   {
-    let user = this.nameInput.value,
-        pass = this.passInput.value;
+    let user = this.nameInput.value.trim(),
+        pass = this.passInput.value.trim();
 
     if (!user.length || !pass.length)
     {
-      ML.mbox('Input both email and password');
+      ML.emit('messagebox', {html: 'Input both email and password'});
       return;
     }
 
     // disallow Gmail login here
     if (user.split('@')[1] == 'gmail.com')
     {
-      ML.mbox('Use "Sign in with Google" button');
+      ML.emit('messagebox', {html: 'Use "Sign in with Google" button'});
       return;
     }
 
