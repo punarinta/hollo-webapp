@@ -28,6 +28,7 @@ class App extends Component
     window.addEventListener('hollo:custombox', this.showCustomBox.bind(this));
     window.addEventListener('hollo:userpicker', this.showUserPicker.bind(this));
     window.addEventListener('hollo:inituser', this.initUser.bind(this));
+    window.addEventListener('hollo:firebase', this.firebaseListener.bind(this));
 
     // === ROUTER ===
     window.onpopstate = (e) =>
@@ -199,6 +200,26 @@ class App extends Component
     }
 
     this.setState({user: data.user})
+  }
+
+  firebaseListener(e)
+  {
+    if (!this.state.user || e.payload.authId != this.state.user.id)
+    {
+      return
+    }
+
+    if (e.payload.cmd == 'logout')
+    {
+      // absolute event
+      ML.go('auth/logout');
+    }
+
+    if (e.payload.cmd == 'ping')
+    {
+      // absolute event
+      ML.emit('messagebox', {html: 'Ping signal received'});
+    }
   }
 
   showMessageBox(e)
