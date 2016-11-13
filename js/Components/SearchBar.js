@@ -47,7 +47,7 @@ class SearchBar extends Component
       h('search-bar', {className: this.props.className},
         h('input',
         {
-          type: 'text',
+          type: 'email',
           value: this.state.value,
           onkeyup: this.onKeyUp.bind(this),
           onfocus: this.onFocus.bind(this),
