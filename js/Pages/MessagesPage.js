@@ -181,7 +181,7 @@ class MessagesPage extends Component
     this.reposition(1)
   }
 
-  reposition(mode = 0)
+  reposition(mode = 0, timeOffset = 0)
   {
     // modes: 0 - keep ul's scrollTop, 1 - scroll down
     if (this.state.messages.length) setTimeout( () =>
@@ -195,7 +195,7 @@ class MessagesPage extends Component
         this.base.querySelector('message-bubble:last-child').scrollIntoView();
         this.scrollTop = this.base.querySelector('ul').scrollTop;
       }
-    }, 50);
+    }, 50 + timeOffset);
   }
 
   toggleMenu(menuId = 0)
@@ -570,7 +570,7 @@ class MessagesPage extends Component
             rows: 1,
             placeholder: 'Write a new hollo...',
             onkeyup: this.composerTextChanged.bind(this),
-            onfocus: (e) => {this.setState({compFocus: 1}); setTimeout(() => e.target.focus(), 50); this.reposition(1)},
+            onfocus: (e) => {this.setState({compFocus: 1}); setTimeout(() => e.target.focus(), 50); this.reposition(1, 50)},
             value: this.state.currentComposed
           }),
           this.state.canSend ? h(BarIcon, {fullHeight: 1, width: 40, img: 'color/send', height: sendHeight, onclick: this.send.bind(this) }) : '',
