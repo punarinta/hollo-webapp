@@ -64,6 +64,45 @@ class App extends Component
       }
     };
 
+
+    (function mwInit(user)
+    {
+      ML.ws = new WebSocket(CFG.notifierUrl);
+      ML.ws.onerror = function ()
+      {
+        // we don't care, just switch IM-mode off
+        ML.ws = null
+      };
+
+      ML.ws.onopen = function ()
+      {
+        ML._wsOpened = 1;
+        if (user)
+        {
+          ML.ws.send(JSON.stringify({cmd: 'online', userId: user.id}));
+        }
+      };
+
+      ML.ws.onclose = function ()
+      {
+        if (ML._wsOpened)
+        {
+          ML._wsOpened = 0;
+          // never close, kurwa!
+
+          // TODO: fix this somehow
+          // mwInit(AU.user);
+        }
+      };
+
+      ML.ws.onmessage = function (event)
+      {
+        var data = JSON.parse(event.data);
+        ML.emit('im', data);
+      };
+    })();
+
+
     let oauthCode = ML.getQueryVar('code');
     if (oauthCode)
     {

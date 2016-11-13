@@ -5,6 +5,7 @@
   [
     "js/md5",
     "js/core",
+    "js/parented",
     "js/gravatar",
     "js/settings"
   ],
