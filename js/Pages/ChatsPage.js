@@ -134,14 +134,22 @@ class ChatsPage extends Component
 
   showHolloed()
   {
-    this.muted = 0;
-    this.callFind();
+    if (this.muted)
+    {
+      this.pageStart = 0;
+      this.muted = 0;
+      this.callFind();
+    }
   }
 
   showMuted()
   {
-    this.muted = 1;
-    this.callFind();
+    if (!this.muted)
+    {
+      this.pageStart = 0;
+      this.muted = 1;
+      this.callFind();
+    }
   }
 
   render()
