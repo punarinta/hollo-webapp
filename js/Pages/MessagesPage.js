@@ -570,7 +570,7 @@ class MessagesPage extends Component
             rows: 1,
             placeholder: 'Write a new hollo...',
             onkeyup: this.composerTextChanged.bind(this),
-            onfocus: (e) => {this.setState({compFocus: 1}); setTimeout(() => e.target.focus(), 50)},
+            onfocus: (e) => {this.setState({compFocus: 1}); setTimeout(() => e.target.focus(), 50); this.reposition(1)},
             value: this.state.currentComposed
           }),
           this.state.canSend ? h(BarIcon, {fullHeight: 1, width: 40, img: 'color/send', height: sendHeight, onclick: this.send.bind(this) }) : '',
