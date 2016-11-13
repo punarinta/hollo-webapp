@@ -421,7 +421,9 @@ class MessagesPage extends Component
 
       for (let i in subjects)
       {
-        subjectLines.push(h('li', {onclick: () => this.filterMessages(subjects[i])}, subjects[i]))
+        // babeli bug if 'subject' is not defined via a variable
+        let subject = subjects[i];
+        subjectLines.push(h('li', {onclick: () => this.filterMessages(subject)}, subject))
       }
 
       menuModal = h('menu-modal', {className: 'menu-subjects'},
