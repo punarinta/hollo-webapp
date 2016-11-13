@@ -17,14 +17,14 @@ class ChatsPage extends Component
   componentDidMount()
   {
     this.muted = this.props.data ? this.props.data.muted || 0 : 0;
-    this.scrollReference = this.scroll.bind(this);
-    this.base.querySelector('ul').addEventListener('scroll', this.scrollReference);
+    // this.scrollReference = this.scroll.bind(this);
+    // this.base.querySelector('ul').addEventListener('scroll', this.scrollReference);
     this.callFind();
   }
 
   componentWillUnmount()
   {
-    this.base.querySelector('ul').removeEventListener('scroll', this.scrollReference);
+    // this.base.querySelector('ul').removeEventListener('scroll', this.scrollReference);
   }
 
   callFind(shouldAdd = 0)
