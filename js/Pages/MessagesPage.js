@@ -18,6 +18,7 @@ class MessagesPage extends Component
     this.state.currentSubject = '';
     this.state.currentComposed = '';
     this.state.menuModalShown = 0;
+    this.state.emojis = [];
   }
 
   componentDidMount()
@@ -99,17 +100,55 @@ class MessagesPage extends Component
     h = Math.min(parseInt(h, 10), window.innerHeight * .3);
     let state = {canSend: !!t.value.trim().length, currentComposed: t.value};
 
-    if (h != this.state.h)
-    {
-      state.h = h;
-    }
+    if (h != this.state.h) state.h = h;
+    if (e.keyCode == 13 && e.ctrlKey) this.send();
 
-    if (e.keyCode == 13 && e.ctrlKey)
+    // process emojis
+    if (/[^a-zA-Z0-9-_]/.test(t.value.slice(-1)) && e.keyCode > 31)
     {
-      this.send()
+      let key = t.value.trim().split(' ').slice(-1)[0].toLowerCase().replace(/[_\W]+/g, '');
+
+      if (typeof EMJ[key] != 'undefined')
+      {
+        let emojis = this.state.emojis;
+        emojis.push(key);
+        this.setState({emojis});
+
+        // simply remove the top one in 5 sec
+        setTimeout(() =>
+        {
+          let emojis = this.state.emojis;
+          this.state.emojis.shift();
+          this.setState({emojis});
+        }, 5000)
+      }
     }
 
     this.setState(state)
+  }
+
+  removeEmoji(key, offset)
+  {
+    let emojis = this.state.emojis, currentComposed = this.state.currentComposed;
+
+    for (let i in emojis)
+    {
+      if (emojis[i] == key) emojis.splice(emojis.indexOf(key), 1)
+    }
+
+    if (CFG.hungryEmojis)
+    {
+      // replace the last occurrence of a word with an emoji
+      let pat = new RegExp('(\\b' + key + '\\b)(?!.*\\b\\1\\b)', 'i');
+      currentComposed = currentComposed.replace(pat, EMJ[key][offset]);
+    }
+    else
+    {
+      currentComposed += EMJ[key][offset] + ' ';
+    }
+
+    this.setState({emojis, currentComposed});
+    setTimeout(() => this.cmpText.focus(), 50)
   }
 
   tryBlurring(e)
@@ -147,7 +186,7 @@ class MessagesPage extends Component
     // modes: 0 - keep ul's scrollTop, 1 - scroll down
     if (this.state.messages.length) setTimeout( () =>
     {
-      if (mode == 0)
+      if (mode == 0 && this.base)
       {
         this.base.querySelector('ul').scrollTop = this.scrollTop;
       }
@@ -421,7 +460,6 @@ class MessagesPage extends Component
           users
         ),
         h('bar', null,
-          h('button', {onclick: () => this.setState({menuModalShown: 0})}, 'OK'),
           h('button', {onclick: this.addUserStart.bind(this) }, 'Add more')
         )
       )
@@ -486,6 +524,18 @@ class MessagesPage extends Component
       h(BarIcon, {img: 'color/circled-cross', onclick: () => this.filterMessages(0)})
     );
 
+    let emojiRows = [];
+    for (let i in this.state.emojis)
+    {
+      let key = this.state.emojis[i], emojis = [];
+
+      for (let j in EMJ[key])
+      {
+        emojis.push(h('emoji', {onclick: () => this.removeEmoji(key, j) }, EMJ[key][j]))
+      }
+      emojiRows.push(h('div', null, emojis))
+    }
+
     this.reposition();
 
     return (
@@ -504,6 +554,9 @@ class MessagesPage extends Component
           messages
         ),
         h('composer', {style: {height: composerHeight + 'px'}},
+          h('emojis', {style: {bottom: composerHeight + 8 + 'px'}},
+            emojiRows
+          ),
           this.state.compFocus ? h('bar', null,
             h(BarIcon, {img: 'color/subj', width: 40, height: 40, onclick: this.showSubjects.bind(this)}),
             h('input', {className: 'subj', type: 'text', value: this.state.currentSubject, onkeyup: this.inputSubject.bind(this)}),
@@ -513,6 +566,7 @@ class MessagesPage extends Component
           ) : '',
           h('textarea',
           {
+            ref: (input) => this.cmpText = input,
             rows: 1,
             placeholder: 'Write a new hollo...',
             onkeyup: this.composerTextChanged.bind(this),
