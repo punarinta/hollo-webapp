@@ -220,6 +220,15 @@ class App extends Component
       // absolute event
       ML.emit('messagebox', {html: 'Ping signal received'});
     }
+
+    if (e.payload.cmd == 'show-chat')
+    {
+      if (e.payload.wasTapped)
+      {
+        // app was off, just go to the chat
+        ML.go('chat/' + e.payload.chatId);
+      }
+    }
   }
 
   showMessageBox(e)
