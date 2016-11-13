@@ -58,7 +58,7 @@ foreach ($config['pre-shell'] as $sh)
 
 // Preact core
 file_put_contents("$distDir/$random.js", file_get_contents("node_modules/preact/dist/preact.min.js"), FILE_APPEND);
-file_put_contents("$distDir/$random_es6.js", "const { Component, h, render } = window.preact;", FILE_APPEND);
+file_put_contents("$distDir/$random.js", "var Component = exports.Component, h = exports.h, render = exports.render;", FILE_APPEND);
 
 foreach ($config['js-es6'] as $file)
 {
