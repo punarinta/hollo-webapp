@@ -39,6 +39,8 @@ class ProfilePage extends Component
         h('button', {onclick: () => ML.go('auth/logout')}, 'Logout'),
         h('br'),
         h('button', {onclick: this.testNotifications.bind(this)}, 'Test notifications'),
+        h('div', {className: 'group'}, 'Application version'),
+        h('div', {className: 'line'}, APPVER),
         h('div', {className: 'group'}, 'Settings'),
         h('ul', null,
           h(Checkbox, {caption: 'Emojis replace words', checked: CFG.hungryEmojis, onchange: this.optEmojiChanged.bind(this)})
