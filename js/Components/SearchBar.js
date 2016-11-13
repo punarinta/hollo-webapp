@@ -29,16 +29,15 @@ class SearchBar extends Component
 
   onBlur()
   {
-    this.setState({focus: 0});
+    this.setState({focus: 0, showCross: !!this.state.value.length});
     this.onfocuschange(0)
   }
 
   clear()
   {
-    this.setState({value: ''});
-    this.onchange('');
+    this.setState({value: '', showCross: 0});
     // fukken bug fix
-    setTimeout(() => this.setState({showCross: 0}), 50)
+    setTimeout(() => this.onchange(''), 50)
   }
 
   render(props)
