@@ -6,7 +6,7 @@ class ProfilePage extends Component
 
     ML.api('settings', 'update', {flag: {name: 'emojis-replace', value}}, () =>
     {
-      CFG.hungryEmojis = value;
+      CFG.emojisReplace = value;
     });
   }
 
@@ -20,7 +20,7 @@ class ProfilePage extends Component
 
   render()
   {
-    let user = this.props.user;
+    let user = this.props.user, flags = user ? user.settings.flags : CFG;
 
     return (
 
@@ -43,7 +43,7 @@ class ProfilePage extends Component
         h('div', {className: 'line'}, APPVER),
         h('div', {className: 'group'}, 'Settings'),
         h('ul', null,
-          h(Checkbox, {caption: 'Emojis replace words', checked: CFG.hungryEmojis, onchange: this.optEmojiChanged.bind(this)})
+          h(Checkbox, {caption: 'Emojis replace words', checked: flags['emojis-replace'], onchange: this.optEmojiChanged.bind(this)})
         ),
         h(BottomBar, null,
           h(BarIcon, {caption: 'Profile', img: 'white/profile'}),
