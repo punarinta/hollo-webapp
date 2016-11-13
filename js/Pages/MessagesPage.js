@@ -451,7 +451,7 @@ class MessagesPage extends Component
               this.chat.users[i].email
             )
           ),
-          this.chat.users.length > 1 ? h(BarIcon, {img: 'color/close', onclick: () => this.removeUser(this.chat.users[i]) }) : ''
+          this.chat.users.length > 1 ? h(BarIcon, {img: 'color/cross', onclick: () => this.removeUser(this.chat.users[i]) }) : ''
         ))
       }
 
