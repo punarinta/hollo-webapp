@@ -6,6 +6,11 @@ class Checkbox extends Component
     this.state.checked = 1;
   }
 
+  componentWillMount()
+  {
+    this.state.checked = this.props.checked
+  }
+
   onClick()
   {
     let checked = !this.state.checked;
