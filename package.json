@@ -2,8 +2,7 @@
   "name": "Hollo",
   "version": "1.0.0",
   "scripts": {
-    "build": "babel js -d temp",
-    "build-preact": "babel js/preact -d temp"
+    "build": "babel dist -d dist"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",

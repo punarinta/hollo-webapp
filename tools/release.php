@@ -46,6 +46,7 @@ shell_exec("rm -rf $distDir");
 mkdir($distDir);
 mkdir("$distDir/modules");
 
+$random_es6 = uniqid();
 $random = uniqid();
 
 echo "Running pre scripts...\n";
@@ -55,14 +56,30 @@ foreach ($config['pre-shell'] as $sh)
     shell_exec(str_replace('$distDir', $distDir, $sh));
 }
 
+// Preact core
+file_put_contents("$distDir/$random.js", file_get_contents("node_modules/preact/dist/preact.min.js"), FILE_APPEND);
+file_put_contents("$distDir/$random_es6.js", "const { Component, h, render } = window.preact;", FILE_APPEND);
+
+foreach ($config['js-es6'] as $file)
+{
+    echo "ES6 Script '$file.js'...\n";
+    $js = file_get_contents("$file.js");
+    $js = preg_replace('#[\x5C]n\s{2,}#', ' ', $js);
+    file_put_contents("$distDir/$random_es6.js", $js, FILE_APPEND);
+}
+
+// run babel before modules
+shell_exec("npm run build");
+
 foreach ($config['js'] as $file)
 {
     echo "Script '$file.js'...\n";
-    //shell_exec("yui-compressor $file.js -o $distDir/temp.js");
-    $js = file_get_contents("$file.js");
+    shell_exec("yui-compressor $file.js -o $distDir/temp.js");
+    $js = file_get_contents("$distDir/temp.js");
     $js = preg_replace('#[\x5C]n\s{2,}#', ' ', $js);
     file_put_contents("$distDir/$random.js", $js, FILE_APPEND);
 }
+
 foreach ($config['mods'] as $file)
 {
     echo "Module '$file.js'...\n";
@@ -87,9 +104,9 @@ $replace = ['>', '<', '\\1', ''];
 $html = preg_replace($search, $replace, $html);
 
 $html = strtr($html, ['> ' => '>', ' <' => '<']);
+$html = str_replace("APPVER='dev'", "APPVER='" . date('d.m.Y H:i') . "'", $html);
 $html = str_replace('<!-- CSS -->', '<style>' . file_get_contents("$distDir/$random.css") . '</style>', $html);
-$html = str_replace('<!-- JS -->', '<script>' . file_get_contents("$distDir/$random.js") . '</script>' . $mixpanel, $html);
-$html = str_replace('<!-- VERSION -->dev<!-- /VERSION -->', date('d.m.Y H:i'), $html);
+$html = str_replace('<!-- JS -->', '<script>' . file_get_contents("$distDir/$random.js") . file_get_contents("$distDir/$random_es6.js") . '</script>' . $mixpanel, $html);
 
 file_put_contents($distDir . '/index.html', $html);
 
@@ -104,7 +121,8 @@ echo "Estimated GZIP size: ";
 system('gzip -c dist/index.html | wc -c');
 
 echo "Cleaning up...\n";
-//unlink("$distDir/temp.js");
+unlink("$distDir/temp.js");
 unlink("$distDir/temp.css");
 unlink("$distDir/$random.css");
 unlink("$distDir/$random.js");
+unlink("$distDir/$random_es6.js");

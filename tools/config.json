@@ -3,18 +3,34 @@
   "index": "index.html",
   "js":
   [
-    "temp/vendy/md5",
-    "temp/autosize",
-    "temp/core",
-    "temp/auth",
-    "temp/contacts",
-    "temp/chat-roster",
-    "temp/subject-picker",
-    "temp/ms",
-    "temp/ms-init",
-    "temp/ms-init-composer",
-    "temp/settings",
-    "temp/main"
+    "js/md5",
+    "js/core",
+    "js/gravatar",
+    "js/settings"
+  ],
+  "js-es6":
+  [
+    "js/Components/HolloLoaderBig",
+    "js/Components/Avatar",
+    "js/Components/ChatRow",
+    "js/Components/BarIcon",
+    "js/Components/BottomBar",
+    "js/Components/SearchBar",
+    "js/Components/FilePlate",
+    "js/Components/Checkbox",
+    "js/Components/MessageBody",
+    "js/Components/MessageBubble",
+    "js/Components/Widgets/InvitationWidget",
+    "js/Components/Modals/MessageBoxModal",
+    "js/Components/Modals/DemoBoxModal",
+    "js/Components/Modals/UserPickerModal",
+    "js/Components/Modals/CustomBoxModal",
+    "js/Pages/LoadingPage",
+    "js/Pages/LoginPage",
+    "js/Pages/ChatsPage",
+    "js/Pages/MessagesPage",
+    "js/Pages/ProfilePage",
+    "js/App"
   ],
   "mods":
   [
@@ -46,7 +62,6 @@
   "dist": "../dist",
   "pre-shell":
   [
-    "npm run build",
     "stylus css/stylus/main.styl -o css/main.css"
   ],
   "post-shell":
