@@ -152,26 +152,53 @@ class ChatsPage extends Component
     }
   }
 
+  addNew()
+  {
+    console.log('add', this.emailFilter);
+  }
+
   render()
   {
-    let chats = [];
+    let ulContents = '';
 
-    for (let i in this.state.chats)
+    if (ML.isEmail(this.emailFilter))
     {
-      chats.push(h(ChatRow, {chat: this.state.chats[i], canSwipe: !this.state.blockSwipe, onclick: (chat) => ML.go('chat/' + chat.id)}))
-    }
-
-    let normalPart =
-    [
-      h('ul', null,
-        chats
-      ),
-      h(BottomBar, null,
-        h(BarIcon, {caption: 'Profile', img: 'white/profile', onclick: () => ML.go('profile')}),
-        h(BarIcon, {caption: 'Hollo`d', img: 'white/email', onclick: this.showHolloed.bind(this)}),
-        h(BarIcon, {caption: 'Muted', img: 'white/muted', onclick: this.showMuted.bind(this)})
+      let f = this.emailFilter;
+      ulContents = h('ul', null,
+        h(ChatRow, {chat: {users: [{email: f, name: f}], read:1, last:{msg:'Create a chat with ' + f}}, canSwipe: 0, onclick: this.addNew.bind(this)})
       )
-    ];
+    }
+    else if (this.state.filterActive && !this.emailFilter.length)
+    {
+      ulContents = h('div', {className: 'filter-hint'},
+        'To start a new',
+        h('br'),
+        'conversation type in',
+        h('br'),
+        'an email address.'
+      )
+    }
+    else
+    {
+      let chats = [];
+
+      for (let i in this.state.chats)
+      {
+        chats.push(h(ChatRow, {chat: this.state.chats[i], canSwipe: !this.state.blockSwipe, onclick: (chat) => ML.go('chat/' + chat.id)}))
+      }
+
+      ulContents =
+      [
+        h('ul', null,
+          chats
+        ),
+        h(BottomBar, null,
+          h(BarIcon, {caption: 'Profile', img: 'white/profile', onclick: () => ML.go('profile')}),
+          h(BarIcon, {caption: 'Hollo`d', img: 'white/email', onclick: this.showHolloed.bind(this)}),
+          h(BarIcon, {caption: 'Muted', img: 'white/muted', onclick: this.showMuted.bind(this)})
+        )
+      ];
+    }
 
     return (
 
@@ -183,13 +210,7 @@ class ChatsPage extends Component
           onfocuschange: this.filterFocusChanged.bind(this),
           className: this.state.filterActive ? 'focused' : ''
         }),
-        this.state.filterActive && !this.emailFilter.length ? h('div', {className: 'filter-hint'},
-          'To start a new',
-          h('br'),
-          'conversation type in',
-          h('br'),
-          'an email address.'
-        ) : normalPart
+        ulContents
       )
     );
   }
