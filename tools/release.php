@@ -56,10 +56,6 @@ foreach ($config['pre-shell'] as $sh)
     shell_exec(str_replace('$distDir', $distDir, $sh));
 }
 
-// Preact core
-file_put_contents("$distDir/$random.js", file_get_contents("node_modules/preact/dist/preact.min.js"), FILE_APPEND);
-file_put_contents("$distDir/$random.js", "var Component = exports.Component, h = exports.h, render = exports.render;", FILE_APPEND);
-
 foreach ($config['js-es6'] as $file)
 {
     echo "ES6 Script '$file.js'...\n";
@@ -68,8 +64,15 @@ foreach ($config['js-es6'] as $file)
     file_put_contents("$distDir/$random_es6.js", $js, FILE_APPEND);
 }
 
-// run babel before modules
+// run babel before building ES5 files
 shell_exec("npm run build");
+
+
+// Preact core
+file_put_contents("$distDir/$random.js", "var exports={}, module={};", FILE_APPEND);
+file_put_contents("$distDir/$random.js", file_get_contents("node_modules/preact/dist/preact.min.js"), FILE_APPEND);
+file_put_contents("$distDir/$random.js", "\nvar Component=exports.Component,h=exports.h,render=exports.render;", FILE_APPEND);
+
 
 foreach ($config['js'] as $file)
 {
