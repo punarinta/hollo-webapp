@@ -2,7 +2,7 @@ class InvitationWidget extends Component
 {
   render(props)
   {
-    let w = this.props.data;
+    let w = props.data;
 
     let org = w.org[1] || w.org[0],
       when = ML.ts(w.from) + ' – ' + ML.ts(w.to, 2),
@@ -17,7 +17,7 @@ class InvitationWidget extends Component
         break;
       }
       let toAdd = w.att[j][1].length ? w.att[j][1] : w.att[j][0];
-      if (toAdd != org) atts.push(toAdd)
+      if (toAdd != org) atts.push(h('div', null, toAdd))
     }
 
     return (
