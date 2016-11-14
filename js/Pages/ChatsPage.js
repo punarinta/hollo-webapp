@@ -154,7 +154,11 @@ class ChatsPage extends Component
 
   addNew()
   {
-    console.log('add', this.emailFilter);
+    ML.api('chat', 'add', {emails: [this.emailFilter]}, data =>
+    {
+      this.setState({menuModalShown: 0});
+      ML.go('chat/' + data.id);
+    });
   }
 
   render()
@@ -216,6 +220,7 @@ class ChatsPage extends Component
       h('chats-page', {ontouchstart: this.touchStart.bind(this), ontouchmove: this.touchMove.bind(this), ontouchend: this.touchEnd.bind(this)},
         h(SearchBar,
         {
+          value: '',
           placeholder: 'Search chat or start new',
           onchange: this.filterChanged.bind(this),
           onfocuschange: this.filterFocusChanged.bind(this),
