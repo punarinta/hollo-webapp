@@ -10,7 +10,15 @@ class UserPickerModal extends Component
 
   componentDidMount()
   {
-    this.callFind();
+    if (this.props.data) this.callFind();
+  }
+
+  componentWillReceiveProps(nextProps)
+  {
+    if (nextProps.data && this.props.data != nextProps.data)
+    {
+      this.callFind();
+    }
   }
 
   callFind()
