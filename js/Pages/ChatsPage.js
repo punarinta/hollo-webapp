@@ -187,17 +187,28 @@ class ChatsPage extends Component
         chats.push(h(ChatRow, {chat: this.state.chats[i], canSwipe: !this.state.blockSwipe, onclick: (chat) => ML.go('chat/' + chat.id)}))
       }
 
-      ulContents =
-      [
-        h('ul', null,
-          chats
-        ),
-        h(BottomBar, null,
-          h(BarIcon, {caption: 'Profile', img: 'white/profile', onclick: () => ML.go('profile')}),
-          h(BarIcon, {caption: 'Hollo`d', img: 'white/email', onclick: this.showHolloed.bind(this)}),
-          h(BarIcon, {caption: 'Muted', img: 'white/muted', onclick: this.showMuted.bind(this)})
+      if ((chats.length || !this.startPage) && !this.emailFilter.length)
+      {
+        ulContents =
+        [
+          h('ul', null,
+            chats
+          ),
+          h(BottomBar, null,
+            h(BarIcon, {caption: 'Profile', img: 'white/profile', onclick: () => ML.go('profile')}),
+            h(BarIcon, {caption: 'Hollo`d', img: 'white/email', onclick: this.showHolloed.bind(this)}),
+            h(BarIcon, {caption: 'Muted', img: 'white/muted', onclick: this.showMuted.bind(this)})
+          )
+        ];
+      }
+      else
+      {
+        ulContents = h('div', {className: 'filter-hint'},
+          'Wanna create a new chat?',
+          h('br'),
+          'Just type in an email!'
         )
-      ];
+      }
     }
 
     return (
