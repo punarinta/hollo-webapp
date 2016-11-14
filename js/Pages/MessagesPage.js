@@ -402,7 +402,7 @@ class MessagesPage extends Component
   render()
   {
     let messages = [],
-        menuModal = h('menu-modal', {style: {display: 'none'}}),
+        menuModal = h('div', {className: 'modal-shader', style: {display: 'none'}}),
         uploadedFiles = null,
         name = this.chat ? ML.xname(this.chat)[0] : '',
         composerHeight = this.state.compFocus ? this.state.h + 40 : this.state.h,
@@ -455,12 +455,14 @@ class MessagesPage extends Component
         ))
       }
 
-      menuModal = h('menu-modal', {className: 'menu-users'},
-        h('ul', null,
-          users
-        ),
-        h('bar', null,
-          h('button', {onclick: this.addUserStart.bind(this) }, 'Add more')
+      menuModal = h('div', {className: 'modal-shader'},
+        h('menu-modal', {className: 'menu-users'},
+          h('ul', null,
+            users
+          ),
+          h('bar', null,
+            h('button', {onclick: this.addUserStart.bind(this) }, 'Add more')
+          )
         )
       )
     }
@@ -476,9 +478,11 @@ class MessagesPage extends Component
         subjectLines.push(h('li', {onclick: () => this.filterMessages(subject)}, subject))
       }
 
-      menuModal = h('menu-modal', {className: 'menu-subjects'},
-        h('ul', null,
-          subjectLines
+      menuModal = h('div', {className: 'modal-shader'},
+        h('menu-modal', {className: 'menu-subjects'},
+          h('ul', null,
+            subjectLines
+          )
         )
       )
     }
@@ -499,19 +503,23 @@ class MessagesPage extends Component
         }
       }
 
-      menuModal = h('menu-modal', {className: 'menu-files'},
-        filePlates.length ? h('ul', null, filePlates) : h('div', null, 'No files in this chat')
+      menuModal = h('div', {className: 'modal-shader'},
+        h('menu-modal', {className: 'menu-files'},
+          filePlates.length ? h('ul', null, filePlates) : h('div', null, 'No files in this chat')
+        )
       )
     }
 
     if (this.state.menuModalShown == 4)
     {
-      menuModal = h('menu-modal', {className: 'menu-more'},
-        h('ul', null,
-          h('li', {onclick: this.muteChat.bind(this)}, this.chat.muted ? 'Unmute' : 'Mute'),
-          h('li', {onclick: this.unreadChat.bind(this)}, `Mark as ${this.chat.read ? 'un' : ''}read`),
-          h('li', {onclick: this.renameChat.bind(this)}, 'Rename chat'),
-          h('li', {onclick: this.leaveChat.bind(this)}, 'Leave chat')
+      menuModal = h('div', {className: 'modal-shader'},
+        h('menu-modal', {className: 'menu-more'},
+          h('ul', null,
+            h('li', {onclick: this.muteChat.bind(this)}, this.chat.muted ? 'Unmute' : 'Mute'),
+            h('li', {onclick: this.unreadChat.bind(this)}, `Mark as ${this.chat.read ? 'un' : ''}read`),
+            h('li', {onclick: this.renameChat.bind(this)}, 'Rename chat'),
+            h('li', {onclick: this.leaveChat.bind(this)}, 'Leave chat')
+          )
         )
       )
     }
