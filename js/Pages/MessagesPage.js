@@ -8,6 +8,7 @@ class MessagesPage extends Component
     this.canLoadMore = 0;
     this.chat = null;
     this.scrollTop = 0;
+    this.lastCallFindParams = {};
 
     this.state.h = 64;
     this.state.canSend = 0;
@@ -48,7 +49,14 @@ class MessagesPage extends Component
 
   callFind(shouldAdd = 0)
   {
-    ML.api('message', 'findByChatId', {chatId: this.props.data.chatId, pageStart: this.pageStart, pageLength: this.pageLength}, (data) =>
+    let callFindParams = {chatId: this.props.data.chatId, pageStart: this.pageStart, pageLength: this.pageLength};
+
+    if (JSON.stringify(callFindParams) == JSON.stringify(this.lastCallFindParams))
+    {
+      return
+    }
+
+    ML.api('message', 'findByChatId', this.lastCallFindParams = callFindParams, (data) =>
     {
       this.canLoadMore = (data.messages.length == this.pageLength);
       this.chat = data.chat;
