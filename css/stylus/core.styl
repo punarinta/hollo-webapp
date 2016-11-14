@@ -114,7 +114,6 @@ body
 	&::-webkit-scrollbar
 		display none
 
-
 button
 	margin 5px auto
 	padding 7px 15px 6px
@@ -129,25 +128,6 @@ button
 	&:active
 		background-color color-brand
 		color #fff
-
-.hidden
-	display none !important
-
-.flex
-	display flex
-
-.page
-	/* ES6 display none*/
-	display block
-	padding 5px
-
-.texty
-	border 0
-	border-bottom 1px solid color-brand
-	padding 5px 8px
-	height 32px
-	width 100%
-	font-size 16px
 
 .spinner1
 	margin 80px auto 30px
@@ -214,49 +194,8 @@ hollo-loader-big
 		&:nth-of-type(odd)
 			animation(load-anim-big2)
 
-.onoff
-	input
-		display none
-		&:checked
-			& + label
-				background-color color-brand
-				&:before
-					right 0
-	label
-		display block
-		overflow hidden
-		cursor pointer
-		height 38px
-		padding 0
-		line-height 36px
-		border 1px solid color-brand
-		border-radius 36px
-		background-color #fff
-		transition background-color .3s ease-in
-		&:before
-			content ""
-			display block
-			width 36px
-			height 36px
-			margin -1px 9px 0 -1px
-			background #fff
-			position absolute
-			border 1px solid color-brand
-			border-radius 36px
-/* Transition to Stylus has completely fucked up this switch, plus transition does not work at all anymore :/
-		&:before
-			content ""
-			display block
-			width 36px
-			margin 0
-			background #fff
-			position absolute
-			top 0
-			bottom 0
-			right 26px
-			border 1px solid color-brand
-			border-radius 36px
-			transition all 0.3s ease-in 0s*/
+.opa-85
+	opacity 0.85
 
 app-loader
 	background color-brand
@@ -265,20 +204,3 @@ app-loader
 	align-items center
 	height 100vh
 	flex-direction column
-
-#busybox
-	background rgba(80,80,80,.4)
-	position fixed
-	top 0
-	left 0
-	justify-content center
-	align-items center
-	width 100vw
-	height 100vh
-	z-index 100
-	opacity 1
-	transition-mixin(opacity)
-	&.hidden
-		display block
-		opacity 0
-		pointer-events none

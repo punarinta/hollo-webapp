@@ -199,9 +199,9 @@ class ChatsPage extends Component
             chats
           ),
           h(BottomBar, null,
-            h(BarIcon, {caption: 'Profile', img: 'white/profile', onclick: () => ML.go('profile')}),
-            h(BarIcon, {caption: 'Hollo`d', img: 'white/email', onclick: this.showHolloed.bind(this)}),
-            h(BarIcon, {caption: 'Muted', img: 'white/muted', onclick: this.showMuted.bind(this)})
+            h(BarIcon, {className: 'opa-85', caption: 'Profile', img: 'white/profile', onclick: () => ML.go('profile')}),
+            h(BarIcon, {className: this.muted ? 'opa-85' : '', caption: 'Inbox', img: 'white/email', onclick: this.showHolloed.bind(this)}),
+            h(BarIcon, {className: this.muted ? '' : 'opa-85', caption: 'Muted', img: 'white/muted', onclick: this.showMuted.bind(this)})
           )
         ];
       }

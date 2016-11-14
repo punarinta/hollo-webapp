@@ -47,8 +47,8 @@ class ProfilePage extends Component
         ),
         h(BottomBar, null,
           h(BarIcon, {caption: 'Profile', img: 'white/profile'}),
-          h(BarIcon, {caption: 'Hollo`d', img: 'white/email', onclick: () => ML.go('chats')}),
-          h(BarIcon, {caption: 'Muted', img: 'white/muted', onclick: () => ML.go('chats', {muted: 1})})
+          h(BarIcon, {className: 'opa-85', caption: 'Inbox', img: 'white/email', onclick: () => ML.go('chats')}),
+          h(BarIcon, {className: 'opa-85', caption: 'Muted', img: 'white/muted', onclick: () => ML.go('chats', {muted: 1})})
         )
       )
     );
