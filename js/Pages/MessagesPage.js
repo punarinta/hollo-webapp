@@ -25,8 +25,10 @@ class MessagesPage extends Component
   {
     this.scrollRef = this.scroll.bind(this);
     this.tryBlurringRef = this.tryBlurring.bind(this);
+    this.firebaseListenerRef = this.firebaseListener.bind(this);
     this.base.querySelector('ul').addEventListener('scroll', this.scrollRef);
     this.base.addEventListener('click', this.tryBlurringRef);
+    window.addEventListener('hollo:firebase', this.firebaseListenerRef);
     this.callFind();
     ML.load('modules/emojis');
   }
@@ -41,6 +43,7 @@ class MessagesPage extends Component
   {
     this.base.querySelector('ul').removeEventListener('scroll', this.scrollRef);
     this.base.removeEventListener('click', this.tryBlurringRef);
+    window.removeEventListener('hollo:firebase', this.firebaseListenerRef);
   }
 
   callFind(shouldAdd = 0)
@@ -68,6 +71,29 @@ class MessagesPage extends Component
         this.reposition(1)
       }
     });
+  }
+
+  firebaseListener(e)
+  {
+    if (e.payload.authId != this.props.user.id)
+    {
+      return
+    }
+
+    if (e.payload.cmd == 'show-chat' && !e.payload.wasTapped)
+    {
+      if (this.chat && e.payload.chatId == this.chat.id)
+      {
+        // we're inside the target chat, fetch messages
+        ML.api('message', 'getLastChatMessage', {chatId: e.payload.chatId}, data =>
+        {
+          let messages = this.state.messages;
+          messages.push(data);
+          this.setState({messages});
+          this.reposition(1)
+        });
+      }
+    }
   }
 
   scroll(e)
