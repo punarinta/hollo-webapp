@@ -20,7 +20,7 @@ class ProfilePage extends Component
 
   render()
   {
-    let user = this.props.user, flags = user ? user.settings.flags : CFG;
+    let user = this.props.user, flags = (user && user.settings && user.settings.flags) ? user.settings.flags : CFG;
 
     return (
 
