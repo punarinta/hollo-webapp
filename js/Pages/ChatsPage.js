@@ -191,7 +191,7 @@ class ChatsPage extends Component
         chats.push(h(ChatRow, {chat: this.state.chats[i], canSwipe: !this.state.blockSwipe, onclick: (chat) => ML.go('chat/' + chat.id)}))
       }
 
-      if ((chats.length || !this.startPage) && !this.emailFilter.length)
+      if (!this.emailFilter.length || chats.length)
       {
         ulContents =
         [
