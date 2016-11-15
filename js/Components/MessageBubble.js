@@ -64,7 +64,6 @@ class MessageBubble extends Component
 
   render()
   {
-    console.log('MessageBubble rendered: ', this.state.message.subject);
     this.canUpdate = false;
 
     let message = this.state.message,
