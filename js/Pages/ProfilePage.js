@@ -24,7 +24,7 @@ class ProfilePage extends Component
 
     return (
 
-      h('profile-page', null,
+      h('profile-page', {style: {zIndex: this.props.zIndex}},
         h('div', {className: 'head'},
           h(Avatar, {user: user}),
           h('div', null,

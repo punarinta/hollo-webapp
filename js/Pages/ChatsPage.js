@@ -217,7 +217,7 @@ class ChatsPage extends Component
 
     return (
 
-      h('chats-page', {ontouchstart: this.touchStart.bind(this), ontouchmove: this.touchMove.bind(this), ontouchend: this.touchEnd.bind(this)},
+      h('chats-page', {style: {zIndex: this.props.zIndex}, ontouchstart: this.touchStart.bind(this), ontouchmove: this.touchMove.bind(this), ontouchend: this.touchEnd.bind(this)},
         h(SearchBar,
         {
           value: '',

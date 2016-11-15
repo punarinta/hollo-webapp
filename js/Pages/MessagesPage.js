@@ -49,6 +49,11 @@ class MessagesPage extends Component
 
   callFind(shouldAdd = 0)
   {
+    if (!this.props.data.chatId)
+    {
+      return
+    }
+
     let callFindParams = {chatId: this.props.data.chatId, pageStart: this.pageStart, pageLength: this.pageLength};
 
     if (JSON.stringify(callFindParams) == JSON.stringify(this.lastCallFindParams))
@@ -582,7 +587,7 @@ class MessagesPage extends Component
 
     return (
 
-      h('messages-page', null,
+      h('messages-page', {style: {zIndex: this.props.zIndex}},
         filterModal,
         menuModal,
         h('snackbar', null,
