@@ -293,23 +293,21 @@ class App extends Component
         break;
 
       case 'profile':
-        pages.push(h(ProfilePage, {user: this.state.user}));
+        pages.push(h(ProfilePage, {zIndex: 2, user: this.state.user}));
+        pages.push(h(ChatsPage, {zIndex: 1, data: this.state.chatsPageData}));
+        pages.push(h(MessagesPage, {zIndex: 0, data: this.state.messagesPageData, user: this.state.user}));
         break;
 
       case 'chats':
-        pages.push(h(ChatsPage, {data: this.state.chatsPageData}));
-      //  if (this.state.widthMode)
-      //  {
-      //    pages.push(h(MessagesPage, {data: this.state.messagesPageData, user: this.state.user}))
-      //  }
+        pages.push(h(ProfilePage, {zIndex: 0, user: this.state.user}));
+        pages.push(h(ChatsPage, {zIndex: 2, data: this.state.chatsPageData}));
+        pages.push(h(MessagesPage, {zIndex: 1, data: this.state.messagesPageData, user: this.state.user}));
         break;
 
       case 'chat':
-        pages.push(h(MessagesPage, {data: this.state.messagesPageData, user: this.state.user}));
-      //  if (this.state.widthMode)
-      //  {
-      //    pages.unshift(h(ChatsPage, {data: this.state.chatsPageData}))
-      //  }
+        pages.push(h(ProfilePage, {zIndex: 0, user: this.state.user}));
+        pages.push(h(ChatsPage, {zIndex: 1, data: this.state.chatsPageData}));
+        pages.push(h(MessagesPage, {zIndex: 2, data: this.state.messagesPageData, user: this.state.user}));
         break;
     }
 
