@@ -314,10 +314,7 @@ class MessagesPage extends Component
   {
     this.chat.read = !this.chat.read;
     ML.api('chat', 'update', {id: this.chat.id, read: this.chat.read}, () => this.setState({menuModalShown: 0}));
-
-    let chat = this.chat;
-    chat.forceUpdate = 1;
-    ML.emit('chatupdate', {chat});
+    ML.emit('chatupdate', {chat : this.chat});
   }
 
   renameChat()
@@ -329,6 +326,7 @@ class MessagesPage extends Component
       {
         this.chat.name = text;
         ML.api('chat', 'update', { id: this.chat.id, name: text }, () => this.render());
+        ML.emit('chatupdate', {chat: this.chat});
       }
     }});
   }

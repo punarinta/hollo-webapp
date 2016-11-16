@@ -39,6 +39,8 @@ class ChatsPage extends Component
       if (e.payload.chat.id == chats[i].id)
       {
         chats[i].read = e.payload.chat.read;
+        chats[i].name = e.payload.chat.name;
+        chats[i].forceUpdate = 1;
         this.setState({chats});
         break;
       }
@@ -182,7 +184,6 @@ class ChatsPage extends Component
   chatClicked(chat)
   {
     chat.read = 1;
-    chat.forceUpdate = 1;
     ML.go('chat/' + chat.id);
     ML.emit('chatupdate', {chat});
   }
