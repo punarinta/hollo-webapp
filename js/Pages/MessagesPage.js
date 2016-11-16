@@ -175,7 +175,7 @@ class MessagesPage extends Component
       if (emojis[i] == key) emojis.splice(emojis.indexOf(key), 1)
     }
 
-    if (CFG.hungryEmojis)
+    if (CFG.emojisReplace)
     {
       // replace the last occurrence of a word with an emoji
       let pat = new RegExp('(\\b' + key + '\\b)(?!.*\\b\\1\\b)', 'i');
