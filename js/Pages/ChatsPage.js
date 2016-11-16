@@ -38,6 +38,15 @@ class ChatsPage extends Component
     {
       if (e.payload.chat.id == chats[i].id)
       {
+        if (chats[i].muted != e.payload.chat.muted)
+        {
+          // list changed, reloading must be administered
+          // TODO: refactor in a way without API calls
+          this.pageStart = 0;
+          this.callFind();
+          break;
+        }
+
         chats[i].read = e.payload.chat.read;
         chats[i].name = e.payload.chat.name;
         chats[i].forceUpdate = 1;
