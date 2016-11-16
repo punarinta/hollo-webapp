@@ -2,8 +2,14 @@
 
 import re
 import config
-from selenium import webdriver
 from time import sleep
+from selenium import webdriver
+
+def log(text, status):
+	if status == True:
+		print '\033[92m[PASSED]\033[0m ' + text
+	else:
+		print '\033[91m[FAILED]\033[0m ' + text
 
 # remember to input your own file path to your chrome driver here if you're using chrome
 browser = webdriver.Chrome()
@@ -19,6 +25,14 @@ password.send_keys(config.password)
 
 login_button = browser.find_element_by_xpath('//button[@class="login"]')
 login_button.click()
-sleep(1.0)
+sleep(4.0)
+log('Path changed to /chats', browser.current_url == rootURL + '/chats')
 
-assert browser.current_url == rootURL + '/chats'
+profile_button = browser.find_element_by_xpath('//chats-page/bottom-bar/bar-icon[1]')
+profile_button.click()
+sleep(2.0)
+log('Path changed to /profile', browser.current_url == rootURL + '/profile')
+
+sleep(0.5)
+print ''
+# browser.quit()
