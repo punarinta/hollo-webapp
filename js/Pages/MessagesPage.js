@@ -535,13 +535,19 @@ class MessagesPage extends Component
 
       for (let i in this.state.messages)
       {
-        let m = this.state.messages[i], url = `https://${CFG.apiRoot}/api/file?method=download&messageId=${m.id}&offset=${j}`;
-        if (m.files) for (let j in m.files)
+        let m = this.state.messages[i];
+        if (m.files)
         {
-          filePlates.push(h('li', null,
-            h(FilePlate, {file: m.files[j], size: '47vw'}),
-            h(BarIcon, {img: 'color/download', onclick: () => window.open(url) })
-          ))
+          for (let j in m.files)
+          {
+            // babeli bug if vars are not defined via a variable
+            let file = m.files[j];
+
+            filePlates.push(h('li', null,
+              h(FilePlate, {file: file, size: '47vw'}),
+              h(BarIcon, {img: 'color/download', onclick: () => window.open('https://' + CFG.apiRoot + '/api/file?method=download&messageId=' + m.id + '&offset=' + j) })
+            ))
+          }
         }
       }
 
