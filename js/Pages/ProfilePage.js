@@ -4,9 +4,19 @@ class ProfilePage extends Component
   {
     value *= 1;
 
-    ML.api('settings', 'update', {flag: {name: 'emojis-replace', value}}, () =>
+    ML.api('settings', 'update', {flag: {name: 'emojisReplace', value}}, () =>
     {
       CFG.emojisReplace = value;
+    });
+  }
+
+  optAvatarsChanged(value)
+  {
+    value *= 1;
+
+    ML.api('settings', 'update', {flag: {name: 'colorAvatars', value}}, () =>
+    {
+      CFG.colorAvatars = value;
     });
   }
 
@@ -20,7 +30,7 @@ class ProfilePage extends Component
 
   render()
   {
-    let user = this.props.user, flags = (user && user.settings && user.settings.flags) ? user.settings.flags : CFG;
+    let user = this.props.user;
 
     return (
 
@@ -43,7 +53,8 @@ class ProfilePage extends Component
         h('div', {className: 'line'}, APPVER),
         h('div', {className: 'group'}, 'Settings'),
         h('ul', null,
-          h(Checkbox, {caption: 'Emojis replace words', checked: flags['emojis-replace'], onchange: this.optEmojiChanged.bind(this)})
+          h(Checkbox, {caption: 'Emojis replace words', checked: CFG.emojisReplace, onchange: this.optEmojiChanged.bind(this)}),
+          h(Checkbox, {caption: 'Colored avatars', checked: CFG.colorAvatars, onchange: this.optAvatarsChanged.bind(this)})
         ),
         h(BottomBar, null,
           h(BarIcon, {caption: 'Profile', img: 'white/profile'}),
