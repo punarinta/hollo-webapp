@@ -70,7 +70,7 @@ class Avatar extends Component
         email = chat.users[0].email,
         style =
         {
-          backgroundColor: ML.colorHash(email),
+          backgroundColor: CFG.colorAvatars ? ML.colorHash(email) : '#e2e3dc',
           backgroundImage: this.state.bgImage,
           width: size,
           minWidth: size,
