@@ -535,12 +535,12 @@ class MessagesPage extends Component
 
       for (let i in this.state.messages)
       {
-        let m = this.state.messages[i];
+        let m = this.state.messages[i], url = `https://${CFG.apiRoot}/api/file?method=download&messageId=${m.id}&offset=${j}`;
         if (m.files) for (let j in m.files)
         {
           filePlates.push(h('li', null,
             h(FilePlate, {file: m.files[j], size: '47vw'}),
-            h(BarIcon, {img: 'color/download', onclick: () => window.open(`https://${CFG.apiRoot}/api/file?method=download&messageId=${m.id}&offset=${j}`) })
+            h(BarIcon, {img: 'color/download', onclick: () => window.open(url) })
           ))
         }
       }
