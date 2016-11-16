@@ -18,13 +18,31 @@ class ChatsPage extends Component
   {
     this.muted = this.props.data ? this.props.data.muted || 0 : 0;
     this.scrollReference = this.scroll.bind(this);
+    this.chatUpdateReference = this.chatUpdate.bind(this);
     this.base.querySelector('ul').addEventListener('scroll', this.scrollReference);
+    window.addEventListener('hollo:chatupdate', this.chatUpdateReference);
     this.callFind();
   }
 
   componentWillUnmount()
   {
     this.base.querySelector('ul').removeEventListener('scroll', this.scrollReference);
+    window.removeEventListener('hollo:chatupdate', this.chatUpdateReference);
+  }
+
+  chatUpdate(e)
+  {
+    let chats = this.state.chats;
+
+    for (let i in chats)
+    {
+      if (e.payload.chat.id == chats[i].id)
+      {
+        chats[i].read = e.payload.chat.read;
+        this.setState({chats});
+        break;
+      }
+    }
   }
 
   callFind(shouldAdd = 0)
@@ -161,6 +179,14 @@ class ChatsPage extends Component
     });
   }
 
+  chatClicked(chat)
+  {
+    chat.read = 1;
+    chat.forceUpdate = 1;
+    ML.go('chat/' + chat.id);
+    ML.emit('chatupdate', {chat});
+  }
+
   render()
   {
     let ulContents = '';
@@ -188,7 +214,7 @@ class ChatsPage extends Component
 
       for (let i in this.state.chats)
       {
-        chats.push(h(ChatRow, {chat: this.state.chats[i], canSwipe: !this.state.blockSwipe, onclick: (chat) => ML.go('chat/' + chat.id)}))
+        chats.push(h(ChatRow, {chat: this.state.chats[i], canSwipe: !this.state.blockSwipe, onclick: this.chatClicked}))
       }
 
       if (!this.emailFilter.length || chats.length)

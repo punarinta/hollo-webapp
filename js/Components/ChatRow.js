@@ -13,7 +13,7 @@ class ChatRow extends Component
 
   componentWillReceiveProps(nextProps)
   {
-    if (this.state.chat.id != nextProps.chat.id)
+    if (JSON.stringify(this.state.chat) != JSON.stringify(nextProps.chat) || nextProps.chat.forceUpdate == 1)
     {
       this.canUpdate = true;
     }
