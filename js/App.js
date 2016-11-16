@@ -199,6 +199,24 @@ class App extends Component
       }
     }
 
+    // configure flags
+    let s = data.user.settings;
+    if (!s)
+    {
+      data.user.settings = {flags: CFG};
+    }
+    else if (!s.flags)
+    {
+      data.user.settings.flags = CFG;
+    }
+    else
+    {
+      let flags = s.flags;
+      if (typeof s.flags.emojisReplace == 'undefined') data.user.settings.flags.emojisReplace = CFG.emojisReplace;
+      if (typeof s.flags.colorAvatars == 'undefined') data.user.settings.flags.colorAvatars = CFG.colorAvatars;
+      CFG = Object.assign(CFG, flags);
+    }
+
     this.setState({user: data.user})
   }
 
