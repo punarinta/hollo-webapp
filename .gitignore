@@ -13,3 +13,4 @@ api
 files
 node_modules
 temp
+tests/config.py
