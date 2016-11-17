@@ -28,7 +28,8 @@ def waitForElement (selector, finalMsg = '', critical = True):
     log(finalMsg, 0)
 
     if critical:
-        raise ValueError('Timed out')
+        print "\nTimed out. that was critical.\n"
+        exit()
 
     return False
 
@@ -55,7 +56,8 @@ def element (selector, critical = True):
     except:
         log('selector "{}"' . format(selector), 0)
         if critical:
-            raise self.e
+            print "\nCritical error occurred.\n"
+            exit()
 
     return element
 
