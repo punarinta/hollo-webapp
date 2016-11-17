@@ -28,7 +28,7 @@ def waitForElement (selector, finalMsg = '', critical = True):
     log(finalMsg, 0)
 
     if critical:
-        print "\nTimed out. that was critical.\n"
+        print "\nTimed out. That was critical.\n"
         exit()
 
     return False
@@ -48,7 +48,7 @@ def waitForUrl (url, finalMsg = '', critical = True):
     log(finalMsg, 0)
 
     if critical:
-        print "\nTimed out. that was critical.\n"
+        print "\nTimed out. That was critical.\n"
         exit()
 
     return False
