@@ -1,4 +1,4 @@
-import re
+import sys
 import config
 from time import sleep
 from selenium import webdriver
@@ -62,8 +62,11 @@ def element (selector, critical = True):
 ## Setup
 window.set_window_size(414, 736)	    # 375 x 667
 window.set_window_position(610, 0)      # 1024 - W x 0
+if len(sys.argv) > 1:
+    config.production = sys.argv[1]
+
 rootURL = 'https://app.hollo.email' if config.production else 'https://app.hollo.dev'
-print "\nLoading URL {}\n" . format(rootURL)
+print "\nLoading URL {} in {} mode\n" . format(rootURL, 'production' if config.production else 'development')
 window.get(rootURL)
 
 ## Assure that Hollo loads without some tricky initial crash
