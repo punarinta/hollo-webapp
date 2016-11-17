@@ -293,7 +293,7 @@ class App extends Component
   render()
   {
     // place here the logic of page switching
-    let pages =
+    let user = this.state.user, pages =
     [
       h(DemoBoxModal,    {data: this.state.demoBox,    onclose: this.closeDemoBox.bind(this)    }),
       h(MessageBoxModal, {data: this.state.messageBox, onclose: this.closeMessageBox.bind(this) }),
@@ -312,21 +312,21 @@ class App extends Component
         break;
 
       case 'profile':
-        pages.push(h(ProfilePage, {zIndex: 2, user: this.state.user}));
-        pages.push(h(ChatsPage, {zIndex: 1, data: this.state.chatsPageData}));
-        pages.push(h(MessagesPage, {zIndex: 0, data: this.state.messagesPageData, user: this.state.user}));
+        pages.push(h(ProfilePage, {zIndex: 2, user}));
+        pages.push(h(ChatsPage, {zIndex: 1, data: this.state.chatsPageData, user}));
+        pages.push(h(MessagesPage, {zIndex: 0, data: this.state.messagesPageData, user}));
         break;
 
       case 'chats':
-        pages.push(h(ProfilePage, {zIndex: 0, user: this.state.user}));
-        pages.push(h(ChatsPage, {zIndex: 2, data: this.state.chatsPageData}));
-        pages.push(h(MessagesPage, {zIndex: 1, data: this.state.messagesPageData, user: this.state.user}));
+        pages.push(h(ProfilePage, {zIndex: 0, user}));
+        pages.push(h(ChatsPage, {zIndex: 2, data: this.state.chatsPageData, user}));
+        pages.push(h(MessagesPage, {zIndex: 1, data: this.state.messagesPageData, user}));
         break;
 
       case 'chat':
-        pages.push(h(ProfilePage, {zIndex: 0, user: this.state.user}));
-        pages.push(h(ChatsPage, {zIndex: 1, data: this.state.chatsPageData}));
-        pages.push(h(MessagesPage, {zIndex: 2, data: this.state.messagesPageData, user: this.state.user}));
+        pages.push(h(ProfilePage, {zIndex: 0, user}));
+        pages.push(h(ChatsPage, {zIndex: 1, data: this.state.chatsPageData, user}));
+        pages.push(h(MessagesPage, {zIndex: 2, data: this.state.messagesPageData, user}));
         break;
     }
 
