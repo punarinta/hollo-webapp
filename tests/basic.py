@@ -108,7 +108,7 @@ log('Modal menu shadow', d_shader.value_of_css_property('display') == 'block')
 log('User picker menu', element('menu-modal.menu-users', False) != None)
 
 element('snackbar bar-icon:nth-of-type(2)').click()
-log('Subject piccker modal', element('menu-modal.menu-subjects', False) != None)
+log('Subject picker modal', element('menu-modal.menu-subjects', False) != None)
 
 element('snackbar bar-icon:nth-of-type(3)').click()
 log('Files modal', element('menu-modal.menu-files', False) != None)
