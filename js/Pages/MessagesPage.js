@@ -217,7 +217,7 @@ class MessagesPage extends Component
   filterMessages(subjectFilter)
   {
     this.setState({menuModalShown: 0, subjectFilter});
-    this.reposition(1)
+    // this.reposition(1)
   }
 
   reposition(mode = 0, timeOffset = 0)
@@ -592,7 +592,7 @@ class MessagesPage extends Component
       emojiRows.push(h('div', null, emojis))
     }
 
-    this.reposition();
+    // this.reposition();
 
     return (
 
