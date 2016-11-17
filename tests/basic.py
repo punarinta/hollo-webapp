@@ -32,11 +32,15 @@ browser = webdriver.Chrome()
 browser.set_window_size(414, 736)	    # 375 x 667
 browser.set_window_position(610, 0)     # 1024 - W x 0
 
-rootURL = config.rootURL
+rootURL = 'https://app.hollo.email' if config.production else 'https://app.hollo.dev'
 print "\nLoading URL {}\n" . format(rootURL)
 browser.get(rootURL)
 waitForElement(browser, 'login-page', 'Loading login page')
 log('Path init to /auth/login', browser.current_url == rootURL + '/auth/login')
+
+if config.production:
+    v_version = browser.execute_script("return APPVER;")
+    log('Version set correctly', v_version != 'dev' )
 
 i_username = browser.find_element_by_css_selector("input[type='email']")
 i_password = browser.find_element_by_css_selector("input[type='password']")
