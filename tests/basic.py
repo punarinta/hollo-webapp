@@ -33,7 +33,7 @@ def waitForElement (selector, finalMsg = '', critical = True):
 
     return False
 
-def waitForUrl (url, finalMsg = ''):
+def waitForUrl (url, finalMsg = '', critical = True):
     global window
     time = 0.0
     maxTime = 5.0
@@ -46,6 +46,11 @@ def waitForUrl (url, finalMsg = ''):
             sleep(0.1)
 
     log(finalMsg, 0)
+
+    if critical:
+        print "\nTimed out. that was critical.\n"
+        exit()
+
     return False
 
 def element (selector, critical = True):
