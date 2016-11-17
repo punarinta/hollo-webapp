@@ -25,35 +25,45 @@ def waitForElement (browser, selector, finalMsg = ''):
     log(finalMsg, 0)
     return False
 
-browser = webdriver.Chrome()
-browser.set_window_size(414, 736)	    # 375 x 667
-browser.set_window_position(610, 0)     # 1024 - W x 0
+window = webdriver.Chrome()
+window.set_window_size(414, 736)	    # 375 x 667
+window.set_window_position(610, 0)     # 1024 - W x 0
 
 rootURL = 'https://app.hollo.email' if config.production else 'https://app.hollo.dev'
 print "\nLoading URL {}\n" . format(rootURL)
-browser.get(rootURL)
+window.get(rootURL)
 
-waitForElement(browser, 'login-page', 'Loading login page')
-log('Path init to /auth/login', browser.current_url == rootURL + '/auth/login')
+## Assure that Hollo loads without some tricky initial crash
+waitForElement(window, 'login-page', 'Loading login page')
+log('Path init to /auth/login', window.current_url == rootURL + '/auth/login')
 
 if config.production:
-    v_version = browser.execute_script("return APPVER;")
+    v_version = window.execute_script("return APPVER;")
     log('Version set correctly', v_version != 'dev' )
 
-i_username = browser.find_element_by_css_selector("input[type='email']")
-i_password = browser.find_element_by_css_selector("input[type='password']")
-i_username.send_keys(config.username)
-i_password.send_keys(config.password)
+window.find_element_by_css_selector("input[type='email']").send_keys(config.username)
+window.find_element_by_css_selector("input[type='password']").send_keys(config.password)
 
-b_login = browser.find_element_by_css_selector('button.login')
-b_login.click()
-waitForElement(browser, 'chats-page', 'Loading chats page')
-log('Path changed to /chats', browser.current_url == rootURL + '/chats')
+## Assure that main page is accessible
+window.find_element_by_css_selector('button.login').click()
+waitForElement(window, 'chats-page', 'Loading chats page')
+log('Path changed to /chats', window.current_url == rootURL + '/chats')
 
-b_profile = browser.find_element_by_css_selector('chats-page bottom-bar bar-icon:nth-child(1)')
-b_profile.click()
-waitForElement(browser, 'profile-page', 'Loading profile page')
-log('Path changed to /profile', browser.current_url == rootURL + '/profile')
+## Test filtering
+## t.b.d.
+
+## Assure that profile page is accessible
+
+window.find_element_by_css_selector('chats-page bottom-bar bar-icon:nth-child(1)').click()
+waitForElement(window, 'profile-page', 'Loading profile page')
+log('Path changed to /profile', window.current_url == rootURL + '/profile')
+
+## Get back and try to click the first chat
+window.find_element_by_css_selector('profile-page bottom-bar bar-icon:nth-child(2)').click()
+waitForElement(window, 'chats-page', 'Get back to chat list')
+window.find_element_by_css_selector('chats-page chat-row:nth-child(1)').click()
+waitForElement(window, 'snackbar', 'Snackbar is present')
+log('Path changed to /chat/*', '/chat/' in window.current_url)
 
 print "\nTesting completed\n"
-browser.quit()
+window.quit()
