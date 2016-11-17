@@ -1,5 +1,3 @@
-# https://christopher.su/2015/selenium-chromedriver-ubuntu/
-
 import re
 import config
 from time import sleep
@@ -27,7 +25,6 @@ def waitForElement (browser, selector, finalMsg = ''):
     log(finalMsg, 0)
     return False
 
-# remember to input your own file path to your chrome driver here if you're using chrome
 browser = webdriver.Chrome()
 browser.set_window_size(414, 736)	    # 375 x 667
 browser.set_window_position(610, 0)     # 1024 - W x 0
@@ -35,6 +32,7 @@ browser.set_window_position(610, 0)     # 1024 - W x 0
 rootURL = 'https://app.hollo.email' if config.production else 'https://app.hollo.dev'
 print "\nLoading URL {}\n" . format(rootURL)
 browser.get(rootURL)
+
 waitForElement(browser, 'login-page', 'Loading login page')
 log('Path init to /auth/login', browser.current_url == rootURL + '/auth/login')
 
