@@ -93,7 +93,7 @@ log('Path changed to /profile', window.current_url == rootURL + '/profile')
 ## Get back and try to click the first chat
 element('profile-page bottom-bar bar-icon:nth-of-type(2)').click()
 waitForElement('chats-page', 'Get back to chat list')
-element('chats-page chat-row:nth-child(1)').click()
+element('chats-page chat-row:nth-of-type(1)').click()
 waitForElement('snackbar', 'Snackbar is present')
 log('Path changed to /chat/*', '/chat/' in window.current_url)
 
