@@ -25,6 +25,20 @@ def waitForElement (browser, selector, finalMsg = ''):
     log(finalMsg, 0)
     return False
 
+def waitForUrl (browser, url, finalMsg = ''):
+    time = 0.0
+    maxTime = 5.0
+    while time < maxTime:
+        if browser.current_url == url:
+            log(finalMsg, 1)
+            return True
+        else:
+            time += 0.1
+            sleep(0.1)
+
+    log(finalMsg, 0)
+    return False
+
 window = webdriver.Chrome()
 window.set_window_size(414, 736)	    # 375 x 667
 window.set_window_position(610, 0)     # 1024 - W x 0
