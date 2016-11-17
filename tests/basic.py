@@ -86,12 +86,12 @@ log('Path changed to /chats', window.current_url == rootURL + '/chats')
 ## t.b.d.
 
 ## Assure that profile page is accessible
-element('chats-page bottom-bar bar-icon:nth-child(1)').click()
+element('chats-page bottom-bar bar-icon:nth-of-type(1)').click()
 waitForElement('profile-page', 'Loading profile page')
 log('Path changed to /profile', window.current_url == rootURL + '/profile')
 
 ## Get back and try to click the first chat
-element('profile-page bottom-bar bar-icon:nth-child(2)').click()
+element('profile-page bottom-bar bar-icon:nth-of-type(2)').click()
 waitForElement('chats-page', 'Get back to chat list')
 element('chats-page chat-row:nth-child(1)').click()
 waitForElement('snackbar', 'Snackbar is present')
@@ -99,9 +99,18 @@ log('Path changed to /chat/*', '/chat/' in window.current_url)
 
 ## Check that all menues can be toggled
 element('snackbar > div').click()
-d_shader = element('messages-page div.modal-shader')
-log('Shadow is shown', d_shader.value_of_css_property('display') == 'block')
-log('User modal menu is shown', element('menu-modal.menu-users', False) != None)
+d_shader = element('messages-page div.modal-shader', False)
+log('Modal menu shadow', d_shader.value_of_css_property('display') == 'block')
+log('User picker menu', element('menu-modal.menu-users', False) != None)
+
+element('snackbar bar-icon:nth-of-type(2)').click()
+log('Subject piccker modal', element('menu-modal.menu-subjects', False) != None)
+
+element('snackbar bar-icon:nth-of-type(3)').click()
+log('Files modal', element('menu-modal.menu-files', False) != None)
+
+element('snackbar bar-icon:nth-of-type(4)').click()
+log('Moar modal', element('menu-modal.menu-more', False) != None)
 
 print "\nTesting completed\n"
 window.quit()
