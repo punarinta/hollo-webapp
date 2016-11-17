@@ -101,6 +101,7 @@ waitForElement('snackbar', 'Snackbar is present')
 log('Path changed to /chat/*', '/chat/' in window.current_url)
 
 ## Check that all menues can be toggled
+sleep(0.05)  # needs a small wait in production, no clue why
 element('snackbar > div').click()
 d_shader = element('messages-page div.modal-shader', False)
 log('Modal menu shadow', d_shader.value_of_css_property('display') == 'block')
