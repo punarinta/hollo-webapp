@@ -3,18 +3,21 @@ import config
 from time import sleep
 from selenium import webdriver
 
+window = webdriver.Chrome()
+
 def log (text, status):
 	if status == True:
 		print '\033[92m[PASSED]\033[0m ' + text
 	else:
 		print '\033[91m[FAILED]\033[0m ' + text
 
-def waitForElement (browser, selector, finalMsg = ''):
+def waitForElement (selector, finalMsg = '', critical = True):
+    global window
     time = 0.0
     maxTime = 5.0
     while time < maxTime:
         try:
-            browser.find_element_by_css_selector(selector)
+            window.find_element_by_css_selector(selector)
         except:
             time += 0.1
             sleep(0.1)
@@ -23,13 +26,18 @@ def waitForElement (browser, selector, finalMsg = ''):
             return True
 
     log(finalMsg, 0)
+
+    if critical:
+        raise ValueError('Timed out')
+
     return False
 
-def waitForUrl (browser, url, finalMsg = ''):
+def waitForUrl (url, finalMsg = ''):
+    global window
     time = 0.0
     maxTime = 5.0
     while time < maxTime:
-        if browser.current_url == url:
+        if window.current_url == url:
             log(finalMsg, 1)
             return True
         else:
@@ -39,45 +47,61 @@ def waitForUrl (browser, url, finalMsg = ''):
     log(finalMsg, 0)
     return False
 
-window = webdriver.Chrome()
-window.set_window_size(414, 736)	    # 375 x 667
-window.set_window_position(610, 0)     # 1024 - W x 0
+def element (selector, critical = True):
+    global window
+    element = None
+    try:
+        element = window.find_element_by_css_selector(selector)
+    except:
+        log('selector "{}"' . format(selector), 0)
+        if critical:
+            raise self.e
 
+    return element
+
+## Setup
+window.set_window_size(414, 736)	    # 375 x 667
+window.set_window_position(610, 0)      # 1024 - W x 0
 rootURL = 'https://app.hollo.email' if config.production else 'https://app.hollo.dev'
 print "\nLoading URL {}\n" . format(rootURL)
 window.get(rootURL)
 
 ## Assure that Hollo loads without some tricky initial crash
-waitForElement(window, 'login-page', 'Loading login page')
+waitForElement('login-page', 'Loading login page')
 log('Path init to /auth/login', window.current_url == rootURL + '/auth/login')
 
 if config.production:
     v_version = window.execute_script("return APPVER;")
     log('Version set correctly', v_version != 'dev' )
 
-window.find_element_by_css_selector("input[type='email']").send_keys(config.username)
-window.find_element_by_css_selector("input[type='password']").send_keys(config.password)
+element("input[type='email']").send_keys(config.username)
+element("input[type='password']").send_keys(config.password)
 
 ## Assure that main page is accessible
-window.find_element_by_css_selector('button.login').click()
-waitForElement(window, 'chats-page', 'Loading chats page')
+element('button.login').click()
+waitForElement('chats-page', 'Loading chats page')
 log('Path changed to /chats', window.current_url == rootURL + '/chats')
 
 ## Test filtering
 ## t.b.d.
 
 ## Assure that profile page is accessible
-
-window.find_element_by_css_selector('chats-page bottom-bar bar-icon:nth-child(1)').click()
-waitForElement(window, 'profile-page', 'Loading profile page')
+element('chats-page bottom-bar bar-icon:nth-child(1)').click()
+waitForElement('profile-page', 'Loading profile page')
 log('Path changed to /profile', window.current_url == rootURL + '/profile')
 
 ## Get back and try to click the first chat
-window.find_element_by_css_selector('profile-page bottom-bar bar-icon:nth-child(2)').click()
-waitForElement(window, 'chats-page', 'Get back to chat list')
-window.find_element_by_css_selector('chats-page chat-row:nth-child(1)').click()
-waitForElement(window, 'snackbar', 'Snackbar is present')
+element('profile-page bottom-bar bar-icon:nth-child(2)').click()
+waitForElement('chats-page', 'Get back to chat list')
+element('chats-page chat-row:nth-child(1)').click()
+waitForElement('snackbar', 'Snackbar is present')
 log('Path changed to /chat/*', '/chat/' in window.current_url)
+
+## Check that all menues can be toggled
+element('snackbar > div').click()
+d_shader = element('messages-page div.modal-shader')
+log('Shadow is shown', d_shader.value_of_css_property('display') == 'block')
+log('User modal menu is shown', element('menu-modal.menu-users', False) != None)
 
 print "\nTesting completed\n"
 window.quit()
