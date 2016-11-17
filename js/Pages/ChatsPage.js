@@ -19,8 +19,10 @@ class ChatsPage extends Component
     this.muted = this.props.data ? this.props.data.muted || 0 : 0;
     this.scrollReference = this.scroll.bind(this);
     this.chatUpdateReference = this.chatUpdate.bind(this);
+    this.firebaseListenerRef = this.firebaseListener.bind(this);
     this.base.querySelector('ul').addEventListener('scroll', this.scrollReference);
     window.addEventListener('hollo:chatupdate', this.chatUpdateReference);
+    window.addEventListener('hollo:firebase', this.firebaseListenerRef);
     this.callFind();
   }
 
@@ -28,6 +30,7 @@ class ChatsPage extends Component
   {
     this.base.querySelector('ul').removeEventListener('scroll', this.scrollReference);
     window.removeEventListener('hollo:chatupdate', this.chatUpdateReference);
+    window.removeEventListener('hollo:firebase', this.firebaseListenerRef);
   }
 
   chatUpdate(e)
@@ -52,6 +55,36 @@ class ChatsPage extends Component
         chats[i].forceUpdate = 1;
         this.setState({chats});
         break;
+      }
+    }
+  }
+
+  firebaseListener(e)
+  {
+    if (e.payload.authId != this.props.user.id)
+    {
+      return
+    }
+
+    if (e.payload.cmd == 'show-chat' && !e.payload.wasTapped)
+    {
+      // check if the chat is present
+      let found = 0, chats = this.state.chats;
+      for (let i in chats)
+      {
+        if (e.payload.chatId == chats[i].id)
+        {
+          found = 1;
+          // mark it as unread
+          chats[i].read = 0;
+          this.setState({chats});
+          break;
+        }
+      }
+      if (!found)
+      {
+        // full reload
+        this.callFind();
       }
     }
   }
