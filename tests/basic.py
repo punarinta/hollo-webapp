@@ -14,7 +14,7 @@ def log (text, status):
 def waitForElement (selector, finalMsg = '', critical = True):
     global window
     time = 0.0
-    maxTime = 5.0
+    maxTime = 10.0
     while time < maxTime:
         try:
             window.find_element_by_css_selector(selector)
@@ -23,6 +23,7 @@ def waitForElement (selector, finalMsg = '', critical = True):
             sleep(0.1)
         else:
             log(finalMsg, 1)
+            sleep(0.05)             # needs a small wait in production, no clue why
             return True
 
     log(finalMsg, 0)
@@ -36,10 +37,11 @@ def waitForElement (selector, finalMsg = '', critical = True):
 def waitForUrl (url, finalMsg = '', critical = True):
     global window
     time = 0.0
-    maxTime = 5.0
+    maxTime = 10.0
     while time < maxTime:
         if window.current_url == url:
             log(finalMsg, 1)
+            sleep(0.05)             # needs a small wait in production, no clue why
             return True
         else:
             time += 0.1
@@ -108,7 +110,6 @@ waitForElement('snackbar', 'Snackbar is present')
 log('Path changed to /chat/*', '/chat/' in window.current_url)
 
 ## Check that all menues can be toggled
-sleep(0.05)  # needs a small wait in production, no clue why
 element('snackbar > div').click()
 d_shader = element('messages-page div.modal-shader', False)
 log('Modal menu shadow', d_shader.value_of_css_property('display') == 'block')
