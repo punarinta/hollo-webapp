@@ -112,7 +112,8 @@ log('Path changed to /chat/*', '/chat/' in window.current_url)
 ## Check that all menues can be toggled
 element('snackbar > div').click()
 d_shader = element('messages-page div.modal-shader', False)
-log('Modal menu shadow', d_shader.value_of_css_property('display') == 'block')
+if d_shader != None:
+    log('Modal menu shadow', d_shader.value_of_css_property('display') == 'block')
 log('User picker menu', element('menu-modal.menu-users', False) != None)
 
 element('snackbar bar-icon:nth-of-type(2)').click()
