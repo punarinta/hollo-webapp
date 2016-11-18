@@ -82,8 +82,6 @@ class Avatar extends Component
 
   render(props)
   {
-    console.log('CFG.colorAvatars', CFG.colorAvatars)
-
     let chat = props.chat || {users: [props.user], read: 1},
         size = this.state.size,
         email = chat.users[0] ? chat.users[0].email : '',
