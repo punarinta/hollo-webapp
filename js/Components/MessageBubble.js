@@ -36,9 +36,9 @@ class MessageBubble extends Component
     // URLs
     body = body.replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, m =>
     {
-      let s = m.split('//');
-      s = s.length ? s[1] : s[0];
-      return `<a target="_blank" rel="noopener noreferrer" href="${m}">${s.length > 25 ? s.substr(0, 25) + '&hellip;' : s}</a>`;
+      let s = m.replace(/\/$/, '').split('//');
+      s = (s.length ? s[1] : s[0]).split('/');
+      return `<a target="_blank" rel="noopener noreferrer" href="${m}">${s.length ? (s[0] + '&hellip;') : s[0]}</a>`;
     });
 
     // mailto: links
