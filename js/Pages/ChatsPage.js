@@ -9,7 +9,9 @@ class ChatsPage extends Component
     this.emailFilter = '';
     this.canLoadMore = 0;
 
+    this.state.qs = [];
     this.state.chats = [];
+    this.state.qsCount = 0;
     this.state.blockSwipe = 0;
     this.state.filterActive = 0;
   }
@@ -35,7 +37,7 @@ class ChatsPage extends Component
 
   chatUpdate(e)
   {
-    let found = 0, chats = this.state.chats;
+    let found = 0, chats = this.state.chats, qsCount = this.state.qsCount;
 
     for (let i in chats)
     {
@@ -55,7 +57,10 @@ class ChatsPage extends Component
         chats[i].forceUpdate = 1;
         chats[i].read = e.payload.chat.read;
         if (e.payload.chat.name) chats[i].name = e.payload.chat.name;
-        this.setState({chats});
+
+        qsCount += e.payload.chat.read ? -1 : 1;
+        this.setState({chats, qsCount});
+
         break;
       }
     }
@@ -108,17 +113,27 @@ class ChatsPage extends Component
 
     ML.api('chat', 'find', {pageStart: this.pageStart, pageLength: this.pageLength, filters: filters, sortBy: 'lastTs'}, (data) =>
     {
+      let chats = this.state.chats,
+          qsCount = 0;
+
       this.canLoadMore = (data.length == this.pageLength);
 
       if (shouldAdd)
       {
         this.pageStart += data.length;
-        this.setState({chats: this.state.chats.concat(data)});
+        chats = chats.concat(data);
       }
       else
       {
-        this.setState({chats: data})
+        chats = data;
       }
+
+      for (let i in chats)
+      {
+        if (!chats[i].read) ++qsCount;
+      }
+
+      this.setState({chats, qsCount})
     });
   }
 
@@ -238,9 +253,53 @@ class ChatsPage extends Component
     ML.emit('chatupdate', {chat});
   }
 
+  qsShow()
+  {
+    ML.api('message', 'buildQuickStack', {muted: this.muted}, data =>
+    {
+      this.setState({quickStackShown: 1, qs: data});
+    });
+  }
+
+  qsReply(qsCurrent)
+  {
+    let qsCount = this.state.qsCount - 1;
+    // TODO: update chat
+    this.setState({quickStackShown: 0, qsCount});
+    ML.go('chat/' + qsCurrent.chatId)
+  }
+
+  qsSkip()
+  {
+    let qs = this.state.qs, qsCount = this.state.qsCount - 1;
+    qs.shift();
+    this.setState({qs, qsCount, quickStackShown: qsCount >0});
+  }
+
+  qsMarkRead(qsCurrent)
+  {
+    let chat = null;
+    for (let i in this.state.chats)
+    {
+      if (qsCurrent.chatId == this.state.chats[i].id)
+      {
+        chat = this.state.chats[i];
+      }
+    }
+
+    if (chat)
+    {
+      chat.read = 1;
+      ML.api('chat', 'update', {id: chat.id, read: 1});
+      ML.emit('chatupdate', {chat});
+    }
+
+    this.qsSkip()
+  }
+
   render()
   {
-    let ulContents = '';
+    let ulContents = '', quickStackModal = h('div', {className: 'qs-shader', style: {display: 'none'}});
 
     if (ML.isEmail(this.emailFilter))
     {
@@ -265,6 +324,7 @@ class ChatsPage extends Component
 
       for (let i in this.state.chats)
       {
+        if (this.state.chats[i].muted != this.muted) continue;  // skip it!
         chats.push(h(ChatRow, {chat: this.state.chats[i], canSwipe: !this.state.blockSwipe, onclick: this.chatClicked}))
       }
 
@@ -292,17 +352,62 @@ class ChatsPage extends Component
       }
     }
 
-    let unreadCount = 0;
-
-    for (let i in this.state.chats)
-    {
-      if (!this.state.chats[i].read) ++unreadCount;
-    }
-
-    let qsButton = h('div', {className: 'quick-stack-button', style: {display: unreadCount ? 'flex' : 'none'}},
+    let qsButton = h('qs-button', {style: {display: this.state.qsCount > 0 ? 'flex' : 'none'}, onclick: this.qsShow.bind(this) },
       h(BarIcon, {img: 'white/timer'}),
-      h('div', null, unreadCount + ' unread')
+      h('div', null, this.state.qsCount + ' unread')
     );
+
+    if (this.state.quickStackShown && this.state.qs.length)
+    {
+      // always the topmost that is shown
+      let fakeUser = null, qsCurrent = this.state.qs[0];
+
+      if (qsCurrent.fromId == this.props.user.id)
+      {
+        fakeUser = this.props.user
+      }
+      else for (let i in this.state.chats)
+      {
+        for (let j in this.state.chats[i].users)
+        {
+          let u = this.state.chats[i].users[j];
+          if (u.id == qsCurrent.fromId)
+          {
+            fakeUser = u;
+            break;
+          }
+        }
+      }
+
+      // fake a message
+      let message =
+      {
+        id: qsCurrent.id,
+        body: qsCurrent.body,
+        subject: qsCurrent.subject,
+        refId: qsCurrent.refId,
+        ts: qsCurrent.ts,
+        files: qsCurrent.files ? JSON.parse(qsCurrent.files) : null,
+        from: fakeUser,
+        debug: qsCurrent.fromId
+      };
+
+      quickStackModal = h('qs-shader', {onclick: (e) => {if (e.target.nodeName.toLowerCase() == 'qs-shader') this.setState({quickStackShown: 0})} },
+        h('quick-stack', {},
+          h(MessageBubble, {message, user: this.props.user}),
+          h('bar', null,
+            h('button', {onclick: () => this.qsMarkRead(qsCurrent)}, 'Mark as read'),
+            h('button', {onclick: () => this.qsReply(qsCurrent)}, 'Reply'),
+            h('button', {onclick: () => this.qsSkip() }, 'Leave for later')
+          )
+        ),
+        h('qs-indicator', {},
+          h(BarIcon, {img: 'white/timer'}),
+          h('div', null, this.state.qsCount + ' to go'),
+          h(BarIcon, {img: 'white/cross', onclick: () => this.setState({quickStackShown: 0}) })
+        )
+      )
+    }
 
     return (
 
@@ -316,7 +421,8 @@ class ChatsPage extends Component
           className: this.state.filterActive ? 'focused' : ''
         }),
         ulContents,
-        qsButton
+        qsButton,
+        quickStackModal
       )
     );
   }
