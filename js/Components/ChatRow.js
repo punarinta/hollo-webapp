@@ -107,6 +107,7 @@ class ChatRow extends Component
           chat.read = !chat.read - 0;
 
           ML.api('chat', 'update', {id: chat.id, read: chat.read});
+          ML.emit('chatupdate', {chat});
 
           setTimeout( () =>
           {
