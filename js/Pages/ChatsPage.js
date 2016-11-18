@@ -127,23 +127,32 @@ class ChatsPage extends Component
         chats = data;
       }
 
-      this.setState({chats})
+      this.setState({chats});
       this.qsCount();
     });
   }
 
   touchStart(e)
   {
+    let t = e.changedTouches[0];
     this.pull = 0;
-    this.startY = e.changedTouches[0].pageY;
+    this.swiping = 0;
+    this.startX = t.pageX;
+    this.startY = t.pageY;
     this.ul = this.base.querySelector('ul');
   }
 
   touchMove(e)
   {
-    let distY = e.changedTouches[0].pageY - this.startY;
+    let distY = e.changedTouches[0].pageY - this.startY,
+        distX = e.changedTouches[0].pageX - this.startX;
 
-    if (Math.abs(distY) > 16)
+    if (Math.abs(distX) > 32)
+    {
+      this.swiping = 1;
+    }
+
+    if (Math.abs(distY) > 16 && !this.swiping)
     {
       if (!this.state.blockSwipe)
       {
