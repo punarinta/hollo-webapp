@@ -26,7 +26,7 @@ class MessageBubble extends Component
     this.setState({showName: !this.state.showName});
   }
 
-  clearBody(body = '', messageId = 0)
+  clearBody(body = '')
   {
     body = body.replace(/(?:[ ]\r\n|[ ]\r|[ ]\n)/g, ' ');
 
@@ -99,7 +99,7 @@ class MessageBubble extends Component
     }
     else
     {
-      body = this.clearBody(body, message.id)
+      body = this.clearBody(body)
     }
 
     let filesBody = '',
