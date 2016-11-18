@@ -17,6 +17,7 @@ class ProfilePage extends Component
     ML.api('settings', 'update', {flag: {name: 'colorAvatars', value}}, () =>
     {
       CFG.colorAvatars = value;
+      ML.emit('avasync')
     });
   }
 

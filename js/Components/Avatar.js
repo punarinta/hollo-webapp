@@ -4,11 +4,23 @@ class Avatar extends Component
   {
     super();
     this.empty = [];
+    this.state.nothing = 0;
   }
 
   componentWillMount()
   {
     this.loadGraphics(this.props);
+  }
+
+  componentDidMount()
+  {
+    this.resyncRef = this.resync.bind(this);
+    window.addEventListener('hollo:avasync', this.resyncRef);
+  }
+
+  componentWillUnmount()
+  {
+    window.removeEventListener('hollo:avasync', this.resyncRef);
   }
 
   componentWillReceiveProps(nextProps)
@@ -18,6 +30,11 @@ class Avatar extends Component
       this.setState({bgImage: null})
     }
     this.loadGraphics(nextProps);
+  }
+
+  resync()
+  {
+    this.setState({nothing: Math.random()})
   }
 
   loadGraphics(props)
@@ -65,9 +82,11 @@ class Avatar extends Component
 
   render(props)
   {
+    console.log('CFG.colorAvatars', CFG.colorAvatars)
+
     let chat = props.chat || {users: [props.user], read: 1},
         size = this.state.size,
-        email = chat.users[0].email,
+        email = chat.users[0] ? chat.users[0].email : '',
         style =
         {
           backgroundColor: CFG.colorAvatars ? ML.colorHash(email) : '#e2e3dc',
