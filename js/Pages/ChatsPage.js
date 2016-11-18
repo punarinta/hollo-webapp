@@ -37,7 +37,7 @@ class ChatsPage extends Component
 
   chatUpdate(e)
   {
-    let found = 0, chats = this.state.chats, qsCount = this.state.qsCount;
+    let found = 0, chats = this.state.chats;
 
     for (let i in chats)
     {
@@ -58,8 +58,8 @@ class ChatsPage extends Component
         chats[i].read = e.payload.chat.read;
         if (e.payload.chat.name) chats[i].name = e.payload.chat.name;
 
-        qsCount += e.payload.chat.read ? -1 : 1;
-        this.setState({chats, qsCount});
+        this.setState({chats});
+        this.qsCount();
 
         break;
       }
@@ -113,8 +113,7 @@ class ChatsPage extends Component
 
     ML.api('chat', 'find', {pageStart: this.pageStart, pageLength: this.pageLength, filters: filters, sortBy: 'lastTs'}, (data) =>
     {
-      let chats = this.state.chats,
-          qsCount = 0;
+      let chats = this.state.chats;
 
       this.canLoadMore = (data.length == this.pageLength);
 
@@ -128,12 +127,8 @@ class ChatsPage extends Component
         chats = data;
       }
 
-      for (let i in chats)
-      {
-        if (!chats[i].read) ++qsCount;
-      }
-
-      this.setState({chats, qsCount})
+      this.setState({chats})
+      this.qsCount();
     });
   }
 
@@ -251,6 +246,16 @@ class ChatsPage extends Component
     chat.read = 1;
     ML.go('chat/' + chat.id);
     ML.emit('chatupdate', {chat});
+  }
+
+  qsCount()
+  {
+    let qsCount = 0;
+    for (let i in this.state.chats)
+    {
+      if (!this.state.chats[i].read) ++qsCount;
+    }
+    this.setState({qsCount});
   }
 
   qsShow()
