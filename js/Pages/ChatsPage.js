@@ -292,6 +292,18 @@ class ChatsPage extends Component
       }
     }
 
+    let unreadCount = 0;
+
+    for (let i in this.state.chats)
+    {
+      if (!this.state.chats[i].read) ++unreadCount;
+    }
+
+    let qsButton = h('div', {className: 'quick-stack-button', style: {display: unreadCount ? 'flex' : 'none'}},
+      h(BarIcon, {img: 'white/timer'}),
+      h('div', null, unreadCount + ' unread')
+    );
+
     return (
 
       h('chats-page', {style: {zIndex: this.props.zIndex}, ontouchstart: this.touchStart.bind(this), ontouchmove: this.touchMove.bind(this), ontouchend: this.touchEnd.bind(this)},
@@ -303,7 +315,8 @@ class ChatsPage extends Component
           onfocuschange: this.filterFocusChanged.bind(this),
           className: this.state.filterActive ? 'focused' : ''
         }),
-        ulContents
+        ulContents,
+        qsButton
       )
     );
   }
