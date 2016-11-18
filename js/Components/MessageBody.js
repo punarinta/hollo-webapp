@@ -10,8 +10,8 @@ class MessageBody extends Component
     this.base.innerHTML = this.props.html;
   }
 
-  render()
+  render(props)
   {
-    return h('message-body')
+    return h('message-body', {onclick: props.onclick})
   }
 }
