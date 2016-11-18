@@ -61,9 +61,9 @@ class MessageBubble extends Component
   {
     if (e.target.classList.contains('fwd'))
     {
-      ML.api('message', 'showOriginal', {id: this.state.message.id}, data =>
+      let message = this.state.message;
+      ML.api('message', 'showOriginal', {id: message.id}, data =>
       {
-        let message = this.state.message;
         message.body = data;
         this.canUpdate = true;
         this.setState({message});
