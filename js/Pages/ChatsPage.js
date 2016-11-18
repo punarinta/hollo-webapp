@@ -35,12 +35,14 @@ class ChatsPage extends Component
 
   chatUpdate(e)
   {
-    let chats = this.state.chats;
+    let found = 0, chats = this.state.chats;
 
     for (let i in chats)
     {
       if (e.payload.chat.id == chats[i].id)
       {
+        found = 1;
+
         if (chats[i].muted != e.payload.chat.muted)
         {
           // list changed, reloading must be administered
@@ -50,12 +52,18 @@ class ChatsPage extends Component
           break;
         }
 
-        chats[i].read = e.payload.chat.read;
-        chats[i].name = e.payload.chat.name;
         chats[i].forceUpdate = 1;
+        chats[i].read = e.payload.chat.read;
+        if (e.payload.chat.name) chats[i].name = e.payload.chat.name;
         this.setState({chats});
         break;
       }
+    }
+
+    if (!found)
+    {
+      // new chat -> resync
+      this.callFind();
     }
   }
 
