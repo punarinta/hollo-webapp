@@ -246,6 +246,10 @@ class App extends Component
       {
         // app was off, just go to the chat
         ML.go('chat/' + e.payload.chatId);
+
+        // app was upp, so update the chat in the list
+        let chat = {id: e.payload.chatId, read: 1};
+        ML.emit('chatupdate', {chat});
       }
     }
   }
