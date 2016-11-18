@@ -92,7 +92,7 @@ class ChatRow extends Component
         case 1:
           chat.muted = !chat.muted - 0;
 
-          // ML.api('chat', 'update', {id: chat.id, muted: chat.muted});
+          ML.api('chat', 'update', {id: chat.id, muted: chat.muted});
 
           setTimeout( () =>
           {
