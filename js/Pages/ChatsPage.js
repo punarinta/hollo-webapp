@@ -399,6 +399,10 @@ class ChatsPage extends Component
 
       quickStackModal = h('qs-shader', {onclick: (e) => {if (e.target.nodeName.toLowerCase() == 'qs-shader') this.setState({quickStackShown: 0})} },
         h('quick-stack', {},
+          h('topbar', null,
+            h(Avatar, {user: fakeUser, size: 32}),
+            h('div', null, ML.xname({users:[fakeUser]})[0])
+          ),
           h(MessageBubble, {message, user: this.props.user}),
           h('bar', null,
             h('button', {onclick: () => this.qsMarkRead(qsCurrent)}, 'Mark as read'),

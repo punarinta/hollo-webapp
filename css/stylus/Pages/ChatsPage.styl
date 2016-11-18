@@ -88,14 +88,24 @@ chats-page
     border-radius 2px
     box-shadow 0 2px 4px 0 rgba(0, 0, 0, .12)
     margin 0 8px
+    overflow-x hidden
     message-bubble
       flex 1
-      .foot
+      padding-left 44px
+      .foot, .cap
         display none
       &.mine
         & > div
           float none
           margin-left auto
+    topbar
+      display flex
+      margin 12px 12px 0
+      div
+        display flex
+        font 300 22px 'Work Sans'
+        align-items center
+        margin-left 12px
     bar
       margin-bottom 0
       display flex
