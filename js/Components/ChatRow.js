@@ -96,7 +96,8 @@ class ChatRow extends Component
 
           setTimeout( () =>
           {
-            this.base.parentNode.removeChild(this.base);
+            // remove it from the parent component
+            ML.emit('chatupdate', {chat});
           }, 800);
 
           this.item.style.transform = `translateX(${this.vw}px)`;
@@ -107,12 +108,11 @@ class ChatRow extends Component
           chat.read = !chat.read - 0;
 
           ML.api('chat', 'update', {id: chat.id, read: chat.read});
-          ML.emit('chatupdate', {chat});
 
           setTimeout( () =>
           {
-            this.canUpdate = true;
-            this.setState({chat})
+            // set the state from the parent component
+            ML.emit('chatupdate', {chat});
           }, 400);
 
           this.item.style.transform = `translateX(-${this.vw}px)`;
