@@ -26,7 +26,7 @@ class MessageBubble extends Component
     this.setState({showName: !this.state.showName});
   }
 
-  clearBody(body = '')
+  clearBody(body = '', messageId = 0)
   {
     body = body.replace(/(?:[ ]\r\n|[ ]\r|[ ]\n)/g, ' ');
 
@@ -46,7 +46,7 @@ class MessageBubble extends Component
 
     body = body.replace(/\[sys:fwd\]/g, '<div class="fwd">Forwarded message</div>');
 
-    return h(MessageBody, {html: `<p>${body}</p>`});
+    return h(MessageBody, {html: `<p>${body}</p>`, onclick: this.messageClicked.bind(this)});
   }
 
   previewFile(file, offset)
@@ -54,6 +54,20 @@ class MessageBubble extends Component
     if (file.type.match('image.*'))
     {
       ML.emit('demobox', {messageId: this.state.message.id, offset, file})
+    }
+  }
+
+  messageClicked(e)
+  {
+    if (e.target.classList.contains('fwd'))
+    {
+      ML.api('message', 'showOriginal', {id: this.state.message.id}, data =>
+      {
+        let message = this.state.message;
+        message.body = data;
+        this.canUpdate = true;
+        this.setState({message});
+      });
     }
   }
 
@@ -83,7 +97,7 @@ class MessageBubble extends Component
     }
     else
     {
-      body = this.clearBody(body)
+      body = this.clearBody(body, message.id)
     }
 
     let filesBody = '',
