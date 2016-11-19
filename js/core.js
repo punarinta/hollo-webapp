@@ -20,27 +20,27 @@ var ML =
 
     r.onload = function ()
     {
-      var r = this.response.toString();
+      var r = this.response.toString(), status = this.status;
       if (ML.isJson(r))
       {
         var json = JSON.parse(r);
-        if (this.status >= 200 && this.status < 400)
+        if (status >= 200 && status < 400)
         {
           if (callback) callback(json.data);
         }
         else
         {
-          console.log('Status:', this.status);
-          if (this.status != 401)
+          console.log('Status:', status);
+          if (status != 401)
           {
-            // ML.mbox(json.errMsg);
+            ML.emit('messagebox', {html: json.errMsg});
           }
         }
       }
       else
       {
         console.log('Not JSON:', r);
-        // ML.mbox([200, 500].indexOf(this.status) != -1 ? r : ('HTTP ' + this.status));
+        ML.emit('messagebox', {html: [200, 500].indexOf(status) != -1 ? r : ('HTTP ' + status)});
       }
     };
     r.onerror = function (e)
