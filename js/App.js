@@ -149,7 +149,8 @@ class App extends Component
         }});
       });
     }
-    else ML.api('auth', 'status', {}, data =>
+    // use GET for better start performance
+    else ML.api('auth?method=status', 0, {}, data =>
     {
       if (data.user)
       {

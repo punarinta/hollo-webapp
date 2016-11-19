@@ -11,7 +11,7 @@ var ML =
   {
     var r = new XMLHttpRequest(), ps = null, pl;
 
-    r.open('POST', 'https://' + CFG.apiRoot + '/api/' + endpoint, true);
+    r.open(method ? 'POST' : 'GET', 'https://' + CFG.apiRoot + '/api/' + endpoint, true);
     r.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
     if (typeof ML.sessionId == 'string')
     {
@@ -55,7 +55,8 @@ var ML =
       pl = data.pageLength;
     }
 
-    r.send(JSON.stringify({ 'method': method, 'data': data, 'pageStart': ps, 'pageLength': pl }));
+    if (method) r.send(JSON.stringify({ 'method': method, 'data': data, 'pageStart': ps, 'pageLength': pl }));
+    else r.send();
   },
 
   getQueryVar: function (v, hashed)
