@@ -23,7 +23,7 @@ class ChatRow extends Component
     let t = e.changedTouches[0];
     this.startX = t.pageX;
     this.startY = t.pageY;
-    this.item = this.base.querySelector('div');
+    this.item = this.base.querySelector('.real');
     this.shadow = this.base.querySelector('.shadow');
   }
 
@@ -155,7 +155,7 @@ class ChatRow extends Component
           ontouchend: this.touchEnd.bind(this),
           onclick: () => this.props.onclick(this.state.chat)
         },
-        h('div', null,
+        h('div', {className: 'real'},
           h(Avatar, {chat}),
           h('div', {className: 'info'},
             h('div', {className: 'name'},
