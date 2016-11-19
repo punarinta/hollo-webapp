@@ -33,8 +33,7 @@ class ChatsPage extends Component
     let muted = nextProps.data ? nextProps.data.muted || 0 : 0;
     if (muted != this.muted)
     {
-      this.muted = muted;
-      this.callFind();
+      muted ? this.showMuted() : this.showHolloed()
     }
   }
 
@@ -126,6 +125,12 @@ class ChatsPage extends Component
       let chats = this.state.chats;
 
       this.canLoadMore = (data.length == this.pageLength);
+
+      if (!this.pageStart)
+      {
+        let first = this.base.querySelector('chat-row:first-child');
+        if (first) first.scrollIntoView();
+      }
 
       if (shouldAdd)
       {
