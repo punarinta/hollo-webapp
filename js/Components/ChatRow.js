@@ -5,8 +5,6 @@ class ChatRow extends Component
     this.swipe = 0;
     this.action = 0;
     this.blockSwipe = 0;
-    this.vw = window.innerWidth > 768 ? 360 : window.innerWidth;
-    this.threshold = this.vw * .3;
     this.canUpdate = true;
     this.state.chat = this.props.chat;
   }
@@ -40,12 +38,13 @@ class ChatRow extends Component
 
     if (this.swipe)
     {
+      let threshold = this.props.vw * .3;
       this.item.style.transform = `translateX(${distX}px)`;
       e.preventDefault();
 
-      if (distX > this.threshold) this.action = 1;
-      else if (Math.abs(distX) < this.threshold) this.action = 0;
-      else if (distX < -this.threshold) this.action = -1;
+      if (distX > threshold) this.action = 1;
+      else if (Math.abs(distX) < threshold) this.action = 0;
+      else if (distX < -threshold) this.action = -1;
     }
     else
     {
@@ -100,7 +99,7 @@ class ChatRow extends Component
             ML.emit('chatupdate', {chat});
           }, 800);
 
-          this.item.style.transform = `translateX(${this.vw}px)`;
+          this.item.style.transform = `translateX(${this.props.vw}px)`;
           mixpanel.track('Chat - swipe muting');
           break;
 
@@ -115,7 +114,7 @@ class ChatRow extends Component
             ML.emit('chatupdate', {chat});
           }, 400);
 
-          this.item.style.transform = `translateX(-${this.vw}px)`;
+          this.item.style.transform = `translateX(-${this.props.vw}px)`;
           mixpanel.track('Chat - swipe reading');
           break;
 

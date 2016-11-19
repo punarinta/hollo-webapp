@@ -334,12 +334,18 @@ class ChatsPage extends Component
     }
     else
     {
-      let chats = [];
+      let chats = [], vw = window.innerWidth > 768 ? 360 : window.innerWidth;
 
       for (let i in this.state.chats)
       {
         if (this.state.chats[i].muted != this.muted) continue;  // skip it!
-        chats.push(h(ChatRow, {chat: this.state.chats[i], canSwipe: !this.state.blockSwipe, onclick: this.chatClicked}))
+        chats.push(h(ChatRow,
+        {
+          chat: this.state.chats[i],
+          canSwipe: !this.state.blockSwipe,
+          onclick: this.chatClicked,
+          vw
+        }))
       }
 
       if (!this.emailFilter.length || chats.length)
