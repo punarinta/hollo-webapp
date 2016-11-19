@@ -36,7 +36,11 @@ class MessagesPage extends Component
 
   componentWillReceiveProps(nextProps)
   {
-    this.props.data.chatId = nextProps.data.chatId;
+    if (this.props.data.chatId != nextProps.data.chatId)
+    {
+      this.setState({menuModalShown: 0});
+      this.props.data.chatId = nextProps.data.chatId;
+    }
     this.callFind();
   }
 
@@ -600,7 +604,7 @@ class MessagesPage extends Component
         filterModal,
         menuModal,
         h('snackbar', null,
-          h(BarIcon, {img: 'color/arrow-back', onclick: () => ML.go('chats')}),
+          h(BarIcon, {img: 'color/arrow-back', onclick: () => {this.setState({menuModalShown: 0}); ML.go('chats')} }),
           h('div', {className: 'name' + (this.state.menuModalShown == 1 ? ' toggled' : ''), onclick: () => this.toggleMenu(1) }, name),
           h(BarIcon, {className: this.state.menuModalShown == 2 ? 'toggled' : '', img: 'color/subjs', width: 40, height: 40, onclick: () => this.toggleMenu(2) }),
           h(BarIcon, {className: this.state.menuModalShown == 3 ? 'toggled' : '', img: 'color/clip', width: 40, height: 40, onclick: () => this.toggleMenu(3) }),
