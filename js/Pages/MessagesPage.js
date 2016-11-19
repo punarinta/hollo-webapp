@@ -423,7 +423,7 @@ class MessagesPage extends Component
      };
 
     messages.push(m);
-    this.setState({files: [], messages, compFocus: 0, currentComposed: ''});
+    this.setState({files: [], messages, compFocus: 0, currentComposed: '', h: 64});
     this.reposition(1);
 
     console.log('Sending:', msg, msgId, m.subject, m.files, this.chat.id);
