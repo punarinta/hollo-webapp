@@ -365,7 +365,7 @@ class ChatsPage extends Component
           h('ul', null,
             chats
           ),
-          h(BottomBar, null,
+            this.emailFilter.length ? null : h(BottomBar, null,
             h(BarIcon, {className: 'opa-85', caption: 'Profile', img: 'white/profile', onclick: () => ML.go('profile')}),
             h(BarIcon, {className: this.muted ? 'opa-85' : '', caption: 'Inbox', img: 'white/email', onclick: this.showHolloed.bind(this)}),
             h(BarIcon, {className: this.muted ? '' : 'opa-85', caption: 'Muted', img: 'white/muted', onclick: this.showMuted.bind(this)})
