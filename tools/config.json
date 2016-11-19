@@ -70,6 +70,7 @@
     "cp favicon.ico $distDir/favicon.ico",
     "cp -R gfx $distDir/gfx",
     "cp -R favicon $distDir/favicon",
+    "cp node_modules/preact/dist/preact.min.js.map $distDir",
     "rm -rf temp"
   ]
 }
