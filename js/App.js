@@ -3,6 +3,7 @@ class App extends Component
   constructor()
   {
     super();
+    this.resizeTimer = null;
     this.state.page = 'loading';
     this.state.chatsPageData = {};
     this.state.messagesPageData = {};
@@ -29,6 +30,16 @@ class App extends Component
     window.addEventListener('hollo:userpicker', this.showUserPicker.bind(this));
     window.addEventListener('hollo:inituser', this.initUser.bind(this));
     window.addEventListener('hollo:firebase', this.firebaseListener.bind(this));
+
+    window.addEventListener('resize', () =>
+    {
+      clearTimeout(this.resizeTimer);
+      this.resizeTimer = setTimeout(() =>
+      {
+        windowInnerWidth = window.innerWidth;
+        console.log('restyle() has been triggered')
+      }, 250);
+    });
 
     // === ROUTER ===
     window.onpopstate = (e) =>
