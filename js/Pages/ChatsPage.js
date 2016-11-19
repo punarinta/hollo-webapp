@@ -28,6 +28,16 @@ class ChatsPage extends Component
     this.callFind();
   }
 
+  componentWillReceiveProps(nextProps)
+  {
+    let muted = nextProps.data ? nextProps.data.muted || 0 : 0;
+    if (muted != this.muted)
+    {
+      this.muted = muted;
+      this.callFind();
+    }
+  }
+
   componentWillUnmount()
   {
     this.base.querySelector('ul').removeEventListener('scroll', this.scrollReference);
