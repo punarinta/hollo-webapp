@@ -23,6 +23,7 @@ class MessageBubble extends Component
 
   toggleName()
   {
+    this.canUpdate = true;
     this.setState({showName: !this.state.showName});
   }
 
