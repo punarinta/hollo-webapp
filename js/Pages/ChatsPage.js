@@ -334,7 +334,7 @@ class ChatsPage extends Component
     }
     else
     {
-      let chats = [], vw = window.innerWidth > 768 ? 360 : window.innerWidth;
+      let chats = [], vw = windowInnerWidth > 768 ? 360 : windowInnerWidth;
 
       for (let i in this.state.chats)
       {

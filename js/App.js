@@ -8,7 +8,7 @@ class App extends Component
     this.state.messagesPageData = {};
     this.state.pagePayload = null;
     this.state.currentDemo = null;
-    this.state.widthMode = window.innerWidth > 768;
+    this.state.widthMode = windowInnerWidth > 768;
     this.state.demoBox = null;
     this.state.messageBox = null;
     this.state.customBox = null;
@@ -339,4 +339,6 @@ class App extends Component
 }
 
 document.body.innerHTML = '';
+// cheapest place to compute initial window width
+var windowInnerWidth = window.innerWidth;
 render(h(App), document.body);
