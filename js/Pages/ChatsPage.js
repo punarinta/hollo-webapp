@@ -8,6 +8,7 @@ class ChatsPage extends Component
     this.filterTimer = null;
     this.emailFilter = '';
     this.canLoadMore = 0;
+    this.lastCallFindParams = {};
 
     this.state.qs = [];
     this.state.chats = [];
@@ -18,7 +19,6 @@ class ChatsPage extends Component
 
   componentDidMount()
   {
-    this.muted = this.props.data ? this.props.data.muted || 0 : 0;
     this.scrollReference = this.scroll.bind(this);
     this.chatUpdateReference = this.chatUpdate.bind(this);
     this.firebaseListenerRef = this.firebaseListener.bind(this);
@@ -30,11 +30,8 @@ class ChatsPage extends Component
 
   componentWillReceiveProps(nextProps)
   {
-    let muted = nextProps.data ? nextProps.data.muted || 0 : 0;
-    if (muted != this.muted)
-    {
-      muted ? this.showMuted() : this.showHolloed()
-    }
+    this.props = nextProps;
+    this.callFind();
   }
 
   componentWillUnmount()
@@ -113,14 +110,21 @@ class ChatsPage extends Component
 
   callFind(shouldAdd = 0)
   {
-    let filters = [{mode: 'muted', value: this.muted}];
+    let filters = [{mode: 'muted', value: this.props.data ? this.props.data.muted || 0 : 0}];
 
     if (this.emailFilter.length)
     {
       filters.push({mode:'email', value: this.emailFilter});
     }
 
-    ML.api('chat', 'find', {pageStart: this.pageStart, pageLength: this.pageLength, filters: filters, sortBy: 'lastTs'}, (data) =>
+    let callFindParams = {pageStart: this.pageStart, pageLength: this.pageLength, filters: filters, sortBy: 'lastTs'}
+
+    if (JSON.stringify(callFindParams) == JSON.stringify(this.lastCallFindParams))
+    {
+      return
+    }
+
+    ML.api('chat', 'find', this.lastCallFindParams = callFindParams, (data) =>
     {
       let chats = this.state.chats;
 
@@ -236,26 +240,6 @@ class ChatsPage extends Component
     this.setState({filterActive: focus})
   }
 
-  showHolloed()
-  {
-    if (this.muted)
-    {
-      this.pageStart = 0;
-      this.muted = 0;
-      this.callFind();
-    }
-  }
-
-  showMuted()
-  {
-    if (!this.muted)
-    {
-      this.pageStart = 0;
-      this.muted = 1;
-      this.callFind();
-    }
-  }
-
   addNew()
   {
     ML.api('chat', 'add', {emails: [this.emailFilter]}, data =>
@@ -263,13 +247,6 @@ class ChatsPage extends Component
       this.setState({menuModalShown: 0});
       ML.go('chat/' + data.id);
     });
-  }
-
-  chatClicked(chat)
-  {
-    // chat.read = 1;
-    ML.go('chat/' + chat.id);
-    // ML.emit('chatupdate', {chat});
   }
 
   qsCount()
@@ -284,9 +261,9 @@ class ChatsPage extends Component
 
   qsShow()
   {
-    ML.api('message', 'buildQuickStack', {muted: this.muted}, data =>
+    ML.api('message', 'buildQuickStack', {muted: this.props.data.muted}, qs =>
     {
-      this.setState({quickStackShown: 1, qs: data});
+      this.setState({quickStackShown: 1, qs});
     });
   }
 
@@ -330,13 +307,14 @@ class ChatsPage extends Component
 
   render()
   {
-    let ulContents = '', quickStackModal = h('div', {className: 'qs-shader', style: {display: 'none'}});
+    let quickStackModal = h('div', {className: 'qs-shader', style: {display: 'none'}}),
+        ulContents = '', muted = this.props.data ? this.props.data.muted : 0;
 
     if (ML.isEmail(this.emailFilter))
     {
-      let f = this.emailFilter;
+      let email = this.emailFilter;
       ulContents = h('ul', null,
-        h(ChatRow, {chat: {users: [{email: f, name: f}], read:1, last:{msg:'Create a chat with ' + f}}, canSwipe: 0, onclick: this.addNew.bind(this)})
+        h(ChatRow, {chat: {users: [{email, name: email}], read:1, last: {msg:'Create a chat with ' + f}}, canSwipe: 0, onclick: this.addNew.bind(this)})
       )
     }
     else if (this.state.filterActive && !this.emailFilter.length)
@@ -355,12 +333,12 @@ class ChatsPage extends Component
 
       for (let i in this.state.chats)
       {
-        if (this.state.chats[i].muted != this.muted) continue;  // skip it!
+        if (this.state.chats[i].muted != muted) continue;  // skip it!
         chats.push(h(ChatRow,
         {
           chat: this.state.chats[i],
           canSwipe: !this.state.blockSwipe,
-          onclick: this.chatClicked,
+          onclick: (chat) => ML.go('chat/' + chat.id),
           vw
         }))
       }
@@ -374,8 +352,8 @@ class ChatsPage extends Component
           ),
             this.emailFilter.length ? null : h(BottomBar, null,
             h(BarIcon, {className: 'opa-85', caption: 'Profile', img: 'white/profile', onclick: () => ML.go('profile')}),
-            h(BarIcon, {className: this.muted ? 'opa-85' : '', caption: 'Inbox', img: 'white/email', onclick: this.showHolloed.bind(this)}),
-            h(BarIcon, {className: this.muted ? '' : 'opa-85', caption: 'Muted', img: 'white/muted', onclick: this.showMuted.bind(this)})
+            h(BarIcon, {className: muted ? 'opa-85' : '', caption: 'Inbox', img: 'white/email', onclick: () =>ML.go('chats') }),
+            h(BarIcon, {className: muted ? '' : 'opa-85', caption: 'Muted', img: 'white/muted', onclick: () =>ML.go('chats', {muted: 1}) })
           )
         ];
       }
