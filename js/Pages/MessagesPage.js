@@ -65,6 +65,8 @@ class MessagesPage extends Component
       return
     }
 
+    ML.emit('busybox', 1);
+
     ML.api('message', 'findByChatId', this.lastCallFindParams = callFindParams, (data) =>
     {
       this.canLoadMore = (data.messages.length == this.pageLength);
@@ -89,6 +91,8 @@ class MessagesPage extends Component
         this.setState({messages: data.messages, currentSubject});
         this.reposition(1)
       }
+
+      ML.emit('busybox', 0);
     });
   }
 
