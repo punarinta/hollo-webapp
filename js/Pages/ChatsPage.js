@@ -300,9 +300,10 @@ class ChatsPage extends Component
 
   qsSkip()
   {
-    let qs = this.state.qs, qsCount = this.state.qsCount - 1;
+    let qs = this.state.qs;
     qs.shift();
-    this.setState({qs, qsCount, quickStackShown: qsCount >0});
+    let qsCount = qs.length;
+    this.setState({qs, qsCount, quickStackShown: qsCount > 0});
   }
 
   qsMarkRead(qsCurrent)
@@ -313,6 +314,7 @@ class ChatsPage extends Component
       if (qsCurrent.chatId == this.state.chats[i].id)
       {
         chat = this.state.chats[i];
+        break;
       }
     }
 
@@ -423,8 +425,7 @@ class ChatsPage extends Component
         refId: qsCurrent.refId,
         ts: qsCurrent.ts,
         files: qsCurrent.files ? JSON.parse(qsCurrent.files) : null,
-        from: fakeUser,
-        debug: qsCurrent.fromId
+        from: fakeUser
       };
 
       quickStackModal = h('qs-shader', {onclick: (e) => {if (e.target.nodeName.toLowerCase() == 'qs-shader') this.setState({quickStackShown: 0})} },
