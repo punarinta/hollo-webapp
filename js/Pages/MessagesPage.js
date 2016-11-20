@@ -331,12 +331,12 @@ class MessagesPage extends Component
   renameChat()
   {
     this.setState({menuModalShown: 0});
-    ML.emit('messagebox', {type: 1, html: 'Enter new name:', input: this.chat.name, cb: (code, text) =>
+    ML.emit('messagebox', {type: 1, html: 'Enter new name:', input: this.chat.name, cb: (code, name) =>
     {
       if (code)
       {
-        this.chat.name = text;
-        ML.api('chat', 'update', { id: this.chat.id, name: text }, () => this.render());
+        this.chat.name = name;
+        ML.api('chat', 'update', { id: this.chat.id, name }, () => this.render());
         ML.emit('chatupdate', {chat: this.chat});
       }
     }});
@@ -349,10 +349,7 @@ class MessagesPage extends Component
     {
       if (code)
       {
-        ML.api('chat', 'leave', {id: this.chat.id}, () =>
-        {
-          ML.go('chats');
-        });
+        ML.api('chat', 'leave', {id: this.chat.id}, () => ML.go('chats') );
       }
     }})
   }
@@ -492,18 +489,18 @@ class MessagesPage extends Component
 
       for (let i in this.chat.users)
       {
-        let u = this.chat.users[i];
+        let user = this.chat.users[i];
         users.push(h('li', null,
-          h(Avatar, {user: u}),
+          h(Avatar, {user}),
           h('div', null,
             h('div', {className: 'name'},
-              this.chat.users[i].name
+              user.name
             ),
             h('div', {className: 'email'},
-              this.chat.users[i].email
+              user.email
             )
           ),
-          this.chat.users.length > 1 ? h(BarIcon, {img: 'color/cross', onclick: () => this.removeUser(this.chat.users[i]) }) : ''
+          this.chat.users.length > 1 ? h(BarIcon, {img: 'color/cross', onclick: () => this.removeUser(user) }) : ''
         ))
       }
 
@@ -602,15 +599,13 @@ class MessagesPage extends Component
       emojiRows.push(h('div', null, emojis))
     }
 
-    // this.reposition();
-
     return (
 
       h('messages-page', {style: {zIndex: this.props.zIndex}},
         filterModal,
         menuModal,
         h('snackbar', null,
-          h(BarIcon, {img: 'color/arrow-back', onclick: () => {this.setState({menuModalShown: 0}); ML.go('chats')} }),
+          h(BarIcon, {img: 'color/arrow-back', onclick: () => { this.setState({menuModalShown: 0}); ML.go('chats')} }),
           h('div', {className: 'name' + (this.state.menuModalShown == 1 ? ' toggled' : ''), onclick: () => this.toggleMenu(1) }, name),
           h(BarIcon, {className: this.state.menuModalShown == 2 ? 'toggled' : '', img: 'color/subjs', width: 40, height: 40, onclick: () => this.toggleMenu(2) }),
           h(BarIcon, {className: this.state.menuModalShown == 3 ? 'toggled' : '', img: 'color/clip', width: 40, height: 40, onclick: () => this.toggleMenu(3) }),
