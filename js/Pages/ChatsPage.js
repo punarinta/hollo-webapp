@@ -124,6 +124,8 @@ class ChatsPage extends Component
       return
     }
 
+    ML.emit('busybox', 1);
+
     ML.api('chat', 'find', this.lastCallFindParams = callFindParams, (data) =>
     {
       let chats = this.state.chats;
@@ -148,6 +150,8 @@ class ChatsPage extends Component
 
       this.setState({chats});
       this.qsCount();
+
+      ML.emit('busybox', 0);
     });
   }
 
