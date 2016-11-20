@@ -15,6 +15,7 @@ class App extends Component
     this.state.customBox = null;
     this.state.userPicker = null;
     this.state.user = null;
+    this.state.busy = 0;
   }
 
   componentDidMount()
@@ -27,6 +28,7 @@ class App extends Component
     window.addEventListener('hollo:demobox', this.showDemoBox.bind(this));
     window.addEventListener('hollo:messagebox', this.showMessageBox.bind(this));
     window.addEventListener('hollo:custombox', this.showCustomBox.bind(this));
+    window.addEventListener('hollo:busybox', this.showBusyBox.bind(this));
     window.addEventListener('hollo:userpicker', this.showUserPicker.bind(this));
     window.addEventListener('hollo:inituser', this.initUser.bind(this));
     window.addEventListener('hollo:firebase', this.firebaseListener.bind(this));
@@ -306,6 +308,11 @@ class App extends Component
     this.setState({userPicker: null});
   }
 
+  showBusyBox(e)
+  {
+    this.setState({busy: e.payload});
+  }
+
   render()
   {
     // place here the logic of page switching
@@ -345,6 +352,8 @@ class App extends Component
         pages.push(h(MessagesPage, {zIndex: 2, data: this.state.messagesPageData, user}));
         break;
     }
+
+    pages.push(h('busybox', {style: {display: this.state.busy ? 'flex' : 'none'}}, h(HolloLoaderBig, {color:'#7a4df9'})));
 
     return h('div', { id: 'app' }, pages);
   }
