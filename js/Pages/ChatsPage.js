@@ -267,9 +267,9 @@ class ChatsPage extends Component
 
   chatClicked(chat)
   {
-    chat.read = 1;
+    // chat.read = 1;
     ML.go('chat/' + chat.id);
-    ML.emit('chatupdate', {chat});
+    // ML.emit('chatupdate', {chat});
   }
 
   qsCount()

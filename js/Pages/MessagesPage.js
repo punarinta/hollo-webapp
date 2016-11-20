@@ -71,6 +71,8 @@ class MessagesPage extends Component
       this.chat = data.chat;
       this.chat.read = 1;
 
+      ML.emit('chatupdate', {chat : this.chat});
+
       data.messages = data.messages.reverse();
 
       if (shouldAdd)
