@@ -4,7 +4,6 @@ class App extends Component
   {
     super();
     this.resizeTimer = null;
-    this.state.page = 'loading';
     this.state.chatsPageData = {};
     this.state.messagesPageData = {};
     this.state.pagePayload = null;
@@ -15,7 +14,7 @@ class App extends Component
     this.state.customBox = null;
     this.state.userPicker = null;
     this.state.user = null;
-    this.state.busy = 0;
+    this.state.busy = 1;
   }
 
   componentDidMount()
@@ -25,11 +24,11 @@ class App extends Component
       ML.sessionId = localStorage.getItem('sessionId');
     }
 
-    window.addEventListener('hollo:demobox', this.showDemoBox.bind(this));
-    window.addEventListener('hollo:messagebox', this.showMessageBox.bind(this));
-    window.addEventListener('hollo:custombox', this.showCustomBox.bind(this));
-    window.addEventListener('hollo:busybox', this.showBusyBox.bind(this));
-    window.addEventListener('hollo:userpicker', this.showUserPicker.bind(this));
+    window.addEventListener('hollo:demobox', (e) => this.setState({demoBox: e.payload}) );
+    window.addEventListener('hollo:messagebox', (e) => this.setState({messageBox: e.payload}) );
+    window.addEventListener('hollo:custombox', (e) => this.setState({customBox: e.payload}) );
+    window.addEventListener('hollo:userpicker', (e) => this.setState({userPicker: e.payload}) );
+    window.addEventListener('hollo:busybox', (e) => this.setState({busy: e.payload}) );
     window.addEventListener('hollo:inituser', this.initUser.bind(this));
     window.addEventListener('hollo:firebase', this.firebaseListener.bind(this));
 
@@ -61,13 +60,13 @@ class App extends Component
             break;
 
           case 'auth/login':
-            this.setState({page: 'login'});
+            this.setState({page: 'login', busy: 0});
             break;
 
           case 'auth/logout':
             ML.api('auth', 'logout', null, () =>
             {
-              this.setState({page: 'login'});
+              this.setState({page: 'login', busy: 0});
             });
             break;
 
@@ -268,68 +267,19 @@ class App extends Component
     }
   }
 
-  showMessageBox(e)
-  {
-    this.setState({messageBox: e.payload});
-  }
-
-  closeMessageBox()
-  {
-    this.setState({messageBox: null});
-  }
-
-  showDemoBox(e)
-  {
-    this.setState({demoBox: e.payload});
-  }
-
-  closeDemoBox()
-  {
-    this.setState({demoBox: null});
-  }
-
-  showCustomBox(e)
-  {
-    this.setState({customBox: e.payload});
-  }
-
-  closeCustomBox()
-  {
-    this.setState({customBox: null});
-  }
-
-  showUserPicker(e)
-  {
-    this.setState({userPicker: e.payload});
-  }
-
-  closeUserPicker()
-  {
-    this.setState({userPicker: null});
-  }
-
-  showBusyBox(e)
-  {
-    this.setState({busy: e.payload});
-  }
-
   render()
   {
     // place here the logic of page switching
     let user = this.state.user, pages =
     [
-      h(DemoBoxModal,    {data: this.state.demoBox,    onclose: this.closeDemoBox.bind(this)    }),
-      h(MessageBoxModal, {data: this.state.messageBox, onclose: this.closeMessageBox.bind(this) }),
-      h(UserPickerModal, {data: this.state.userPicker, onclose: this.closeUserPicker.bind(this) }),
-      h(CustomBoxModal,  {data: this.state.customBox,  onclose: this.closeCustomBox.bind(this)  })
+      h(DemoBoxModal,    {data: this.state.demoBox,    onclose: () => this.setState({demoBox: null})    }),
+      h(MessageBoxModal, {data: this.state.messageBox, onclose: () => this.setState({messageBox: null}) }),
+      h(UserPickerModal, {data: this.state.userPicker, onclose: () => this.setState({userPicker: null}) }),
+      h(CustomBoxModal,  {data: this.state.customBox,  onclose: () => this.setState({customBox: null})  })
     ];
 
     switch (this.state.page)
     {
-      case 'loading':
-        pages.push(h(LoadingPage));
-        break;
-
       case 'login':
         pages.push(h(LoginPage));
         break;

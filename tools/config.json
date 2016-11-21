@@ -26,7 +26,6 @@
     "js/Components/Modals/DemoBoxModal",
     "js/Components/Modals/UserPickerModal",
     "js/Components/Modals/CustomBoxModal",
-    "js/Pages/LoadingPage",
     "js/Pages/LoginPage",
     "js/Pages/ChatsPage",
     "js/Pages/MessagesPage",
