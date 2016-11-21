@@ -22,8 +22,8 @@ def waitForElement (selector, finalMsg = '', critical = True):
             time += 0.1
             sleep(0.1)
         else:
-            log(finalMsg, 1)
-            sleep(0.05)             # needs a small wait in production, no clue why
+            log(finalMsg + ' [took {} sec]' . format(time), 1)
+            sleep(0.1)             # needs a small wait in production, no clue why
             return True
 
     log(finalMsg, 0)
@@ -40,8 +40,8 @@ def waitForUrl (url, finalMsg = '', critical = True):
     maxTime = 10.0
     while time < maxTime:
         if window.current_url == url:
-            log(finalMsg, 1)
-            sleep(0.05)             # needs a small wait in production, no clue why
+            log(finalMsg + ' [took {} sec]' . format(time), 1)
+            sleep(0.1)             # needs a small wait in production, no clue why
             return True
         else:
             time += 0.1
