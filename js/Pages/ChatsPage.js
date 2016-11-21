@@ -119,6 +119,13 @@ class ChatsPage extends Component
 
     let callFindParams = {pageStart: this.pageStart, pageLength: this.pageLength, filters, sortBy: 'lastTs'};
 
+    if (this.lastCallFindParams.filters && callFindParams.filters[0].value != this.lastCallFindParams.filters[0].value)
+    {
+      // another mode => reset head
+      this.pageStart = 0;
+      callFindParams.pageStart = 0;
+    }
+
     if (JSON.stringify(callFindParams) == JSON.stringify(this.lastCallFindParams))
     {
       return
