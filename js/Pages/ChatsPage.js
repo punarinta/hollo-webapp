@@ -210,14 +210,12 @@ class ChatsPage extends Component
       this.swiping = 1;
     }
 
-    // yellow
-    if (distX > 100) this.ul.style.backgroundColor = '#F5F5DC';
-    // green
-    else if (distX < -100) this.ul.style.backgroundColor= '#F0FFF0';
-    // none
-    else this.ul.style.backgroundColor = '#fff';
+    if (distX > 100) this.ul.style.backgroundColor = '#F5F5DC';       // yellow
+    else if (distX < -100) this.ul.style.backgroundColor= '#F0FFF0';  // green
+    else this.ul.style.backgroundColor = '#fff';                      // none
 
-    if (this.swiping) this.ul.style.transform = `translate(${distX}px, ${distY}px)`;
+    if (this.swiping && (distX % 2 || distY % 2)) this.ul.style.transform = `translate(${distX}px, ${distY}px)`;
+    e.stopPropagation()
   }
 
   touchEnd()
