@@ -26,7 +26,6 @@ class ChatRow extends Component
     this.item = this.base.querySelector('.real');
     this.shadow = this.base.querySelector('.shadow');
     this.item.style.willChange = 'transform';
-    e.stopPropagation();
   }
 
   touchMove(e)
@@ -47,6 +46,7 @@ class ChatRow extends Component
       if (distX > threshold) this.action = 1;
       else if (Math.abs(distX) < threshold) this.action = 0;
       else if (distX < -threshold) this.action = -1;
+      e.stopPropagation();
     }
     else
     {
@@ -64,7 +64,6 @@ class ChatRow extends Component
         this.shadow.style.opacity = 1;
       }
     }
-    e.stopPropagation();
   }
 
   touchEnd()
