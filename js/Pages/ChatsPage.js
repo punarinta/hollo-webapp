@@ -265,7 +265,7 @@ class ChatsPage extends Component
 
   qsShow()
   {
-    ML.api('message', 'buildQuickStack', {muted: this.props.data.muted}, qs =>
+    ML.api('message', 'buildQuickStack', {muted: this.props.data ? this.props.data.muted : 0}, qs =>
     {
       this.setState({quickStackShown: 1, qs});
     });
