@@ -165,6 +165,16 @@ class ChatsPage extends Component
     this.ul = this.base.querySelector('ul');
   }
 
+  qsTouchStart(e)
+  {
+    let t = e.changedTouches[0];
+    this.swiping = 0;
+    this.startX = t.pageX;
+    this.startY = t.pageY;
+    this.ul = this.base.querySelector('quick-stack');
+    e.stopPropagation()
+  }
+
   touchMove(e)
   {
     let distY = e.changedTouches[0].pageY - this.startY,
@@ -190,6 +200,26 @@ class ChatsPage extends Component
     }
   }
 
+  qsTouchMove(e)
+  {
+    let distX = e.changedTouches[0].pageX - this.startX,
+        distY = e.changedTouches[0].pageY - this.startY;
+
+    if (Math.abs(distX) > 32)
+    {
+      this.swiping = 1;
+    }
+
+    // yellow
+    if (distX > 100) this.ul.style.backgroundColor = '#F5F5DC';
+    // green
+    else if (distX < -100) this.ul.style.backgroundColor= '#F0FFF0';
+    // none
+    else this.ul.style.backgroundColor = '#fff';
+
+    if (this.swiping) this.ul.style.transform = `translate(${distX}px, ${distY}px)`;
+  }
+
   touchEnd()
   {
     if (this.state.blockSwipe)
@@ -202,6 +232,18 @@ class ChatsPage extends Component
         this.callFind();
       }
     }
+  }
+
+  qsTouchEnd(e)
+  {
+    this.swiping = 0;
+    this.ul.style.transform = 'translate(0,0)';
+    this.ul.style.backgroundColor = '#fff';
+
+    let distX = e.changedTouches[0].pageX - this.startX;
+
+    if (distX > 100) this.qsSkip();
+    else if (distX < -100) this.qsMarkRead(this.state.qs[0]);
   }
 
   scroll()
@@ -411,7 +453,7 @@ class ChatsPage extends Component
       };
 
       quickStackModal = h('qs-shader', {onclick: (e) => {if (e.target.nodeName.toLowerCase() == 'qs-shader') this.setState({quickStackShown: 0})} },
-        h('quick-stack', {},
+        h('quick-stack', { ontouchstart: this.qsTouchStart.bind(this), ontouchmove: this.qsTouchMove.bind(this), ontouchend: this.qsTouchEnd.bind(this) },
           h('topbar', null,
             h(Avatar, {user: fakeUser, size: 32}),
             h('div', null, ML.xname({users:[fakeUser]})[0])
