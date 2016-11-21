@@ -125,5 +125,9 @@ log('Files modal', element('menu-modal.menu-files', False) != None)
 element('snackbar bar-icon:nth-of-type(4)').click()
 log('Moar modal', element('menu-modal.menu-more', False) != None)
 
+## Get back to chat list
+element('snackbar bar-icon:nth-of-type(1)').click()
+waitForElement('chats-page', 'Snackbar back button')
+
 print "\nTesting completed\n"
 window.quit()
