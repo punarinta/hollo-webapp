@@ -35,11 +35,8 @@ class DemoBoxModal extends Component
 
     return h('demo-box-modal', {onclick: this.props.onclose},
       h('div', null,
-        h('div', {className: 'head'},
-          h('div', null,
-            ''
-          ),
-          h('div', {className: 'close', onclick: this.props.onclose})
+        h('div', {className: 'head', onclick: this.props.onclose},
+          h(Svg, {model: 'cross', fill: '#fff', type: 'polygon', size: 14})
         ),
         h('div', {className: 'img', style},
           nc
@@ -48,7 +45,9 @@ class DemoBoxModal extends Component
           h('div', {className: 'name'},
             data.file.name
           ),
-          h('div', {className: 'delete', style: {display: data.canDelete ? 'flex' : 'none'}, onclick: this.deleteClicked.bind(this)})
+          h('div', {className: 'delete', style: {display: data.canDelete ? 'flex' : 'none'}, onclick: this.deleteClicked.bind(this)},
+            h(Svg, {model: 'delete', fill: '#fff'})
+          )
         )
       )
     );

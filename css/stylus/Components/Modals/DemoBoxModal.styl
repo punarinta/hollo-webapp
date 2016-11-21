@@ -24,13 +24,11 @@ demo-box-modal
     display flex
   .head
     display flex
-    justify-content flex-end
     margin 5px
-  .close
-    background url('/gfx/white/cross.svg') no-repeat
-    width 20px
-    height 20px
-    cursor pointer
+    svg
+      cursor pointer
+      margin 4px
+      margin-left auto
   .bar
     height 10vmin
     position fixed
@@ -39,12 +37,11 @@ demo-box-modal
     display flex
     background rgba(0, 0, 0, .25)
   .delete
-    background url('/gfx/white/delete.svg') no-repeat center
     width 10vmin
-    height 100%
-    float right
     cursor pointer
     margin-left auto
+    svg
+      margin 6px
   .name
     color #fff
     display flex

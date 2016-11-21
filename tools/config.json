@@ -13,9 +13,9 @@
   [
     "js/Components/HolloLoaderBig",
     "js/Components/Avatar",
+    "js/Components/Svg",
     "js/Components/ChatRow",
     "js/Components/BarIcon",
-    "js/Components/BottomBar",
     "js/Components/SearchBar",
     "js/Components/FilePlate",
     "js/Components/Checkbox",

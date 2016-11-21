@@ -54,7 +54,9 @@ class SearchBar extends Component
           onblur: this.onBlur.bind(this),
           placeholder: props.placeholder
         }),
-        h('div', {onclick: this.clear.bind(this), style: {display: this.state.showCross ? 'block' : 'none'}})
+        h('div', {onclick: this.clear.bind(this), style: {display: this.state.showCross ? 'block' : 'none'}},
+          h(Svg, {model: 'cross', size: 14, type: 'polygon'})
+        )
       )
     );
   }

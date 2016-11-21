@@ -404,15 +404,16 @@ class ChatsPage extends Component
 
       if (!this.emailFilter.length || chats.length)
       {
+        let fill = '#fff';
         ulContents =
         [
           h('ul', null,
             chats
           ),
-            this.emailFilter.length ? null : h(BottomBar, null,
-            h(BarIcon, {className: 'opa-85', caption: 'Profile', img: 'white/profile', onclick: () => ML.go('profile')}),
-            h(BarIcon, {className: muted ? 'opa-85' : '', caption: 'Inbox', img: 'white/email', onclick: () =>ML.go('chats') }),
-            h(BarIcon, {className: muted ? '' : 'opa-85', caption: 'Muted', img: 'white/muted', onclick: () =>ML.go('chats', {muted: 1}) })
+            this.emailFilter.length ? null : h('bottom-bar', null,
+            h(BarIcon, {className: 'opa-85', caption: 'Profile', svg: 'profile', fill, onclick: () => ML.go('profile')}),
+            h(BarIcon, {className: muted ? 'opa-85' : '', caption: 'Inbox', svg: 'email', fill, onclick: () =>ML.go('chats') }),
+            h(BarIcon, {className: muted ? '' : 'opa-85', caption: 'Muted', svg: 'muted', fill, onclick: () =>ML.go('chats', {muted: 1}) })
           )
         ];
       }
@@ -427,7 +428,7 @@ class ChatsPage extends Component
     }
 
     let qsButton = h('qs-button', {style: {display: this.state.qsCount > 0 ? 'flex' : 'none'}, onclick: this.qsShow.bind(this) },
-      h(BarIcon, {img: 'white/timer'}),
+      h(BarIcon, {svg: 'timer', fill: '#fff'}),
       h('div', null, this.state.qsCount + ' unread')
     );
 
@@ -479,9 +480,9 @@ class ChatsPage extends Component
           )
         ),
         h('qs-indicator', {},
-          h(BarIcon, {img: 'white/timer'}),
+          h(Svg, {model: 'timer', fill: '#fff'}),
           h('div', null, this.state.qsCount + ' to go'),
-          h(BarIcon, {img: 'white/cross', onclick: () => this.setState({quickStackShown: 0}) })
+          h(BarIcon, {svg: 'cross', fill: '#fff', type: 'polygon', width: 14, height: 14, onclick: () => this.setState({quickStackShown: 0}) })
         )
       )
     }

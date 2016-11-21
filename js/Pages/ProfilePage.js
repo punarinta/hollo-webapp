@@ -31,7 +31,7 @@ class ProfilePage extends Component
 
   render()
   {
-    let user = this.props.user;
+    let user = this.props.user, fill = '#fff';
 
     return (
 
@@ -57,10 +57,10 @@ class ProfilePage extends Component
           h(Checkbox, {caption: 'Emojis replace words', checked: CFG.emojisReplace, onchange: this.optEmojiChanged.bind(this)}),
           h(Checkbox, {caption: 'Colored avatars', checked: CFG.colorAvatars, onchange: this.optAvatarsChanged.bind(this)})
         ),
-        h(BottomBar, null,
-          h(BarIcon, {caption: 'Profile', img: 'white/profile'}),
-          h(BarIcon, {className: 'opa-85', caption: 'Inbox', img: 'white/email', onclick: () => ML.go('chats')}),
-          h(BarIcon, {className: 'opa-85', caption: 'Muted', img: 'white/muted', onclick: () => ML.go('chats', {muted: 1})})
+        h('bottom-bar', null,
+          h(BarIcon, {caption: 'Profile', svg: 'profile', fill}),
+          h(BarIcon, {className: 'opa-85', caption: 'Inbox', svg: 'email', fill, onclick: () => ML.go('chats')}),
+          h(BarIcon, {className: 'opa-85', caption: 'Muted', svg: 'muted', fill, onclick: () => ML.go('chats', {muted: 1})})
         )
       )
     );
