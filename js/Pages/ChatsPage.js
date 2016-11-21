@@ -7,7 +7,7 @@ class ChatsPage extends Component
     this.pageStart = 0;
     this.filterTimer = null;
     this.emailFilter = '';
-    this.canLoadMore = 0;
+    this.canLazyLoadMore = 0;
     this.lastCallFindParams = {};
 
     this.state.qs = [];
@@ -117,11 +117,16 @@ class ChatsPage extends Component
       filters.push({mode:'email', value: this.emailFilter});
     }
 
-    let callFindParams = {pageStart: this.pageStart, pageLength: this.pageLength, filters: filters, sortBy: 'lastTs'}
+    let callFindParams = {pageStart: this.pageStart, pageLength: this.pageLength, filters, sortBy: 'lastTs'};
 
     if (JSON.stringify(callFindParams) == JSON.stringify(this.lastCallFindParams))
     {
       return
+    }
+
+    if (!shouldAdd)
+    {
+      this.pageStart = 0;
     }
 
     ML.emit('busybox', 1);
@@ -129,8 +134,6 @@ class ChatsPage extends Component
     ML.api('chat', 'find', this.lastCallFindParams = callFindParams, (data) =>
     {
       let chats = this.state.chats;
-
-      this.canLoadMore = (data.length == this.pageLength);
 
       if (!this.pageStart)
       {
@@ -140,7 +143,7 @@ class ChatsPage extends Component
 
       if (shouldAdd)
       {
-        this.pageStart += data.length;
+        // this.pageStart += data.length;
         chats = chats.concat(data);
       }
       else
@@ -150,6 +153,8 @@ class ChatsPage extends Component
 
       this.setState({chats});
       this.qsCount();
+
+      this.canLazyLoadMore = (data.length == this.pageLength);
 
       ML.emit('busybox', 0);
     });
@@ -225,10 +230,10 @@ class ChatsPage extends Component
       this.setState({blockSwipe: false});
       this.ul.style.transform = 'translateY(0)';
 
-      if (this.pull)
+    /*  if (this.pull)
       {
         this.callFind();
-      }
+      }*/
     }
   }
 
@@ -246,7 +251,7 @@ class ChatsPage extends Component
 
   scroll()
   {
-    if (!this.canLoadMore)
+    if (!this.canLazyLoadMore)
     {
       return;
     }
@@ -255,7 +260,8 @@ class ChatsPage extends Component
 
     if (el && el.getBoundingClientRect().bottom < screen.height + 50)
     {
-      this.canLoadMore = 0;
+      // temporarily block it
+      this.canLazyLoadMore = 0;
       this.pageStart += this.pageLength;
       this.callFind(1);
 
