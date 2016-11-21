@@ -25,6 +25,8 @@ class ChatRow extends Component
     this.startY = t.pageY;
     this.item = this.base.querySelector('.real');
     this.shadow = this.base.querySelector('.shadow');
+    this.item.style.willChange = 'transform';
+    e.stopPropagation();
   }
 
   touchMove(e)
@@ -62,6 +64,7 @@ class ChatRow extends Component
         this.shadow.style.opacity = 1;
       }
     }
+    e.stopPropagation();
   }
 
   touchEnd()

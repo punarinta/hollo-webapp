@@ -184,6 +184,7 @@ class ChatsPage extends Component
     this.startX = t.pageX;
     this.startY = t.pageY;
     this.ul = this.base.querySelector('quick-stack');
+    this.ul.style.willChange = 'transform';
     e.stopPropagation()
   }
 
@@ -210,6 +211,7 @@ class ChatsPage extends Component
         this.ul.style.transform = `translateY(${Math.min(distY, 216)}px)`;
       }*/
     }
+    e.stopPropagation();
   }
 
   qsTouchMove(e)
