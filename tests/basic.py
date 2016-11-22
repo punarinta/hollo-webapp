@@ -78,56 +78,61 @@ rootURL = 'https://app.hollo.email' if config.production else 'https://app.hollo
 print "\nLoading URL {} in {} mode\n" . format(rootURL, 'production' if config.production else 'development')
 window.get(rootURL)
 
-## Assure that Hollo loads without some tricky initial crash
-waitForElement('login-page', 'Loading login page')
-log('Path init to /auth/login', window.current_url == rootURL + '/auth/login')
+try:
+    ## Assure that Hollo loads without some tricky initial crash
+    waitForElement('login-page', 'Loading login page')
+    log('Path init to /auth/login', window.current_url == rootURL + '/auth/login')
 
-if config.production:
-    v_version = window.execute_script("return APPVER;")
-    log('Version set correctly', v_version != 'dev' )
+    if config.production:
+        v_version = window.execute_script("return APPVER;")
+        log('Version set correctly', v_version != 'dev' )
 
-element("input[type='email']").send_keys(config.username)
-element("input[type='password']").send_keys(config.password)
+    element("input[type='email']").send_keys(config.username)
+    element("input[type='password']").send_keys(config.password)
 
-## Assure that main page is accessible
-element('button.login').click()
-waitForElement('chats-page', 'Loading chats page')
-log('Path changed to /chats', window.current_url == rootURL + '/chats')
+    ## Assure that main page is accessible
+    element('button.login').click()
+    waitForElement('chats-page', 'Loading chats page')
+    log('Path changed to /chats', window.current_url == rootURL + '/chats')
 
-## Test filtering
-## t.b.d.
+    ## Test filtering
+    ## t.b.d.
 
-## Assure that profile page is accessible
-element('chats-page bottom-bar bar-icon:nth-of-type(1)').click()
-waitForElement('profile-page', 'Loading profile page')
-log('Path changed to /profile', window.current_url == rootURL + '/profile')
+    ## Assure that profile page is accessible
+    element('chats-page bottom-bar bar-icon:nth-of-type(1)').click()
+    waitForElement('profile-page', 'Loading profile page')
+    log('Path changed to /profile', window.current_url == rootURL + '/profile')
 
-## Get back and try to click the first chat
-element('profile-page bottom-bar bar-icon:nth-of-type(2)').click()
-waitForElement('chats-page', 'Get back to chat list')
-element('chats-page chat-row:nth-of-type(1)').click()
-waitForElement('snackbar', 'Snackbar is present')
-log('Path changed to /chat/*', '/chat/' in window.current_url)
+    ## Get back and try to click the first chat
+    element('profile-page bottom-bar bar-icon:nth-of-type(2)').click()
+    waitForElement('chats-page', 'Get back to chat list')
+    element('chats-page chat-row:nth-of-type(1)').click()
+    waitForElement('snackbar', 'Snackbar is present')
+    log('Path changed to /chat/*', '/chat/' in window.current_url)
 
-## Check that all menues can be toggled
-element('snackbar > div').click()
-d_shader = element('messages-page div.modal-shader', False)
-if d_shader != None:
-    log('Modal menu shadow', d_shader.value_of_css_property('display') == 'block')
-log('User picker menu', element('menu-modal.menu-users', False) != None)
+    ## Check that all menues can be toggled
+    element('snackbar > div').click()
+    d_shader = element('messages-page div.modal-shader', False)
+    if d_shader != None:
+        log('Modal menu shadow', d_shader.value_of_css_property('display') == 'block')
+    log('User picker menu', element('menu-modal.menu-users', False) != None)
 
-element('snackbar bar-icon:nth-of-type(2)').click()
-log('Subject picker modal', element('menu-modal.menu-subjects', False) != None)
+    element('snackbar bar-icon:nth-of-type(2)').click()
+    log('Subject picker modal', element('menu-modal.menu-subjects', False) != None)
 
-element('snackbar bar-icon:nth-of-type(3)').click()
-log('Files modal', element('menu-modal.menu-files', False) != None)
+    element('snackbar bar-icon:nth-of-type(3)').click()
+    log('Files modal', element('menu-modal.menu-files', False) != None)
 
-element('snackbar bar-icon:nth-of-type(4)').click()
-log('Moar modal', element('menu-modal.menu-more', False) != None)
+    element('snackbar bar-icon:nth-of-type(4)').click()
+    log('Moar modal', element('menu-modal.menu-more', False) != None)
 
-## Get back to chat list
-element('snackbar bar-icon:nth-of-type(1)').click()
-waitForElement('chats-page', 'Snackbar back button')
+    ## Get back to chat list
+    element('snackbar bar-icon:nth-of-type(1)').click()
+    waitForElement('chats-page', 'Snackbar back button')
+
+except Exception as e:
+    log('Run-time', 0)
+    print "\n{}" . format(e)
 
 print "\nTesting completed\n"
 window.quit()
