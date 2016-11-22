@@ -5,9 +5,9 @@ class InvitationWidget extends Component
     let w = props.data;
 
     let org = w.org[1] || w.org[0],
-      when = ML.ts(w.from) + ' – ' + ML.ts(w.to, 2),
-      url = w.descr.match(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig),
-      atts = [];
+        when = ML.ts(w.from) + ' – ' + ML.ts(w.to, 2),
+        url = w.descr.match(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig),
+        atts = [];
 
     for (let j = 0; j < w.att.length; j++)
     {
@@ -22,44 +22,32 @@ class InvitationWidget extends Component
 
     return (
 
-      h('invitation-widget', {className: 'event'},
-        h('div', {className: 'b when'},
-          h('icon', null),
+      h('invitation-widget', { className: 'event' },
+        h('div', { className: 'b when' },
+          h('icon'),
           h('div', null,
-            h('div', null,
-              'When'
-            ),
-            h('div', null,
-              when
-            )
+            h('div', null, 'When'),
+            h('div', null, when)
           )
         ),
-        h('div', {className: 'people'},
-          h('div', {className: 'b org'},
-            h('icon', null),
+        h('div', { className: 'people' },
+          h('div', { className: 'b org' },
+            h('icon'),
             h('div', null,
-              h('div', null,
-                'Organizer'
-              ),
-              h('div', null,
-                org
-              )
+              h('div', null, 'Organizer'),
+              h('div', null, org)
             )
           ),
-          h('div', {className: 'b att'},
-            h('icon', null),
+          h('div', { className: 'b att' },
+            h('icon'),
             h('div', null,
-              h('div', null,
-                'Invitees'
-              ),
-              h('div', null,
-                atts
-              )
+              h('div', null, 'Invitees'),
+              h('div', null, atts)
             )
           )
         ),
-        url ? h('div', {className: 'open'},
-          h('a', {target: '_blank', href: url},
+        url ? h('div', { className: 'open' },
+          h('a', { target: '_blank', href: url },
             'Open in calendar'
           )
         ) : ''
