@@ -1,22 +1,20 @@
 messages-page
   width 100vw
   height 100vh
-  display block
+  display flex
   position fixed
+  flex-direction column
+  background-color color-bg-grey
   & > ul
     list-style-type none
     padding 5px
-    position fixed
-    top 56px
-    bottom 62px
     overflow-y auto
-    background-color color-bg-grey
     margin 0
   snackbar
     z-index inherit
-    top 0
     width 100%
     height 56px
+    min-height 56px
     background-color #fff
     display flex
     align-items center
@@ -40,14 +38,11 @@ messages-page
           border-radius 50%
           background-color color-bg-grey
   composer
-    position fixed
-    bottom 0
-    width 100%
+    margin-top auto
     background #fff
     bar
       height 40px
       display flex
-      width 100%
       .subj
         flex-grow 4
         border 0
@@ -80,8 +75,6 @@ messages-page
         font-family 'Work Sans', sans-serif
         font-weight 300
     .files
-      position fixed
-      bottom 0
       display flex
       white-space nowrap
       padding 0 2px

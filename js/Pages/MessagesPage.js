@@ -611,10 +611,10 @@ class MessagesPage extends Component
           h(BarIcon, {className: this.state.menuModalShown == 3 ? 'toggled' : '', img: 'color/clip', width: 40, height: 40, onclick: () => this.toggleMenu(3) }),
           h(BarIcon, {className: this.state.menuModalShown == 4 ? 'toggled' : '', img: 'color/more-vert', width: 40, height: 40, onclick: () => this.toggleMenu(4) })
         ),
-        h('ul', {style: {bottom: composerHeight + 'px', paddingTop: this.state.subjectFilter ? '72px' : 0}},
+        h('ul', null,
           messages
         ),
-        h('composer', {style: {height: composerHeight + 'px'}},
+        h('composer', {style: {minHeight: composerHeight + 'px'}},
           h('emojis', {style: {bottom: composerHeight + 8 + 'px'}},
             emojiRows
           ),
