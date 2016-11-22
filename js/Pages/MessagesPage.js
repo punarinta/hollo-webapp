@@ -227,7 +227,7 @@ class MessagesPage extends Component
   filterMessages(subjectFilter)
   {
     this.setState({menuModalShown: 0, subjectFilter});
-    // this.reposition(1)
+    if (!subjectFilter) this.reposition(1)
   }
 
   reposition(mode = 0, timeOffset = 0)
