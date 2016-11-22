@@ -73,6 +73,9 @@ class App extends Component
           case 'profile':
             this.setState({page: 'profile'});
             break;
+
+          default:
+            ML.go('chats')
         }
       }
     };
