@@ -130,7 +130,7 @@ class MessagesPage extends Component
 
     let el = this.base.querySelector('message-bubble:nth-child(2)');
 
-    if (el && el.getBoundingClientRect().top > 0)
+    if (el && el.getBoundingClientRect().top > 0 && !this.state.subjectFilter)
     {
       this.canLoadMore = 0;
       this.pageStart += this.pageLength;
@@ -442,7 +442,7 @@ class MessagesPage extends Component
     {
       // mark it as delivered to mail/DB
       statusClass = 'status s2';
-      console.log('send()', json);
+      console.log('message/send()', json);
     });
 
     mixpanel.track('Composer - message sent');
@@ -463,7 +463,12 @@ class MessagesPage extends Component
       {
         if (this.state.messages[i].subject != this.state.subjectFilter) continue;
       }
-      messages.push(h(MessageBubble, {message: this.state.messages[i], user: this.props.user}))
+      messages.push(h(MessageBubble,
+      {
+        message: this.state.messages[i],
+        user: this.props.user,
+        captionClicked: (subjectFilter) => this.setState({subjectFilter})
+      }))
     }
 
     if (this.state.files.length)

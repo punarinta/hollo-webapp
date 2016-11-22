@@ -139,7 +139,7 @@ class MessageBubble extends Component
       h('message-bubble', {className: mine ? 'mine' : 'yours'},
         h('div', null,
           h('div', {className: 'white'},
-            h('div', {className: 'cap'},
+            h('div', {className: 'cap', onclick: () => { if (this.props.captionClicked) this.props.captionClicked(subject) }},
               subject
             ),
             msgBody,
