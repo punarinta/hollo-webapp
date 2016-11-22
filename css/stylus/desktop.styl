@@ -1,82 +1,10 @@
 @media screen and (min-width break-tablet)
-  .page
-    background color-bg-grey
-  #page-contacts
+  chats-page
     width 360px
-    background #fff
-    min-height 100vh
-    .head
-      width 360px
-      .filter
-        width 271px
-      .clear
-        left 330px
-        right auto
-    ul
-      margin-bottom 0
-      li
-        width 360px
-      .hujava
-        width 250px
-      .name, .email
-        width 270px
-  #page-msgs
-    position fixed
-    top 0
+  messages-page
     left 360px
-    bottom 60px
-    right 0
-    width auto
-    //height 100vh
-    overflow-y scroll
-    ul
-      padding 20px 0 60px
-      width auto
-      li
-        overflow auto
-        width calc(100vw - 370px)
-        &.yours
-          & > div
-            margin-left 24px
-        &.mine
-          & > div
-            margin-right 24px
-    #msgs-more
-      width 70%
-      left 15%
-  #snackbar
-    left 360px
-    right 0
-    width auto
-    box-shadow none
-    padding-top 4px
-    border-left 1px solid color-bg-grey
-    padding-right 16px
-    .icon
-      &.back
-        display none
-    .name
-      padding-left 24px
-  #msgs-filter
-    left 372px
-  #composer
-    textarea
-      left 361px
-      border 0
-      width calc(100vw - 361px)
-    .head
-      left 361px
-      right 1px
-      width auto
-      border 0
-      .files
-        margin-right 25px
-    .subjects
-      left 385px
-      right 25px
-      width auto
-    .send
-      right 37px
-  #uploaded
-    left 385px
-    right 25px
+    width calc(100vw - 360px)
+    message-bubble
+      width calc(100vw - 10px - 360px)
+    composer
+      width calc(100vw - 360px)
