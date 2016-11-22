@@ -198,10 +198,10 @@ class ChatsPage extends Component
       this.swiping = 1;
     }
 
-    if (this.pull)
+    /*if (this.pull)
     {
       this.ul.style.transform = `translateY(${Math.min(distY, 216)}px)`;
-    }
+    }*/
 
     if (Math.abs(distY) > 16 && !this.swiping)
     {
@@ -210,11 +210,11 @@ class ChatsPage extends Component
         this.setState({blockSwipe: true});
       }
 
-      if (distY > 48 && !this.pull)
+      /*if (distY > 48 && !this.pull)
       {
         this.pull = 1;
         this.ul.style.overflowY = 'hidden';
-      }
+      }*/
     }
     e.stopPropagation();
   }
@@ -243,9 +243,11 @@ class ChatsPage extends Component
     {
       this.setState({blockSwipe: false});
       this.ul.style.transform = 'translateY(0)';
-      this.ul.style.overflowY = 'auto';
+
       if (this.pull)
       {
+        this.pull = 0;
+        this.ul.style.overflowY = 'auto';
         this.ul.classList.add('travel');
         this.callFind(0, 1);
         setTimeout( () =>
@@ -253,8 +255,6 @@ class ChatsPage extends Component
           this.ul.classList.remove('travel');
         }, 400);
       }
-
-      this.pull = 0;
     }
   }
 
