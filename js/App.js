@@ -285,21 +285,21 @@ class App extends Component
         break;
 
       case 'profile':
-        pages.push(h(ProfilePage, {zIndex: 2, user}));
-        pages.push(h(ChatsPage, {zIndex: 1, data: this.state.chatsPageData, user}));
+        pages.push(h(ProfilePage, {zIndex: 20, user}));
+        pages.push(h(ChatsPage, {zIndex: 10, data: this.state.chatsPageData, user}));
         pages.push(h(MessagesPage, {zIndex: 0, data: this.state.messagesPageData, user}));
         break;
 
       case 'chats':
         pages.push(h(ProfilePage, {zIndex: 0, user}));
-        pages.push(h(ChatsPage, {zIndex: 2, data: this.state.chatsPageData, user}));
-        pages.push(h(MessagesPage, {zIndex: 1, data: this.state.messagesPageData, user}));
+        pages.push(h(ChatsPage, {zIndex: 20, data: this.state.chatsPageData, user}));
+        pages.push(h(MessagesPage, {zIndex: 10, data: this.state.messagesPageData, user}));
         break;
 
       case 'chat':
         pages.push(h(ProfilePage, {zIndex: 0, user}));
-        pages.push(h(ChatsPage, {zIndex: 1, data: this.state.chatsPageData, user}));
-        pages.push(h(MessagesPage, {zIndex: 2, data: this.state.messagesPageData, user}));
+        pages.push(h(ChatsPage, {zIndex: 10, data: this.state.chatsPageData, user}));
+        pages.push(h(MessagesPage, {zIndex: 20, data: this.state.messagesPageData, user}));
         break;
     }
 

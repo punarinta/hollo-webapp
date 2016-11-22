@@ -108,7 +108,7 @@ class ChatsPage extends Component
     }
   }
 
-  callFind(shouldAdd = 0)
+  callFind(shouldAdd = 0, force = 0)
   {
     let filters = [{mode: 'muted', value: this.props.data ? this.props.data.muted || 0 : 0}];
 
@@ -126,7 +126,7 @@ class ChatsPage extends Component
       callFindParams.pageStart = 0;
     }
 
-    if (JSON.stringify(callFindParams) == JSON.stringify(this.lastCallFindParams))
+    if (!force && JSON.stringify(callFindParams) == JSON.stringify(this.lastCallFindParams))
     {
       return
     }
@@ -198,6 +198,11 @@ class ChatsPage extends Component
       this.swiping = 1;
     }
 
+    if (this.pull)
+    {
+      this.ul.style.transform = `translateY(${Math.min(distY, 216)}px)`;
+    }
+
     if (Math.abs(distY) > 16 && !this.swiping)
     {
       if (!this.state.blockSwipe)
@@ -205,11 +210,11 @@ class ChatsPage extends Component
         this.setState({blockSwipe: true});
       }
 
-    /*  if (distY > 72)
+      if (distY > 48 && !this.pull)
       {
         this.pull = 1;
-        this.ul.style.transform = `translateY(${Math.min(distY, 216)}px)`;
-      }*/
+        this.ul.style.overflowY = 'hidden';
+      }
     }
     e.stopPropagation();
   }
@@ -238,11 +243,18 @@ class ChatsPage extends Component
     {
       this.setState({blockSwipe: false});
       this.ul.style.transform = 'translateY(0)';
-
-    /*  if (this.pull)
+      this.ul.style.overflowY = 'auto';
+      if (this.pull)
       {
-        this.callFind();
-      }*/
+        this.ul.classList.add('travel');
+        this.callFind(0, 1);
+        setTimeout( () =>
+        {
+          this.ul.classList.remove('travel');
+        }, 400);
+      }
+
+      this.pull = 0;
     }
   }
 
