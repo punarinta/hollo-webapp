@@ -27,35 +27,38 @@ class MessageBubble extends Component
     this.setState({showName: !this.state.showName});
   }
 
-  clearBody(body = '')
+  clearBody(body = '', type = '')
   {
     body = body.replace(/(?:[ ]\r\n|[ ]\r|[ ]\n)/g, ' ');
 
     body = body.replace('/mailto:/g', '');
     body = body.replace(/ -- /g, ' — ');
 
-    // URLs
-    body = body.replace(/(<*\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]>*)/ig, m =>
+    if (type != 'text/html')
     {
-      // check YouTube
-      let match = m.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
-      if (match && match[2].length == 11)
+      // URLs
+      body = body.replace(/(<*\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]>*)/ig, m =>
       {
-        return `<iframe src="//www.youtube.com/embed/${match[2]}" frameborder="0" allowfullscreen></iframe>`;
-      }
+        // check YouTube
+        let match = m.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
+        if (match && match[2].length == 11)
+        {
+          return `<iframe src="//www.youtube.com/embed/${match[2]}" frameborder="0" allowfullscreen></iframe>`;
+        }
 
-      let s = m.replace(/\/$/, '').split('//');
-      s = (s.length ? s[1] : s[0]).split('/');
-      return `<a target="_blank" rel="noopener noreferrer" href="${m}">${s.length ? (s[0] + '&hellip;') : s[0]}</a>`;
-    });
+        let s = m.replace(/\/$/, '').split('//');
+        s = (s.length ? s[1] : s[0]).split('/');
+        return `<a target="_blank" rel="noopener noreferrer" href="${m}">${s.length ? (s[0] + '&hellip;') : s[0]}</a>`;
+      });
 
-    // mailto: links
-    body = body.replace(/(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim, m =>
-    {
-      return `<a target="_blank" rel="noopener noreferrer" href="mailto:${m}">${m.replace('@', ' @ ')}</a> `;
-    });
+      // mailto: links
+      body = body.replace(/(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim, m =>
+      {
+        return `<a target="_blank" rel="noopener noreferrer" href="mailto:${m}">${m.replace('@', ' @ ')}</a> `;
+      });
 
-    body = body.replace(/(?:\r\n|\r\r|\n\n)/g, '</p><p>');
+      body = body.replace(/(?:\r\n|\r\r|\n\n)/g, '</p><p>');
+    }
 
     body = body.replace(/\[sys:fwd\]/g, '<div class="fwd">Forwarded message</div>');
 
@@ -77,7 +80,8 @@ class MessageBubble extends Component
       let message = this.state.message;
       ML.api('message', 'showOriginal', {id: message.id}, data =>
       {
-        message.body = data;
+        message.body = data.content;
+        message.type = data.type;
         this.canUpdate = true;
         this.setState({message});
       });
@@ -110,7 +114,7 @@ class MessageBubble extends Component
     }
     else
     {
-      body = this.clearBody(body)
+      body = this.clearBody(body, message.type)
     }
 
     let filesBody = '',
