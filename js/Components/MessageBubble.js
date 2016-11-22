@@ -35,7 +35,7 @@ class MessageBubble extends Component
     body = body.replace(/ -- /g, ' — ');
 
     // URLs
-    body = body.replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, m =>
+    body = body.replace(/(<*\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]>*)/ig, m =>
     {
       let s = m.replace(/\/$/, '').split('//');
       s = (s.length ? s[1] : s[0]).split('/');
@@ -43,7 +43,10 @@ class MessageBubble extends Component
     });
 
     // mailto: links
-    body = body.replace(/(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim, '<a target="_blank" rel="noopener noreferrer" href="mailto:$1">$1</a>');
+    body = body.replace(/(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim, m =>
+    {
+      return `<a target="_blank" rel="noopener noreferrer" href="mailto:${m}">${m.replace('@', ' at ')}</a> `;
+    });
 
     body = body.replace(/(?:\r\n|\r\r|\n\n)/g, '</p><p>');
 
