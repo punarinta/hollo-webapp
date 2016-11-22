@@ -52,7 +52,7 @@ class MessageBubble extends Component
     // mailto: links
     body = body.replace(/(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim, m =>
     {
-      return `<a target="_blank" rel="noopener noreferrer" href="mailto:${m}">${m.replace('@', ' at ')}</a> `;
+      return `<a target="_blank" rel="noopener noreferrer" href="mailto:${m}">${m.replace('@', ' @ ')}</a> `;
     });
 
     body = body.replace(/(?:\r\n|\r\r|\n\n)/g, '</p><p>');
