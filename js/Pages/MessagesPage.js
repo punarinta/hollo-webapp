@@ -572,7 +572,7 @@ class MessagesPage extends Component
           h('ul', null,
             h('li', {onclick: this.muteChat.bind(this)}, this.chat.muted ? 'Unmute' : 'Mute'),
             h('li', {onclick: this.unreadChat.bind(this)}, `Mark as ${this.chat.read ? 'un' : ''}read`),
-            h('li', {onclick: this.renameChat.bind(this)}, 'Rename chat'),
+            this.chat.users.length > 1 ? h('li', {onclick: this.renameChat.bind(this)}, 'Rename chat') : null,
             h('li', {onclick: this.leaveChat.bind(this)}, 'Leave chat')
           )
         )
