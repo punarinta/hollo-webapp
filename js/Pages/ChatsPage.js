@@ -385,7 +385,7 @@ class ChatsPage extends Component
     {
       let email = this.emailFilter;
       ulContents = h('ul', null,
-        h(ChatRow, {chat: {users: [{email, name: email}], read:1, last: {msg:'Create a chat with ' + f}}, canSwipe: 0, onclick: this.addNew.bind(this)})
+        h(ChatRow, {chat: {users: [{email, name: email}], read:1, last: {msg:'Create a chat with ' + email}}, canSwipe: 0, onclick: this.addNew.bind(this)})
       )
     }
     else if (this.state.filterActive && !this.emailFilter.length)
