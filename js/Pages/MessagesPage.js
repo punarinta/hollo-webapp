@@ -5,7 +5,7 @@ class MessagesPage extends Component
     super();
     this.pageStart = 0;
     this.pageLength = 20;
-    this.canLoadMore = 0;
+    this.canLazyLoadMore = 0;
     this.chat = null;
     this.scrollTop = 0;
     this.lastCallFindParams = {};
@@ -69,7 +69,6 @@ class MessagesPage extends Component
 
     ML.api('message', 'findByChatId', this.lastCallFindParams = callFindParams, (data) =>
     {
-      this.canLoadMore = (data.messages.length == this.pageLength);
       this.chat = data.chat;
       this.chat.read = 1;
 
@@ -80,7 +79,6 @@ class MessagesPage extends Component
       if (shouldAdd)
       {
         // adds messages to the top
-        this.pageStart += data.messages.length;
         this.setState({messages: data.messages.concat(this.state.messages)});
 
         // TODO: configure repositioning
@@ -91,6 +89,8 @@ class MessagesPage extends Component
         this.setState({messages: data.messages, currentSubject});
         this.reposition(1)
       }
+
+      this.canLazyLoadMore = (data.messages.length == this.pageLength);
 
       ML.emit('busybox', 0);
     });
@@ -123,7 +123,7 @@ class MessagesPage extends Component
   {
     this.scrollTop = e.target.scrollTop;
 
-    if (!this.canLoadMore)
+    if (!this.canLazyLoadMore)
     {
       return;
     }
@@ -132,7 +132,7 @@ class MessagesPage extends Component
 
     if (el && el.getBoundingClientRect().top > 0 && !this.state.subjectFilter)
     {
-      this.canLoadMore = 0;
+      this.canLazyLoadMore = 0;
       this.pageStart += this.pageLength;
       this.callFind(1);
 
