@@ -313,7 +313,7 @@ class App extends Component
 
     pages.push(h('busybox', {style: {display: this.state.busy ? 'flex' : 'none'}}, h(HolloLoaderBig, {color:'#7a4df9'})));
 
-    return h('div', { id: 'app' }, pages);
+    return h('div', null, pages);
   }
 }
 
