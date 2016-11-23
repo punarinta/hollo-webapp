@@ -134,14 +134,13 @@ var ML =
     document.querySelector('head').appendChild(f)
   },
 
-  go: function  (r, d)
+  go: function (r, d)
   {
-    for (var i = 2; i--;)
-    {
-      history.pushState({route: r, data: d}, '', '/' + r);
-    }
-
-    history.go(-1)
+    var e = new Event('popstate'),
+        data = {route: r, data: d};
+    history.pushState(data, '', '/' + r);
+    e.state = data;
+    window.dispatchEvent(e);
   },
 
   emit: function (eventName, payload)
