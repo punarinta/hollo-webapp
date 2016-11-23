@@ -560,11 +560,18 @@ class MessagesPage extends Component
     {
       let subjectLines = [], subjects = this.getUniqueSubjects();
 
-      for (let i in subjects)
+      if (subjects.length)
       {
-        // babeli bug if 'subject' is not defined via a variable
-        let subject = subjects[i];
-        subjectLines.push(h('li', {onclick: () => this.filterMessages(subject)}, subject))
+        for (let i in subjects)
+        {
+          // babeli bug if 'subject' is not defined via a variable
+          let subject = subjects[i];
+          subjectLines.push(h('li', {onclick: () => this.filterMessages(subject)}, subject))
+        }
+      }
+      else
+      {
+        subjectLines.push(h('li', null, 'No subjects in this chat'))
       }
 
       menuModal = h('div', {className: 'modal-shader'},
