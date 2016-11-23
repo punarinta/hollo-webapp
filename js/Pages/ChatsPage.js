@@ -296,6 +296,7 @@ class ChatsPage extends Component
 
     this.filterTimer = setTimeout( () =>
     {
+      if (filter == 'debug-logout') ML.go('auth/logout');
       if (this.emailFilter != filter)
       {
         this.emailFilter = filter;
