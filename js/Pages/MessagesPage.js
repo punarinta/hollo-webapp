@@ -67,7 +67,7 @@ class MessagesPage extends Component
 
     if (callFindParams.chatId == 'me')
     {
-      this.chat = { id: 0, name: 'You', read: 1, users: [], muted: 0 };
+      this.chat = { id: 0, name: 'My notes', read: 1, users: [], muted: 0 };
 
       let messages = JSON.parse(localStorage.getItem('messages')) || [],
           currentSubject = messages.length ? messages[messages.length - 1].subject : '';
