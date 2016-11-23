@@ -56,6 +56,7 @@ class App extends Component
         switch (r)
         {
           case 'chats':
+            parent.postMessage({cmd: 'statusBar', flag: 1, color: 'e2e2e2'}, '*');
             this.setState({page: 'chats', chatsPageData: e.state.data});
             break;
 
