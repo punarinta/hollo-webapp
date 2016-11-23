@@ -114,7 +114,12 @@ class App extends Component
       ML.ws.onmessage = function (event)
       {
         var data = JSON.parse(event.data);
-        ML.emit('im', data);
+        console.log('IM', data);
+        if (data.cmd == 'update')
+        {
+          let chat = {id: data.chatId, read: 0};
+          ML.emit('chatupdate', {chat});
+        }
       };
     })();
 
