@@ -73,8 +73,8 @@ class ChatsPage extends Component
 
     if (!found)
     {
-      // new chat -> resync
-      this.callFind();
+      // new chat -> force resync
+      this.callFind(0, 1);
     }
   }
 
