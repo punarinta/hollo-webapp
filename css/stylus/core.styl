@@ -24,184 +24,184 @@ margin-xlarge = 24px
 
 // Font styles, @extend theese
 $font-bread // This is a placeholder selector, wont be generated in the css but can be extended
-	font-family 'Roboto', sans-serif
-	font-size font-size-small
-	line-height font-size-medium
-	color color-font-standard
+  font-family 'Roboto', sans-serif
+  font-size font-size-small
+  line-height font-size-medium
+  color color-font-standard
 
 $font-clickable
-	font-family 'Work Sans', sans-serif
-	font-size font-size-small
-	font-weight 400
-	color color-brand
+  font-family 'Work Sans', sans-serif
+  font-size font-size-small
+  font-weight 400
+  color color-brand
 
 $font-clickable-bold
-	font-family 'Work Sans', sans-serif
-	font-size font-size-small
-	font-weight 500
-	color color-brand
+  font-family 'Work Sans', sans-serif
+  font-size font-size-small
+  font-weight 500
+  color color-brand
 
 $font-heading
-	font-family 'Work Sans', sans-serif
-	font-size font-size-large
-	font-weight 300
-	color color-font-standard
+  font-family 'Work Sans', sans-serif
+  font-size font-size-large
+  font-weight 300
+  color color-font-standard
 
 // Font setup
 @font-face
-	font-family 'Roboto'
-	font-style normal
-	font-weight 400
-	src local('Roboto'), url('/gfx/Roboto-Regular.woff') format('woff')
+  font-family 'Roboto'
+  font-style normal
+  font-weight 400
+  src local('Roboto'), url('/gfx/Roboto-Regular.woff') format('woff')
 
 @font-face
-	font-family 'Work Sans'
-	font-style normal
-	font-weight 300
-	src local('Work Sans Light'), url('/gfx/WorkSans-Light.woff') format('woff')
+  font-family 'Work Sans'
+  font-style normal
+  font-weight 300
+  src local('Work Sans Light'), url('/gfx/WorkSans-Light.woff') format('woff')
 
 @font-face
-	font-family 'Work Sans'
-	font-style normal
-	font-weight 400
-	src local('Work Sans'), url('/gfx/WorkSans-Regular.woff') format('woff')
+  font-family 'Work Sans'
+  font-style normal
+  font-weight 400
+  src local('Work Sans'), url('/gfx/WorkSans-Regular.woff') format('woff')
 
 @font-face
-	font-family 'Work Sans'
-	font-style normal
-	font-weight 500
-	src local('Work Sans Medium'), url('/gfx/WorkSans-Medium.woff') format('woff')
+  font-family 'Work Sans'
+  font-style normal
+  font-weight 500
+  src local('Work Sans Medium'), url('/gfx/WorkSans-Medium.woff') format('woff')
 
 @font-face
-	font-family 'Work Sans'
-	font-style normal
-	font-weight 600
-	src local('Work Sans SemiBold'), url('/gfx/WorkSans-SemiBold.woff') format('woff')
+  font-family 'Work Sans'
+  font-style normal
+  font-weight 600
+  src local('Work Sans SemiBold'), url('/gfx/WorkSans-SemiBold.woff') format('woff')
 
 /* latin-ext */
 @font-face
-	font-family 'Work Sans'
-	font-style normal
-	font-weight 300
-	src local('Work Sans Light'), url('/gfx/WorkSansExt-Light.woff') format('woff')
-	unicode-range U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF
+  font-family 'Work Sans'
+  font-style normal
+  font-weight 300
+  src local('Work Sans Light'), url('/gfx/WorkSansExt-Light.woff') format('woff')
+  unicode-range U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF
 
 /* cyr */
 @font-face
-	font-family 'Work Sans'
-	font-style normal
-	font-weight 300
-	src local('Work Sans Light'), url('/gfx/OpenSansCyr-Light.woff') format('woff')
-	unicode-range U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116
+  font-family 'Work Sans'
+  font-style normal
+  font-weight 300
+  src local('Work Sans Light'), url('/gfx/OpenSansCyr-Light.woff') format('woff')
+  unicode-range U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116
 
 
 *
-	box-sizing border-box
-	outline 0
-	-webkit-tap-highlight-color rgba(0,0,0,0)	// WebKit only
+  box-sizing border-box
+  outline 0
+  -webkit-tap-highlight-color rgba(0,0,0,0)  // WebKit only
 
 html
-	font-size 13px
-	@media screen and (min-width break-desktop)
-		font-size 11px
+  font-size 13px
+  @media screen and (min-width break-desktop)
+    font-size 11px
 
 body
-	font-family 'Work Sans', sans-serif
-	color color-font-standard
-	padding 0
-	margin 0
-	background-color #fff
-	&::-webkit-scrollbar
-		display none
+  font-family 'Work Sans', sans-serif
+  color color-font-standard
+  padding 0
+  margin 0
+  background-color #fff
+  &::-webkit-scrollbar
+    display none
 
 button
-	margin 5px auto
-	padding 7px 15px 6px
-	cursor pointer
-	background #fff
-	border 0 color-brand solid
-	color color-brand
-	border-radius 3px
-	min-width 64px
-	height 36px
-	@extend $font-clickable
-	&:active
-		background-color color-brand
-		color #fff
+  margin 5px auto
+  padding 7px 15px 6px
+  cursor pointer
+  background #fff
+  border 0 color-brand solid
+  color color-brand
+  border-radius 3px
+  min-width 64px
+  height 36px
+  @extend $font-clickable
+  &:active
+    background-color color-brand
+    color #fff
 
 /*.spinner1
-	margin 80px auto 30px
-	width 50px
-	height 40px
-	text-align center
-	font-size 10px
-	& > div
-		background-color #fff
-		height 100%
-		width 6px
-		display inline-block
-		animation ldStretchDelay 1.2s infinite ease-in-out
-	.rect2
-		animation-delay -1.1s
-	.rect3
-		animation-delay -1s
-	.rect4
-		animation-delay -0.9s
-	.rect5
-		animation-delay -0.8s
+  margin 80px auto 30px
+  width 50px
+  height 40px
+  text-align center
+  font-size 10px
+  & > div
+    background-color #fff
+    height 100%
+    width 6px
+    display inline-block
+    animation ldStretchDelay 1.2s infinite ease-in-out
+  .rect2
+    animation-delay -1.1s
+  .rect3
+    animation-delay -1s
+  .rect4
+    animation-delay -0.9s
+  .rect5
+    animation-delay -0.8s
 */
 
 .hollo-loader-small
-	float left
-	position relative
-	top 50%
-	left 50%
-	transform translate(-50%, -50%)
-	span
-		float left
-		display block
-		height 6px
-		width 20px
-		border-radius 8px
-		margin 8px -2px 0
-		background-color color-brand
-		animation-mixin(load-anim-small)
-		animation-iteration-count infinite
-		animation-direction alternate
-		&:nth-of-type(odd)
-			animation-mixin(load-anim-small2)
-			animation-iteration-count infinite
-			animation-direction alternate
-		&:first-of-type
-			border-radius 0 8px 8px 0
-			margin-left 0
-		&:last-of-type
-			border-radius 8px 0 0 8px
-			margin-right 0
+  float left
+  position relative
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  span
+    float left
+    display block
+    height 6px
+    width 20px
+    border-radius 8px
+    margin 8px -2px 0
+    background-color color-brand
+    animation-mixin(load-anim-small)
+    animation-iteration-count infinite
+    animation-direction alternate
+    &:nth-of-type(odd)
+      animation-mixin(load-anim-small2)
+      animation-iteration-count infinite
+      animation-direction alternate
+    &:first-of-type
+      border-radius 0 8px 8px 0
+      margin-left 0
+    &:last-of-type
+      border-radius 8px 0 0 8px
+      margin-right 0
 
 hollo-loader-big
-	@extend .hollo-loader-small
-	margin-top 20px
-	transform none
-	float none
-	top auto
-	left auto
-	span
-		height 10px
-		width 24px
-		margin 0 -4px
-		background-color #fff
-		animation(load-anim-big)
-		&:nth-of-type(odd)
-			animation(load-anim-big2)
+  @extend .hollo-loader-small
+  margin-top 20px
+  transform none
+  float none
+  top auto
+  left auto
+  span
+    height 10px
+    width 24px
+    margin 0 -4px
+    background-color #fff
+    animation(load-anim-big)
+    &:nth-of-type(odd)
+      animation(load-anim-big2)
 
 .opa-85
-	opacity 0.85
+  opacity 0.85
 
 app-loader
-	background color-brand
-	display flex
-	justify-content center
-	align-items center
-	height 100vh
-	flex-direction column
+  background color-brand
+  display flex
+  justify-content center
+  align-items center
+  height 100vh
+  flex-direction column
