@@ -25,7 +25,14 @@ class MessageBoxModal extends Component
     return h('message-box-modal', {onclick: (e) => {if (e.target.nodeName.toLowerCase() == 'message-box-modal') this.onClick(0)} },
       h('div', null,
         h(MessageBody, {html: data.html}),
-        typeof data.input == 'undefined' ? '' : h('input', {value: data.input, type: 'text', autofocus: 'autofocus'}),
+        typeof data.input == 'undefined' ? '' : h('input',
+        {
+          value: data.input,
+          type: 'text',
+          autofocus: 'autofocus',
+          onfocus: () => parent.postMessage({cmd: 'statusBar', flag: 1}, '*'),
+          onblur:  () => parent.postMessage({cmd: 'statusBar', flag: 0}, '*')
+        }),
         h('div', {className: 'foot'},
           buttons
         )

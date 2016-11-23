@@ -24,13 +24,15 @@ class SearchBar extends Component
   onFocus()
   {
     this.setState({focus: 1, showCross: 1});
-    this.onfocuschange(1)
+    this.onfocuschange(1);
+    parent.postMessage({cmd: 'statusBar', flag: 1}, '*');
   }
 
   onBlur()
   {
     this.setState({focus: 0, showCross: !!this.state.value.length});
-    this.onfocuschange(0)
+    this.onfocuschange(0);
+    parent.postMessage({cmd: 'statusBar', flag: 0}, '*');
   }
 
   clear()

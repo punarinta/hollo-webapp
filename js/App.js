@@ -56,7 +56,7 @@ class App extends Component
         switch (r)
         {
           case 'chats':
-            parent.postMessage({cmd: 'statusBar', flag: 1, color: 'e2e2e2'}, '*');
+            parent.postMessage({cmd: 'statusBar', flag: 0}, '*');
             this.setState({page: 'chats', chatsPageData: e.state.data});
             break;
 
@@ -176,6 +176,9 @@ class App extends Component
         ML.go('auth/login')
       }
     });
+
+    // pop in status bar
+    parent.postMessage({cmd: 'statusBar', flag: 1, color: 'e2e2e2'}, '*');
   }
 
   initUser(e)
