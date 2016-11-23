@@ -161,7 +161,7 @@ class MessagesPage extends Component
     let state = {canSend: !!t.value.trim().length, currentComposed: t.value};
 
     if (h != this.state.h) state.h = h;
-    if (e.keyCode == 13 && e.ctrlKey) this.send();
+    if (e.keyCode == 13 && e.ctrlKey) { this.send(); return }
 
     // process emojis
     if (/[^a-zA-Z0-9-_]/.test(t.value.slice(-1)) && e.keyCode > 31)
