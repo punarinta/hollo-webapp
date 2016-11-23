@@ -403,6 +403,19 @@ class ChatsPage extends Component
     {
       let chats = [], vw = windowInnerWidth > 768 ? 360 : windowInnerWidth;
 
+      // self-chat
+      if (0)
+      {
+        let my = JSON.parse(localStorage.getItem('messages')) || [];
+        chats.push(h(ChatRow,
+        {
+          chat: {users: [this.props.user], last: {msg: my.length ? my[my.length-1].body : ''}, read: 1, name: 'My notes'},
+          canSwipe: 0,
+          onclick: (chat) => ML.go('chat/me'),
+          vw
+        }))
+      }
+
       for (let i in this.state.chats)
       {
         if (this.state.chats[i].muted != muted) continue;  // skip it!

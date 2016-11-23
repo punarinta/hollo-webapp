@@ -65,6 +65,17 @@ class MessagesPage extends Component
       return
     }
 
+    if (callFindParams.chatId == 'me')
+    {
+      this.chat = { id: 0, name: 'You', read: 1, users: [], muted: 0 };
+
+      let messages = JSON.parse(localStorage.getItem('messages')) || [],
+          currentSubject = messages.length ? messages[messages.length - 1].subject : '';
+
+      this.setState({messages, currentSubject});
+      return;
+    }
+
     ML.emit('busybox', 1);
 
     ML.api('message', 'findByChatId', this.lastCallFindParams = callFindParams, (data) =>
@@ -354,6 +365,12 @@ class MessagesPage extends Component
     }})
   }
 
+  clearNotes()
+  {
+    localStorage.removeItem('messages');
+    this.setState({messages: [], menuModalShown: 0})
+  }
+
   uploadFiles(e)
   {
     let i, f, files = e.target.files;
@@ -413,6 +430,24 @@ class MessagesPage extends Component
       return;
     }
 
+    if (!this.chat.id)
+    {
+      let m =
+      {
+        ts: new Date().getTime() / 1000,
+        body: msg,
+        from: this.props.user,
+        subject: this.state.currentSubject
+      };
+
+      messages.push(m);
+      messages = messages.slice(Math.max(0, messages.length - 10));
+      localStorage.setItem('messages', JSON.stringify(messages));
+      this.setState({files: [], messages, compFocus: 0, currentComposed: '', h: 64});
+      this.reposition(1);
+      return
+    }
+
     // try to find last message with real id
     for (let i in this.state.messages)
     {
@@ -427,7 +462,7 @@ class MessagesPage extends Component
       from: this.props.user,
       files: this.state.files,
       subject: this.state.currentSubject
-     };
+    };
 
     messages.push(m);
     this.setState({files: [], messages, compFocus: 0, currentComposed: '', h: 64});
@@ -578,7 +613,7 @@ class MessagesPage extends Component
             h('li', {onclick: this.muteChat.bind(this)}, this.chat.muted ? 'Unmute' : 'Mute'),
             h('li', {onclick: this.unreadChat.bind(this)}, `Mark as ${this.chat.read ? 'un' : ''}read`),
             this.chat.users.length > 1 ? h('li', {onclick: this.renameChat.bind(this)}, 'Rename chat') : null,
-            h('li', {onclick: this.leaveChat.bind(this)}, 'Leave chat')
+            this.chat.id ? h('li', {onclick: this.leaveChat.bind(this)}, 'Leave chat') : h('li', {onclick: this.clearNotes.bind(this)}, 'Clear notes')
           )
         )
       )
