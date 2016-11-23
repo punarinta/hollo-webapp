@@ -391,7 +391,7 @@ class ChatsPage extends Component
     }
     else if (this.state.filterActive && !this.emailFilter.length)
     {
-      ulContents = h('div', {className: 'filter-hint'},
+      ulContents = h('div', {className: 'list-hint'},
         'To start a new',
         h('br'),
         'conversation type in',
@@ -445,7 +445,7 @@ class ChatsPage extends Component
       }
       else
       {
-        ulContents = h('div', {className: 'filter-hint'},
+        ulContents = h('div', {className: 'list-hint'},
           'Wanna create a new chat?',
           h('br'),
           'Just type in an email!'
