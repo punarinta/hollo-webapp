@@ -659,7 +659,7 @@ class MessagesPage extends Component
           h(BarIcon, {className: this.state.menuModalShown == 4 ? 'toggled' : '', img: 'color/more-vert', width: 40, height: 40, onclick: () => this.toggleMenu(4) })
         ),
         h('ul', null, messages.length ? messages : h('li', {className: 'list-hint'}, 'No messages yet', h('br'), 'Or they became too old') ),
-        h('composer', {style: {minHeight: composerHeight + 'px'}},
+        h('composer', {style: {minHeight: composerHeight + 'px', height: composerHeight + 'px'}},
           h('emojis', {style: {bottom: composerHeight + 8 + 'px'}},
             emojiRows
           ),
