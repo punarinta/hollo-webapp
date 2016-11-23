@@ -58,7 +58,7 @@ class ProfilePage extends Component
         h('ul', null,
           h(Checkbox, {caption: 'Emojis replace words', checked: CFG.emojisReplace, onchange: this.optEmojiChanged.bind(this)}),
           h(Checkbox, {caption: 'Colored avatars', checked: CFG.colorAvatars, onchange: this.optAvatarsChanged.bind(this)}),
-          h(Checkbox, {caption: 'Show personal notes', checked: CFG.showNotes, onchange: this.optNotesChanged.bind(this)})
+          h(Checkbox, {caption: 'Show local notes', checked: CFG.showNotes, onchange: this.optNotesChanged.bind(this)})
         ),
         h('bottom-bar', null,
           h(BarIcon, {caption: 'Profile', svg: 'profile', fill}),
