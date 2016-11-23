@@ -443,7 +443,7 @@ class MessagesPage extends Component
       messages.push(m);
       messages = messages.slice(Math.max(0, messages.length - 10));
       localStorage.setItem('messages', JSON.stringify(messages));
-      this.setState({files: [], messages, compFocus: 0, currentComposed: '', h: 64});
+      this.setState({files: [], messages, compFocus: 0, currentComposed: '', h: 64, canSend: 0});
       this.reposition(1);
       return
     }
