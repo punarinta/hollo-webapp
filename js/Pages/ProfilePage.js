@@ -40,7 +40,7 @@ class ProfilePage extends Component
           h(Avatar, {user: user}),
           h('div', null,
             h('div', {className: 'name'},
-              user.name
+              user.name || user.email
             ),
             h('div', {className: 'email'},
               user.email
