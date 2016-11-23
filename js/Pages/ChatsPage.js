@@ -404,7 +404,7 @@ class ChatsPage extends Component
       let chats = [], vw = windowInnerWidth > 768 ? 360 : windowInnerWidth;
 
       // self-chat
-      if (0)
+      if (CFG.showNotes)
       {
         let my = JSON.parse(localStorage.getItem('messages')) || [];
         chats.push(h(ChatRow,

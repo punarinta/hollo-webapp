@@ -7,4 +7,5 @@ var CFG =
   redirectUrl: 'https://app.hollo.email/oauth/google',
   emojisReplace: true,
   colorAvatars: true
+  // showNotes: false      // false by default => no need to specify here
 };

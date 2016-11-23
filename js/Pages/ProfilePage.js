@@ -3,11 +3,13 @@ class ProfilePage extends Component
   optEmojiChanged(value)
   {
     value *= 1;
+    ML.api('settings', 'update', {flag: {name: 'emojisReplace', value}}, () => CFG.emojisReplace = value);
+  }
 
-    ML.api('settings', 'update', {flag: {name: 'emojisReplace', value}}, () =>
-    {
-      CFG.emojisReplace = value;
-    });
+  optNotesChanged(value)
+  {
+    value *= 1;
+    ML.api('settings', 'update', {flag: {name: 'showNotes', value}}, () => CFG.showNotes = value);
   }
 
   optAvatarsChanged(value)
@@ -55,7 +57,8 @@ class ProfilePage extends Component
         h('div', {className: 'group'}, 'Settings'),
         h('ul', null,
           h(Checkbox, {caption: 'Emojis replace words', checked: CFG.emojisReplace, onchange: this.optEmojiChanged.bind(this)}),
-          h(Checkbox, {caption: 'Colored avatars', checked: CFG.colorAvatars, onchange: this.optAvatarsChanged.bind(this)})
+          h(Checkbox, {caption: 'Colored avatars', checked: CFG.colorAvatars, onchange: this.optAvatarsChanged.bind(this)}),
+          h(Checkbox, {caption: 'Show personal notes', checked: CFG.showNotes, onchange: this.optNotesChanged.bind(this)})
         ),
         h('bottom-bar', null,
           h(BarIcon, {caption: 'Profile', svg: 'profile', fill}),
