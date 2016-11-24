@@ -418,10 +418,12 @@ class ChatsPage extends Component
 
       for (let i in this.state.chats)
       {
-        if (this.state.chats[i].muted != muted) continue;  // skip it!
+        let chat = this.state.chats[i];
+        if (chat.muted != muted) continue;  // skip it!
+
         chats.push(h(ChatRow,
         {
-          chat: this.state.chats[i],
+          chat,
           canSwipe: !this.state.blockSwipe,
           onclick: (chat) => ML.go('chat/' + chat.id),
           vw

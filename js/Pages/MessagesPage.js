@@ -598,7 +598,7 @@ class MessagesPage extends Component
             let file = m.files[j];
 
             filePlates.push(h('li', null,
-              h(FilePlate, {file: file, size: '47vw'}),
+              h(FilePlate, {file, size: '47vw'}),
               h(BarIcon, {img: 'color/download', onclick: () => window.open('https://' + CFG.apiRoot + '/api/file?method=download&messageId=' + m.id + '&offset=' + j) })
             ))
           }
