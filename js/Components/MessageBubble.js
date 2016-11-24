@@ -110,6 +110,7 @@ class MessageBubble extends Component
 
       // for now we only support calendars
       subject = w.title;
+      if (w.att[0][2] == 'ACCEPTED') subject += ': ACCEPTED';
       body = h(InvitationWidget, {data: w})
     }
     else
