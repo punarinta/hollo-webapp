@@ -76,7 +76,7 @@ class MessagesPage extends Component
       return;
     }
 
-    ML.emit('busybox', 1);
+    ML.emit('busybox', {mode: 2});
 
     ML.api('message', 'findByChatId', this.lastCallFindParams = callFindParams, (data) =>
     {

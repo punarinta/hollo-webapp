@@ -316,7 +316,15 @@ class App extends Component
         break;
     }
 
-    pages.push(h('busybox', {style: {display: this.state.busy ? 'flex' : 'none'}}, h(HolloLoaderBig, {color:'#7a4df9'})));
+    let style = {display: 'none'};
+    if (this.state.busy)
+    {
+      style = {display: 'flex'};
+      if (this.state.busy.mode == 1) style.height = 'calc(100vh - 56px)'; // mode for chats
+      if (this.state.busy.mode == 2) {style.height = 'calc(100vh - 120px)'; style.top = '56px';} // mode for messages
+    }
+
+    pages.push(h('busybox', {style}, h(HolloLoaderBig, {color:'#7a4df9'})));
 
     return h('div', null, pages);
   }

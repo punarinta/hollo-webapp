@@ -136,7 +136,7 @@ class ChatsPage extends Component
       this.pageStart = 0;
     }
 
-    ML.emit('busybox', 1);
+    ML.emit('busybox', {mode: 1});
 
     ML.api('chat', 'find', this.lastCallFindParams = callFindParams, (data) =>
     {
