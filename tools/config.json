@@ -12,6 +12,7 @@
   "js-es6":
   [
     "js/Components/HolloLoaderBig",
+    "js/Components/Input",
     "js/Components/Avatar",
     "js/Components/Svg",
     "js/Components/ChatRow",

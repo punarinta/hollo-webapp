@@ -56,7 +56,6 @@ class App extends Component
         switch (r)
         {
           case 'chats':
-            parent.postMessage({cmd: 'statusBar', flag: 0}, '*');
             this.setState({page: 'chats', chatsPageData: e.state.data});
             break;
 
@@ -177,8 +176,8 @@ class App extends Component
       }
     });
 
-    // pop in status bar
-    parent.postMessage({cmd: 'statusBar', flag: 1, color: 'e2e2e2'}, '*');
+    // TODO: remove after next APK (>= 0.1.7) is published
+    parent.postMessage({cmd: 'statusBar', color: 'e2e2e2'}, '*');
   }
 
   initUser(e)

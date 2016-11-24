@@ -29,9 +29,7 @@ class MessageBoxModal extends Component
         {
           value: data.input,
           type: 'text',
-          autofocus: 'autofocus',
-          onfocus: () => parent.postMessage({cmd: 'statusBar', flag: 1}, '*'),
-          onblur:  () => parent.postMessage({cmd: 'statusBar', flag: 0}, '*')
+          autofocus: 'autofocus'
         }),
         h('div', {className: 'foot'},
           buttons

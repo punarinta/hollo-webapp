@@ -25,14 +25,12 @@ class SearchBar extends Component
   {
     this.setState({focus: 1, showCross: 1});
     this.onfocuschange(1);
-    parent.postMessage({cmd: 'statusBar', flag: 1}, '*');
   }
 
   onBlur()
   {
     this.setState({focus: 0, showCross: !!this.state.value.length});
     this.onfocuschange(0);
-    parent.postMessage({cmd: 'statusBar', flag: 0}, '*');
   }
 
   clear()
@@ -47,13 +45,13 @@ class SearchBar extends Component
     return (
 
       h('search-bar', {className: this.props.className},
-        h('input',
+        h(Input,
         {
           type: 'email',
           value: this.state.value,
           onkeyup: this.onKeyUp.bind(this),
-          onfocus: this.onFocus.bind(this),
-          onblur: this.onBlur.bind(this),
+          onfocusx: this.onFocus.bind(this),
+          onblurx: this.onBlur.bind(this),
           placeholder: props.placeholder
         }),
         h('div', {onclick: this.clear.bind(this), style: {display: this.state.showCross ? 'block' : 'none'}},
