@@ -483,16 +483,9 @@ class ChatsPage extends Component
       }
 
       // fake a message
-      let message =
-      {
-        id: qsCurrent.id,
-        body: qsCurrent.body,
-        subject: qsCurrent.subject,
-        refId: qsCurrent.refId,
-        ts: qsCurrent.ts,
-        files: qsCurrent.files ? JSON.parse(qsCurrent.files) : null,
-        from: fakeUser
-      };
+      let message = qsCurrent;
+      message.from = fakeUser;
+      message.files = qsCurrent.files ? JSON.parse(qsCurrent.files) : null;
 
       quickStackModal = h('qs-shader', {onclick: (e) => {if (e.target.nodeName.toLowerCase() == 'qs-shader') this.setState({quickStackShown: 0})} },
         h('quick-stack', { ontouchstart: this.qsTouchStart.bind(this), ontouchmove: this.qsTouchMove.bind(this), ontouchend: this.qsTouchEnd.bind(this) },
