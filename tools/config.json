@@ -47,10 +47,12 @@
     "prefixes":
     [
       "-webkit-",
-      "-moz-"
+      "-moz-",
+      "-ms-"
     ],
     "prefixed":
     [
+      ["hyphens", [0,1,2]],
       ["user-select", [0,1]],
       ["tap-highlight-color", [0,1]],
       ["animation", [0]],
