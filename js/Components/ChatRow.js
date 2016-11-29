@@ -139,10 +139,10 @@ class ChatRow extends Component
         email = chat.users[0].email,
         lastMsg = chat.last.msg || '';
 
-    if (lastMsg.charAt(0) == '{')
+    if (lastMsg !== null && typeof lastMsg === 'object')
     {
       // for now we only support calendar invites
-      lastMsg = '📅 ' + JSON.parse(lastMsg).widget.title;
+      lastMsg = '📅 ' + lastMsg.widget.title;
     }
     else
     {
