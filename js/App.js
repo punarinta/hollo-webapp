@@ -282,6 +282,19 @@ class App extends Component
 
   render()
   {
+    let maintenance = false;
+
+    if (maintenance)
+    {
+      return h('div', null, h(MessageBoxModal, {data:
+      {
+        html:
+        '<p>Hollo, user! 🤖</p>' +
+        '<p>We are making some hardware changes.</p>' +
+        '<p>Few hours will we need to setup the stuff, so if you see this message for more than a day, please restart the app.</p>'
+      }}));
+    }
+
     // place here the logic of page switching
     let user = this.state.user, pages =
     [
