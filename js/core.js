@@ -11,7 +11,7 @@ var ML =
   {
     var r = new XMLHttpRequest(), ps = null, pl;
 
-    r.open(method ? 'POST' : 'GET', 'https://' + CFG.apiRoot + '/api/' + endpoint, true);
+    r.open(method ? 'POST' : 'GET', CFG.apiRoot + endpoint, true);
     r.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
     if (typeof ML.sessionId == 'string')
     {

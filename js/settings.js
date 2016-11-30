@@ -2,7 +2,7 @@
 
 var CFG =
 {
-  apiRoot: 'app.hollo.email',
+  apiRoot: 'https://app.hollo.email/api/',
   notifierUrl: 'wss://notify.hollo.email:443/',
   redirectUrl: 'https://app.hollo.email/oauth/google',
   emojisReplace: true,
