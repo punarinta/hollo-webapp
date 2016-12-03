@@ -104,9 +104,9 @@ class MessageBubble extends Component
 
     let virtualChat = {users:[message.from], read:1};
 
-    if (ML.isJson(body) && body && body.charAt(0) == '{')
+    if (body !== null && typeof body === 'object')
     {
-      let w = JSON.parse(body).widget;
+      let w = body.widget;
 
       // for now we only support calendars
       subject = w.title;

@@ -282,6 +282,18 @@ class App extends Component
 
   render()
   {
+    if (maintenance)
+    {
+      return h('div', null, h(MessageBoxModal, {data:
+      {
+        html:
+        '<p>Hollo, user! 🤖</p>' +
+        '<p>We are making some hardware changes.</p>' +
+        '<p>Few hours will we need to setup the stuff, so if you see this message for more than that, please restart the app.</p>'+
+        '<p>We are terribly sorry for inconveniences!</p>'
+      }}));
+    }
+
     // place here the logic of page switching
     let user = this.state.user, pages =
     [
@@ -333,4 +345,5 @@ class App extends Component
 document.body.innerHTML = '';
 // cheapest place to compute initial window width
 var windowInnerWidth = window.innerWidth;
+var maintenance = 0;//!ML.getQueryVar('debug');
 render(h(App), document.body);

@@ -117,7 +117,7 @@ class ChatsPage extends Component
       filters.push({mode:'email', value: this.emailFilter});
     }
 
-    let callFindParams = {pageStart: this.pageStart, pageLength: this.pageLength, filters, sortBy: 'lastTs'};
+    let callFindParams = {pageStart: this.pageStart, pageLength: this.pageLength, filters};
 
     if (this.lastCallFindParams.filters && callFindParams.filters[0].value != this.lastCallFindParams.filters[0].value)
     {
@@ -485,7 +485,7 @@ class ChatsPage extends Component
       // fake a message
       let message = qsCurrent;
       message.from = fakeUser;
-      message.files = qsCurrent.files ? JSON.parse(qsCurrent.files) : null;
+      message.files = qsCurrent.files;
 
       quickStackModal = h('qs-shader', {onclick: (e) => {if (e.target.nodeName.toLowerCase() == 'qs-shader') this.setState({quickStackShown: 0})} },
         h('quick-stack', { ontouchstart: this.qsTouchStart.bind(this), ontouchmove: this.qsTouchMove.bind(this), ontouchend: this.qsTouchEnd.bind(this) },
