@@ -229,9 +229,22 @@ class ChatsPage extends Component
       this.swiping = 1;
     }
 
-    if (distX > 100) this.ul.style.backgroundColor = '#F5F5DC';       // yellow
-    else if (distX < -100) this.ul.style.backgroundColor= '#F0FFF0';  // green
-    else this.ul.style.backgroundColor = '#fff';                      // none
+    if (distX > 100)
+    {
+    //  this.ul.style.backgroundColor = '#F5F5DC'; // yellow
+      this.buttonSkip.classList.add('picked')
+    }
+    else if (distX < -100)
+    {
+    //  this.ul.style.backgroundColor = '#F0FFF0';  // green
+      this.buttonRead.classList.add('picked')
+    }
+    else
+    {
+    //  this.ul.style.backgroundColor = '#fff'; // none
+      this.buttonRead.classList.remove('picked');
+      this.buttonSkip.classList.remove('picked')
+    }
 
     if (this.swiping) this.ul.style.transform = `translate(${distX}px, ${distY}px)`;
     e.stopPropagation()
@@ -501,9 +514,9 @@ class ChatsPage extends Component
           h(BarIcon, {svg: 'cross', fill: '#fff', type: 'polygon', width: 14, height: 14, onclick: () => this.setState({quickStackShown: 0}) })
         ),
         h('bar', null,
-          h('button', {onclick: () => this.qsMarkRead(qsCurrent)}, 'Read'),
+          h('button', {ref: (x) => this.buttonRead = x, onclick: () => this.qsMarkRead(qsCurrent)}, 'Read'),
           h('button', {onclick: () => this.qsReply(qsCurrent)}, 'Reply'),
-          h('button', {onclick: () => this.qsSkip() }, 'Skip')
+          h('button', {ref: (x) => this.buttonSkip = x, onclick: () => this.qsSkip() }, 'Skip')
         )
       )
     }
