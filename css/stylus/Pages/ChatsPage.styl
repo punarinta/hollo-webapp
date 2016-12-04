@@ -54,6 +54,15 @@ chats-page
     background rgba(color-bg-grey, .8)
     flex-direction column
     justify-content center
+    bar
+      margin-top 5px
+      display flex
+      justify-content center
+      button
+        border-radius 100px
+        height 48px
+        width 100px
+        font-weight 400;
   qs-indicator
     background-color color-brand
     border-radius 28px
@@ -80,9 +89,11 @@ chats-page
     box-shadow 0 2px 4px 0 rgba(0, 0, 0, .12)
     margin 0 8px
     overflow-x hidden
+    padding-bottom 10px
     message-bubble
       .white
         background-color transparent
+        padding-left 10px
       flex 1
       padding-left 44px
       .foot, .cap
@@ -91,6 +102,8 @@ chats-page
         & > div
           float none
           margin-left auto
+      p:first-of-type
+        margin-top 0
     topbar
       display flex
       margin 12px 12px 0
@@ -99,7 +112,3 @@ chats-page
         font 300 22px 'Work Sans'
         align-items center
         margin-left 12px
-    bar
-      margin-bottom 0
-      display flex
-      justify-content center

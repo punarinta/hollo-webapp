@@ -493,17 +493,17 @@ class ChatsPage extends Component
             h(Avatar, {user: fakeUser, size: 32}),
             h('div', null, ML.xname({users:[fakeUser]})[0])
           ),
-          h(MessageBubble, {message, user: this.props.user}),
-          h('bar', null,
-            h('button', {onclick: () => this.qsMarkRead(qsCurrent)}, 'Mark as read'),
-            h('button', {onclick: () => this.qsReply(qsCurrent)}, 'Reply'),
-            h('button', {onclick: () => this.qsSkip() }, 'Leave for later')
-          )
+          h(MessageBubble, {message, user: this.props.user})
         ),
         h('qs-indicator', {},
           h(Svg, {model: 'timer', fill: '#fff'}),
           h('div', null, this.state.qsCount + ' to go'),
           h(BarIcon, {svg: 'cross', fill: '#fff', type: 'polygon', width: 14, height: 14, onclick: () => this.setState({quickStackShown: 0}) })
+        ),
+        h('bar', null,
+          h('button', {onclick: () => this.qsMarkRead(qsCurrent)}, 'Read'),
+          h('button', {onclick: () => this.qsReply(qsCurrent)}, 'Reply'),
+          h('button', {onclick: () => this.qsSkip() }, 'Skip')
         )
       )
     }
