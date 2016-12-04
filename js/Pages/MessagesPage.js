@@ -646,6 +646,12 @@ class MessagesPage extends Component
       emojiRows.push(h('div', null, emojis))
     }
 
+    let listHint = ['No messages yet', h('br'), 'Or they became too old'];
+    if (this.chat && !this.chat.id)
+    {
+      listHint = ['Feel free to talk to yourself here,', h('br'), 'maybe you need to do something?', h('br'), 'Or write down a shopping list?'];
+    }
+
     return (
 
       h('messages-page', {style: {zIndex: this.props.zIndex}},
@@ -658,7 +664,7 @@ class MessagesPage extends Component
           h(BarIcon, {className: this.state.menuModalShown == 3 ? 'toggled' : '', img: 'color/clip', width: 40, height: 40, onclick: () => this.toggleMenu(3) }),
           h(BarIcon, {className: this.state.menuModalShown == 4 ? 'toggled' : '', img: 'color/more-vert', width: 40, height: 40, onclick: () => this.toggleMenu(4) })
         ),
-        h('ul', null, messages.length ? messages : h('li', {className: 'list-hint'}, 'No messages yet', h('br'), 'Or they became too old') ),
+        h('ul', null, messages.length ? messages : h('li', {className: 'list-hint'}, listHint) ),
         h('composer', {style: {minHeight: composerHeight + 'px', height: composerHeight + 'px'}},
           h('emojis', {style: {bottom: composerHeight + 8 + 'px'}},
             emojiRows
