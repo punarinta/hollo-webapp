@@ -23,7 +23,7 @@ class UserPickerModal extends Component
 
   callFind()
   {
-    let params = {pageStart: 0, pageLength: 25};
+    let params = {pageStart: 0, pageLength: 50};
     if (this.emailFilter.length) params.filters = [{mode: 'email', value: this.emailFilter}];
 
     ML.api('contact', 'find', params, (users) =>
