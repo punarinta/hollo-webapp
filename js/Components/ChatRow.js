@@ -43,9 +43,22 @@ class ChatRow extends Component
       this.item.style.transform = `translateX(${distX}px)`;
       e.preventDefault();
 
-      if (distX > threshold) this.action = 1;
-      else if (Math.abs(distX) < threshold) this.action = 0;
-      else if (distX < -threshold) this.action = -1;
+      if (distX > threshold && this.action != 1)
+      {
+        this.action = 1;
+        this.base.querySelector('.markas').style.opacity = 0;
+      }
+      else if (Math.abs(distX) < threshold)
+      {
+        this.action = 0;
+        this.base.querySelector('.markas').style.opacity = 1;
+        this.base.querySelector('.muteas').style.opacity = 1;
+      }
+      else if (distX < -threshold)
+      {
+        this.action = -1;
+        this.base.querySelector('.muteas').style.opacity = 0;
+      }
       e.stopPropagation();
     }
     else
@@ -169,7 +182,7 @@ class ChatRow extends Component
           )
         ),
         h('div', {className: 'shadow'},
-          h('div', null,
+          h('div', {className: 'muteas'},
             `${chat.muted ? 'un' : ''}mute`
           ),
           h('div', {className: 'markas'},
