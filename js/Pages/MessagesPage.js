@@ -26,9 +26,11 @@ class MessagesPage extends Component
   {
     this.scrollRef = this.scroll.bind(this);
     this.tryBlurringRef = this.tryBlurring.bind(this);
+    this.chatUpdateReference = this.chatUpdate.bind(this);
     this.firebaseListenerRef = this.firebaseListener.bind(this);
     this.base.querySelector('ul').addEventListener('scroll', this.scrollRef);
     this.base.addEventListener('click', this.tryBlurringRef);
+    window.addEventListener('hollo:chatupdate', this.chatUpdateReference);
     window.addEventListener('hollo:firebase', this.firebaseListenerRef);
     this.callFind();
     ML.load('modules/emojis');
@@ -48,10 +50,19 @@ class MessagesPage extends Component
   {
     this.base.querySelector('ul').removeEventListener('scroll', this.scrollRef);
     this.base.removeEventListener('click', this.tryBlurringRef);
+    window.removeEventListener('hollo:chatupdate', this.chatUpdateReference);
     window.removeEventListener('hollo:firebase', this.firebaseListenerRef);
   }
 
-  callFind(shouldAdd = 0)
+  chatUpdate(e)
+  {
+    if (e.payload.chat.reload)
+    {
+      this.callFind(0, 1)
+    }
+  }
+
+  callFind(shouldAdd = 0, force = 0)
   {
     if (!this.props.data.chatId)
     {
@@ -60,7 +71,7 @@ class MessagesPage extends Component
 
     let callFindParams = {chatId: this.props.data.chatId, pageStart: this.pageStart, pageLength: this.pageLength};
 
-    if (JSON.stringify(callFindParams) == JSON.stringify(this.lastCallFindParams))
+    if (!force && JSON.stringify(callFindParams) == JSON.stringify(this.lastCallFindParams))
     {
       return
     }
@@ -672,7 +683,6 @@ class MessagesPage extends Component
           this.state.compFocus ? h('bar', null,
             h(BarIcon, {img: 'color/subj', width: 40, height: 40, onclick: this.showSubjects.bind(this)}),
             h('input', {className: 'subj', type: 'text', value: this.state.currentSubject, onkeyup: this.inputSubject.bind(this), onclick: this.showSubjects.bind(this)}),
-  //          h(BarIcon, {img: 'color/updown', width: 40, height: 40, onclick: this.showSubjects.bind(this)}),
             h(BarIcon, {img: 'color/clip', width: 40, height: 40}),
             h('input', {className: 'uploader', type: 'file', multiple: 'multiple', onchange: this.uploadFiles.bind(this)})
           ) : '',

@@ -113,11 +113,11 @@ class App extends Component
 
       ML.ws.onmessage = function (event)
       {
-        var data = JSON.parse(event.data);
+        let data = JSON.parse(event.data);
         console.log('IM', data);
         if (data.cmd == 'update')
         {
-          let chat = {id: data.chatId, read: 0};
+          let chat = {id: data.chatId, read: 0, reload: 1};
           ML.emit('chatupdate', {chat});
         }
       };
@@ -274,7 +274,7 @@ class App extends Component
         ML.go('chat/' + e.payload.chatId);
 
         // app was upp, so update the chat in the list
-        let chat = {id: e.payload.chatId, read: 1};
+        let chat = {id: e.payload.chatId, read: 1, reload: 1};
         ML.emit('chatupdate', {chat});
       }
     }
