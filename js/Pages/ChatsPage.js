@@ -366,6 +366,7 @@ class ChatsPage extends Component
     qs.shift();
     let qsCount = qs.length;
     this.setState({qs, qsCount, quickStackShown: qsCount > 0});
+    this.buttonSkip.classList.remove('picked');
   }
 
   qsMarkRead(qsCurrent)
@@ -386,6 +387,8 @@ class ChatsPage extends Component
       ML.api('chat', 'update', {id: chat.id, read: 1});
       ML.emit('chatupdate', {chat});
     }
+
+    this.buttonRead.classList.remove('picked');
 
     this.qsSkip()
   }
