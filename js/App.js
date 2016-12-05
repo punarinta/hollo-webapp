@@ -177,7 +177,7 @@ class App extends Component
     });
 
     // TODO: remove after next APK (>= 0.1.7) is published
-    parent.postMessage({cmd: 'statusBar', color: 'e2e2e2'}, '*');
+    parent.postMessage({cmd: 'statusBar', color: 'e2e2e2', flag: 1}, '*');
   }
 
   initUser(e)
