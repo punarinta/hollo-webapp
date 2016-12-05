@@ -24,6 +24,8 @@ class App extends Component
       ML.sessionId = localStorage.getItem('sessionId');
     }
 
+    if (window.Notification) Notification.requestPermission();
+
     window.addEventListener('hollo:demobox', (e) => this.setState({demoBox: e.payload}) );
     window.addEventListener('hollo:messagebox', (e) => this.setState({messageBox: e.payload}) );
     window.addEventListener('hollo:custombox', (e) => this.setState({customBox: e.payload}) );
