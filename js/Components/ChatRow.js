@@ -129,6 +129,7 @@ class ChatRow extends Component
           {
             // set the state from the parent component
             ML.emit('chatupdate', {chat});
+            this.base.querySelector('.markas').style.display = 'none';
           }, 400);
 
           this.item.style.transform = `translateX(-${this.props.vw}px)`;
