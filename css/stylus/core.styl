@@ -10,9 +10,9 @@ color-bg-grey = #f5f5f5
 
 // If 13 is baseline (set in html)
 font-size-xsmall = 1rem // 13px
-font-size-small = 1.154rem // 15px
-font-size-medium = 1.538rem // 20px
-font-size-large = 1.846rem // 24px
+font-size-small = 1.077rem // 14px
+font-size-medium = 1.16rem // 15px
+font-size-large = 1.539rem // 20px
 font-size-xlarge = 2.077rem // 27px
 
 // Distances
@@ -23,29 +23,36 @@ margin-large = 16px
 margin-xlarge = 24px
 
 // Font styles, @extend theese
-$font-bread // This is a placeholder selector, wont be generated in the css but can be extended
-  font-family 'Roboto', sans-serif
-  font-size font-size-small
-  line-height font-size-medium
-  color color-font-standard
-
-$font-clickable
-  font-family 'Work Sans', sans-serif
-  font-size font-size-small
-  font-weight 400
-  color color-brand
-
-$font-clickable-bold
-  font-family 'Work Sans', sans-serif
-  font-size font-size-small
-  font-weight 500
-  color color-brand
-
 $font-heading
   font-family 'Work Sans', sans-serif
   font-size font-size-large
+  line-height 1.846rem // 24px
   font-weight 300
   color color-font-standard
+
+$font-bread // This is a placeholder selector, wont be generated in the css but can be extended
+  font-family 'Roboto', sans-serif
+  font-size font-size-small
+  line-height 1.230rem // 16px
+  font-weight 400
+  color color-font-standard
+
+$font-bread-2 // This is a version of bread
+  @extend $font-bread
+  color color-font-hint
+  line-height 1.539rem // 20px
+
+$font-hint
+  font-family 'Work Sans', sans-serif
+  font-size font-size-xsmall
+  color color-font-hint
+  font-weight 400
+
+$font-clickable
+  font-family 'Work Sans', sans-serif
+  font-size font-size-medium
+  font-weight 400
+  color color-brand
 
 // Font setup
 @font-face
