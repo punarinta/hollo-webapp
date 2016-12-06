@@ -13,7 +13,7 @@ font-size-xsmall = 1rem // 13px
 font-size-small = 1.077rem // 14px
 font-size-medium = 1.16rem // 15px
 font-size-large = 1.539rem // 20px
-font-size-xlarge = 2.077rem // 27px
+font-size-xlarge = 1.847rem // 24px
 
 // Distances
 margin-tiny = 4px
@@ -33,26 +33,37 @@ $font-heading
 $font-bread // This is a placeholder selector, wont be generated in the css but can be extended
   font-family 'Roboto', sans-serif
   font-size font-size-small
-  line-height 1.230rem // 16px
+  line-height 1.539rem // 20px
   font-weight 400
   color color-font-standard
 
 $font-bread-2 // This is a version of bread
   @extend $font-bread
   color color-font-hint
-  line-height 1.539rem // 20px
 
 $font-hint
   font-family 'Work Sans', sans-serif
   font-size font-size-xsmall
+  line-height 1.231rem// 16px 
   color color-font-hint
   font-weight 400
 
 $font-clickable
   font-family 'Work Sans', sans-serif
   font-size font-size-medium
+  line-height 2.462rem // 32px
   font-weight 400
   color color-brand
+
+$font-clickable-large
+  @extend $font-clickable
+  font-size font-size-xlarge
+  font-weight 300
+
+$font-clickable-white
+  @extend $font-clickable
+  color #ffffff
+
 
 // Font setup
 @font-face
