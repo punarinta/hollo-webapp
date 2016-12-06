@@ -263,7 +263,7 @@ class MessagesPage extends Component
       }
       if (mode == 1)
       {
-        this.base.querySelector('message-bubble:last-child').scrollIntoView();
+        this.base.querySelector('message-bubble:last-child').scrollIntoView(false);
         this.scrollTop = this.base.querySelector('ul').scrollTop;
       }
     }, 50 + timeOffset);
