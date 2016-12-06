@@ -1,15 +1,21 @@
 chat-row
   overflow hidden
-  height 72px
+  height 64px
   white-space nowrap
   display flex
-  padding-left 4px
   transition height .8s ease-in, opacity .8s ease-in
   cursor pointer
   align-items center
   position relative
   avatar
-    margin 12px
+    margin-left margin-large
+    margin-top margin-small
+    margin-bottom margin-small
+    margin-right margin-medium
+    width 40px !important
+    min-width 40px !important
+    height 40px !important
+    line-height @height
   &>div
     display flex
     background color-bg-grey
@@ -22,19 +28,19 @@ chat-row
     overflow hidden
     text-overflow ellipsis
     width calc(100vw - 90px)
-    font-size 22px
     &:first-letter
       text-transform capitalize
   .email
     overflow hidden
     text-overflow ellipsis
     width calc(100vw - 90px)
-    font-size 14px
-    @extend $font-bread
+    @extend $font-bread-2
   .info
-    padding-top 12px
+    padding-top 6px
+  .real
+    height 64px
   .shadow
-    height 72px
+    height 64px
     display none
     width 100%
     background color-brand
