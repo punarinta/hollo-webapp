@@ -1,6 +1,7 @@
 chat-row
+  chat-row-height = 72px
   overflow hidden
-  height 64px
+  height chat-row-height
   white-space nowrap
   display flex
   transition height .8s ease-in, opacity .8s ease-in
@@ -8,7 +9,7 @@ chat-row
   align-items center
   position relative
   avatar
-    margin margin-small margin-medium margin-small margin-large
+    margin margin-large margin-medium margin-large margin-large
     line-height @height
   &>div
     display flex
@@ -30,11 +31,11 @@ chat-row
     width calc(100vw - 90px)
     @extend $font-bread-2
   .info
-    padding-top 6px
+    padding-top 12px
   .real
-    height 64px
+    height chat-row-height
   .shadow
-    height 64px
+    height chat-row-height
     display none
     width 100%
     background color-brand
