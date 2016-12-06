@@ -49,18 +49,14 @@ class ChatsPage extends Component
       {
         found = 1;
 
-        if (chats[i].muted != e.payload.chat.muted)
-        {
-          // list changed, reloading must be administered
-          // TODO: refactor in a way without API calls
-          this.pageStart = 0;
-          this.callFind();
-          break;
-        }
-
         chats[i].forceUpdate = 1;
         chats[i].read = e.payload.chat.read;
         if (e.payload.chat.name) chats[i].name = e.payload.chat.name;
+
+        if (e.payload.cmd == 'muted')
+        {
+          delete chats[i]
+        }
 
         this.setState({chats});
         ML.emit('qs:count');
