@@ -10,9 +10,7 @@ class ChatsPage extends Component
     this.canLazyLoadMore = 0;
     this.lastCallFindParams = {};
 
-    this.state.qs = [];
     this.state.chats = [];
-    this.state.qsCount = 0;
     this.state.blockSwipe = 0;
     this.state.filterActive = 0;
   }
@@ -65,7 +63,7 @@ class ChatsPage extends Component
         if (e.payload.chat.name) chats[i].name = e.payload.chat.name;
 
         this.setState({chats});
-        this.qsCount();
+        ML.emit('qs:count');
 
         break;
       }
@@ -159,10 +157,8 @@ class ChatsPage extends Component
       }
 
       this.setState({chats});
-      this.qsCount();
-
       this.canLazyLoadMore = (data.length == this.pageLength);
-
+      ML.emit('qs:count');
       ML.emit('busybox', 0);
     });
   }
@@ -175,17 +171,6 @@ class ChatsPage extends Component
     this.startX = t.pageX;
     this.startY = t.pageY;
     this.ul = this.base.querySelector('ul');
-  }
-
-  qsTouchStart(e)
-  {
-    let t = e.changedTouches[0];
-    this.swiping = 0;
-    this.startX = t.pageX;
-    this.startY = t.pageY;
-    this.ul = this.base.querySelector('quick-stack');
-    this.ul.style.willChange = 'transform';
-    e.stopPropagation()
   }
 
   touchMove(e)
@@ -219,37 +204,6 @@ class ChatsPage extends Component
     e.stopPropagation();
   }
 
-  qsTouchMove(e)
-  {
-    let distX = e.changedTouches[0].pageX - this.startX,
-        distY = e.changedTouches[0].pageY - this.startY;
-
-    if (Math.abs(distX) > 32)
-    {
-      this.swiping = 1;
-    }
-
-    if (distX > 100)
-    {
-    //  this.ul.style.backgroundColor = '#F5F5DC'; // yellow
-      this.buttonSkip.classList.add('picked')
-    }
-    else if (distX < -100)
-    {
-    //  this.ul.style.backgroundColor = '#F0FFF0';  // green
-      this.buttonRead.classList.add('picked')
-    }
-    else
-    {
-    //  this.ul.style.backgroundColor = '#fff'; // none
-      this.buttonRead.classList.remove('picked');
-      this.buttonSkip.classList.remove('picked')
-    }
-
-    if (this.swiping) this.ul.style.transform = `translate(${distX}px, ${distY}px)`;
-    e.stopPropagation()
-  }
-
   touchEnd()
   {
     if (this.state.blockSwipe)
@@ -269,18 +223,6 @@ class ChatsPage extends Component
         }, 400);
       }
     }
-  }
-
-  qsTouchEnd(e)
-  {
-    this.swiping = 0;
-    this.ul.style.transform = 'translate(0,0)';
-    this.ul.style.backgroundColor = '#fff';
-
-    let distX = e.changedTouches[0].pageX - this.startX;
-
-    if (distX > 100) this.qsSkip();
-    else if (distX < -100) this.qsMarkRead(this.state.qs[0]);
   }
 
   scroll()
@@ -334,69 +276,9 @@ class ChatsPage extends Component
     });
   }
 
-  qsCount()
-  {
-    let qsCount = 0;
-    for (let i in this.state.chats)
-    {
-      if (!this.state.chats[i].read) ++qsCount;
-    }
-    this.setState({qsCount});
-  }
-
-  qsShow()
-  {
-    ML.api('message', 'buildQuickStack', {muted: this.props.data ? this.props.data.muted : 0}, qs =>
-    {
-      this.setState({quickStackShown: 1, qs});
-    });
-  }
-
-  qsReply(qsCurrent)
-  {
-    let qsCount = this.state.qsCount - 1;
-    // TODO: update chat
-    this.setState({quickStackShown: 0, qsCount});
-    ML.go('chat/' + qsCurrent.chatId)
-  }
-
-  qsSkip()
-  {
-    let qs = this.state.qs;
-    qs.shift();
-    let qsCount = qs.length;
-    this.setState({qs, qsCount, quickStackShown: qsCount > 0});
-    this.buttonSkip.classList.remove('picked');
-  }
-
-  qsMarkRead(qsCurrent)
-  {
-    let chat = null;
-    for (let i in this.state.chats)
-    {
-      if (qsCurrent.chatId == this.state.chats[i].id)
-      {
-        chat = this.state.chats[i];
-        break;
-      }
-    }
-
-    if (chat)
-    {
-      chat.read = 1;
-      ML.api('chat', 'update', {id: chat.id, read: 1});
-      ML.emit('chatupdate', {chat});
-    }
-
-    this.buttonRead.classList.remove('picked');
-
-    this.qsSkip()
-  }
-
   render()
   {
-    let quickStackModal = h('div', {className: 'qs-shader', style: {display: 'none'}}),
-        ulContents = '', muted = this.props.data ? this.props.data.muted : 0;
+    let ulContents = '', muted = this.props.data ? this.props.data.muted : 0;
 
     if (ML.isEmail(this.emailFilter))
     {
@@ -456,8 +338,8 @@ class ChatsPage extends Component
           ),
             this.emailFilter.length ? null : h('bottom-bar', null,
             h(BarIcon, {className: 'opa-85', caption: 'Profile', svg: 'profile', fill, onclick: () => ML.go('profile')}),
-            h(BarIcon, {className: muted ? 'opa-85' : '', caption: 'Inbox', svg: 'email', fill, onclick: () =>ML.go('chats') }),
-            h(BarIcon, {className: muted ? '' : 'opa-85', caption: 'Muted', svg: 'muted', fill, onclick: () =>ML.go('chats', {muted: 1}) })
+            h(BarIcon, {className: muted ? 'opa-85' : '', caption: 'Inbox', svg: 'email', fill, onclick: () => ML.go('chats') }),
+            h(BarIcon, {className: muted ? '' : 'opa-85', caption: 'Muted', svg: 'muted', fill, onclick: () => ML.go('chats', {muted: 1}) })
           )
         ];
       }
@@ -469,60 +351,6 @@ class ChatsPage extends Component
           'Just type in an email!'
         )
       }
-    }
-
-    let qsButton = h('qs-button', {style: {display: this.state.qsCount > 0 ? 'flex' : 'none'}, onclick: this.qsShow.bind(this) },
-      h(BarIcon, {svg: 'timer', fill: '#fff'}),
-      h('div', null, this.state.qsCount + ' unread')
-    );
-
-    if (this.state.quickStackShown && this.state.qs.length)
-    {
-      // always the topmost that is shown
-      let fakeUser = null, qsCurrent = this.state.qs[0];
-
-      if (qsCurrent.fromId == this.props.user.id)
-      {
-        fakeUser = this.props.user
-      }
-      else for (let i in this.state.chats)
-      {
-        for (let j in this.state.chats[i].users)
-        {
-          let u = this.state.chats[i].users[j];
-          if (u.id == qsCurrent.fromId)
-          {
-            fakeUser = u;
-            break;
-          }
-        }
-      }
-
-      // fake a message
-      let message = qsCurrent;
-      message.from = fakeUser;
-      message.files = qsCurrent.files;
-
-      quickStackModal = h('qs-shader', {onclick: (e) => {if (e.target.nodeName.toLowerCase() == 'qs-shader') this.setState({quickStackShown: 0})} },
-        h('quick-stack', { ontouchstart: this.qsTouchStart.bind(this), ontouchmove: this.qsTouchMove.bind(this), ontouchend: this.qsTouchEnd.bind(this) },
-          h('topbar', null,
-            h(Avatar, {user: fakeUser, size: 32}),
-            h('div', null, ML.xname({users:[fakeUser]})[0])
-          ),
-          h(MessageBubble, {message, user: this.props.user}),
-          h('shadow', null, h('div'))
-        ),
-        h('qs-indicator', {},
-          h(Svg, {model: 'timer', fill: '#fff'}),
-          h('div', null, this.state.qsCount + ' to go'),
-          h(BarIcon, {svg: 'cross', fill: '#fff', type: 'polygon', width: 14, height: 14, onclick: () => this.setState({quickStackShown: 0}) })
-        ),
-        h('bar', null,
-          h('button', {ref: (x) => this.buttonRead = x, onclick: () => this.qsMarkRead(qsCurrent)}, 'Read'),
-          h('button', {onclick: () => this.qsReply(qsCurrent)}, 'Reply'),
-          h('button', {ref: (x) => this.buttonSkip = x, onclick: () => this.qsSkip() }, 'Skip')
-        )
-      )
     }
 
     return (
@@ -537,8 +365,7 @@ class ChatsPage extends Component
           className: this.state.filterActive ? 'focused' : ''
         }),
         ulContents,
-        qsButton,
-        quickStackModal
+        h(QuickStack, {chats: this.state.chats, muted, user: this.props.user})
       )
     );
   }
