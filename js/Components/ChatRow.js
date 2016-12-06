@@ -111,7 +111,7 @@ class ChatRow extends Component
           setTimeout( () =>
           {
             // remove it from the parent component
-            ML.emit('chatupdate', {chat});
+            ML.emit('chatupdate', {chat, cmd: 'muted'});
           }, 800);
 
           this.item.style.transform = `translateX(${this.props.vw}px)`;
