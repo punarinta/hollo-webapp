@@ -171,7 +171,7 @@ class ChatRow extends Component
           onclick: () => this.props.onclick(this.state.chat)
         },
         h('div', {className: 'real'},
-          h(Avatar, {chat, size: 40}),
+          h(Avatar, {chat}),
           h('div', {className: 'info'},
             h('div', {className: 'name'},
               ML.xname(chat)[0]

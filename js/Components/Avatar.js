@@ -46,7 +46,7 @@ class Avatar extends Component
     {
       nc: ML.xname(chat)[1],
       bgImage: '',
-      size: props.size || '48px'
+      size: props.size || '40px'
     });
 
     if (this.empty.indexOf(email) != -1)
