@@ -26,7 +26,6 @@ class ChatRow extends Component
     this.item = this.base.querySelector('.real');
     this.shadow = this.base.querySelector('.shadow');
     this.item.style.willChange = 'transform';
-    this.base.querySelector('.markas').style.display = 'flex';    // TODO: find why is it necessary to update this manually
   }
 
   touchMove(e)
@@ -113,7 +112,6 @@ class ChatRow extends Component
           {
             // remove it from the parent component
             ML.emit('chatupdate', {chat, cmd: 'muted'});
-            this.base.querySelector('.markas').style.display = 'none';
           }, 800);
 
           this.item.style.transform = `translateX(${this.props.vw}px)`;
@@ -129,7 +127,6 @@ class ChatRow extends Component
           {
             // set the state from the parent component
             ML.emit('chatupdate', {chat});
-            this.base.querySelector('.markas').style.display = 'none';
           }, 400);
 
           this.item.style.transform = `translateX(-${this.props.vw}px)`;
