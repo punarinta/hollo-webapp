@@ -17,9 +17,9 @@ message-box-modal
     animation-mixin(fadeIn)
   message-body
     padding 16px 16px 8px
-    font-size 16px
     max-height calc(100vh - 120px)
     overflow-y auto
+    @extend $font-bread
   .foot
     display flex
   input[type="text"]
@@ -28,6 +28,6 @@ message-box-modal
     border-bottom 1px solid color-brand
     padding 5px 8px
     height 32px
-    font-size 16px
+    @extend $font-bread
   button
     margin 8px auto

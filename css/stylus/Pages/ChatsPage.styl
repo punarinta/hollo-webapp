@@ -62,7 +62,7 @@ chats-page
         border-radius 100px
         height 48px
         width 100px
-        font-weight 400
+        @extend $font-clickable
         &.picked
           background color-brand
           color #fff
@@ -115,12 +115,12 @@ chats-page
       p:first-of-type
         margin-top 0
       p
-        font-size 14px
+        @extend $font-bread
     topbar
       display flex
       margin 12px 12px 0
       div
         display flex
-        font 300 22px 'Work Sans'
         align-items center
         margin-left 12px
+        @extend $font-heading
