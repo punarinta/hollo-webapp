@@ -178,7 +178,6 @@ class App extends Component
       }
     });
 
-    // TODO: remove after next APK (>= 0.1.7) is published
     parent.postMessage({cmd: 'statusBar', color: 'e2e2e2', flag: 1}, '*');
   }
 
@@ -256,17 +255,8 @@ class App extends Component
       return
     }
 
-    if (e.payload.cmd == 'logout')
-    {
-      // absolute event
-      ML.go('auth/logout');
-    }
-
-    if (e.payload.cmd == 'ping')
-    {
-      // absolute event
-      ML.emit('messagebox', {html: 'Ping signal received'});
-    }
+    if (e.payload.cmd == 'logout')  ML.go('auth/logout');
+    if (e.payload.cmd == 'ping')    ML.emit('messagebox', {html: 'Ping signal received'});
 
     if (e.payload.cmd == 'show-chat')
     {
