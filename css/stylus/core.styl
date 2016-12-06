@@ -23,12 +23,18 @@ margin-large = 16px
 margin-xlarge = 24px
 
 // Font styles, @extend theese
+$aa-text
+  text-rendering optimizeLegibility
+  -webkit-font-smoothing antialiased
+  -moz-osx-font-smoothing grayscale
+
 $font-heading
   font-family 'Work Sans', sans-serif
   font-size font-size-large
   line-height 1.846rem // 24px
   font-weight 300
   color color-font-standard
+  @extend $aa-text
 
 $font-bread // This is a placeholder selector, wont be generated in the css but can be extended
   font-family 'Roboto', sans-serif
@@ -36,6 +42,7 @@ $font-bread // This is a placeholder selector, wont be generated in the css but 
   line-height 1.539rem // 20px
   font-weight 400
   color color-font-standard
+  @extend $aa-text
 
 $font-bread-2 // This is a version of bread
   @extend $font-bread
@@ -44,9 +51,10 @@ $font-bread-2 // This is a version of bread
 $font-hint
   font-family 'Work Sans', sans-serif
   font-size font-size-xsmall
-  line-height 1.231rem// 16px 
+  line-height 1.231rem// 16px
   color color-font-hint
   font-weight 400
+  @extend $aa-text
 
 $font-clickable
   font-family 'Work Sans', sans-serif
@@ -54,6 +62,7 @@ $font-clickable
   line-height 2.462rem // 32px
   font-weight 400
   color color-brand
+  @extend $aa-text
 
 $font-clickable-large
   @extend $font-clickable
