@@ -153,7 +153,8 @@ class ChatsPage extends Component
       }
 
       this.setState({chats});
-      this.canLazyLoadMore = (data.length == this.pageLength);
+      this.canLazyLoadMore = (data.length == this.pageLength && !this.emailFilter.length);
+
       ML.emit('qs:count');
       ML.emit('busybox', 0);
     });
