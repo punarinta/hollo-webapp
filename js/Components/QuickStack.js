@@ -142,7 +142,7 @@ class QuickStack extends Component
     let quickStackModal = h('div', {className: 'qs-shader', style: {display: 'none'}});
 
     let qsButton = h('qs-button', {style: {display: this.state.count > 0 ? 'flex' : 'none'}, onclick: this.show.bind(this) },
-      h(BarIcon, {svg: 'timer', fill: '#fff'}),
+      h(BarIcon, {img: 'white/qs', width: 30}),
       h('div', null, this.state.count + ' unread')
     );
 
@@ -183,7 +183,7 @@ class QuickStack extends Component
           h('shadow', null, h('div'))
         ),
         h('qs-indicator', {},
-          h(Svg, {model: 'timer', fill: '#fff'}),
+          h(BarIcon, {img: 'white/qs', width: 30}),
           h('div', null, this.state.count + ' to go'),
           h(BarIcon, {svg: 'cross', fill: '#fff', type: 'polygon', width: 14, height: 14, onclick: () => this.setState({quickStackShown: 0}) })
         ),
