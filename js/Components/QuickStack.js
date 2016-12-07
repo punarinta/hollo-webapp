@@ -96,10 +96,12 @@ class QuickStack extends Component
 
   touchMove(e)
   {
-    let distX = e.changedTouches[0].pageX - this.startX,
-      distY = e.changedTouches[0].pageY - this.startY;
+    e.preventDefault();
 
-    if (Math.abs(distX) > 32)
+    let distX = e.changedTouches[0].pageX - this.startX,
+        distY = e.changedTouches[0].pageY - this.startY;
+
+    if (Math.abs(distX) > 32 || Math.abs(distY) > 32)
     {
       this.swiping = 1;
     }
