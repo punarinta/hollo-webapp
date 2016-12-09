@@ -124,3 +124,12 @@ chats-page
         align-items center
         margin-left 12px
         @extend $font-heading
+
+  loader
+    width 100vw
+    height 0
+    z-index 1
+    position fixed
+    background url('/gfx/color/loading.svg') no-repeat center center
+    &.travel
+      transition all .4s ease-in
