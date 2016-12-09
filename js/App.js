@@ -106,10 +106,9 @@ class App extends Component
         if (ML._wsOpened)
         {
           ML._wsOpened = 0;
-          // never close, kurwa!
 
-          // TODO: fix this somehow
-          // mwInit(AU.user);
+          // keep the connection alive all the time
+          mwInit(user);
         }
       };
 
