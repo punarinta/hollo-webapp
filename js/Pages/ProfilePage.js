@@ -25,9 +25,9 @@ class ProfilePage extends Component
 
   testNotifications()
   {
-    ML.emit('messagebox', {html: 'After you close this message you will have 5 seconds to switch off your display', cb: () =>
+    ML.emit('messagebox', {html: 'Notification will be delivered in 5 seconds. OK to test mobile push, Cancel to test desktop push.', type: 1, cb: (code) =>
     {
-      ML.api('settings', 'testNotification');
+      ML.api('settings', 'testNotification', {mode: code ? 'firebase' : 'im'});
     }})
   }
 
