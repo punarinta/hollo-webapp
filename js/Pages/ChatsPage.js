@@ -76,36 +76,6 @@ class ChatsPage extends Component
     }
   }
 
-  /*firebaseListener(e)
-  {
-    if (e.payload.authId != this.props.user.id)
-    {
-      return
-    }
-
-    if (e.payload.cmd == 'chat:update' && !e.payload.wasTapped)
-    {
-      // check if the chat is present
-      let found = 0, chats = this.state.chats;
-      for (let i in chats)
-      {
-        if (e.payload.chatId == chats[i].id)
-        {
-          found = 1;
-          // mark it as unread
-          chats[i].read = 0;
-          this.setState({chats});
-          break;
-        }
-      }
-      if (!found)
-      {
-        // full reload
-        this.callFind();
-      }
-    }
-  }*/
-
   callFind(shouldAdd = 0, force = 0)
   {
     let filters = [{mode: 'muted', value: this.props.data ? this.props.data.muted || 0 : 0}];
