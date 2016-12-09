@@ -86,7 +86,7 @@ class QuickStack extends Component
     {
       chat.read = 1;
       ML.api('chat', 'update', {id: chat.id, read: 1});
-      ML.emit('chatupdate', {chat});
+      ML.emit('chat:update', {chat});
     }
 
     this.buttonRead.classList.remove('picked');

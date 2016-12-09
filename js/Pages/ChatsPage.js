@@ -19,10 +19,8 @@ class ChatsPage extends Component
   {
     this.scrollReference = this.scroll.bind(this);
     this.chatUpdateReference = this.chatUpdate.bind(this);
-    this.firebaseListenerRef = this.firebaseListener.bind(this);
     this.base.querySelector('ul').addEventListener('scroll', this.scrollReference);
-    window.addEventListener('hollo:chatupdate', this.chatUpdateReference);
-    window.addEventListener('hollo:firebase', this.firebaseListenerRef);
+    window.addEventListener('hollo:chat:update', this.chatUpdateReference);
     this.callFind();
   }
 
@@ -35,8 +33,7 @@ class ChatsPage extends Component
   componentWillUnmount()
   {
     this.base.querySelector('ul').removeEventListener('scroll', this.scrollReference);
-    window.removeEventListener('hollo:chatupdate', this.chatUpdateReference);
-    window.removeEventListener('hollo:firebase', this.firebaseListenerRef);
+    window.removeEventListener('hollo:chat:update', this.chatUpdateReference);
   }
 
   chatUpdate(e)
@@ -48,10 +45,16 @@ class ChatsPage extends Component
       if (e.payload.chat.id == chats[i].id)
       {
         found = 1;
-
         chats[i].forceUpdate = 1;
-        chats[i].read = e.payload.chat.read;
+
+        if (e.payload.chat.read) chats[i].read = e.payload.chat.read;
         if (e.payload.chat.name) chats[i].name = e.payload.chat.name;
+
+        if (e.payload.chat.external && !e.payload.chat.silent)
+        {
+          // non-silent external signal => mark chat as unread
+          chats[i].read = 0;
+        }
 
         if (e.payload.cmd == 'muted')
         {
@@ -67,19 +70,20 @@ class ChatsPage extends Component
 
     if (!found)
     {
+      // TODO: make it more smooth, do not reload all
       // new chat -> force resync
       this.callFind(0, 1);
     }
   }
 
-  firebaseListener(e)
+  /*firebaseListener(e)
   {
     if (e.payload.authId != this.props.user.id)
     {
       return
     }
 
-    if (e.payload.cmd == 'show-chat' && !e.payload.wasTapped)
+    if (e.payload.cmd == 'chat:update' && !e.payload.wasTapped)
     {
       // check if the chat is present
       let found = 0, chats = this.state.chats;
@@ -100,7 +104,7 @@ class ChatsPage extends Component
         this.callFind();
       }
     }
-  }
+  }*/
 
   callFind(shouldAdd = 0, force = 0)
   {
@@ -306,7 +310,7 @@ class ChatsPage extends Component
     }
     else
     {
-      let chats = [], vw = windowInnerWidth > 768 ? 360 : windowInnerWidth;
+      let chats = [], vw = $windowInnerWidth > 768 ? 360 : $windowInnerWidth;
 
       // self-chat
       if (CFG.showNotes && (!this.props.data || !this.props.data.muted))

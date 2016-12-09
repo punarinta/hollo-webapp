@@ -8,7 +8,7 @@ class App extends Component
     this.state.messagesPageData = {};
     this.state.pagePayload = null;
     this.state.currentDemo = null;
-    this.state.widthMode = windowInnerWidth > 768;
+    this.state.widthMode = $windowInnerWidth > 768;
     this.state.demoBox = null;
     this.state.messageBox = null;
     this.state.customBox = null;
@@ -39,7 +39,7 @@ class App extends Component
       clearTimeout(this.resizeTimer);
       this.resizeTimer = setTimeout(() =>
       {
-        windowInnerWidth = window.innerWidth;
+        $windowInnerWidth = window.innerWidth;
         console.log('restyle() has been triggered')
       }, 250);
     });
@@ -97,7 +97,7 @@ class App extends Component
         ML._wsOpened = 1;
         if (user)
         {
-          ML.ws.send(JSON.stringify({cmd: 'online', userId: user.id}));
+          ML.ws.send(JSON.stringify({cmd: 'auth:online', userId: user.id}));
         }
       };
 
@@ -114,12 +114,23 @@ class App extends Component
 
       ML.ws.onmessage = function (event)
       {
+        // this works only if the app is ON
         let data = JSON.parse(event.data);
         console.log('IM', data);
-        if (data.cmd == 'update')
+
+        if (data.cmd == 'chat:update')
         {
-          let chat = {id: data.chatId, read: 0, reload: 1};
-          ML.emit('chatupdate', {chat});
+          let chat = {id: data.chatId, external: 1, silent: data.silent};     // IM supports 'silent' flag
+          ML.emit('chat:update', {chat});
+        }
+        if (data.cmd == 'sys:ping')
+        {
+          if (window.Notification && Notification.permission === 'granted')
+          {
+            let icon = 'https://app.hollo.email/favicon/notification.png';
+            new Notification('Good news everyone!', {image: icon, icon});
+          }
+          else ML.emit('messagebox', {html: 'Ping signal received'});
         }
       };
     })();
@@ -209,7 +220,7 @@ class App extends Component
     {
       if (ML._wsOpened)
       {
-        ML.ws.send(JSON.stringify({cmd: 'online', userId: data.user.id}));
+        ML.ws.send(JSON.stringify({cmd: 'auth:online', userId: data.user.id}));
       }
       else
       {
@@ -217,7 +228,7 @@ class App extends Component
         {
           ML.ws.onopen = function ()
           {
-            ML.ws.send(JSON.stringify({cmd: 'online', userId: data.user.id}));
+            ML.ws.send(JSON.stringify({cmd: 'auth:online', userId: data.user.id}));
           };
         })(data);
       }
@@ -251,29 +262,30 @@ class App extends Component
   {
     if (!this.state.user || e.payload.authId != this.state.user.id)
     {
+      // no login — no Firebase
       return
     }
 
-    if (e.payload.cmd == 'logout')  ML.go('auth/logout');
-    if (e.payload.cmd == 'ping')    ML.emit('messagebox', {html: 'Ping signal received'});
-
-    if (e.payload.cmd == 'show-chat')
+    if (e.payload.cmd == 'auth:logout')  ML.go('auth/logout');
+    if (e.payload.cmd == 'sys:ping')     ML.emit('messagebox', { html: 'Ping signal received' });
+    if (e.payload.cmd == 'chat:update')
     {
+      let chat = {id: e.payload.chatId, external: 1};
+
       if (e.payload.wasTapped)
       {
-        // app was off, just go to the chat
-        ML.go('chat/' + e.payload.chatId);
-
-        // app was upp, so update the chat in the list
-        let chat = {id: e.payload.chatId, read: 1, reload: 1};
-        ML.emit('chatupdate', {chat});
+        // app was OFF, just go to the chat
+        ML.go('chat/' + chat.id);
       }
+
+      // update the info in the DOM in any case
+      ML.emit('chat:update', {chat});
     }
   }
 
   render()
   {
-    if (maintenance)
+    if ($maintenance)
     {
       return h('div', null, h(MessageBoxModal, {data:
       {
@@ -334,7 +346,17 @@ class App extends Component
 }
 
 document.body.innerHTML = '';
+
 // cheapest place to compute initial window width
-var windowInnerWidth = window.innerWidth;
-var maintenance = 0;//!ML.getQueryVar('debug');
+var $windowInnerWidth = window.innerWidth,
+    $maintenance = 0, //!ML.getQueryVar('debug'),
+    $platform = window.self === window.top ? 0 : (window.Notification ? 2 : 1);
+
+/*
+    Platforms:
+    0 - web browser
+    1 - mobile app
+    2 - desktop app
+*/
+
 render(h(App), document.body);
