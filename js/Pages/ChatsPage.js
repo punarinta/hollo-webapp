@@ -177,10 +177,8 @@ class ChatsPage extends Component
         this.setState({blockSwipe: true});
       }
 
-      if (distY > 48 && !this.pull)
-      {
-        this.pull = 1;
-      }
+      if (distY > 96) this.pull = 2;
+      else if (distY > 48) this.pull = 1;
     }
     e.stopPropagation();
   }
@@ -189,12 +187,8 @@ class ChatsPage extends Component
   {
     if (this.state.blockSwipe)
     {
-      this.setState({blockSwipe: false});
-
-      if (this.pull)
+      if (this.pull == 2)
       {
-        this.pull = 0;
-        this.ul.style.height = 0;
         this.ul.style.transform = 'rotate(0)';
         this.ul.classList.add('travel');
         this.callFind(0, 1);
@@ -203,6 +197,10 @@ class ChatsPage extends Component
           this.ul.classList.remove('travel');
         }, 400);
       }
+
+      this.pull = 0;
+      this.ul.style.height = 0;
+      this.setState({blockSwipe: false});
     }
   }
 
