@@ -39,25 +39,27 @@ class ChatRow extends Component
 
     if (this.swipe)
     {
+      e.preventDefault();
       let threshold = this.props.vw * .3;
       this.item.style.transform = `translateX(${distX}px)`;
-      e.preventDefault();
 
       if (distX > threshold && this.action != 1)
       {
         this.action = 1;
-        this.base.querySelector('.markas').style.opacity = 0;
+        this.canUpdate = 1;
+        this.setState({mode: 1});
       }
-      else if (Math.abs(distX) < threshold)
+      else if (Math.abs(distX) < threshold && this.action)
       {
         this.action = 0;
-        this.base.querySelector('.markas').style.opacity = 1;
-        this.base.querySelector('.muteas').style.opacity = 1;
+        this.canUpdate = 1;
+        this.setState({mode: 0});
       }
-      else if (distX < -threshold)
+      else if (distX < -threshold && this.action != -1)
       {
         this.action = -1;
-        this.base.querySelector('.muteas').style.opacity = 0;
+        this.canUpdate = 1;
+        this.setState({mode: -1});
       }
       e.stopPropagation();
     }
@@ -182,10 +184,10 @@ class ChatRow extends Component
           )
         ),
         h('div', {className: 'shadow'},
-          h('div', {className: 'muteas'},
+          h('div', {style: {opacity: (this.state.mode != -1) - 0}},
             `${chat.muted ? 'un' : ''}mute`
           ),
-          h('div', {className: 'markas'},
+          h('div', {style: {opacity: (this.state.mode != 1) - 0}},
             'mark',
             h('br'),
             `as ${chat.read ? 'un' : ''}read`

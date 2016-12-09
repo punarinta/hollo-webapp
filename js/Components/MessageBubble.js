@@ -40,11 +40,11 @@ class MessageBubble extends Component
       body = body.replace(/(<*\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]>*)/ig, m =>
       {
         // check YouTube
-        let match = m.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
-        if (match && match[2].length == 11)
+      //  let match = m.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
+      /*  if (match && match[2].length == 11)
         {
           return `<iframe src="//www.youtube.com/embed/${match[2]}" frameborder="0" allowfullscreen></iframe>`;
-        }
+        }*/
 
         let s = m.replace(/\/$/, '').split('//');
         s = (s.length ? s[1] : s[0]).split('/');

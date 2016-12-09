@@ -153,7 +153,8 @@ class ChatsPage extends Component
       }
 
       this.setState({chats});
-      this.canLazyLoadMore = (data.length == this.pageLength);
+      this.canLazyLoadMore = (data.length == this.pageLength && !this.emailFilter.length);
+
       ML.emit('qs:count');
       ML.emit('busybox', 0);
     });
@@ -166,7 +167,7 @@ class ChatsPage extends Component
     this.swiping = 0;
     this.startX = t.pageX;
     this.startY = t.pageY;
-    this.ul = this.base.querySelector('ul');
+    this.ul = this.base.querySelector('loader');
   }
 
   touchMove(e)
@@ -179,10 +180,21 @@ class ChatsPage extends Component
       this.swiping = 1;
     }
 
-    /*if (this.pull)
+    if (this.pull)
     {
-      this.ul.style.transform = `translateY(${Math.min(distY, 216)}px)`;
-    }*/
+      if (Math.abs(distY) < 48)
+      {
+        this.pull = 0;
+        this.ul.style.height = 0;
+      }
+      else
+      {
+        this.ul.style.height = Math.min(distY, 300) + 'px';
+        this.ul.style.opacity = distY/300;
+        this.ul.style.transform = `rotate(${distY/5}deg)`
+      }
+      e.preventDefault()
+    }
 
     if (Math.abs(distY) > 16 && !this.swiping)
     {
@@ -191,11 +203,10 @@ class ChatsPage extends Component
         this.setState({blockSwipe: true});
       }
 
-      /*if (distY > 48 && !this.pull)
+      if (distY > 48 && !this.pull)
       {
         this.pull = 1;
-        this.ul.style.overflowY = 'hidden';
-      }*/
+      }
     }
     e.stopPropagation();
   }
@@ -205,12 +216,12 @@ class ChatsPage extends Component
     if (this.state.blockSwipe)
     {
       this.setState({blockSwipe: false});
-      this.ul.style.transform = 'translateY(0)';
 
       if (this.pull)
       {
         this.pull = 0;
-        this.ul.style.overflowY = 'auto';
+        this.ul.style.height = 0;
+        this.ul.style.transform = 'rotate(0)';
         this.ul.classList.add('travel');
         this.callFind(0, 1);
         setTimeout( () =>
@@ -360,6 +371,7 @@ class ChatsPage extends Component
           onfocuschange: this.filterFocusChanged.bind(this),
           className: this.state.filterActive ? 'focused' : ''
         }),
+        h('loader'),
         ulContents,
         h(QuickStack, {chats: this.state.chats, muted, user: this.props.user})
       )

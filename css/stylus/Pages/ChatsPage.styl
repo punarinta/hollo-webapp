@@ -42,7 +42,7 @@ chats-page
     align-items center
     bar-icon
       max-width 21px
-      margin-right 8px
+      margin-right 12px
   qs-shader
     display flex
     position fixed
@@ -92,12 +92,12 @@ chats-page
     box-shadow 0 2px 4px 0 rgba(0, 0, 0, .12)
     margin 0 8px
     overflow-x hidden
-    padding-bottom 40px
+    padding-bottom 20px
     shadow
       div
-        height 96px
+        height 70px
         position fixed
-        margin-top -86px
+        margin-top -50px
         width calc(100vw - 15px)
         background-image linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, .9) 51%, #fff)
     message-bubble
@@ -124,3 +124,12 @@ chats-page
         align-items center
         margin-left 12px
         @extend $font-heading
+
+  loader
+    width 100vw
+    height 0
+    z-index 1
+    position fixed
+    background url('/gfx/color/loading.svg') no-repeat center center
+    &.travel
+      transition all .4s ease-in
