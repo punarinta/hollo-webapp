@@ -191,7 +191,7 @@ class ChatsPage extends Component
       {
         this.ul.style.height = Math.min(distY, 300) + 'px';
         this.ul.style.opacity = distY/300;
-        this.ul.style.transform = `rotate(${distY/5}deg)`
+        this.ul.style.transform = `rotate(${distY/1.5}deg)`
       }
       e.preventDefault()
     }
