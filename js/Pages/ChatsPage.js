@@ -313,7 +313,13 @@ class ChatsPage extends Component
         ulContents =
         [
           h('ul', null,
-            chats
+            chats.length ? chats : h('div', {className: 'list-hint', style: {height: 'calc(100vh - 120px)'}},
+              'Welcome to Hollo!',
+              h('br'),
+              'Wait a bit please until',
+              h('br'),
+              'your messages are fetched...'
+            )
           ),
             this.emailFilter.length ? null : h('bottom-bar', null,
             h(BarIcon, {className: 'opa-85', caption: 'Profile', svg: 'profile', fill, onclick: () => ML.go('profile')}),
