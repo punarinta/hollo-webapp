@@ -82,6 +82,7 @@ class App extends Component
       }
     };
 
+    var that = this;
 
     (function mwInit(user)
     {
@@ -125,12 +126,10 @@ class App extends Component
         }
         if (data.cmd == 'sys:ping')
         {
-          if (window.Notification && Notification.permission === 'granted')
+          if (!that.notification('Ping signal received'))
           {
-            let icon = 'https://app.hollo.email/favicon/notification.png';
-            new Notification('Good news everyone!', {image: icon, icon});
+            ML.emit('messagebox', {html: 'Ping signal received'});
           }
-          else ML.emit('messagebox', {html: 'Ping signal received'});
         }
       };
     })();
@@ -189,6 +188,30 @@ class App extends Component
     });
 
     parent.postMessage({cmd: 'statusBar', color: 'e2e2e2', flag: 1}, '*');
+  }
+
+  notification (message)
+  {
+    if (window.Notification && Notification.permission === 'granted')
+    {
+      let icon = 'https://app.hollo.email/favicon/notification.png';
+
+      if (navigator.serviceWorker && $platform)
+      {
+        navigator.serviceWorker.register('modules/null.js').then(function (registration)
+        {
+          registration.showNotification(message, {icon});
+        })
+      }
+      else
+      {
+        new Notification('Good news everyone!', {image: icon, icon});
+      }
+
+      return true;
+    }
+
+    return false;
   }
 
   initUser(e)
