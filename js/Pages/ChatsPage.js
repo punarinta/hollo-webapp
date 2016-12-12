@@ -177,7 +177,7 @@ class ChatsPage extends Component
         this.setState({blockSwipe: true});
       }
 
-      if (distY > 96) this.pull = 2;
+      if (distY > 80) this.pull = 2;
       else if (distY > 48) this.pull = 1;
     }
     e.stopPropagation();
