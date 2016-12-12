@@ -381,6 +381,12 @@ class MessagesPage extends Component
       // Closure to capture the file information.
       reader.onload = ( (f) =>
       {
+        if (f.size > 10485760)
+        {
+          ML.emit('messagebox', {html: 'Sorry, maximum attachment size is 10MB.'});
+          return null;
+        }
+
         return (e) =>
         {
           let files = this.state.files;
