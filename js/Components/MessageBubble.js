@@ -58,6 +58,7 @@ class MessageBubble extends Component
       });
 
       body = body.replace(/(?:\r\n|\r\r|\n\n)/g, '</p><p>');
+      body = body.replace(/(?:[ ]*\r\n|[ ]*\r|[ ]*\n)/g, '<br>');
     }
 
     body = body.replace(/\[sys:fwd\]/g, '<div class="fwd">Forwarded message</div>');

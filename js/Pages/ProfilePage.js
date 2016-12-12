@@ -25,9 +25,9 @@ class ProfilePage extends Component
 
   testNotifications()
   {
-    ML.emit('messagebox', {html: 'After you close this message you will have 5 seconds to switch off your display', cb: () =>
+    ML.emit('messagebox', {html: 'Notification will be delivered in 5 seconds. OK to test mobile push, Cancel to test desktop push.', type: 1, cb: (code) =>
     {
-      ML.api('settings', 'testNotification');
+      ML.api('settings', 'testNotification', {mode: code ? 'firebase' : 'im'});
     }})
   }
 
@@ -50,16 +50,14 @@ class ProfilePage extends Component
           )
         ),
         h('button', {onclick: () => ML.go('auth/logout')}, 'Logout'),
-        h('br'),
         h('button', {onclick: this.testNotifications.bind(this)}, 'Test notifications'),
-        h('div', {className: 'group'}, 'Application version'),
-        h('div', {className: 'line'}, APPVER),
         h('div', {className: 'group'}, 'Settings'),
         h('ul', null,
           h(Checkbox, {caption: 'Emojis replace words', checked: CFG.emojisReplace, onchange: this.optEmojiChanged.bind(this)}),
           h(Checkbox, {caption: 'Colored avatars', checked: CFG.colorAvatars, onchange: this.optAvatarsChanged.bind(this)}),
           h(Checkbox, {caption: 'Show local notes', checked: CFG.showNotes, onchange: this.optNotesChanged.bind(this)})
         ),
+        h('div', {className: 'appver'}, 'ver: ' + APPVER),
         h('bottom-bar', null,
           h(BarIcon, {caption: 'Profile', svg: 'profile', fill}),
           h(BarIcon, {className: 'opa-85', caption: 'Inbox', svg: 'email', fill, onclick: () => ML.go('chats')}),

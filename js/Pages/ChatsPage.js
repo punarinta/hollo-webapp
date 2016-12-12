@@ -19,10 +19,8 @@ class ChatsPage extends Component
   {
     this.scrollReference = this.scroll.bind(this);
     this.chatUpdateReference = this.chatUpdate.bind(this);
-    this.firebaseListenerRef = this.firebaseListener.bind(this);
     this.base.querySelector('ul').addEventListener('scroll', this.scrollReference);
-    window.addEventListener('hollo:chatupdate', this.chatUpdateReference);
-    window.addEventListener('hollo:firebase', this.firebaseListenerRef);
+    window.addEventListener('hollo:chat:update', this.chatUpdateReference);
     this.callFind();
   }
 
@@ -35,8 +33,7 @@ class ChatsPage extends Component
   componentWillUnmount()
   {
     this.base.querySelector('ul').removeEventListener('scroll', this.scrollReference);
-    window.removeEventListener('hollo:chatupdate', this.chatUpdateReference);
-    window.removeEventListener('hollo:firebase', this.firebaseListenerRef);
+    window.removeEventListener('hollo:chat:update', this.chatUpdateReference);
   }
 
   chatUpdate(e)
@@ -48,10 +45,16 @@ class ChatsPage extends Component
       if (e.payload.chat.id == chats[i].id)
       {
         found = 1;
-
         chats[i].forceUpdate = 1;
-        chats[i].read = e.payload.chat.read;
+
+        if (e.payload.chat.read) chats[i].read = e.payload.chat.read;
         if (e.payload.chat.name) chats[i].name = e.payload.chat.name;
+
+        if (e.payload.chat.external && !e.payload.chat.silent)
+        {
+          // non-silent external signal => mark chat as unread
+          chats[i].read = 0;
+        }
 
         if (e.payload.cmd == 'muted')
         {
@@ -67,38 +70,9 @@ class ChatsPage extends Component
 
     if (!found)
     {
+      // TODO: make it more smooth, do not reload all
       // new chat -> force resync
       this.callFind(0, 1);
-    }
-  }
-
-  firebaseListener(e)
-  {
-    if (e.payload.authId != this.props.user.id)
-    {
-      return
-    }
-
-    if (e.payload.cmd == 'show-chat' && !e.payload.wasTapped)
-    {
-      // check if the chat is present
-      let found = 0, chats = this.state.chats;
-      for (let i in chats)
-      {
-        if (e.payload.chatId == chats[i].id)
-        {
-          found = 1;
-          // mark it as unread
-          chats[i].read = 0;
-          this.setState({chats});
-          break;
-        }
-      }
-      if (!found)
-      {
-        // full reload
-        this.callFind();
-      }
     }
   }
 
@@ -191,7 +165,7 @@ class ChatsPage extends Component
       {
         this.ul.style.height = Math.min(distY, 300) + 'px';
         this.ul.style.opacity = distY/300;
-        this.ul.style.transform = `rotate(${distY/5}deg)`
+        this.ul.style.transform = `rotate(${distY/1.5}deg)`
       }
       e.preventDefault()
     }
@@ -203,10 +177,8 @@ class ChatsPage extends Component
         this.setState({blockSwipe: true});
       }
 
-      if (distY > 48 && !this.pull)
-      {
-        this.pull = 1;
-      }
+      if (distY > 80) this.pull = 2;
+      else if (distY > 48) this.pull = 1;
     }
     e.stopPropagation();
   }
@@ -215,12 +187,8 @@ class ChatsPage extends Component
   {
     if (this.state.blockSwipe)
     {
-      this.setState({blockSwipe: false});
-
-      if (this.pull)
+      if (this.pull == 2)
       {
-        this.pull = 0;
-        this.ul.style.height = 0;
         this.ul.style.transform = 'rotate(0)';
         this.ul.classList.add('travel');
         this.callFind(0, 1);
@@ -229,6 +197,10 @@ class ChatsPage extends Component
           this.ul.classList.remove('travel');
         }, 400);
       }
+
+      this.pull = 0;
+      this.ul.style.height = 0;
+      this.setState({blockSwipe: false});
     }
   }
 
@@ -306,7 +278,7 @@ class ChatsPage extends Component
     }
     else
     {
-      let chats = [], vw = windowInnerWidth > 768 ? 360 : windowInnerWidth;
+      let chats = [], vw = $windowInnerWidth > 768 ? 360 : $windowInnerWidth;
 
       // self-chat
       if (CFG.showNotes && (!this.props.data || !this.props.data.muted))
@@ -341,7 +313,13 @@ class ChatsPage extends Component
         ulContents =
         [
           h('ul', null,
-            chats
+            chats.length ? chats : h('div', {className: 'list-hint', style: {height: 'calc(100vh - 120px)'}},
+              'Welcome to Hollo!',
+              h('br'),
+              'Wait a bit please until',
+              h('br'),
+              'your messages are fetched...'
+            )
           ),
             this.emailFilter.length ? null : h('bottom-bar', null,
             h(BarIcon, {className: 'opa-85', caption: 'Profile', svg: 'profile', fill, onclick: () => ML.go('profile')}),

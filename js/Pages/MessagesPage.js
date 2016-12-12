@@ -27,11 +27,9 @@ class MessagesPage extends Component
     this.scrollRef = this.scroll.bind(this);
     this.tryBlurringRef = this.tryBlurring.bind(this);
     this.chatUpdateReference = this.chatUpdate.bind(this);
-    this.firebaseListenerRef = this.firebaseListener.bind(this);
     this.base.querySelector('ul').addEventListener('scroll', this.scrollRef);
     this.base.addEventListener('click', this.tryBlurringRef);
-    window.addEventListener('hollo:chatupdate', this.chatUpdateReference);
-    window.addEventListener('hollo:firebase', this.firebaseListenerRef);
+    window.addEventListener('hollo:chat:update', this.chatUpdateReference);
     this.callFind();
     ML.load('modules/emojis');
   }
@@ -50,15 +48,28 @@ class MessagesPage extends Component
   {
     this.base.querySelector('ul').removeEventListener('scroll', this.scrollRef);
     this.base.removeEventListener('click', this.tryBlurringRef);
-    window.removeEventListener('hollo:chatupdate', this.chatUpdateReference);
-    window.removeEventListener('hollo:firebase', this.firebaseListenerRef);
+    window.removeEventListener('hollo:chat:update', this.chatUpdateReference);
   }
 
   chatUpdate(e)
   {
-    if (e.payload.chat.reload)
+    if (e.payload.chat.external)
     {
-      this.callFind(0, 1)
+      if (this.chat && e.payload.chat.id == this.chat.id)
+      {
+        let m = this.state.messages;
+        ML.api('message', 'getAllAfter', {chatId: this.chat.id, lastMessageId: m[m.length - 1].id}, data =>
+        {
+          data = data.reverse();
+          let messages = this.state.messages;
+          for (let i in data)
+          {
+            messages.push(data[i]);
+          }
+          this.setState({messages});
+          this.reposition(1)
+        });
+      }
     }
   }
 
@@ -94,7 +105,7 @@ class MessagesPage extends Component
       this.chat = data.chat;
       this.chat.read = 1;
 
-      ML.emit('chatupdate', {chat : this.chat});
+      ML.emit('chat:update', {chat : this.chat});
 
       data.messages = data.messages.reverse();
 
@@ -116,29 +127,6 @@ class MessagesPage extends Component
 
       ML.emit('busybox', 0);
     });
-  }
-
-  firebaseListener(e)
-  {
-    if (e.payload.authId != this.props.user.id)
-    {
-      return
-    }
-
-    if (e.payload.cmd == 'show-chat' && !e.payload.wasTapped)
-    {
-      if (this.chat && e.payload.chatId == this.chat.id)
-      {
-        // we're inside the target chat, fetch messages
-        ML.api('message', 'getLastChatMessage', {chatId: e.payload.chatId}, data =>
-        {
-          let messages = this.state.messages;
-          messages.push(data);
-          this.setState({messages});
-          this.reposition(1)
-        });
-      }
-    }
   }
 
   scroll(e)
@@ -340,14 +328,14 @@ class MessagesPage extends Component
   {
     this.chat.muted = !this.chat.muted;
     ML.api('chat', 'update', {id: this.chat.id, muted: this.chat.muted}, () => this.setState({menuModalShown: 0}));
-    ML.emit('chatupdate', {chat : this.chat});
+    ML.emit('chat:update', {chat : this.chat});
   }
 
   unreadChat()
   {
     this.chat.read = !this.chat.read;
     ML.api('chat', 'update', {id: this.chat.id, read: this.chat.read}, () => this.setState({menuModalShown: 0}));
-    ML.emit('chatupdate', {chat : this.chat});
+    ML.emit('chat:update', {chat : this.chat});
   }
 
   renameChat()
@@ -359,7 +347,7 @@ class MessagesPage extends Component
       {
         this.chat.name = name;
         ML.api('chat', 'update', { id: this.chat.id, name }, () => this.render());
-        ML.emit('chatupdate', {chat: this.chat});
+        ML.emit('chat:update', {chat: this.chat});
       }
     }});
   }
@@ -393,6 +381,12 @@ class MessagesPage extends Component
       // Closure to capture the file information.
       reader.onload = ( (f) =>
       {
+        if (f.size > 10485760)
+        {
+          ML.emit('messagebox', {html: 'Sorry, maximum attachment size is 10MB.'});
+          return null;
+        }
+
         return (e) =>
         {
           let files = this.state.files;
@@ -625,14 +619,17 @@ class MessagesPage extends Component
 
     if (this.state.menuModalShown == 4)
     {
+      let lis = this.chat.id ?
+      [
+        h('li', {onclick: this.muteChat.bind(this)}, this.chat.muted ? 'Unmute' : 'Mute'),
+        h('li', {onclick: this.unreadChat.bind(this)}, `Mark as ${this.chat.read ? 'un' : ''}read`),
+        this.chat.users.length > 1 ? h('li', {onclick: this.renameChat.bind(this)}, 'Rename chat') : null,
+        h('li', {onclick: this.leaveChat.bind(this)}, 'Leave chat')
+      ] : [h('li', {onclick: this.clearNotes.bind(this)}, 'Clear notes')];
+
       menuModal = h('div', {className: 'modal-shader'},
         h('menu-modal', {className: 'menu-more'},
-          h('ul', null,
-            h('li', {onclick: this.muteChat.bind(this)}, this.chat.muted ? 'Unmute' : 'Mute'),
-            h('li', {onclick: this.unreadChat.bind(this)}, `Mark as ${this.chat.read ? 'un' : ''}read`),
-            this.chat.users.length > 1 ? h('li', {onclick: this.renameChat.bind(this)}, 'Rename chat') : null,
-            this.chat.id ? h('li', {onclick: this.leaveChat.bind(this)}, 'Leave chat') : h('li', {onclick: this.clearNotes.bind(this)}, 'Clear notes')
-          )
+          h('ul', null, lis)
         )
       )
     }
@@ -669,7 +666,7 @@ class MessagesPage extends Component
         filterModal,
         menuModal,
         h('snackbar', null,
-          h(BarIcon, {img: 'color/arrow-back', onclick: () => { this.setState({menuModalShown: 0}); ML.go('chats', {muted: this.chat.muted} )} }),
+          h(BarIcon, {img: 'color/arrow-back', onclick: () => { this.setState({menuModalShown: 0}); ML.go('chats', {muted: this.chat ? this.chat.muted : 0} )} }),
           h('div', {className: 'name' + (this.state.menuModalShown == 1 ? ' toggled' : ''), onclick: () => this.toggleMenu(1) }, name),
           h(BarIcon, {className: this.state.menuModalShown == 2 ? 'toggled' : '', img: 'color/subjs', width: 40, height: 40, onclick: () => this.toggleMenu(2) }),
           h(BarIcon, {className: this.state.menuModalShown == 3 ? 'toggled' : '', img: 'color/clip', width: 40, height: 40, onclick: () => this.toggleMenu(3) }),
@@ -692,8 +689,7 @@ class MessagesPage extends Component
             rows: 1,
             placeholder: 'Write a new hollo...',
             onkeyup: this.composerTextChanged.bind(this),
-            onfocus: (e) => { this.setState({compFocus: 1}); setTimeout(() => e.target.focus(), 50); /*parent.postMessage({cmd: 'statusBar', flag: 1}, '*');*/ this.reposition(1, 50) },
-        //    onblur: () => parent.postMessage({cmd: 'statusBar'}, '*'),
+            onfocus: (e) => { this.setState({compFocus: 1}); setTimeout(() => e.target.focus(), 50); this.reposition(1, 50) },
             value: this.state.currentComposed
           }),
           this.state.canSend ? h(BarIcon, {fullHeight: 1, width: 40, img: 'color/send', height: sendHeight, onclick: this.send.bind(this) }) : '',
