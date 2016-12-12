@@ -142,7 +142,7 @@ class ChatsPage extends Component
     this.startX = t.pageX;
     this.startY = t.pageY;
     this.ul = this.base.querySelector('loader');
-    this.ulin = this.base.querySelector('inner-loader');
+    this.ulin = this.ul.querySelector('inner-loader');
   }
 
   touchMove(e)
@@ -351,7 +351,7 @@ class ChatsPage extends Component
           onfocuschange: this.filterFocusChanged.bind(this),
           className: this.state.filterActive ? 'focused' : ''
         }),
-        h('loader', {}, h('inner-loader')),
+        h('loader', null, h('inner-loader')),
         ulContents,
         h(QuickStack, {chats: this.state.chats, muted, user: this.props.user})
       )
