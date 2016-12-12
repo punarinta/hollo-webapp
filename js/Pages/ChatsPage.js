@@ -202,7 +202,6 @@ class ChatsPage extends Component
       }
 
       this.pull = 0;
-      this.ul.style.height = 0;
       this.setState({blockSwipe: false});
     }
   }
