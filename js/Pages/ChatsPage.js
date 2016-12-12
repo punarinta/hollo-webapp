@@ -142,6 +142,7 @@ class ChatsPage extends Component
     this.startX = t.pageX;
     this.startY = t.pageY;
     this.ul = this.base.querySelector('loader');
+    this.ulin = this.base.querySelector('inner-loader');
   }
 
   touchMove(e)
@@ -159,13 +160,13 @@ class ChatsPage extends Component
       if (Math.abs(distY) < 48)
       {
         this.pull = 0;
-        this.ul.style.height = 0;
+        this.ul.style.opacity = 0;
       }
       else
       {
-        this.ul.style.height = Math.min(distY, 300) + 'px';
         this.ul.style.opacity = distY/300;
-        this.ul.style.transform = `rotate(${distY/1.5}deg)`
+        this.ulin.style.transform = `rotate(${distY/1.1}deg)`
+        this.ul.style.transform = `translateY(${distY*0.3}px)`
       }
       e.preventDefault()
     }
@@ -189,7 +190,9 @@ class ChatsPage extends Component
     {
       if (this.pull == 2)
       {
-        this.ul.style.transform = 'rotate(0)';
+        this.ul.style.opacity = 0;
+        this.ul.style.transform = 'translateY(0)';
+        this.ulin.style.transform = 'rotate(0)';
         this.ul.classList.add('travel');
         this.callFind(0, 1);
         setTimeout( () =>
@@ -349,7 +352,7 @@ class ChatsPage extends Component
           onfocuschange: this.filterFocusChanged.bind(this),
           className: this.state.filterActive ? 'focused' : ''
         }),
-        h('loader'),
+        h('loader', {}, h('inner-loader')),
         ulContents,
         h(QuickStack, {chats: this.state.chats, muted, user: this.props.user})
       )

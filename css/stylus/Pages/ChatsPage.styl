@@ -126,10 +126,21 @@ chats-page
         @extend $font-heading
 
   loader
-    width 100vw
-    height 0
+    width 48px
+    height 48px
     z-index 1
     position fixed
-    background url('/gfx/color/loading.svg') no-repeat center center
+    opacity 0
+    left 50%
+    margin-left @width*(-0.5)
+    background-color #ffffff
+    border-radius 999px
+    inner-loader
+      display block
+      width 48px
+      height 48px
+      background url('/gfx/color/loading.svg') no-repeat center center
     &.travel
       transition all .4s ease-in
+      inner-loader
+        transition all .4s ease-in
