@@ -113,10 +113,19 @@ class MessageBubble extends Component
       subject = w.title;
       for (let i in w.att)
       {
-        if (w.att[i][2] == 'ACCEPTED' && w.att[i][0] != w.org[0])
+        if (w.att[i][0] != w.org[0])
         {
-          subject += ': ACCEPTED';
-          break;
+          let name = w.att[i][1].length ? w.att[i][1] : w.att[i][0];
+          if (w.att[i][2] == 'ACCEPTED')
+          {
+            subject = name + ' accepted your invite';
+            break;
+          }
+          else if (w.att[i][2] == 'TENTATIVE')
+          {
+            subject = name + ' said "maybe" to your invite';
+            break;
+          }
         }
       }
 

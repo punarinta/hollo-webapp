@@ -156,8 +156,28 @@ class ChatRow extends Component
 
     if (lastMsg !== null && typeof lastMsg === 'object')
     {
+      let w = lastMsg.widget, subject = w.title;
+
+      for (let i in w.att)
+      {
+        if (w.att[i][0] != w.org[0])
+        {
+          let name = w.att[i][1].length ? w.att[i][1] : w.att[i][0];
+          if (w.att[i][2] == 'ACCEPTED')
+          {
+            subject = '✔ ️' + name + ' accepted your invite';
+            break;
+          }
+          else if (w.att[i][2] == 'TENTATIVE')
+          {
+            subject = '❓ ' + name + ' said "maybe" to your invite';
+            break;
+          }
+        }
+      }
+
       // for now we only support calendar invites
-      lastMsg = '📅 ' + lastMsg.widget.title;
+      lastMsg = '📅 ' + subject;
     }
     else
     {
