@@ -284,6 +284,7 @@ class MessagesPage extends Component
 
   newSubject()
   {
+    mixpanel.track('Message - new subject');
     this.setState({currentSubject: ''});
     setTimeout(() => this.base.querySelector('input.subj').focus(), 50);
   }
@@ -340,6 +341,7 @@ class MessagesPage extends Component
 
   renameChat()
   {
+    mixpanel.track('Chat - rename');
     this.setState({menuModalShown: 0});
     ML.emit('messagebox', {type: 1, html: 'Enter new name:', input: this.chat.name, cb: (code, name) =>
     {
