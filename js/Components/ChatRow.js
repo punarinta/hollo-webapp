@@ -146,7 +146,7 @@ class ChatRow extends Component
     return this.canUpdate;
   }
 
-  render()
+  render(props)
   {
     this.canUpdate = false;
 
@@ -165,12 +165,14 @@ class ChatRow extends Component
           let name = w.att[i][1].length ? w.att[i][1] : w.att[i][0];
           if (w.att[i][2] == 'ACCEPTED')
           {
-            subject = '✔ ️' + name + ' accepted your invite';
+            if (this.props.user.email == w.att[i][0]) subject = '✔ ️you accepted this invite';
+            else subject = '✔ ️' + name + ' accepted this invite';
             break;
           }
           else if (w.att[i][2] == 'TENTATIVE')
           {
-            subject = '❓ ' + name + ' said "maybe" to your invite';
+            if (this.props.user.email == w.att[i][0]) subject = '✔ ️you accepted this invite';
+            else subject = '❓ ' + name + ' said "maybe" to this invite';
             break;
           }
         }

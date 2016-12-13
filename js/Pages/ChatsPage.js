@@ -266,7 +266,15 @@ class ChatsPage extends Component
     {
       let email = this.emailFilter;
       ulContents = h('ul', null,
-        h(ChatRow, {chat: {users: [{email, name: email}], read:1, last: {msg:'Create a chat with ' + email}}, canSwipe: 0, onclick: this.addNew.bind(this)})
+        h(ChatRow,
+        {
+          user: this.props.user,
+          chat: {users: [{email, name: email}],
+          read: 1,
+          last: {msg:'Create a chat with ' + email}},
+          canSwipe: 0,
+          onclick: this.addNew.bind(this)
+        })
       )
     }
     else if (this.state.filterActive && !this.emailFilter.length)
@@ -289,6 +297,7 @@ class ChatsPage extends Component
         let my = JSON.parse(localStorage.getItem('messages')) || [];
         chats.push(h(ChatRow,
         {
+          user: this.props.user,
           chat: {users: [this.props.user], last: {msg: my.length ? my[my.length-1].body : ''}, read: 1, name: 'My notes'},
           canSwipe: 0,
           onclick: (chat) => ML.go('chat/me'),
@@ -303,6 +312,7 @@ class ChatsPage extends Component
 
         chats.push(h(ChatRow,
         {
+          user: this.props.user,
           chat,
           canSwipe: !this.state.blockSwipe,
           onclick: (chat) => { mixpanel.track('Chat - enter', {id: chat.id}); ML.go('chat/' + chat.id) },

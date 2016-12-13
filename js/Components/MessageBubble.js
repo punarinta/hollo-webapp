@@ -118,12 +118,12 @@ class MessageBubble extends Component
           let name = w.att[i][1].length ? w.att[i][1] : w.att[i][0];
           if (w.att[i][2] == 'ACCEPTED')
           {
-            subject = name + ' accepted your invite';
+            subject = name + ' accepted this invite';
             break;
           }
           else if (w.att[i][2] == 'TENTATIVE')
           {
-            subject = name + ' said "maybe" to your invite';
+            subject = name + ' said "maybe" to this invite';
             break;
           }
         }
