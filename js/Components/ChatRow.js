@@ -164,6 +164,10 @@ class ChatRow extends Component
       lastMsg = lastMsg.replace(/\[sys:fwd\]/g, ' ➡️ ' + chat.last.subj).replace(/(<([^>]+)>)/ig, '').substring(0, 60).trim();
     }
 
+    let d = document.createElement('div');
+    d.innerHTML = lastMsg;
+    lastMsg = d.textContent.trim();
+
     return (
 
       h('chat-row', {
