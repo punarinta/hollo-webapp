@@ -544,7 +544,7 @@ class MessagesPage extends Component
               user.name
             ),
             h('div', {className: 'email'},
-              user.email
+              ML.prettyEmail(user.email)
             )
           ),
           this.chat.users.length > 1 ? h(BarIcon, {img: 'color/cross', onclick: () => this.removeUser(user) }) : ''
