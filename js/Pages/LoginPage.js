@@ -17,6 +17,7 @@ class LoginPage extends Component
     }
     else
     {
+      // not only mobile, but all frame-like clients
       ML.api('auth', 'getOAuthToken', {redirectUrl: CFG.redirectUrl + 'Mobile'}, (data) =>
       {
         parent.postMessage({cmd: 'openUrl', url: data}, '*');
