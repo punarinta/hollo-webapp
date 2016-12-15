@@ -87,12 +87,13 @@ class Avatar extends Component
         email = chat.users[0] ? chat.users[0].email : '',
         style =
         {
-          backgroundColor: CFG.colorAvatars ? ML.colorHash(email) : '#e2e3dc',
           backgroundImage: this.state.bgImage,
           width: size,
           minWidth: size,
           height: size
         };
+
+    if (CFG.colorAvatars) style.backgroundColor = ML.colorHash(email);
 
     return (
 
