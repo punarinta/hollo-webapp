@@ -12,10 +12,14 @@ chat-row
   avatar
     margin margin-large margin-medium margin-large margin-large
     line-height @height
+    @media screen and (min-width break-tablet)
+      background-color rgba(0,0,0,0.2)
   &>div
     display flex
     background color-bg-grey
     width 100%
+    @media screen and (min-width break-tablet)
+      background color-brand
     &.travel
       transition all .4s ease-in
   .name
@@ -24,6 +28,9 @@ chat-row
     overflow hidden
     text-overflow ellipsis
     width calc(100vw - 90px)
+    @media screen and (min-width break-tablet)
+      color color-font-white
+      width calc(360px - 90px)
     &:first-letter
       text-transform capitalize
   .email
@@ -31,6 +38,9 @@ chat-row
     text-overflow ellipsis
     width calc(100vw - 90px)
     @extend $font-bread-2
+    @media screen and (min-width break-tablet)
+      color color-font-hint-white
+      width calc(360px - 90px)
   .info
     padding-top 14px
   .real
