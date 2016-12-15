@@ -148,7 +148,8 @@ class App extends Component
 
           if (isMobile)
           {
-            history.go(1 - history.length);
+            if ($platform == 1) history.go(1 - history.length);
+            else history.go(0); // this is for desktop clients
           }
           else
           {
@@ -167,6 +168,11 @@ class App extends Component
         {
           this.setState({page: 'login'});
         }});
+      },
+      () =>
+      {
+        // this is for desktop clients
+        document.location.href = document.location.origin + document.location.pathname;
       });
     }
     // use GET for better start performance

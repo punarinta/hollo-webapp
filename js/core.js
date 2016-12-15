@@ -7,7 +7,7 @@ var ML =
   ws: null,
   _wsOpened: 0,
 
-  api: function (endpoint, method, data, callback, error)
+  api: function (endpoint, method, data, callback, error, failure)
   {
     var r = new XMLHttpRequest(), ps = null, pl;
 
@@ -33,7 +33,8 @@ var ML =
           console.log('Status:', status);
           if (status != 401)
           {
-            ML.emit('messagebox', {html: json.errMsg});
+            if (failure) failure(json.errMsg);
+            else ML.emit('messagebox', {html: json.errMsg});
           }
         }
       }
