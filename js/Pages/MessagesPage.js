@@ -544,7 +544,7 @@ class MessagesPage extends Component
               user.name
             ),
             h('div', {className: 'email'},
-              user.email
+              ML.prettyEmail(user.email)
             )
           ),
           this.chat.users.length > 1 ? h(BarIcon, {img: 'color/cross', onclick: () => this.removeUser(user) }) : ''
@@ -605,7 +605,7 @@ class MessagesPage extends Component
             let file = m.files[j];
 
             filePlates.push(h('li', null,
-              h(FilePlate, {file, size: '47vw'}),
+              h(FilePlate, {file, size: 'calc(50vw - 30px)'}),
               h(BarIcon, {img: 'color/download', onclick: () => window.open('https://' + CFG.apiRoot + '/api/file?method=download&messageId=' + m.id + '&offset=' + j) })
             ))
           }

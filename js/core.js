@@ -211,6 +211,13 @@ var ML =
     return [name, nc]
   },
 
+  prettyEmail: function (email)
+  {
+    var parts = email.split('@');
+    if (parts[0].length > 25) parts[0] = parts[0].substring(0, 25) + '…';
+    return parts.join('@')
+  },
+
   // find first parent of the specified type
   par: function (x, type)
   {

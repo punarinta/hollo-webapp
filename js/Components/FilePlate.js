@@ -4,7 +4,7 @@ class FilePlate extends Component
   {
     let file = this.props.file,
         size = this.props.size || '72px',
-        nc = file.type.split('/')[1].substring(0, 8);
+        nc = file.type.split('/')[1];
 
     let style =
     {
@@ -13,6 +13,21 @@ class FilePlate extends Component
       minWidth: size,
       height: size
     };
+
+    if (nc.length > 6)
+    {
+      if (nc.length > 27) nc = nc.substring(0, 27) + '…';
+
+      let a = [];
+      style.fontSize = '80%';
+
+      do
+      {
+        a.push(nc.substring(0, 7));
+        a.push(h('br'));
+      } while ((nc = nc.substring(7, nc.length)) != '');
+      nc = a;
+    }
 
     if (file.type.match('image.*') && file.b64)
     {

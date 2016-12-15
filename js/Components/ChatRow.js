@@ -146,7 +146,7 @@ class ChatRow extends Component
     return this.canUpdate;
   }
 
-  render()
+  render(props)
   {
     this.canUpdate = false;
 
@@ -156,13 +156,39 @@ class ChatRow extends Component
 
     if (lastMsg !== null && typeof lastMsg === 'object')
     {
+      let w = lastMsg.widget, subject = w.title;
+
+      for (let i in w.att)
+      {
+        if (w.att[i][0] != w.org[0])
+        {
+          let name = w.att[i][1].length ? w.att[i][1] : w.att[i][0];
+          if (w.att[i][2] == 'ACCEPTED')
+          {
+            if (this.props.user.email == w.att[i][0]) subject = '✔ ️you accepted this invite';
+            else subject = '✔ ️' + name + ' accepted this invite';
+            break;
+          }
+          else if (w.att[i][2] == 'TENTATIVE')
+          {
+            if (this.props.user.email == w.att[i][0]) subject = '✔ ️you accepted this invite';
+            else subject = '❓ ' + name + ' said "maybe" to this invite';
+            break;
+          }
+        }
+      }
+
       // for now we only support calendar invites
-      lastMsg = '📅 ' + lastMsg.widget.title;
+      lastMsg = '📅 ' + subject;
     }
     else
     {
       lastMsg = lastMsg.replace(/\[sys:fwd\]/g, ' ➡️ ' + chat.last.subj).replace(/(<([^>]+)>)/ig, '').substring(0, 60).trim();
     }
+
+    let d = document.createElement('div');
+    d.innerHTML = lastMsg;
+    lastMsg = d.textContent.trim();
 
     return (
 
