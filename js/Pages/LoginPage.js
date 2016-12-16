@@ -41,8 +41,8 @@ class LoginPage extends Component
       return;
     }
 
-    // disallow Gmail login here
-    if (user.split('@')[1] == 'gmail.com')
+    // disallow OAuth2 login here
+    if (['gmail.com'].indexOf(user.split('@')[1].toLowerCase()) != -1)
     {
       ML.emit('messagebox', {html: 'Use "Sign in with Google" button'});
       return;
