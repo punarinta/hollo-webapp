@@ -6,6 +6,11 @@ class LoginPage extends Component
     this.state.imapEnabled = false;
   }
 
+  componentDidMount()
+  {
+    this.nameInput.value = localStorage.getItem('imapLogin');
+  }
+
   loginWithGoogle()
   {
     if (window.self === window.top)
