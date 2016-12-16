@@ -619,7 +619,7 @@ class MessagesPage extends Component
       )
     }
 
-    if (this.state.menuModalShown == 4)
+    if (this.state.menuModalShown == 4 && this.chat)
     {
       let lis = this.chat.id ?
       [
