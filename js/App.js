@@ -66,6 +66,7 @@ class App extends Component
             break;
 
           case 'auth/logout':
+            if ($platform == 1) window.plugins.googleplus.logout();
             ML.api('auth', 'logout', null, () =>
             {
               this.setState({page: 'login', busy: 0});
@@ -374,18 +375,40 @@ class App extends Component
   }
 }
 
-document.body.innerHTML = '';
-
-// cheapest place to compute initial window width
-var $windowInnerWidth = window.innerWidth,
+// setup global vars
+var $windowInnerWidth = 360,
     $maintenance = 0, //!ML.getQueryVar('debug'),
-    $platform = window.self === window.top ? 0 : (window.Notification ? 2 : 1);
+    $platform = 0;
 
-/*
-    Platforms:
-    0 - web browser
-    1 - mobile app
-    2 - desktop app
-*/
+function onDeviceReady()
+{
+  document.body.innerHTML = '';
 
-render(h(App), document.body);
+  // cheapest place to compute initial window width
+  $windowInnerWidth = window.innerWidth;
+  $platform = window.self === window.top ? 0 : (window.Notification ? 2 : 1);
+
+  /*
+      Platforms:
+      0 - web browser
+      1 - mobile app
+      2 - desktop app
+  */
+
+  if (window.plugins && window.plugins.googleplus)
+  {
+    $platform = 1;
+  }
+
+  render(h(App), document.body);
+}
+
+// (iPhone|iPod|iPad|Android|BlackBerry)
+if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/))
+{
+  document.addEventListener('deviceready', onDeviceReady, false);
+}
+else
+{
+  onDeviceReady();
+}

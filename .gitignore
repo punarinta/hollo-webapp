@@ -8,7 +8,7 @@ deploy.tar.gz
 dist
 local-config.js
 stuff
-css/*.css
+*.css
 api
 files
 node_modules

@@ -56,10 +56,10 @@ class Avatar extends Component
 
     if (chat.users.length < 2)
     {
-      let im = new Image;
+      let im = new Image, avaPath = 'https://app.hollo.email/files/avatars/' + email;
       im.onload = () =>
       {
-        this.setState({nc: '', bgImage: `url('/files/avatars/${email}')`});
+        this.setState({nc: '', bgImage: `url('${avaPath}')`});
       };
       im.onerror = () =>
       {
@@ -76,7 +76,7 @@ class Avatar extends Component
           }
         });
       };
-      im.src = '/files/avatars/' + email;
+      im.src = avaPath;
     }
   }
 
