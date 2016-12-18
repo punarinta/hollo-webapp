@@ -195,7 +195,10 @@ class App extends Component
       }
     });
 
-    parent.postMessage({cmd: 'statusBar', color: 'e2e2e2', flag: 1}, '*');
+    if ($platform == 1 && window.StatusBar)
+    {
+      StatusBar.show();
+    }
   }
 
   notification (message)
@@ -229,7 +232,7 @@ class App extends Component
     ML.sessionId = data.sessionId;
     localStorage.setItem('sessionId', data.sessionId);
 
-    if ($platform == 1)
+    if ($platform == 1 && window.FCMPlugin)
     {
       FCMPlugin.onNotification(data =>
       {
@@ -394,11 +397,17 @@ var $windowInnerWidth = 360,
 
 function onDeviceReady()
 {
+  if (window.StatusBar)
+  {
+    StatusBar.hide();
+    StatusBar.backgroundColorByHexString('e2e2e2');
+  }
+
   document.body.innerHTML = '';
 
   // cheapest place to compute initial window width
   $windowInnerWidth = window.innerWidth;
-  $platform = window.self === window.top ? 0 : (window.Notification ? 2 : 1);
+  $platform = window.self === window.top ? 0 : 2;
 
   /*
       Platforms:
@@ -407,7 +416,7 @@ function onDeviceReady()
       2 - desktop app
   */
 
-  if (window.plugins && window.plugins.googleplus)
+  if (window.cordova)
   {
     $platform = 1;
   }
