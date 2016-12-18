@@ -25,7 +25,7 @@ function prefixify($text = '', $prefixes = [], $prefixed = [])
                     $extraTextLine = str_replace($style, $prefixes[$pfx] . $style, $textLines[$i]);
                     array_splice($textLines, $i + 1, 0, $extraTextLine);
 
-                    echo "$style - $extraTextLine\n";
+                    echo "$style:\t$extraTextLine\n";
                 }
             }
         }
@@ -38,7 +38,17 @@ echo "Setting up...\n";
 
 chdir(__DIR__);
 
-$configFile = ($_SERVER['argc'] == 2) ? $_SERVER['argv'][1] : 'config.json';
+$platform = $_SERVER['argc'] >= 2 ? $_SERVER['argv'][1] : 'web';
+$configFile = $_SERVER['argc'] >= 3 ? $_SERVER['argv'][2] : 'config.json';
+
+echo "Platform = $platform\n";
+
+if (!in_array($platform, ['web', 'ios', 'android']))
+{
+    echo "Platform not supported!\n\n";
+    exit;
+}
+
 $config = json_decode(file_get_contents(__DIR__ . '/' . $configFile), true);
 
 chdir($config['root']);
@@ -108,10 +118,19 @@ $search = ['/\>[^\S ]+/s', '/[^\S ]+\</s', '/(\s)+/s', '#<!-- DEV -->(.*?)<!-- /
 $replace = ['>', '<', '\\1', ''];
 $html = preg_replace($search, $replace, $html);
 
-$cordova = '<script src="cordova.js"></script>';
+if (in_array($platform, ['ios', 'android']))
+{
+    $version = $platform . ', compiled ' . date('d.m.Y H:i');
+    $cordova = '<script src="cordova.js"></script>';
+}
+else
+{
+    $version = date('d.m.Y H:i');
+    $cordova = '';
+}
 
 $html = strtr($html, ['> ' => '>', ' <' => '<']);
-$html = str_replace("APPVER='dev'", "APPVER='" . date('d.m.Y H:i') . "'", $html);
+$html = str_replace("APPVER='dev'", "APPVER='" . $version . "'", $html);
 $html = str_replace('<!-- CSS -->', '<style>' . file_get_contents("$distDir/$random.css") . '</style>', $html);
 $html = str_replace('<!-- JS -->', $cordova . '<script>' . file_get_contents("$distDir/$random.js") . file_get_contents("$distDir/$random_es6.js") . '</script>' . $mixpanel, $html);
 
