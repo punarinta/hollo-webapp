@@ -229,8 +229,19 @@ class App extends Component
     ML.sessionId = data.sessionId;
     localStorage.setItem('sessionId', data.sessionId);
 
-    // send auth data to top frame
-    parent.postMessage({cmd: 'onAuth', user: data.user}, '*');
+    if ($platform == 1)
+    {
+      FCMPlugin.onNotification(data =>
+      {
+        console.log('Firebase message:', data);
+        ML.emit('firebase', data);
+      },
+      msg => console.log('Firebase on!', msg),
+      err =>console.log('Firebase error:', err));
+
+      console.log('FCM: subscribe to user-' + data.user.id);
+      FCMPlugin.subscribeToTopic('user-' + data.user.id);
+    }
 
     if (typeof mixpanel != 'undefined' && !mixpanel.off)
     {
