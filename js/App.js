@@ -47,6 +47,7 @@ class App extends Component
     // === ROUTER ===
     window.onpopstate = (e) =>
     {
+      if (!e.state) return;
       let r = e.state.route, rs = r.split('/');
 
       if (rs[0] == 'chat')
