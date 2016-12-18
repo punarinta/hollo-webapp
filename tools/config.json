@@ -75,7 +75,6 @@
     "cp -R gfx $distDir/gfx",
     "cp -R favicon $distDir/favicon",
     "cp node_modules/preact/dist/preact.min.js.map $distDir",
-    "cp cordova.js $distDir",
     "rm -rf temp"
   ]
 }
