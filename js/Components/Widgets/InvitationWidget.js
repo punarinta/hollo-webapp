@@ -4,8 +4,7 @@ class InvitationWidget extends Component
   {
     if ($platform == 1 && cordova.InAppBrowser)
     {
-      cordova.InAppBrowser.open(e.target.href, '_system');
-      console.log('Try opening:', e.target.href);
+      window.open(e.target.href, '_system');
       return false;
     }
   }
@@ -57,7 +56,7 @@ class InvitationWidget extends Component
           )
         ),
         url ? h('div', { className: 'open' },
-          h('a', { onclick: this.aClicked.bind(this), target: '_blank', href: url },
+          h('a', { onclick: this.aClicked.bind(this), target: '_system', href: url },
             'Open in calendar'
           )
         ) : ''
