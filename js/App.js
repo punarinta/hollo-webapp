@@ -140,23 +140,13 @@ class App extends Component
     let oauthCode = ML.getQueryVar('code');
     if (oauthCode)
     {
-      let isMobile = window.location.pathname == '/oauth/googleMobile';
-
-      ML.api('auth', 'processOAuthCode', {code: oauthCode, redirectUrl: CFG.redirectUrl + (isMobile?'Mobile':'')}, data =>
+      ML.api('auth', 'processOAuthCode', {code: oauthCode, redirectUrl: CFG.redirectUrl}, data =>
       {
         if (data.user)
         {
+          history.replaceState({}, 'Hollo!', '/');
           ML.emit('inituser', {data});
-
-          if (isMobile)
-          {
-            if ($platform == 1) history.go(1 - history.length);
-            else history.go(0); // this is for desktop clients
-          }
-          else
-          {
-            ML.go('chats')
-          }
+          ML.go('chats')
         }
         else
         {
