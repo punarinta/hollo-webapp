@@ -425,7 +425,7 @@ function onDeviceReady()
 }
 
 // (iPhone|iPod|iPad|Android|BlackBerry)
-if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/))
+if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/) && !CFG.local)
 {
   document.addEventListener('deviceready', onDeviceReady, false);
 }
