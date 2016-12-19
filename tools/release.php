@@ -122,6 +122,7 @@ if (in_array($platform, ['ios', 'android']))
 {
     $version = $platform . ', compiled ' . date('d.m.Y H:i');
     $cordova = '<script src="cordova.js"></script>';
+    $html = str_replace('href="/', 'href="', $html);
 }
 else
 {
