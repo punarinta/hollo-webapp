@@ -409,6 +409,16 @@ function onDeviceReady()
   if (window.cordova)
   {
     $platform = 1;
+
+    window.plugins.intent.setNewIntentHandler( intent =>
+    {
+      console.log('setNewIntentHandler()', intent);
+    });
+
+    window.plugins.intent.getCordovaIntent(intent =>
+    {
+      console.log('getCordovaIntent()', intent);
+    }, () => {});
   }
 
   render(h(App), document.body);
