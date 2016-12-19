@@ -190,9 +190,6 @@ class ChatsPage extends Component
     {
       if (this.pull == 2)
       {
-        this.ul.style.opacity = 0;
-        this.ul.style.transform = 'translateY(0)';
-        this.ulin.style.transform = 'rotate(0)';
         this.ul.classList.add('travel');
         this.callFind(0, 1);
         setTimeout( () =>
@@ -202,6 +199,9 @@ class ChatsPage extends Component
       }
 
       this.pull = 0;
+      this.ul.style.opacity = 0;
+      this.ul.style.transform = 'translateY(0)';
+      this.ulin.style.transform = 'rotate(0)';
       this.setState({blockSwipe: false});
     }
   }
