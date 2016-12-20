@@ -5,6 +5,7 @@
   [
     "js/md5",
     "js/core",
+    "js/storage",
     "js/gravatar",
     "js/settings"
   ],
