@@ -412,13 +412,9 @@ function onDeviceReady()
 
     window.plugins.intent.setNewIntentHandler( intent =>
     {
-      console.log('setNewIntentHandler()', intent);
+      ML.emit('messagebox', {html: 'This feature will be fully supported in the next version. Stay tuned!'});
+      console.log('Intent:', intent);
     });
-
-    window.plugins.intent.getCordovaIntent(intent =>
-    {
-      console.log('getCordovaIntent()', intent);
-    }, () => {});
   }
 
   render(h(App), document.body);
