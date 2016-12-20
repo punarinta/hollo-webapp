@@ -1,11 +1,5 @@
 class Avatar extends Component
 {
-  constructor()
-  {
-    super();
-    this.state.nothing = 0;
-  }
-
   componentWillMount()
   {
     this.loadGraphics(this.props);
@@ -41,6 +35,9 @@ class Avatar extends Component
         };
         im.onerror = () =>
         {
+          // TODO: fix a bug when multiple similar requests are made
+          this.setState({nc: ML.xname(chat)[1], bgImage: '', size});
+
           // try loading Gravatar if Gmail avatar failed
           Gravatar.load(email, d =>
           {
