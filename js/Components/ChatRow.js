@@ -5,16 +5,11 @@ class ChatRow extends Component
     this.swipe = 0;
     this.action = 0;
     this.blockSwipe = 0;
-    this.canUpdate = true;
     this.state.chat = this.props.chat;
   }
 
   componentWillReceiveProps(nextProps)
   {
-    if (JSON.stringify(this.state.chat) != JSON.stringify(nextProps.chat) || nextProps.chat.forceUpdate == 1)
-    {
-      this.canUpdate = true;
-    }
     this.setState({chat: nextProps.chat});
   }
 
@@ -46,19 +41,16 @@ class ChatRow extends Component
       if (distX > threshold && this.action != 1)
       {
         this.action = 1;
-        this.canUpdate = 1;
         this.setState({mode: 1});
       }
       else if (Math.abs(distX) < threshold && this.action)
       {
         this.action = 0;
-        this.canUpdate = 1;
         this.setState({mode: 0});
       }
       else if (distX < -threshold && this.action != -1)
       {
         this.action = -1;
-        this.canUpdate = 1;
         this.setState({mode: -1});
       }
       e.stopPropagation();
@@ -141,15 +133,8 @@ class ChatRow extends Component
     }
   }
 
-  shouldComponentUpdate()
-  {
-    return this.canUpdate;
-  }
-
   render(props)
   {
-    this.canUpdate = false;
-
     let chat = this.state.chat,
         email = chat.users[0].email,
         lastMsg = chat.last.msg || '';
