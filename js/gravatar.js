@@ -42,12 +42,12 @@ var Gravatar =
     f.setAttribute('type', 'text/javascript');
     f.setAttribute('src', 'https://en.gravatar.com/' + h + '.json?callback=Gravatar.jsonp');
     f.setAttribute('id', 'grava-' + h);
-    f.onerror = function ()
+    f.onerror = function (e)
     {
+      e.target.parentElement.removeChild(e.target);
+
       if (typeof Gravatar.callbacks[h] != 'undefined' && typeof Gravatar.callbacks[h].cb == 'function')
       {
-        var el = document.getElementById('grava-' + h);
-        el.parentElement.removeChild(el);
         Gravatar.callbacks[h].cb(0);
       }
     };
