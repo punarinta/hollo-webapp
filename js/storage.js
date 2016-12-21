@@ -62,11 +62,13 @@ U =
 
   filter: function (email)
   {
+    if (!email) return U.data;
+
     var i, items = [];
 
     for (i in U.data)
     {
-      if (email && (U.data[i].email.indexOf(email) != -1 || U.data[i].name && U.data[i].name.indexOf(email) != -1))
+      if (U.data[i].email.toLowerCase().indexOf(email) != -1 || U.data[i].name && U.data[i].name.toLowerCase().indexOf(email) != -1)
       {
         items.push(U.data[i]);
       }
