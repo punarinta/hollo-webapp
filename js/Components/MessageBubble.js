@@ -100,7 +100,7 @@ class MessageBubble extends Component
 
     let message = this.state.message,
         mine = message.from.email == this.props.user.email,
-        subject = message.subject,
+        subject = message.subj,
         body = message.body;
 
     let virtualChat = {users:[message.from], read:1};

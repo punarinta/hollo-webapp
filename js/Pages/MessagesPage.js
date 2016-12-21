@@ -3,13 +3,7 @@ class MessagesPage extends Component
   constructor()
   {
     super();
-    this.pageStart = 0;
-    this.pageLength = 20;
-    this.canLazyLoadMore = 0;
-    this.chat = null;
     this.scrollTop = 0;
-    this.lastCallFindParams = {};
-
     this.state.h = 64;
     this.state.canSend = 0;
     this.state.compFocus = 0;
@@ -24,13 +18,10 @@ class MessagesPage extends Component
 
   componentDidMount()
   {
-    this.scrollRef = this.scroll.bind(this);
     this.tryBlurringRef = this.tryBlurring.bind(this);
     this.chatUpdateReference = this.chatUpdate.bind(this);
-    this.base.querySelector('ul').addEventListener('scroll', this.scrollRef);
     this.base.addEventListener('click', this.tryBlurringRef);
     window.addEventListener('hollo:chat:update', this.chatUpdateReference);
-    this.callFind();
     ML.load('modules/emojis');
   }
 
@@ -39,114 +30,39 @@ class MessagesPage extends Component
     if (this.props.data.chatId != nextProps.data.chatId)
     {
       this.setState({menuModalShown: 0});
-      this.props.data.chatId = nextProps.data.chatId;
+      this.chatId = nextProps.data.chatId;
+      this.chatUpdate()
     }
-    this.callFind();
   }
 
   componentWillUnmount()
   {
-    this.base.querySelector('ul').removeEventListener('scroll', this.scrollRef);
     this.base.removeEventListener('click', this.tryBlurringRef);
     window.removeEventListener('hollo:chat:update', this.chatUpdateReference);
   }
 
-  chatUpdate(e)
+  chatUpdate()
   {
-    if (e.payload.chat.external)
+    if (this.chatId)
     {
-      if (this.chat && e.payload.chat.id == this.chat.id)
+      let messages = [], currentSubject;
+
+      if (this.chatId == 'me')
       {
-        let m = this.state.messages;
-        ML.api('message', 'getAllAfter', {chatId: this.chat.id, lastMessageId: m[m.length - 1].id}, data =>
-        {
-          data = data.reverse();
-          let messages = this.state.messages;
-          for (let i in data)
-          {
-            messages.push(data[i]);
-          }
-          this.setState({messages});
-          this.reposition(1)
-        });
-      }
-    }
-  }
+        this.chat = { id: 0, name: 'My notes', read: 1, users: [], muted: 0 };
 
-  callFind(shouldAdd = 0, force = 0)
-  {
-    if (!this.props.data.chatId)
-    {
-      return
-    }
-
-    let callFindParams = {chatId: this.props.data.chatId, pageStart: this.pageStart, pageLength: this.pageLength};
-
-    if (!force && JSON.stringify(callFindParams) == JSON.stringify(this.lastCallFindParams))
-    {
-      return
-    }
-
-    if (callFindParams.chatId == 'me')
-    {
-      this.chat = { id: 0, name: 'My notes', read: 1, users: [], muted: 0 };
-
-      let messages = JSON.parse(localStorage.getItem('messages')) || [],
-          currentSubject = messages.length ? messages[messages.length - 1].subject : '';
-
-      this.setState({messages, currentSubject});
-      return;
-    }
-
-    ML.emit('busybox', {mode: 2});
-
-    ML.api('message', 'findByChatId', this.lastCallFindParams = callFindParams, (data) =>
-    {
-      this.chat = data.chat;
-      this.chat.read = 1;
-
-      ML.emit('chat:update', {chat : this.chat});
-
-      data.messages = data.messages.reverse();
-
-      if (shouldAdd)
-      {
-        // adds messages to the top
-        this.setState({messages: data.messages.concat(this.state.messages)});
-
-        // TODO: configure repositioning
+        messages = JSON.parse(localStorage.getItem('my-notes')) || [];
+        currentSubject = messages.length ? messages[messages.length - 1].subj : '';
       }
       else
       {
-        let currentSubject = data.messages.length ? data.messages[data.messages.length - 1].subject : 'New subject';
-        this.setState({messages: data.messages, currentSubject});
-        this.reposition(1)
+        this.chat = C.get(this.chatId);
+        messages = this.chat.messages.reverse();
+        currentSubject = messages.length ? messages[messages.length - 1].subj : 'New subject';
       }
 
-      this.canLazyLoadMore = (data.messages.length == this.pageLength);
-
-      ML.emit('busybox', 0);
-    });
-  }
-
-  scroll(e)
-  {
-    this.scrollTop = e.target.scrollTop;
-
-    if (!this.canLazyLoadMore)
-    {
-      return;
-    }
-
-    let el = this.base.querySelector('message-bubble:nth-child(2)');
-
-    if (el && el.getBoundingClientRect().top > 0 && !this.state.subjectFilter)
-    {
-      this.canLazyLoadMore = 0;
-      this.pageStart += this.pageLength;
-      this.callFind(1);
-
-      mixpanel.track('Messages - get more');
+      this.setState({messages, currentSubject});
+      this.reposition(1)
     }
   }
 
@@ -228,7 +144,7 @@ class MessagesPage extends Component
 
     for (let i in this.state.messages)
     {
-      subjects.push(this.state.messages[i].subject)
+      subjects.push(this.state.messages[i].subj)
     }
 
     return ML.uniques(subjects);
@@ -368,7 +284,7 @@ class MessagesPage extends Component
 
   clearNotes()
   {
-    localStorage.removeItem('messages');
+    localStorage.removeItem('my-notes');
     this.setState({messages: [], menuModalShown: 0})
   }
 
@@ -449,7 +365,7 @@ class MessagesPage extends Component
 
       messages.push(m);
       messages = messages.slice(Math.max(0, messages.length - 10));
-      localStorage.setItem('messages', JSON.stringify(messages));
+      localStorage.setItem('my-notes', JSON.stringify(messages));
       this.setState({files: [], messages, compFocus: 0, currentComposed: '', h: 64, canSend: 0});
       this.reposition(1);
       return
@@ -475,7 +391,7 @@ class MessagesPage extends Component
     this.setState({files: [], messages, compFocus: 0, currentComposed: '', h: 64});
     this.reposition(1);
 
-    console.log('Sending:', msg, msgId, m.subject, m.files, this.chat.id);
+    console.log('Sending:', msg, msgId, m.subj, m.files, this.chat.id);
 
     let statusClass = this.base.querySelector('message-bubble:last-child .status').className;
     statusClass = 'status s1';
@@ -501,14 +417,20 @@ class MessagesPage extends Component
 
     for (let i in this.state.messages)
     {
+      let user = this.props.user,
+          message = this.state.messages[i];
+
+      message.from = message.userId == user.id ? user : U.get(message.userId);
+
       if (this.state.subjectFilter)
       {
-        if (this.state.messages[i].subject != this.state.subjectFilter) continue;
+        if (message.subj != this.state.subjectFilter) continue;
       }
+
       messages.push(h(MessageBubble,
       {
-        message: this.state.messages[i],
-        user: this.props.user,
+        message,
+        user,
         captionClicked: (subjectFilter) => this.setState({subjectFilter})
       }))
     }
