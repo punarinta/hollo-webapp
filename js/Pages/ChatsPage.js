@@ -29,7 +29,11 @@ class ChatsPage extends Component
 
   chatUpdate()
   {
-    this.setState({chats: C.filter(this.props.user, !!(this.props.data ? this.props.data.muted : 0), this.emailFilter.length ? this.emailFilter : null) });
+    this.setState({chats: C.filter(
+    {
+      muted: !!(this.props.data ? this.props.data.muted : 0),
+      email: this.emailFilter.length ? this.emailFilter : null
+    })});
     ML.emit('qs:count');
   }
 
