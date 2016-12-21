@@ -181,7 +181,7 @@ C =
     C.sync(me);
   },
 
-  sync: function (me)
+  sync: function (me, cb)
   {
     var i, lastTs = 0;
 
@@ -194,6 +194,7 @@ C =
     {
       U.set(null, json.users);
       C.set(me, null, json.chats);
+      if (cb) cb();
     });
   },
 
