@@ -1,5 +1,10 @@
 //  MUST BE IN ES5
 
+/*
+    This is a storage engine for chats, users and avatars.
+    The idea here is to move data storage and data processing logic to the frontend.
+*/
+
 var A =
 {
   data: {},
@@ -23,17 +28,31 @@ var A =
 
 U =
 {
-  data: {},
+  data: [],
 
   get: function (id)
   {
-    return typeof U.data[id] == 'undefined' ? null : U.data[id];
+    for (var i in U.data) if (U.data[i].id == id) return U.data[i];
+    return null;
   },
 
   set: function (id, data)
   {
-    if (id) U.data[id] = data;
-    else for (var i in data) U.data[data[i].id] = data[i];
+    var i, j;
+    if (id) { for (i in U.data) if (U.data[i].id == (data.id || data._id)) U.data.push(data) }
+    else { for (i in data)
+    {
+      if (data[i]._id) { data[i].id = data[i]._id; delete data[i]._id }
+
+      var found = false;
+      for (j in U.data)
+      {
+        if (!U.data[j]) delete U.data[j];
+        else if (U.data[j].id == data[i].id) { U.data[j] = data[i]; found = true }
+      }
+
+      if (!found) U.data.push(data[i])
+    }}
   },
 
   filter: function (email)
@@ -54,53 +73,80 @@ U =
 
 C =
 {
-  data: {},
+  data: [],
 
   get: function (id)
   {
-    return typeof C.data[id] == 'undefined' ? null : C.data[id];
+    for (var i in C.data) if (C.data[i].id == id) return C.data[i];
+    return null;
   },
 
-  set: function (id, data)
+  set: function (me, id, data)
   {
-    var i, j, deadLine = Math.floor(Date.now()/1000) - 6 * 2592000;
+    var i, j, deadLine = Math.floor(Date.now() / 1000) - 6 * 2592000;
 
-    if (id) C.data[id] = data;
-    else for (i in data) C.data[data[i].id] = data[i];
-
-    C.data = C.data(function (a, b)
+    if (id) { for (i in C.data) if (C.data[i].id == (data.id || data._id)) C.data.push(data) }
+    else { for (i in data)
     {
-      if (a.read > b.read) return -1;
+      if (data[i]._id) { data[i].id = data[i]._id; delete data[i]._id }
 
-      if (!a.last || !b.last) return 0;
+      var found = false;
+      for (j in C.data)
+      {
+        if (!C.data[j]) delete C.data[j];
+        else if (C.data[j].id == data[i].id) { C.data[j] = data[i]; found = true }
+      }
 
-      return a.last.ts - b.last.ts;
-    });
+      if (!found) C.data.push(data[i])
+    }}
 
     // remove old chats and messages
     for (i in C.data)
     {
-      if (C.data[i].lastTs < deadLine) delete C.data[i];
+      if (!C.data[i] || C.data[i].lastTs < deadLine)
+      {
+        delete C.data[i];
+        continue;
+      }
       if (C.data[i].messages) for (j in C.data[i].messages)
       {
-        if (C.data[i].messages[j].ts < deadLine) delete C.data[i].messages[j];
+        if (!C.data[i].messages[j] || C.data[i].messages[j].ts < deadLine) delete C.data[i].messages[j]
+      }
+      for (j in C.data[i].users)
+      {
+        if (C.data[i].users[j].id == me.id)
+        {
+          // set flags for yourself
+          C.data[i].read = C.data[i].users[j].read;
+          C.data[i].muted = C.data[i].users[j].muted;
+        }
       }
     }
 
-    localStorage.setItem('chats', C.data);
+    C.data = C.data.sort(function (a, b)
+    {
+      if (a.read > b.read) return -1;
+
+      return a.lastTs - b.lastTs;
+    });
+
+    var jsonString = JSON.stringify(C.data);
+
+    console.log('Storage used: %s kB', Math.round(jsonString.length / 1024));
+    localStorage.setItem('chats', jsonString);
   },
 
-  load: function ()
+  load: function (me)
   {
-    C.data = localStorage.getItem('chats') || {};
-    C.sync();
+    C.data = JSON.parse(localStorage.getItem('chats')) || [];
+    C.sync(me);
   },
 
-  sync: function ()
+  sync: function (me)
   {
     var i, lastTs = 0;
 
-    for (i in C.data)
+    for (i in C.data) if (C.data[i] && C.data[i].lastTs)
     {
       lastTs = Math.max(lastTs, C.data[i].lastTs);
     }
@@ -108,7 +154,7 @@ C =
     ML.api('chat', 'getAllData', {lastTs: lastTs}, function (json)
     {
       U.set(null, json.users);
-      C.set(null, json.chats);
+      C.set(me, null, json.chats);
     });
   },
 
