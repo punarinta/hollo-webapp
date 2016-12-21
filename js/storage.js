@@ -34,6 +34,21 @@ U =
   {
     if (id) U.data[id] = data;
     else for (var i in data) U.data[data[i].id] = data[i];
+  },
+
+  filter: function (email)
+  {
+    var i, items = [];
+
+    for (i in U.data)
+    {
+      if (email && (U.data[i].email.indexOf(email) != -1 || U.data[i].name && U.data[i].name.indexOf(email) != -1))
+      {
+        items.push(U.data[i]);
+      }
+    }
+
+    return items;
   }
 },
 
