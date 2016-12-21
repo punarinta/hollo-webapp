@@ -199,41 +199,54 @@ C =
 
   filter: function (me, muted, email)
   {
-    var i, j, items = [];
+    var i, j, items = [], takeFrom = C.data;
 
     if (typeof muted == 'undefined') muted = null;
     if (typeof email == 'undefined') email = null;
 
-    // find users first
-    var userIds = [];
-    if (email !== null) for (i in U.data)
+    if (muted !== null)
     {
-      if (U.data[i].name && U.data[i].name.indexOf(email) != -1 || U.data[i].email.indexOf(email) != -1)
+      for (i in takeFrom)
       {
-        userIds.push(U.data[i].id);
+        if (!!takeFrom[i].muted == !!muted)
+        {
+          items.push(takeFrom[i]);
+        }
       }
     }
 
-    for (i in C.data)
+    if (email !== null)
     {
-      if (email !== null && C.data[i].name && C.data[i].name.indexOf(email) != -1)
-      {
-        items.push(C.data[i]);
-        continue;
-      }
+      takeFrom = items;
+      items = [];
 
-      if (muted !== null && !!C.data[i].muted == !!muted)
-      {
-        items.push(C.data[i]);
-        continue;
-      }
+      var userIds = [];
+      email = email.toLowerCase();
 
-      if (C.data[i].messages) for (j in C.data[i].messages)
+      // find users first
+      for (i in U.data)
       {
-        if (userIds.indexOf(C.data[i].messages[j].userId) != -1)
+        if (U.data[i].name && U.data[i].name.toLowerCase().indexOf(email) != -1 || U.data[i].email.toLowerCase().indexOf(email) != -1)
         {
-          items.push(C.data[i]);
-          break;
+          userIds.push(U.data[i].id);
+        }
+      }
+
+      for (i in takeFrom)
+      {
+        if (email !== null && takeFrom[i].name && takeFrom[i].name.toLowerCase().indexOf(email) != -1)
+        {
+          items.push(takeFrom[i]);
+          continue;
+        }
+
+        if (takeFrom[i].messages) for (j in takeFrom[i].messages)
+        {
+          if (userIds.indexOf(takeFrom[i].messages[j].userId) != -1)
+          {
+            items.push(takeFrom[i]);
+            break;
+          }
         }
       }
     }
