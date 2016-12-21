@@ -202,18 +202,33 @@ C =
     });
   },
 
-  filter: function (me, muted, email)
+  filter: function (options)
   {
-    var i, j, items = [], takeFrom = C.data;
+    var i, j, items = [], takeFrom = C.data,
 
-    if (typeof muted == 'undefined') muted = null;
-    if (typeof email == 'undefined') email = null;
+    muted = typeof options.muted == 'undefined' ? null : options.muted,
+    read  = typeof options.read  == 'undefined' ? null : options.read,
+    email = typeof options.email == 'undefined' ? null : options.email;
 
     if (muted !== null)
     {
       for (i in takeFrom)
       {
         if (!!takeFrom[i].muted == !!muted)
+        {
+          items.push(takeFrom[i]);
+        }
+      }
+    }
+
+    if (read !== null)
+    {
+      takeFrom = items;
+      items = [];
+
+      for (i in takeFrom)
+      {
+        if (!!takeFrom[i].read == !!read)
         {
           items.push(takeFrom[i]);
         }
