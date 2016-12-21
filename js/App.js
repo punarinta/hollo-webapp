@@ -14,7 +14,7 @@ class App extends Component
     this.state.customBox = null;
     this.state.userPicker = null;
     this.state.user = null;
-    this.state.busy = 1;
+    this.state.busy = 0;
   }
 
   componentDidMount()
@@ -290,7 +290,10 @@ class App extends Component
       if (typeof flags.showNotes != 'undefined') CFG.showNotes = flags.showNotes;
     }
 
-    this.setState({user: data.user})
+    this.setState({user: data.user});
+
+    // load all user chats
+    C.load(data.user);
   }
 
   firebaseListener(e)
