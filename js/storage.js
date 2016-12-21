@@ -90,7 +90,7 @@ C =
       lastTs = Math.max(lastTs, C.data[i].lastTs);
     }
 
-    ML.api('chat', 'getAllData', {lastTs: lastTs}, (json) =>
+    ML.api('chat', 'getAllData', {lastTs: lastTs}, function (json)
     {
       U.set(null, json.users);
       C.set(null, json.chats);
