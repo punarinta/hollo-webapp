@@ -58,6 +58,8 @@ U =
 
     console.log('Storage used for users: %s kB', Math.round(jsonString.length / 1024));
     // localStorage.setItem('users', jsonString);
+
+    ML.emit('users:update');
   },
 
   filter: function (email)
