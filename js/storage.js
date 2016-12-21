@@ -117,11 +117,6 @@ C =
       if (C.data[i].messages) for (j in C.data[i].messages)
       {
         if (!C.data[i].messages[j] || C.data[i].messages[j].ts < deadLine) C.data[i].messages.splice(j, 1);
-        else
-        {
-          delete C.data[i].messages[j].refId;
-          delete C.data[i].messages[j].extId;
-        }
       }
     }
 
