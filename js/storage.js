@@ -47,12 +47,17 @@ U =
       var found = false;
       for (j in U.data)
       {
-        if (!U.data[j]) delete U.data[j];
+        if (!U.data[j]) U.data.splice(j, 1);
         else if (U.data[j].id == data[i].id) { U.data[j] = data[i]; found = true }
       }
 
       if (!found) U.data.push(data[i])
     }}
+
+    var jsonString = JSON.stringify(U.data);
+
+    console.log('Storage used for users: %s kB', Math.round(jsonString.length / 1024));
+    // localStorage.setItem('users', jsonString);
   },
 
   filter: function (email)
@@ -93,7 +98,7 @@ C =
       var found = false;
       for (j in C.data)
       {
-        if (!C.data[j]) delete C.data[j];
+        if (!C.data[j]) C.data.splice(j, 1);
         else if (C.data[j].id == data[i].id) { C.data[j] = data[i]; found = true }
       }
 
@@ -105,13 +110,24 @@ C =
     {
       if (!C.data[i] || C.data[i].lastTs < deadLine)
       {
-        delete C.data[i];
+        C.data.splice(i, 1);
         continue;
       }
+
       if (C.data[i].messages) for (j in C.data[i].messages)
       {
-        if (!C.data[i].messages[j] || C.data[i].messages[j].ts < deadLine) delete C.data[i].messages[j]
+        if (!C.data[i].messages[j] || C.data[i].messages[j].ts < deadLine) C.data[i].messages.splice(j, 1);
+        else
+        {
+          delete C.data[i].messages[j].refId;
+          delete C.data[i].messages[j].extId;
+        }
       }
+    }
+
+    // enrich
+    for (i in C.data)
+    {
       for (j in C.data[i].users)
       {
         if (C.data[i].users[j].id == me.id)
@@ -119,21 +135,49 @@ C =
           // set flags for yourself
           C.data[i].read = C.data[i].users[j].read;
           C.data[i].muted = C.data[i].users[j].muted;
+
+          // just remove yourself, it's obvious
+          C.data[i].users.splice(j, 1);
+
+          break;
         }
       }
+
+      if (C.data[i].messages) C.data[i].messages = C.data[i].messages.sort(function (a, b)
+      {
+        return b.ts - a.ts
+      })
     }
 
     C.data = C.data.sort(function (a, b)
     {
-      if (a.read > b.read) return -1;
+      if (a.read && !!a.read > !!b.read) return 1;
 
-      return a.lastTs - b.lastTs;
+      return b.lastTs - a.lastTs;
     });
 
     var jsonString = JSON.stringify(C.data);
 
-    console.log('Storage used: %s kB', Math.round(jsonString.length / 1024));
-    localStorage.setItem('chats', jsonString);
+    console.log('Storage used for chats: %s kB', Math.round(jsonString.length / 1024));
+    // localStorage.setItem('chats', jsonString);
+
+    for (i in C.data)
+    {
+      if (!C.data[i].messages || !C.data[i].messages.length) C.data[i].last = {ts: 0, msg: '', subj: ''};
+      else
+      {
+        var m = C.data[i].messages[0];
+        C.data[i].last = {ts: m.ts, msg: m.body, subj: m.subj};
+      }
+      for (j in C.data[i].users)
+      {
+        var u = C.data[i].users[j].id == me.id ? me : U.get(C.data[i].users[j].id);
+        C.data[i].users[j].name = u.name;
+        C.data[i].users[j].email = u.email;
+      }
+    }
+
+    ML.emit('chat:update');
   },
 
   load: function (me)
@@ -160,9 +204,10 @@ C =
 
   filter: function (me, muted, email)
   {
-    var i, j, items = [],
-        muted = muted || null,
-        email = email || null;
+    var i, j, items = [];
+
+    if (typeof muted == 'undefined') muted = null;
+    if (typeof email == 'undefined') email = null;
 
     // find users first
     var userIds = [];
@@ -182,13 +227,14 @@ C =
         continue;
       }
 
+      if (muted !== null && !!C.data[i].muted == !!muted)
+      {
+        items.push(C.data[i]);
+        continue;
+      }
+
       if (C.data[i].messages) for (j in C.data[i].messages)
       {
-        if (muted !== null && C.data[i].messages[j].userId == me.id && C.data[i].messages[j].muted == muted)
-        {
-          items.push(C.data[i]);
-          break;
-        }
         if (userIds.indexOf(C.data[i].messages[j].userId) != -1)
         {
           items.push(C.data[i]);
