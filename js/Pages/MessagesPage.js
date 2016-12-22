@@ -244,15 +244,21 @@ class MessagesPage extends Component
   muteChat()
   {
     this.chat.muted = !this.chat.muted;
-    ML.api('chat', 'update', {id: this.chat.id, muted: this.chat.muted}, () => this.setState({menuModalShown: 0}));
-    ML.emit('chat:update', {chat : this.chat});
+    ML.api('chat', 'update', {id: this.chat.id, muted: this.chat.muted}, () =>
+    {
+      this.setState({menuModalShown: 0});
+      C.set(null, this.chat.id, this.chat);
+    });
   }
 
   unreadChat()
   {
     this.chat.read = !this.chat.read;
-    ML.api('chat', 'update', {id: this.chat.id, read: this.chat.read}, () => this.setState({menuModalShown: 0}));
-    ML.emit('chat:update', {chat : this.chat});
+    ML.api('chat', 'update', {id: this.chat.id, read: this.chat.read}, () =>
+    {
+      this.setState({menuModalShown: 0});
+      C.set(null, this.chat.id, this.chat);
+    });
   }
 
   renameChat()
@@ -264,8 +270,8 @@ class MessagesPage extends Component
       if (code)
       {
         this.chat.name = name;
-        ML.api('chat', 'update', { id: this.chat.id, name }, () => this.render());
-        ML.emit('chat:update', {chat: this.chat});
+        ML.api('chat', 'update', { id: this.chat.id, name });
+        C.set(null, this.chat.id, this.chat);
       }
     }});
   }
