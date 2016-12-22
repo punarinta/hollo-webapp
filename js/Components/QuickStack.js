@@ -47,7 +47,7 @@ class QuickStack extends Component
 
   show()
   {
-    let i, qs = [], chats = C.filter({muted: this.props.muted, read: 0});
+    let i, qs = [], chats = $.C.filter({muted: this.props.muted, read: 0});
 
     // go through chats, pick last messages, enrich with extra fields
     for (i in chats)
@@ -95,7 +95,7 @@ class QuickStack extends Component
     {
       chat.read = 1;
       ML.api('chat', 'update', {id: chat.id, read: 1});
-      C.set(null, chat.id, this.chat);
+      $.C.set(null, chat.id, this.chat);
     }
 
     this.buttonRead.classList.remove('picked');

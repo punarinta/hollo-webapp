@@ -21,7 +21,7 @@ class UserPickerModal extends Component
 
   usersUpdate()
   {
-    this.setState({users: U.filter(this.emailFilter.length ? this.emailFilter : 0)})
+    this.setState({users: $.U.filter(this.emailFilter.length ? this.emailFilter : 0)})
   }
 
   filterChanged(filter)

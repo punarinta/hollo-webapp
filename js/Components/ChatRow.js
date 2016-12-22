@@ -103,7 +103,7 @@ class ChatRow extends Component
           ML.api('chat', 'update', {id: chat.id, muted: chat.muted});
           setTimeout( () =>
           {
-            C.set(null, chat.id, chat);
+            $.C.set(null, chat.id, chat);
           }, 800);
 
           this.item.style.transform = `translateX(${this.props.vw}px)`;
@@ -116,7 +116,7 @@ class ChatRow extends Component
           ML.api('chat', 'update', {id: chat.id, read: chat.read});
           setTimeout( () =>
           {
-            C.set(null, chat.id, chat);
+            $.C.set(null, chat.id, chat);
           }, 400);
 
           this.item.style.transform = `translateX(-${this.props.vw}px)`;

@@ -31,12 +31,12 @@ class MessagesPage extends Component
     {
       this.setState({menuModalShown: 0});
       this.chatId = nextProps.data.chatId;
-      let chat = C.get(this.chatId);
+      let chat = $.C.get(this.chatId);
       if (!chat.read)
       {
         chat.read = 1;
         ML.api('chat', 'update', {id: chat.id, read: 1});
-        C.set(null, this.chatId, chat);
+        $.C.set(null, this.chatId, chat);
       }
 
       this.chatUpdate()
@@ -71,7 +71,7 @@ class MessagesPage extends Component
       }
       else
       {
-        this.chat = C.get(this.chatId);
+        this.chat = $.C.get(this.chatId);
         messages = this.chat.messages.reverse();
         currentSubject = messages.length ? messages[messages.length - 1].subj : 'New subject';
       }
@@ -262,7 +262,7 @@ class MessagesPage extends Component
     ML.api('chat', 'update', {id: this.chat.id, muted: this.chat.muted}, () =>
     {
       this.setState({menuModalShown: 0});
-      C.set(null, this.chat.id, this.chat);
+      $.C.set(null, this.chat.id, this.chat);
     });
   }
 
@@ -272,7 +272,7 @@ class MessagesPage extends Component
     ML.api('chat', 'update', {id: this.chat.id, read: this.chat.read}, () =>
     {
       this.setState({menuModalShown: 0});
-      C.set(null, this.chat.id, this.chat);
+      $.C.set(null, this.chat.id, this.chat);
     });
   }
 
@@ -286,7 +286,7 @@ class MessagesPage extends Component
       {
         this.chat.name = name;
         ML.api('chat', 'update', { id: this.chat.id, name });
-        C.set(null, this.chat.id, this.chat);
+        $.C.set(null, this.chat.id, this.chat);
       }
     }});
   }
@@ -301,7 +301,7 @@ class MessagesPage extends Component
         let id = this.chat.id;
         ML.api('chat', 'leave', {id}, () =>
         {
-          C.remove(id);
+          $.C.remove(id);
           ML.go('chats')
         });
       }
@@ -446,7 +446,7 @@ class MessagesPage extends Component
       let user = this.props.user,
           message = this.state.messages[i];
 
-      message.from = message.userId == user.id ? user : U.get(message.userId);
+      message.from = message.userId == user.id ? user : $.U.get(message.userId);
 
       if (this.state.subjectFilter)
       {

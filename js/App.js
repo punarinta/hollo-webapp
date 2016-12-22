@@ -293,7 +293,7 @@ class App extends Component
     this.setState({user: data.user});
 
     // load all user chats
-    C.load(data.user);
+    $.C.load(data.user);
   }
 
   firebaseListener(e)

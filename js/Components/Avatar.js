@@ -17,7 +17,7 @@ class Avatar extends Component
 
     if (chat.users.length < 2)
     {
-      let stored = A.get(email);
+      let stored = $.A.get(email);
 
       if (stored)
       {
@@ -30,7 +30,7 @@ class Avatar extends Component
         im.onload = () =>
         {
           // great success, but don't forget to save it
-          A.set(email, avaPath);
+          $.A.set(email, avaPath);
           this.setState({nc: '', bgImage: `url('${avaPath}')`});
         };
         im.onerror = () =>
@@ -44,12 +44,12 @@ class Avatar extends Component
             if (d)
             {
               let url = `${d.thumbnailUrl}?s=${size}`;
-              A.set(email, url);
+              $.A.set(email, url);
               this.setState({nc: '', bgImage: `url(${url})`});
             }
             else
             {
-              A.set(email, null);
+              $.A.set(email, null);
               this.setState({nc: ML.xname(chat)[1], bgImage: '', size});
             }
           });

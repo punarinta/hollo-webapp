@@ -29,7 +29,7 @@ class ChatsPage extends Component
 
   chatUpdate()
   {
-    this.setState({chats: C.filter(
+    this.setState({chats: $.C.filter(
     {
       muted: !!(this.props.data ? this.props.data.muted : 0),
       email: this.emailFilter.length ? this.emailFilter : null
@@ -143,7 +143,7 @@ class ChatsPage extends Component
     ML.api('chat', 'add', {emails: [this.emailFilter]}, data =>
     {
       // add chat to the storage first
-      C.set(this.props.user, data.id, data);
+      $.C.set(this.props.user, data.id, data);
       this.setState({menuModalShown: 0});
       ML.go('chat/' + data.id);
     });
