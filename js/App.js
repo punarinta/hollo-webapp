@@ -123,8 +123,11 @@ class App extends Component
 
         if (data.cmd == 'chat:update')
         {
-          let chat = {id: data.chatId, external: 1, silent: data.silent};     // IM supports 'silent' flag
-          ML.emit('chat:update', {chat});
+          ML.api('chat', 'getAllData', {chatId: data.chatId}, function (json)
+          {
+            $.U.set(null, json.users);
+            $.C.set(this.state.user, null, json.chats);
+          });
         }
         if (data.cmd == 'sys:ping')
         {
@@ -308,16 +311,17 @@ class App extends Component
     if (e.payload.cmd == 'sys:ping')     ML.emit('messagebox', { html: 'Ping signal received' });
     if (e.payload.cmd == 'chat:update')
     {
-      let chat = {id: e.payload.chatId, external: 1};
-
-      if (e.payload.wasTapped)
+      ML.api('chat', 'getAllData', {chatId: e.payload.chatId}, function (json)
       {
-        // app was OFF, just go to the chat
-        ML.go('chat/' + chat.id);
-      }
+        $.U.set(null, json.users);
+        $.C.set(this.state.user, null, json.chats);
 
-      // update the info in the DOM in any case
-      ML.emit('chat:update', {chat});
+        if (e.payload.wasTapped)
+        {
+          // app was OFF, just go to the chat
+          ML.go('chat/' + chat.id);
+        }
+      });
     }
   }
 
