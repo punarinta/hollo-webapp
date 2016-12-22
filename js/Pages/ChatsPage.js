@@ -96,7 +96,7 @@ class ChatsPage extends Component
       {
         this.ul.classList.add('travel');
         ML.emit('busybox', {mode: 1});
-        C.sync(this.props.user, () =>
+        $.C.sync(this.props.user, () =>
         {
           ML.emit('busybox');
         });
