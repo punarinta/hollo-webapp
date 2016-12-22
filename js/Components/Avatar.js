@@ -1,6 +1,6 @@
 class Avatar extends Component
 {
-  componentWillMount()
+  componentDidMount()
   {
     this.loadGraphics(this.props);
   }
