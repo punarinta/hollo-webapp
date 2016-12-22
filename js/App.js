@@ -125,7 +125,7 @@ class App extends Component
 
         if (data.cmd == 'chat:update')
         {
-          ML.api('chat', 'getAllData', {chatId: data.chatId}, function (json)
+          ML.api('chat', 'getAllData', {chatId: data.chatId}, (json) =>
           {
             $.U.set(null, json.users);
             $.C.set(this.state.user, null, json.chats);
@@ -313,7 +313,7 @@ class App extends Component
     if (e.payload.cmd == 'sys:ping')     ML.emit('messagebox', { html: 'Ping signal received' });
     if (e.payload.cmd == 'chat:update')
     {
-      ML.api('chat', 'getAllData', {chatId: e.payload.chatId}, function (json)
+      ML.api('chat', 'getAllData', {chatId: e.payload.chatId}, (json) =>
       {
         $.U.set(null, json.users);
         $.C.set(this.state.user, null, json.chats);
@@ -321,7 +321,7 @@ class App extends Component
         if (e.payload.wasTapped)
         {
           // app was OFF, just go to the chat
-          ML.go('chat/' + chat.id);
+          ML.go('chat/' + e.payload.chatId);
         }
       });
     }
