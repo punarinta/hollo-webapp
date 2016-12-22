@@ -41,8 +41,8 @@ class MessagesPage extends Component
           ML.api('chat', 'update', {id: chat.id, read: 1});
           $.C.set(null, this.chatId, chat);
         }
-        this.chatUpdate()
       }
+      this.chatUpdate()
     }
   }
 
@@ -388,8 +388,8 @@ class MessagesPage extends Component
       {
         ts: new Date().getTime() / 1000,
         body: msg,
-        from: this.props.user,
-        subject: this.state.currentSubject
+        userId: this.props.user.id,
+        subj: this.state.currentSubject
       };
 
       messages.push(m);
