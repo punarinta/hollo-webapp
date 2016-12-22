@@ -156,7 +156,7 @@ C =
     for (i in C.data)
     {
       // TODO: avoid loop if already enriched
-      for (j in C.data[i].users)
+      if (me) for (j in C.data[i].users)
       {
         if (C.data[i].users[j].id == me.id)
         {
@@ -197,7 +197,7 @@ C =
         var m = C.data[i].messages[0];
         C.data[i].last = {ts: m.ts, msg: m.body, subj: m.subj};
       }
-      for (j in C.data[i].users)
+      if (me) for (j in C.data[i].users)
       {
         var u = C.data[i].users[j].id == me.id ? me : U.get(C.data[i].users[j].id);
         C.data[i].users[j].name = u.name;

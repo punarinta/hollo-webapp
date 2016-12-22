@@ -101,11 +101,9 @@ class ChatRow extends Component
           chat.muted = !chat.muted - 0;
 
           ML.api('chat', 'update', {id: chat.id, muted: chat.muted});
-
           setTimeout( () =>
           {
-            // remove it from the parent component
-            ML.emit('chat:update', {chat, cmd: 'muted'});
+            C.set(null, chat.id, chat);
           }, 800);
 
           this.item.style.transform = `translateX(${this.props.vw}px)`;
@@ -116,11 +114,9 @@ class ChatRow extends Component
           chat.read = !chat.read - 0;
 
           ML.api('chat', 'update', {id: chat.id, read: chat.read});
-
           setTimeout( () =>
           {
-            // set the state from the parent component
-            ML.emit('chat:update', {chat});
+            C.set(null, chat.id, chat);
           }, 400);
 
           this.item.style.transform = `translateX(-${this.props.vw}px)`;
@@ -133,7 +129,7 @@ class ChatRow extends Component
     }
   }
 
-  render(props)
+  render()
   {
     let chat = this.state.chat,
         email = chat.users[0].email,
