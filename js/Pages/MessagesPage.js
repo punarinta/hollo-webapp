@@ -31,15 +31,18 @@ class MessagesPage extends Component
     {
       this.setState({menuModalShown: 0});
       this.chatId = nextProps.data.chatId;
-      let chat = $.C.get(this.chatId);
-      if (!chat.read)
-      {
-        chat.read = 1;
-        ML.api('chat', 'update', {id: chat.id, read: 1});
-        $.C.set(null, this.chatId, chat);
-      }
 
-      this.chatUpdate()
+      if (this.chatId != 'me')
+      {
+        let chat = $.C.get(this.chatId);
+        if (!chat.read)
+        {
+          chat.read = 1;
+          ML.api('chat', 'update', {id: chat.id, read: 1});
+          $.C.set(null, this.chatId, chat);
+        }
+        this.chatUpdate()
+      }
     }
   }
 
