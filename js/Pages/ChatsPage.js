@@ -92,7 +92,7 @@ class ChatsPage extends Component
   {
     if (this.state.blockSwipe)
     {
-      if (this.pull == 2)
+    /*  if (this.pull == 2)
       {
         this.ul.classList.add('travel');
         ML.emit('busybox', {mode: 1});
@@ -105,7 +105,7 @@ class ChatsPage extends Component
         {
           this.ul.classList.remove('travel');
         }, 400);
-      }
+      }*/
 
       this.pull = 0;
       this.ul.style.opacity = 0;
