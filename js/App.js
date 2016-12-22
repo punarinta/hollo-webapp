@@ -123,6 +123,17 @@ class App extends Component
         let data = JSON.parse(event.data);
         console.log('IM', data);
 
+        if (data.cmd == 'sys:ping')
+        {
+          if (!that.notification('Ping signal received'))
+          {
+            ML.emit('messagebox', {html: 'Ping signal received'});
+          }
+        }
+
+        // Firebase messaging is on, so skip duplicate activities
+        if ($firebaseOn) return;
+
         if (data.cmd == 'chat:update')
         {
           ML.api('chat', 'getAllData', {chatId: data.chatId}, (json) =>
@@ -130,13 +141,6 @@ class App extends Component
             $.U.set(null, json.users);
             $.C.set(this.state.user, null, json.chats);
           });
-        }
-        if (data.cmd == 'sys:ping')
-        {
-          if (!that.notification('Ping signal received'))
-          {
-            ML.emit('messagebox', {html: 'Ping signal received'});
-          }
         }
       };
     })();
@@ -229,13 +233,20 @@ class App extends Component
 
     if ($platform == 1 && window.FCMPlugin)
     {
-      FCMPlugin.onNotification(data =>
-      {
-        console.log('Firebase message:', data);
-        ML.emit('firebase', data);
-      },
-      msg => console.log('Firebase on!', msg),
-      err =>console.log('Firebase error:', err));
+      FCMPlugin.onNotification
+      (
+        data =>
+        {
+          console.log('Firebase message:', data);
+          ML.emit('firebase', data);
+        },
+        msg =>
+        {
+          console.log('Firebase on!', msg);
+          $firebaseOn = true;
+        },
+        err => console.log('Firebase error:', err)
+      );
 
       console.log('FCM: subscribe to user-' + data.user.id);
       FCMPlugin.subscribeToTopic('user-' + data.user.id);
@@ -392,7 +403,8 @@ class App extends Component
 // setup global vars
 var $windowInnerWidth = 360,
     $maintenance = 0, //!ML.getQueryVar('debug'),
-    $platform = 0;
+    $platform = 0,
+    $firebaseOn = false;
 
 function onDeviceReady()
 {
