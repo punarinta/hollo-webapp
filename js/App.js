@@ -431,7 +431,7 @@ function onDeviceReady()
   {
     $platform = 1;
 
-    window.plugins.intent.setNewIntentHandler( intent =>
+    if (window.plugins.intent) window.plugins.intent.setNewIntentHandler( intent =>
     {
       console.log('Intent:', intent);
       if (intent.action.indexOf('SEND') != -1)
