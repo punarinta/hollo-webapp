@@ -51,6 +51,13 @@ class MessagesPage extends Component
       {
         this.chat = { id: 0, name: 'My notes', read: 1, users: [], muted: 0 };
 
+        // TODO: kept for compatibility, remove
+        if (localStorage.getItem('messages'))
+        {
+          localStorage.setItem('my-notes', localStorage.getItem('messages'));
+          localStorage.removeItem('messages');
+        }
+
         messages = JSON.parse(localStorage.getItem('my-notes')) || [];
         currentSubject = messages.length ? messages[messages.length - 1].subj : '';
       }
