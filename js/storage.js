@@ -38,13 +38,27 @@ U =
 
   set: function (id, data)
   {
-    var i, j;
-    if (id) { for (i in U.data) if (U.data[i].id == (data.id || data._id)) U.data.push(data) }
+    var i, j, found;
+    if (id)
+    {
+      found = false;
+      if (data._id) data.id = data._id;
+      for (i in U.data)
+      {
+        if (U.data[i].id == data.id)
+        {
+          found = true;
+          U.data[i] = data;
+          break;
+        }
+      }
+      if (!found) C.data.push(data)
+    }
     else { for (i in data)
     {
       if (data[i]._id) { data[i].id = data[i]._id; delete data[i]._id }
 
-      var found = false;
+      found = false;
       for (j in U.data)
       {
         if (!U.data[j]) U.data.splice(j, 1);
@@ -92,14 +106,28 @@ C =
 
   set: function (me, id, data)
   {
-    var i, j, deadLine = Math.floor(Date.now() / 1000) - 6 * 2592000;
+    var i, j, found, deadLine = Math.floor(Date.now() / 1000) - 6 * 2592000;
 
-    if (id) { for (i in C.data) if (C.data[i].id == (data.id || data._id)) C.data.push(data) }
+    if (id)
+    {
+      found = false;
+      if (data._id) data.id = data._id;
+      for (i in C.data)
+      {
+        if (C.data[i].id == data.id)
+        {
+          found = true;
+          C.data[i] = data;
+          break;
+        }
+      }
+      if (!found) C.data.push(data)
+    }
     else { for (i in data)
     {
       if (data[i]._id) { data[i].id = data[i]._id; delete data[i]._id }
 
-      var found = false;
+      found = false;
       for (j in C.data)
       {
         if (!C.data[j]) C.data.splice(j, 1);
@@ -127,6 +155,7 @@ C =
     // enrich
     for (i in C.data)
     {
+      // TODO: avoid loop if already enriched
       for (j in C.data[i].users)
       {
         if (C.data[i].users[j].id == me.id)
