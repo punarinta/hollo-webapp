@@ -183,13 +183,13 @@ class ChatsPage extends Component
       let chats = [], vw = $windowInnerWidth > 768 ? 360 : $windowInnerWidth;
 
       // self-chat
-      if (CFG.showNotes && (!this.props.data || !this.props.data.muted))
+      if (CFG.showNotes && !this.props.data.muted)
       {
-        let my = JSON.parse(localStorage.getItem('messages')) || [];
+        let my = JSON.parse(localStorage.getItem('my-notes')) || [];
         chats.push(h(ChatRow,
         {
           user: this.props.user,
-          chat: {users: [this.props.user], last: {msg: my.length ? my[my.length-1].body : ''}, read: 1, name: 'My notes'},
+          chat: {users: [this.props.user], messages: my, read: 1, name: 'My notes'},
           canSwipe: 0,
           onclick: (chat) => ML.go('chat/me'),
           vw
