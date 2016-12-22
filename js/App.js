@@ -59,7 +59,9 @@ class App extends Component
         switch (r)
         {
           case 'chats':
-            this.setState({page: 'chats', chatsPageData: e.state.data});
+            let chatsPageData = e.state.data;
+            if (typeof chatsPageData == 'undefined') chatsPageData = {muted: 0};
+            this.setState({page: 'chats', chatsPageData});
             break;
 
           case 'auth/login':
