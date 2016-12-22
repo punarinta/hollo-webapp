@@ -191,12 +191,6 @@ C =
 
     for (i in C.data)
     {
-      if (!C.data[i].messages || !C.data[i].messages.length) C.data[i].last = {ts: 0, msg: '', subj: ''};
-      else
-      {
-        var m = C.data[i].messages[0];
-        C.data[i].last = {ts: m.ts, msg: m.body, subj: m.subj};
-      }
       if (me) for (j in C.data[i].users)
       {
         var u = C.data[i].users[j].id == me.id ? me : U.get(C.data[i].users[j].id);
@@ -204,6 +198,9 @@ C =
         C.data[i].users[j].email = u.email;
       }
     }
+
+    // for debugging
+    // console.log('Storage used for chats: %s kB', Math.round(JSON.stringify(C.data).length / 1024));
 
     ML.emit('chat:update');
   },

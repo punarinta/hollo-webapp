@@ -133,7 +133,13 @@ class ChatRow extends Component
   {
     let chat = this.state.chat,
         email = chat.users[0].email,
-        lastMsg = chat.last.msg || '';
+        lastSubj = '', lastMsg = '';
+
+    if (chat.messages)
+    {
+      lastMsg = chat.messages[0].body || '';
+      lastSubj = chat.messages[0].subj || '';
+    }
 
     if (lastMsg !== null && typeof lastMsg === 'object')
     {
@@ -164,7 +170,7 @@ class ChatRow extends Component
     }
     else
     {
-      lastMsg = lastMsg.replace(/\[sys:fwd\]/g, ' ➡️ ' + chat.last.subj).replace(/(<([^>]+)>)/ig, '').substring(0, 60).trim();
+      lastMsg = lastMsg.replace(/\[sys:fwd\]/g, ' ➡️ ' + lastSubj).replace(/(<([^>]+)>)/ig, '').substring(0, 60).trim();
     }
 
     let d = document.createElement('div');
