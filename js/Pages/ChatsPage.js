@@ -142,6 +142,8 @@ class ChatsPage extends Component
     mixpanel.track('Chat - add new');
     ML.api('chat', 'add', {emails: [this.emailFilter]}, data =>
     {
+      // add chat to the storage first
+      C.set(this.props.user, data.id, data);
       this.setState({menuModalShown: 0});
       ML.go('chat/' + data.id);
     });

@@ -298,7 +298,12 @@ class MessagesPage extends Component
     {
       if (code)
       {
-        ML.api('chat', 'leave', {id: this.chat.id}, () => ML.go('chats') );
+        let id = this.chat.id;
+        ML.api('chat', 'leave', {id}, () =>
+        {
+          C.remove(id);
+          ML.go('chats')
+        });
       }
     }})
   }
