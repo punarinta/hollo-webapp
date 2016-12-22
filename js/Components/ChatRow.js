@@ -135,7 +135,7 @@ class ChatRow extends Component
         email = chat.users[0].email,
         lastSubj = '', lastMsg = '';
 
-    if (chat.messages)
+    if (chat.messages && chat.messages[0])
     {
       lastMsg = chat.messages[0].body || '';
       lastSubj = chat.messages[0].subj || '';
