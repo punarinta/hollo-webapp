@@ -419,10 +419,10 @@ function onDeviceReady()
 
     window.plugins.intent.setNewIntentHandler( intent =>
     {
+      console.log('Intent:', intent);
       if (intent.action.indexOf('SEND') != -1)
       {
         ML.emit('messagebox', {html: 'Sending files feature will be fully supported in the next version. Stay tuned!'});
-        console.log('Intent:', intent);
       }
     });
   }
