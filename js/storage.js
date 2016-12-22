@@ -205,6 +205,19 @@ C =
     ML.emit('chat:update');
   },
 
+  remove: function (id)
+  {
+    for (var i in C.data)
+    {
+      if (C.data[i].id == id)
+      {
+        C.data.splice(i, 1);
+        return true;
+      }
+    }
+    return false;
+  },
+
   load: function (me)
   {
     C.data = JSON.parse(localStorage.getItem('chats')) || [];
