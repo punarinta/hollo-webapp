@@ -180,9 +180,11 @@ var $ =
 
       $.C.data = $.C.data.sort(function (a, b)
       {
-        if (a.read && !!a.read > !!b.read) return 1;
+        var x = (a.read - 0) - (b.read - 0);
 
-        return b.lastTs - a.lastTs;
+        if (x > 0) return 1;
+        else if (x < 0) return -1;
+        else return b.lastTs - a.lastTs;
       });
 
       var jsonString = JSON.stringify($.C.data);
