@@ -549,11 +549,13 @@ class MessagesPage extends Component
           for (let j in m.files)
           {
             // babeli bug if vars are not defined via a variable
-            let file = m.files[j];
+            let file = m.files[j], token = '';
+
+            if ($platform == 1) token = '&token=' + ML.sessionId;
 
             filePlates.push(h('li', null,
               h(FilePlate, {file, size: 'calc(50vw - 30px)'}),
-              h(BarIcon, {img: 'color/download', onclick: () => window.open(CFG.apiRoot + 'file?method=download&messageId=' + m.id + '&offset=' + j) })
+              h(BarIcon, {img: 'color/download', onclick: () => window.open(CFG.apiRoot + 'file?method=download&messageId=' + m.id + '&offset=' + j + token, '_system') })
             ))
           }
         }
