@@ -5,6 +5,9 @@ messages-page
   position fixed
   flex-direction column
   background-color color-bg-grey
+  @media screen and (min-width break-tablet)
+    left 360px
+    width calc(100vw - 360px)
   & > ul
     list-style-type none
     padding 5px
@@ -42,6 +45,11 @@ messages-page
   composer
     margin-top auto
     background #fff
+    @media screen and (min-width break-tablet)
+      width calc(100% - 32px)
+      max-width 560px
+      margin margin-large
+      border-radius 24px 24px 8px 24px
     bar
       height 40px
       display flex
@@ -68,6 +76,8 @@ messages-page
       padding 20px 40px 20px 20px
       font-size 18px
       resize none
+      @media screen and (min-width break-tablet)
+        border-radius 24px
       &::-webkit-input-placeholder
         font-style italic
         font-family 'Work Sans', sans-serif
