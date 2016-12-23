@@ -1,5 +1,7 @@
 <?php
 
+date_default_timezone_set('UTC');
+
 $mixpanel = '<!-- start Mixpanel --><script type="text/javascript">(function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
 0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
 for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
@@ -23,7 +25,7 @@ function prefixify($text = '', $prefixes = [], $prefixed = [])
                     $extraTextLine = str_replace($style, $prefixes[$pfx] . $style, $textLines[$i]);
                     array_splice($textLines, $i + 1, 0, $extraTextLine);
 
-                    echo "$style - $extraTextLine\n";
+                    echo "$style:\t$extraTextLine\n";
                 }
             }
         }
@@ -36,7 +38,17 @@ echo "Setting up...\n";
 
 chdir(__DIR__);
 
-$configFile = ($_SERVER['argc'] == 2) ? $_SERVER['argv'][1] : 'config.json';
+$platform = $_SERVER['argc'] >= 2 ? $_SERVER['argv'][1] : 'web';
+$configFile = $_SERVER['argc'] >= 3 ? $_SERVER['argv'][2] : 'config.json';
+
+echo "Platform = $platform\n";
+
+if (!in_array($platform, ['web', 'ios', 'android']))
+{
+    echo "Platform not supported!\n\n";
+    exit;
+}
+
 $config = json_decode(file_get_contents(__DIR__ . '/' . $configFile), true);
 
 chdir($config['root']);
@@ -106,10 +118,22 @@ $search = ['/\>[^\S ]+/s', '/[^\S ]+\</s', '/(\s)+/s', '#<!-- DEV -->(.*?)<!-- /
 $replace = ['>', '<', '\\1', ''];
 $html = preg_replace($search, $replace, $html);
 
+if (in_array($platform, ['ios', 'android']))
+{
+    $version = $platform . ', compiled ' . date('d.m.Y H:i');
+    $cordova = '<script src="cordova.js"></script>';
+    $html = str_replace('href="/', 'href="', $html);
+}
+else
+{
+    $version = date('d.m.Y H:i');
+    $cordova = '';
+}
+
 $html = strtr($html, ['> ' => '>', ' <' => '<']);
-$html = str_replace("APPVER='dev'", "APPVER='" . date('d.m.Y H:i') . "'", $html);
+$html = str_replace("APPVER='dev'", "APPVER='" . $version . "'", $html);
 $html = str_replace('<!-- CSS -->', '<style>' . file_get_contents("$distDir/$random.css") . '</style>', $html);
-$html = str_replace('<!-- JS -->', '<script>' . file_get_contents("$distDir/$random.js") . file_get_contents("$distDir/$random_es6.js") . '</script>' . $mixpanel, $html);
+$html = str_replace('<!-- JS -->', $cordova . '<script>' . file_get_contents("$distDir/$random.js") . file_get_contents("$distDir/$random_es6.js") . '</script>' . $mixpanel, $html);
 
 file_put_contents($distDir . '/index.html', $html);
 

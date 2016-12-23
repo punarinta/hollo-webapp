@@ -1,0 +1,1 @@
+// this is a dummy Cordova core for local development

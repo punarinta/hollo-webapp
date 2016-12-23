@@ -45,16 +45,16 @@ class SearchBar extends Component
     return (
 
       h('search-bar', {className: this.props.className},
-        h(Input,
+        h('input',
         {
           type: 'email',
           value: this.state.value,
           onkeyup: this.onKeyUp.bind(this),
-          onfocusx: this.onFocus.bind(this),
-          onblurx: this.onBlur.bind(this),
+          onfocus: this.onFocus.bind(this),
+          onblur: this.onBlur.bind(this),
           placeholder: props.placeholder
         }),
-        h('div', {onclick: this.clear.bind(this), style: {display: this.state.showCross ? 'block' : 'none'}},
+        h('div', {onclick: this.clear.bind(this), style: {display: this.state.showCross ? 'flex' : 'none'}},
           h(Svg, {model: 'cross', size: 14, type: 'polygon'})
         )
       )

@@ -5,17 +5,6 @@ class ChatRow extends Component
     this.swipe = 0;
     this.action = 0;
     this.blockSwipe = 0;
-    this.canUpdate = true;
-    this.state.chat = this.props.chat;
-  }
-
-  componentWillReceiveProps(nextProps)
-  {
-    if (JSON.stringify(this.state.chat) != JSON.stringify(nextProps.chat) || nextProps.chat.forceUpdate == 1)
-    {
-      this.canUpdate = true;
-    }
-    this.setState({chat: nextProps.chat});
   }
 
   touchStart(e)
@@ -46,19 +35,16 @@ class ChatRow extends Component
       if (distX > threshold && this.action != 1)
       {
         this.action = 1;
-        this.canUpdate = 1;
         this.setState({mode: 1});
       }
       else if (Math.abs(distX) < threshold && this.action)
       {
         this.action = 0;
-        this.canUpdate = 1;
         this.setState({mode: 0});
       }
       else if (distX < -threshold && this.action != -1)
       {
         this.action = -1;
-        this.canUpdate = 1;
         this.setState({mode: -1});
       }
       e.stopPropagation();
@@ -101,7 +87,7 @@ class ChatRow extends Component
 
       this.item.classList.add('travel');
 
-      let chat = this.state.chat;
+      let chat = this.props.chat;
 
       switch (this.action)
       {
@@ -109,11 +95,9 @@ class ChatRow extends Component
           chat.muted = !chat.muted - 0;
 
           ML.api('chat', 'update', {id: chat.id, muted: chat.muted});
-
           setTimeout( () =>
           {
-            // remove it from the parent component
-            ML.emit('chat:update', {chat, cmd: 'muted'});
+            $.C.set(null, chat.id, chat);
           }, 800);
 
           this.item.style.transform = `translateX(${this.props.vw}px)`;
@@ -124,11 +108,9 @@ class ChatRow extends Component
           chat.read = !chat.read - 0;
 
           ML.api('chat', 'update', {id: chat.id, read: chat.read});
-
           setTimeout( () =>
           {
-            // set the state from the parent component
-            ML.emit('chat:update', {chat});
+            $.C.set(null, chat.id, chat);
           }, 400);
 
           this.item.style.transform = `translateX(-${this.props.vw}px)`;
@@ -141,18 +123,17 @@ class ChatRow extends Component
     }
   }
 
-  shouldComponentUpdate()
-  {
-    return this.canUpdate;
-  }
-
   render(props)
   {
-    this.canUpdate = false;
-
-    let chat = this.state.chat,
+    let chat = props.chat,
         email = chat.users[0].email,
-        lastMsg = chat.last.msg || '';
+        lastSubj = '', lastMsg = '';
+
+    if (chat.messages && chat.messages[0])
+    {
+      lastMsg = chat.messages[0].body || '';
+      lastSubj = chat.messages[0].subj || '';
+    }
 
     if (lastMsg !== null && typeof lastMsg === 'object')
     {
@@ -165,13 +146,13 @@ class ChatRow extends Component
           let name = w.att[i][1].length ? w.att[i][1] : w.att[i][0];
           if (w.att[i][2] == 'ACCEPTED')
           {
-            if (this.props.user.email == w.att[i][0]) subject = '✔ ️you accepted this invite';
+            if (props.user.email == w.att[i][0]) subject = '✔ ️you accepted this invite';
             else subject = '✔ ️' + name + ' accepted this invite';
             break;
           }
           else if (w.att[i][2] == 'TENTATIVE')
           {
-            if (this.props.user.email == w.att[i][0]) subject = '✔ ️you accepted this invite';
+            if (props.user.email == w.att[i][0]) subject = '✔ ️you accepted this invite';
             else subject = '❓ ' + name + ' said "maybe" to this invite';
             break;
           }
@@ -183,7 +164,7 @@ class ChatRow extends Component
     }
     else
     {
-      lastMsg = lastMsg.replace(/\[sys:fwd\]/g, ' ➡️ ' + chat.last.subj).replace(/(<([^>]+)>)/ig, '').substring(0, 60).trim();
+      lastMsg = lastMsg.replace(/\[sys:fwd\]/g, ' ➡️ ' + lastSubj).replace(/(<([^>]+)>)/ig, '').substring(0, 60).trim();
     }
 
     let d = document.createElement('div');
@@ -196,7 +177,7 @@ class ChatRow extends Component
           ontouchstart: this.touchStart.bind(this),
           ontouchmove: this.touchMove.bind(this),
           ontouchend: this.touchEnd.bind(this),
-          onclick: () => this.props.onclick(this.state.chat)
+          onclick: () => props.onclick(props.chat)
         },
         h('div', {className: 'real'},
           h(Avatar, {chat}),

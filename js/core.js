@@ -7,7 +7,7 @@ var ML =
   ws: null,
   _wsOpened: 0,
 
-  api: function (endpoint, method, data, callback, error)
+  api: function (endpoint, method, data, callback, error, failure)
   {
     var r = new XMLHttpRequest(), ps = null, pl;
 
@@ -33,7 +33,8 @@ var ML =
           console.log('Status:', status);
           if (status != 401)
           {
-            ML.emit('messagebox', {html: json.errMsg});
+            if (failure) failure(json.errMsg);
+            else ML.emit('messagebox', {html: json.errMsg});
           }
         }
       }
@@ -130,7 +131,7 @@ var ML =
     ML._loaded[fn] = 1;
     var f = document.createElement('script');
     f.setAttribute('type', 'text/javascript');
-    f.setAttribute('src', '/' + fn + '.js');
+    f.setAttribute('src', /*'/' +*/ fn + '.js');
     document.querySelector('head').appendChild(f)
   },
 
@@ -138,7 +139,7 @@ var ML =
   {
     var e = new Event('popstate'),
         data = {route: r, data: d};
-    history.pushState(data, '', '/' + r);
+    history.pushState(data, '', '#' + r);
     e.state = data;
     window.dispatchEvent(e);
   },

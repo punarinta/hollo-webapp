@@ -14,7 +14,7 @@ class App extends Component
     this.state.customBox = null;
     this.state.userPicker = null;
     this.state.user = null;
-    this.state.busy = 1;
+    this.state.busy = 0;
   }
 
   componentDidMount()
@@ -47,6 +47,7 @@ class App extends Component
     // === ROUTER ===
     window.onpopstate = (e) =>
     {
+      if (!e.state) return;
       let r = e.state.route, rs = r.split('/');
 
       if (rs[0] == 'chat')
@@ -58,7 +59,9 @@ class App extends Component
         switch (r)
         {
           case 'chats':
-            this.setState({page: 'chats', chatsPageData: e.state.data});
+            let chatsPageData = e.state.data;
+            if (typeof chatsPageData == 'undefined') chatsPageData = {muted: 0};
+            this.setState({page: 'chats', chatsPageData});
             break;
 
           case 'auth/login':
@@ -66,6 +69,7 @@ class App extends Component
             break;
 
           case 'auth/logout':
+            if ($platform == 1) window.plugins.googleplus.disconnect();
             ML.api('auth', 'logout', null, () =>
             {
               this.setState({page: 'login', busy: 0});
@@ -119,17 +123,24 @@ class App extends Component
         let data = JSON.parse(event.data);
         console.log('IM', data);
 
-        if (data.cmd == 'chat:update')
-        {
-          let chat = {id: data.chatId, external: 1, silent: data.silent};     // IM supports 'silent' flag
-          ML.emit('chat:update', {chat});
-        }
         if (data.cmd == 'sys:ping')
         {
           if (!that.notification('Ping signal received'))
           {
             ML.emit('messagebox', {html: 'Ping signal received'});
           }
+        }
+
+        // Firebase messaging is on, so skip duplicate activities
+        if ($firebaseOn) return;
+
+        if (data.cmd == 'chat:update')
+        {
+          ML.api('chat', 'getAllData', {chatId: data.chatId}, (json) =>
+          {
+            $.U.set(null, json.users);
+            $.C.set(this.state.user, null, json.chats);
+          });
         }
       };
     })();
@@ -138,22 +149,13 @@ class App extends Component
     let oauthCode = ML.getQueryVar('code');
     if (oauthCode)
     {
-      let isMobile = window.location.pathname == '/oauth/googleMobile';
-
-      ML.api('auth', 'processOAuthCode', {code: oauthCode, redirectUrl: CFG.redirectUrl + (isMobile?'Mobile':'')}, data =>
+      ML.api('auth', 'processOAuthCode', {code: oauthCode, redirectUrl: CFG.redirectUrl}, data =>
       {
         if (data.user)
         {
+          history.replaceState({}, 'Hollo!', '/');
           ML.emit('inituser', {data});
-
-          if (isMobile)
-          {
-            history.go(1 - history.length);
-          }
-          else
-          {
-            ML.go('chats')
-          }
+          ML.go('chats')
         }
         else
         {
@@ -167,6 +169,11 @@ class App extends Component
         {
           this.setState({page: 'login'});
         }});
+      },
+      () =>
+      {
+        // this is for desktop clients
+        document.location.href = document.location.origin + document.location.pathname;
       });
     }
     // use GET for better start performance
@@ -187,7 +194,10 @@ class App extends Component
       }
     });
 
-    parent.postMessage({cmd: 'statusBar', color: 'e2e2e2', flag: 1}, '*');
+    if ($platform == 1 && window.StatusBar)
+    {
+      StatusBar.show();
+    }
   }
 
   notification (message)
@@ -221,8 +231,26 @@ class App extends Component
     ML.sessionId = data.sessionId;
     localStorage.setItem('sessionId', data.sessionId);
 
-    // send auth data to top frame
-    parent.postMessage({cmd: 'onAuth', user: data.user}, '*');
+    if ($platform == 1 && window.FCMPlugin)
+    {
+      FCMPlugin.onNotification
+      (
+        data =>
+        {
+          console.log('Firebase message:', data);
+          ML.emit('firebase', data);
+        },
+        msg =>
+        {
+          console.log('Firebase on!', msg);
+          $firebaseOn = true;
+        },
+        err => console.log('Firebase error:', err)
+      );
+
+      console.log('FCM: subscribe to user-' + data.user.id);
+      FCMPlugin.subscribeToTopic('user-' + data.user.id);
+    }
 
     if (typeof mixpanel != 'undefined' && !mixpanel.off)
     {
@@ -278,7 +306,10 @@ class App extends Component
       if (typeof flags.showNotes != 'undefined') CFG.showNotes = flags.showNotes;
     }
 
-    this.setState({user: data.user})
+    this.setState({user: data.user});
+
+    // load all user chats
+    $.C.load(data.user);
   }
 
   firebaseListener(e)
@@ -293,16 +324,17 @@ class App extends Component
     if (e.payload.cmd == 'sys:ping')     ML.emit('messagebox', { html: 'Ping signal received' });
     if (e.payload.cmd == 'chat:update')
     {
-      let chat = {id: e.payload.chatId, external: 1};
-
-      if (e.payload.wasTapped)
+      ML.api('chat', 'getAllData', {chatId: e.payload.chatId}, (json) =>
       {
-        // app was OFF, just go to the chat
-        ML.go('chat/' + chat.id);
-      }
+        $.U.set(null, json.users);
+        $.C.set(this.state.user, null, json.chats);
 
-      // update the info in the DOM in any case
-      ML.emit('chat:update', {chat});
+        if (e.payload.wasTapped)
+        {
+          // app was OFF, just go to the chat
+          ML.go('chat/' + e.payload.chatId);
+        }
+      });
     }
   }
 
@@ -350,7 +382,7 @@ class App extends Component
       case 'chat':
         pages.push(h(ProfilePage, {zIndex: 0, user}));
         pages.push(h(ChatsPage, {zIndex: 10, data: this.state.chatsPageData, user}));
-        pages.push(h(MessagesPage, {zIndex: 20, data: this.state.messagesPageData, user}));
+        pages.push(h(MessagesPage, {zIndex: 20, data: this.state.messagesPageData, user, popped: Math.random()}));
         break;
     }
 
@@ -368,18 +400,56 @@ class App extends Component
   }
 }
 
-document.body.innerHTML = '';
-
-// cheapest place to compute initial window width
-var $windowInnerWidth = window.innerWidth,
+// setup global vars
+var $windowInnerWidth = 360,
     $maintenance = 0, //!ML.getQueryVar('debug'),
-    $platform = window.self === window.top ? 0 : (window.Notification ? 2 : 1);
+    $platform = 0,
+    $firebaseOn = false;
 
-/*
-    Platforms:
-    0 - web browser
-    1 - mobile app
-    2 - desktop app
-*/
+function onDeviceReady()
+{
+  if (window.StatusBar)
+  {
+    StatusBar.hide();
+    StatusBar.backgroundColorByHexString('e2e2e2');
+  }
 
-render(h(App), document.body);
+  document.body.innerHTML = '';
+
+  // cheapest place to compute initial window width
+  $windowInnerWidth = window.innerWidth;
+  $platform = window.self === window.top ? 0 : 2;
+
+  /*
+      Platforms:
+      0 - web browser
+      1 - mobile app
+      2 - desktop app
+  */
+
+  if (window.cordova)
+  {
+    $platform = 1;
+
+    if (window.plugins.intent) window.plugins.intent.setNewIntentHandler( intent =>
+    {
+      console.log('Intent:', intent);
+      if (intent.action.indexOf('SEND') != -1)
+      {
+        ML.emit('messagebox', {html: 'Sending files feature will be fully supported in the next version. Stay tuned!'});
+      }
+    });
+  }
+
+  render(h(App), document.body);
+}
+
+// (iPhone|iPod|iPad|Android|BlackBerry)
+if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/) && !CFG.local)
+{
+  document.addEventListener('deviceready', onDeviceReady, false);
+}
+else
+{
+  onDeviceReady();
+}

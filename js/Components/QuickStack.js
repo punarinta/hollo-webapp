@@ -47,10 +47,18 @@ class QuickStack extends Component
 
   show()
   {
-    ML.api('message', 'buildQuickStack', {muted: this.props.muted}, qs =>
+    let i, qs = [], chats = $.C.filter({muted: this.props.muted, read: 0});
+
+    // go through chats, pick last messages, enrich with extra fields
+    for (i in chats)
     {
-      this.setState({quickStackShown: 1, qs});
-    });
+      let m = chats[i].messages[0];
+      m.chatId = chats[i].id;
+      m.fromId = m.userId;
+      qs.push(m)
+    }
+
+    this.setState({quickStackShown: 1, qs});
   }
 
   reply(current)
@@ -86,7 +94,7 @@ class QuickStack extends Component
     {
       chat.read = 1;
       ML.api('chat', 'update', {id: chat.id, read: 1});
-      ML.emit('chat:update', {chat});
+      $.C.set(null, chat.id, chat);
     }
 
     this.buttonRead.classList.remove('picked');

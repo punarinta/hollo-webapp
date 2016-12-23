@@ -3,16 +3,13 @@ class ChatsPage extends Component
   constructor()
   {
     super();
-    this.pageLength = Math.ceil(2.5 * (screen.height - 176) / 72);
-    this.pageStart = 0;
-    this.filterTimer = null;
     this.emailFilter = '';
-    this.canLazyLoadMore = 0;
-    this.lastCallFindParams = {};
-
+    this.filterTimer = null;
     this.state.chats = [];
     this.state.blockSwipe = 0;
     this.state.filterActive = 0;
+    this.displayPerScreen = (screen.height / 72) + 1;
+    this.state.maxDisplay = this.displayPerScreen;
   }
 
   componentDidMount()
@@ -21,13 +18,12 @@ class ChatsPage extends Component
     this.chatUpdateReference = this.chatUpdate.bind(this);
     this.base.querySelector('ul').addEventListener('scroll', this.scrollReference);
     window.addEventListener('hollo:chat:update', this.chatUpdateReference);
-    this.callFind();
   }
 
   componentWillReceiveProps(nextProps)
   {
     this.props = nextProps;
-    this.callFind();
+    this.chatUpdate();
   }
 
   componentWillUnmount()
@@ -36,102 +32,14 @@ class ChatsPage extends Component
     window.removeEventListener('hollo:chat:update', this.chatUpdateReference);
   }
 
-  chatUpdate(e)
+  chatUpdate()
   {
-    let found = 0, chats = this.state.chats;
-
-    for (let i in chats)
+    this.setState({chats: $.C.filter(
     {
-      if (e.payload.chat.id == chats[i].id)
-      {
-        found = 1;
-        chats[i].forceUpdate = 1;
-
-        if (e.payload.chat.read) chats[i].read = e.payload.chat.read;
-        if (e.payload.chat.name) chats[i].name = e.payload.chat.name;
-
-        if (e.payload.chat.external && !e.payload.chat.silent)
-        {
-          // non-silent external signal => mark chat as unread
-          chats[i].read = 0;
-        }
-
-        if (e.payload.cmd == 'muted')
-        {
-          delete chats[i]
-        }
-
-        this.setState({chats});
-        ML.emit('qs:count');
-
-        break;
-      }
-    }
-
-    if (!found)
-    {
-      // TODO: make it more smooth, do not reload all
-      // new chat -> force resync
-      this.callFind(0, 1);
-    }
-  }
-
-  callFind(shouldAdd = 0, force = 0)
-  {
-    let filters = [{mode: 'muted', value: this.props.data ? this.props.data.muted || 0 : 0}];
-
-    if (this.emailFilter.length)
-    {
-      filters.push({mode:'email', value: this.emailFilter});
-    }
-
-    let callFindParams = {pageStart: this.pageStart, pageLength: this.pageLength, filters};
-
-    if (this.lastCallFindParams.filters && callFindParams.filters[0].value != this.lastCallFindParams.filters[0].value)
-    {
-      // another mode => reset head
-      this.pageStart = 0;
-      callFindParams.pageStart = 0;
-    }
-
-    if (!force && JSON.stringify(callFindParams) == JSON.stringify(this.lastCallFindParams))
-    {
-      return
-    }
-
-    if (!shouldAdd)
-    {
-      this.pageStart = 0;
-    }
-
-    ML.emit('busybox', {mode: 1});
-
-    ML.api('chat', 'find', this.lastCallFindParams = callFindParams, (data) =>
-    {
-      let chats = this.state.chats;
-
-      if (!this.pageStart)
-      {
-        let first = this.base.querySelector('chat-row:first-child');
-        if (first) first.scrollIntoView();
-      }
-
-      if (shouldAdd)
-      {
-        // this.pageStart += data.length;
-        chats = chats.concat(data);
-      }
-      else
-      {
-        chats = data;
-      }
-
-      this.setState({chats});
-      this.canLazyLoadMore = (data.length == this.pageLength && !this.emailFilter.length);
-
-      ML.emit('qs:count');
-      ML.emit('busybox', 0);
-    });
+      muted: !!(this.props.data ? this.props.data.muted : 0),
+      email: this.emailFilter.length ? this.emailFilter : null
+    })});
+    ML.emit('qs:count');
   }
 
   touchStart(e)
@@ -173,6 +81,7 @@ class ChatsPage extends Component
 
     if (Math.abs(distY) > 16 && !this.swiping)
     {
+
       if (!this.state.blockSwipe)
       {
         this.setState({blockSwipe: true});
@@ -188,13 +97,17 @@ class ChatsPage extends Component
   {
     if (this.state.blockSwipe)
     {
-      if (this.pull == 2)
+      let el = this.base.querySelector('chat-row:first-child');
+
+      if (this.pull == 2 && (!el || el.getBoundingClientRect().top > 0))
       {
-        this.ul.style.opacity = 0;
-        this.ul.style.transform = 'translateY(0)';
-        this.ulin.style.transform = 'rotate(0)';
         this.ul.classList.add('travel');
-        this.callFind(0, 1);
+        ML.emit('busybox', {mode: 1});
+        $.C.sync(this.props.user, () =>
+        {
+          ML.emit('busybox');
+        });
+
         setTimeout( () =>
         {
           this.ul.classList.remove('travel');
@@ -202,27 +115,10 @@ class ChatsPage extends Component
       }
 
       this.pull = 0;
+      this.ul.style.opacity = 0;
+      this.ul.style.transform = 'translateY(0)';
+      this.ulin.style.transform = 'rotate(0)';
       this.setState({blockSwipe: false});
-    }
-  }
-
-  scroll()
-  {
-    if (!this.canLazyLoadMore)
-    {
-      return;
-    }
-
-    let el = this.base.querySelector('chat-row:nth-last-child(2)');
-
-    if (el && el.getBoundingClientRect().bottom < screen.height + 50)
-    {
-      // temporarily block it
-      this.canLazyLoadMore = 0;
-      this.pageStart += this.pageLength;
-      this.callFind(1);
-
-      mixpanel.track('Chat - get more');
     }
   }
 
@@ -236,7 +132,7 @@ class ChatsPage extends Component
       if (this.emailFilter != filter)
       {
         this.emailFilter = filter;
-        this.callFind();
+        this.chatUpdate();
       }
 
       mixpanel.track('Sys - filter', {keyword: filter});
@@ -253,9 +149,22 @@ class ChatsPage extends Component
     mixpanel.track('Chat - add new');
     ML.api('chat', 'add', {emails: [this.emailFilter]}, data =>
     {
+      // add chat to the storage first
+      $.C.set(this.props.user, data.id, data);
       this.setState({menuModalShown: 0});
       ML.go('chat/' + data.id);
     });
+  }
+
+  scroll()
+  {
+    let el = this.base.querySelector('chat-row:nth-last-child(2)');
+
+    if (el && el.getBoundingClientRect().bottom < screen.height + 50)
+    {
+      this.setState({maxDisplay: this.state.maxDisplay + this.displayPerScreen});
+      mixpanel.track('Chat - get more');
+    }
   }
 
   render()
@@ -292,21 +201,24 @@ class ChatsPage extends Component
       let chats = [], vw = $windowInnerWidth > 768 ? 360 : $windowInnerWidth;
 
       // self-chat
-      if (CFG.showNotes && (!this.props.data || !this.props.data.muted))
+      if (CFG.showNotes && !this.props.data.muted)
       {
-        let my = JSON.parse(localStorage.getItem('messages')) || [];
+        let my = JSON.parse(localStorage.getItem('my-notes')) || [];
         chats.push(h(ChatRow,
         {
           user: this.props.user,
-          chat: {users: [this.props.user], last: {msg: my.length ? my[my.length-1].body : ''}, read: 1, name: 'My notes'},
+          chat: {users: [this.props.user], messages: my, read: 1, name: 'My notes'},
           canSwipe: 0,
           onclick: (chat) => ML.go('chat/me'),
           vw
         }))
       }
 
+      let count = 0;
       for (let i in this.state.chats)
       {
+        if (count > this.state.maxDisplay) break;
+
         let chat = this.state.chats[i];
         if (chat.muted != muted) continue;  // skip it!
 
@@ -317,7 +229,9 @@ class ChatsPage extends Component
           canSwipe: !this.state.blockSwipe,
           onclick: (chat) => { mixpanel.track('Chat - enter', {id: chat.id}); ML.go('chat/' + chat.id) },
           vw
-        }))
+        }));
+
+        ++count;
       }
 
       if (!this.emailFilter.length || chats.length)

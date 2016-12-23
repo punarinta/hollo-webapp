@@ -5,14 +5,13 @@
   [
     "js/md5",
     "js/core",
-    "js/parented",
+    "js/storage",
     "js/gravatar",
     "js/settings"
   ],
   "js-es6":
   [
     "js/Components/HolloLoaderBig",
-    "js/Components/Input",
     "js/Components/Avatar",
     "js/Components/Svg",
     "js/Components/ChatRow",
@@ -61,7 +60,8 @@
       ["animation-fill-mode", [0]],
       ["animation-timing-function", [0]],
       ["animation-delay", [0]],
-      ["animation-duration", [0]]
+      ["animation-duration", [0]],
+      ["overflow-scrolling", [0]]
     ]
   },
   "dist": "../dist",

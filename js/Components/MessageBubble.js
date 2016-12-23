@@ -48,13 +48,13 @@ class MessageBubble extends Component
 
         let s = m.replace(/\/$/, '').split('//');
         s = (s.length ? s[1] : s[0]).split('/');
-        return `<a target="_blank" rel="noopener noreferrer" href="${m}">${s.length ? (s[0] + '&hellip;') : s[0]}</a>`;
+        return `<a target="_system" rel="noopener noreferrer" href="${m}">${s.length ? (s[0] + '&hellip;') : s[0]}</a>`;
       });
 
       // mailto: links
       body = body.replace(/(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim, m =>
       {
-        return `<a target="_blank" rel="noopener noreferrer" href="mailto:${m}">${m.replace('@', ' @ ')}</a> `;
+        return `<a target="_system" rel="noopener noreferrer" href="mailto:${m}">${m.replace('@', ' @ ')}</a> `;
       });
 
       body = body.replace(/(?:\r\n|\r\r|\n\n)/g, '</p><p>');
@@ -100,7 +100,7 @@ class MessageBubble extends Component
 
     let message = this.state.message,
         mine = message.from.email == this.props.user.email,
-        subject = message.subject,
+        subject = message.subj,
         body = message.body;
 
     let virtualChat = {users:[message.from], read:1};

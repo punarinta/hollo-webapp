@@ -3,13 +3,7 @@ class MessagesPage extends Component
   constructor()
   {
     super();
-    this.pageStart = 0;
-    this.pageLength = 20;
-    this.canLazyLoadMore = 0;
-    this.chat = null;
     this.scrollTop = 0;
-    this.lastCallFindParams = {};
-
     this.state.h = 64;
     this.state.canSend = 0;
     this.state.compFocus = 0;
@@ -24,13 +18,10 @@ class MessagesPage extends Component
 
   componentDidMount()
   {
-    this.scrollRef = this.scroll.bind(this);
     this.tryBlurringRef = this.tryBlurring.bind(this);
     this.chatUpdateReference = this.chatUpdate.bind(this);
-    this.base.querySelector('ul').addEventListener('scroll', this.scrollRef);
     this.base.addEventListener('click', this.tryBlurringRef);
     window.addEventListener('hollo:chat:update', this.chatUpdateReference);
-    this.callFind();
     ML.load('modules/emojis');
   }
 
@@ -39,114 +30,51 @@ class MessagesPage extends Component
     if (this.props.data.chatId != nextProps.data.chatId)
     {
       this.setState({menuModalShown: 0});
-      this.props.data.chatId = nextProps.data.chatId;
+      this.chatId = nextProps.data.chatId;
+
+      if (this.chatId != 'me')
+      {
+        let chat = $.C.get(this.chatId);
+        if (!chat.read)
+        {
+          chat.read = 1;
+          ML.api('chat', 'update', {id: chat.id, read: 1});
+          $.C.set(null, this.chatId, chat);
+        }
+      }
+      this.chatUpdate()
     }
-    this.callFind();
+    this.setState({menuModalShown: 0})
   }
 
   componentWillUnmount()
   {
-    this.base.querySelector('ul').removeEventListener('scroll', this.scrollRef);
     this.base.removeEventListener('click', this.tryBlurringRef);
     window.removeEventListener('hollo:chat:update', this.chatUpdateReference);
   }
 
-  chatUpdate(e)
+  chatUpdate()
   {
-    if (e.payload.chat.external)
+    if (this.chatId)
     {
-      if (this.chat && e.payload.chat.id == this.chat.id)
+      let messages = [], currentSubject;
+
+      if (this.chatId == 'me')
       {
-        let m = this.state.messages;
-        ML.api('message', 'getAllAfter', {chatId: this.chat.id, lastMessageId: m[m.length - 1].id}, data =>
-        {
-          data = data.reverse();
-          let messages = this.state.messages;
-          for (let i in data)
-          {
-            messages.push(data[i]);
-          }
-          this.setState({messages});
-          this.reposition(1)
-        });
-      }
-    }
-  }
+        this.chat = { id: 0, name: 'My notes', read: 1, users: [], muted: 0 };
 
-  callFind(shouldAdd = 0, force = 0)
-  {
-    if (!this.props.data.chatId)
-    {
-      return
-    }
-
-    let callFindParams = {chatId: this.props.data.chatId, pageStart: this.pageStart, pageLength: this.pageLength};
-
-    if (!force && JSON.stringify(callFindParams) == JSON.stringify(this.lastCallFindParams))
-    {
-      return
-    }
-
-    if (callFindParams.chatId == 'me')
-    {
-      this.chat = { id: 0, name: 'My notes', read: 1, users: [], muted: 0 };
-
-      let messages = JSON.parse(localStorage.getItem('messages')) || [],
-          currentSubject = messages.length ? messages[messages.length - 1].subject : '';
-
-      this.setState({messages, currentSubject});
-      return;
-    }
-
-    ML.emit('busybox', {mode: 2});
-
-    ML.api('message', 'findByChatId', this.lastCallFindParams = callFindParams, (data) =>
-    {
-      this.chat = data.chat;
-      this.chat.read = 1;
-
-      ML.emit('chat:update', {chat : this.chat});
-
-      data.messages = data.messages.reverse();
-
-      if (shouldAdd)
-      {
-        // adds messages to the top
-        this.setState({messages: data.messages.concat(this.state.messages)});
-
-        // TODO: configure repositioning
+        messages = JSON.parse(localStorage.getItem('my-notes')) || [];
+        currentSubject = messages.length ? messages[messages.length - 1].subj : '';
       }
       else
       {
-        let currentSubject = data.messages.length ? data.messages[data.messages.length - 1].subject : 'New subject';
-        this.setState({messages: data.messages, currentSubject});
-        this.reposition(1)
+        this.chat = $.C.get(this.chatId);
+        messages = this.chat.messages || [];
+        currentSubject = messages.length ? messages[0].subj : 'New subject';
       }
 
-      this.canLazyLoadMore = (data.messages.length == this.pageLength);
-
-      ML.emit('busybox', 0);
-    });
-  }
-
-  scroll(e)
-  {
-    this.scrollTop = e.target.scrollTop;
-
-    if (!this.canLazyLoadMore)
-    {
-      return;
-    }
-
-    let el = this.base.querySelector('message-bubble:nth-child(2)');
-
-    if (el && el.getBoundingClientRect().top > 0 && !this.state.subjectFilter)
-    {
-      this.canLazyLoadMore = 0;
-      this.pageStart += this.pageLength;
-      this.callFind(1);
-
-      mixpanel.track('Messages - get more');
+      this.setState({messages, currentSubject});
+      this.reposition(1)
     }
   }
 
@@ -228,7 +156,7 @@ class MessagesPage extends Component
 
     for (let i in this.state.messages)
     {
-      subjects.push(this.state.messages[i].subject)
+      subjects.push(this.state.messages[i].subj)
     }
 
     return ML.uniques(subjects);
@@ -251,7 +179,8 @@ class MessagesPage extends Component
       }
       if (mode == 1)
       {
-        this.base.querySelector('message-bubble:last-child').scrollIntoView(false);
+        let last = this.base.querySelector('message-bubble:last-child');
+        if (last) last.scrollIntoView(false);
         this.scrollTop = this.base.querySelector('ul').scrollTop;
       }
     }, 50 + timeOffset);
@@ -328,15 +257,21 @@ class MessagesPage extends Component
   muteChat()
   {
     this.chat.muted = !this.chat.muted;
-    ML.api('chat', 'update', {id: this.chat.id, muted: this.chat.muted}, () => this.setState({menuModalShown: 0}));
-    ML.emit('chat:update', {chat : this.chat});
+    ML.api('chat', 'update', {id: this.chat.id, muted: this.chat.muted}, () =>
+    {
+      this.setState({menuModalShown: 0});
+      $.C.set(null, this.chat.id, this.chat);
+    });
   }
 
   unreadChat()
   {
     this.chat.read = !this.chat.read;
-    ML.api('chat', 'update', {id: this.chat.id, read: this.chat.read}, () => this.setState({menuModalShown: 0}));
-    ML.emit('chat:update', {chat : this.chat});
+    ML.api('chat', 'update', {id: this.chat.id, read: this.chat.read}, () =>
+    {
+      this.setState({menuModalShown: 0});
+      $.C.set(null, this.chat.id, this.chat);
+    });
   }
 
   renameChat()
@@ -348,8 +283,8 @@ class MessagesPage extends Component
       if (code)
       {
         this.chat.name = name;
-        ML.api('chat', 'update', { id: this.chat.id, name }, () => this.render());
-        ML.emit('chat:update', {chat: this.chat});
+        ML.api('chat', 'update', { id: this.chat.id, name });
+        $.C.set(null, this.chat.id, this.chat);
       }
     }});
   }
@@ -361,14 +296,19 @@ class MessagesPage extends Component
     {
       if (code)
       {
-        ML.api('chat', 'leave', {id: this.chat.id}, () => ML.go('chats') );
+        let id = this.chat.id;
+        ML.api('chat', 'leave', {id}, () =>
+        {
+          $.C.remove(id);
+          ML.go('chats')
+        });
       }
     }})
   }
 
   clearNotes()
   {
-    localStorage.removeItem('messages');
+    localStorage.removeItem('my-notes');
     this.setState({messages: [], menuModalShown: 0})
   }
 
@@ -443,13 +383,13 @@ class MessagesPage extends Component
       {
         ts: new Date().getTime() / 1000,
         body: msg,
-        from: this.props.user,
-        subject: this.state.currentSubject
+        userId: this.props.user.id,
+        subj: this.state.currentSubject
       };
 
       messages.push(m);
       messages = messages.slice(Math.max(0, messages.length - 10));
-      localStorage.setItem('messages', JSON.stringify(messages));
+      localStorage.setItem('my-notes', JSON.stringify(messages));
       this.setState({files: [], messages, compFocus: 0, currentComposed: '', h: 64, canSend: 0});
       this.reposition(1);
       return
@@ -475,7 +415,7 @@ class MessagesPage extends Component
     this.setState({files: [], messages, compFocus: 0, currentComposed: '', h: 64});
     this.reposition(1);
 
-    console.log('Sending:', msg, msgId, m.subject, m.files, this.chat.id);
+    console.log('Sending:', msg, msgId, m.subj, m.files, this.chat.id);
 
     let statusClass = this.base.querySelector('message-bubble:last-child .status').className;
     statusClass = 'status s1';
@@ -499,16 +439,23 @@ class MessagesPage extends Component
         composerHeight = this.state.compFocus ? this.state.h + 40 : this.state.h,
         sendHeight = this.state.h;
 
-    for (let i in this.state.messages)
+    // render in reversed order
+    for (let i = this.state.messages.length - 1; i >= 0; i--)
     {
+      let user = this.props.user,
+          message = this.state.messages[i];
+
+      message.from = message.userId == user.id ? user : $.U.get(message.userId);
+
       if (this.state.subjectFilter)
       {
-        if (this.state.messages[i].subject != this.state.subjectFilter) continue;
+        if (message.subj != this.state.subjectFilter) continue;
       }
+
       messages.push(h(MessageBubble,
       {
-        message: this.state.messages[i],
-        user: this.props.user,
+        message,
+        user,
         captionClicked: (subjectFilter) => this.setState({subjectFilter})
       }))
     }
@@ -602,11 +549,13 @@ class MessagesPage extends Component
           for (let j in m.files)
           {
             // babeli bug if vars are not defined via a variable
-            let file = m.files[j];
+            let file = m.files[j], token = '';
+
+            if ($platform == 1) token = '&token=' + ML.sessionId;
 
             filePlates.push(h('li', null,
               h(FilePlate, {file, size: 'calc(50vw - 30px)'}),
-              h(BarIcon, {img: 'color/download', onclick: () => window.open('https://' + CFG.apiRoot + '/api/file?method=download&messageId=' + m.id + '&offset=' + j) })
+              h(BarIcon, {img: 'color/download', onclick: () => window.open(CFG.apiRoot + 'file?method=download&messageId=' + m.id + '&offset=' + j + token, '_system') })
             ))
           }
         }
@@ -619,7 +568,7 @@ class MessagesPage extends Component
       )
     }
 
-    if (this.state.menuModalShown == 4)
+    if (this.state.menuModalShown == 4 && this.chat)
     {
       let lis = this.chat.id ?
       [
@@ -668,7 +617,7 @@ class MessagesPage extends Component
         filterModal,
         menuModal,
         h('snackbar', null,
-          h(BarIcon, {img: 'color/arrow-back', onclick: () => { this.setState({menuModalShown: 0}); ML.go('chats', {muted: this.chat ? this.chat.muted : 0} )} }),
+          h(BarIcon, {img: 'color/arrow-back', onclick: () => ML.go('chats', {muted: this.chat ? this.chat.muted : 0} ) }),
           h('div', {className: 'name' + (this.state.menuModalShown == 1 ? ' toggled' : ''), onclick: () => this.toggleMenu(1) }, name),
           h(BarIcon, {className: this.state.menuModalShown == 2 ? 'toggled' : '', img: 'color/subjs', width: 40, height: 40, onclick: () => this.toggleMenu(2) }),
           h(BarIcon, {className: this.state.menuModalShown == 3 ? 'toggled' : '', img: 'color/clip', width: 40, height: 40, onclick: () => this.toggleMenu(3) }),

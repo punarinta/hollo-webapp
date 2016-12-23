@@ -1,89 +1,73 @@
 class Avatar extends Component
 {
-  constructor()
-  {
-    super();
-    this.empty = [];
-    this.state.nothing = 0;
-  }
-
-  componentWillMount()
+  componentDidMount()
   {
     this.loadGraphics(this.props);
   }
 
-  componentDidMount()
-  {
-    this.resyncRef = this.resync.bind(this);
-    window.addEventListener('hollo:avasync', this.resyncRef);
-  }
-
-  componentWillUnmount()
-  {
-    window.removeEventListener('hollo:avasync', this.resyncRef);
-  }
-
   componentWillReceiveProps(nextProps)
   {
-    if (this.props.user != nextProps.user)
-    {
-      this.setState({bgImage: null})
-    }
     this.loadGraphics(nextProps);
-  }
-
-  resync()
-  {
-    this.setState({nothing: Math.random()})
   }
 
   loadGraphics(props)
   {
     let chat = props.chat || {users: [props.user], read: 1},
-        email = chat.users[0].email;
-
-    this.setState(
-    {
-      nc: ML.xname(chat)[1],
-      bgImage: '',
-      size: props.size || '40px'
-    });
-
-    if (this.empty.indexOf(email) != -1)
-    {
-      return;
-    }
+        email = chat.users[0].email, size = props.size || '40px';
 
     if (chat.users.length < 2)
     {
-      let im = new Image;
-      im.onload = () =>
+      let stored = $.A.get(email);
+
+      if (stored)
       {
-        this.setState({nc: '', bgImage: `url('/files/avatars/${email}')`});
-      };
-      im.onerror = () =>
+        if (stored.url) this.setState({nc: '', bgImage: `url('${stored.url}')`});
+        else this.setState({nc: ML.xname(chat)[1], bgImage: '', size});
+      }
+      else
       {
-        // try loading Gravatar if Gmail avatar failed
-        Gravatar.load(email, d =>
+        let im = new Image, avaPath = 'https://app.hollo.email/files/avatars/' + email;
+        im.onload = () =>
         {
-          if (d)
+          // great success, but don't forget to save it
+          $.A.set(email, avaPath);
+          this.setState({nc: '', bgImage: `url('${avaPath}')`});
+        };
+        im.onerror = () =>
+        {
+          // TODO: fix a bug when multiple similar requests are made
+          this.setState({nc: ML.xname(chat)[1], bgImage: '', size});
+
+          // try loading Gravatar if Gmail avatar failed
+          Gravatar.load(email, d =>
           {
-            this.setState({nc: '', bgImage: `url(${d.thumbnailUrl}?s=${this.state.size})`});
-          }
-          else
-          {
-            this.empty.push(email);
-          }
-        });
-      };
-      im.src = '/files/avatars/' + email;
+            if (d)
+            {
+              let url = `${d.thumbnailUrl}?s=${size}`;
+              $.A.set(email, url);
+              this.setState({nc: '', bgImage: `url(${url})`});
+            }
+            else
+            {
+              $.A.set(email, null);
+              this.setState({nc: ML.xname(chat)[1], bgImage: '', size});
+            }
+          });
+        };
+        im.src = avaPath;
+      }
+    }
+    else
+    {
+      // a chat -> no avatar
+      this.setState({nc: ML.xname(chat)[1], bgImage: '', size});
     }
   }
 
   render(props)
   {
     let chat = props.chat || {users: [props.user], read: 1},
-        size = this.state.size,
+        size = props.size || '40px',
         email = chat.users[0] ? chat.users[0].email : '',
         style =
         {

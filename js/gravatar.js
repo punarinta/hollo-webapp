@@ -42,6 +42,15 @@ var Gravatar =
     f.setAttribute('type', 'text/javascript');
     f.setAttribute('src', 'https://en.gravatar.com/' + h + '.json?callback=Gravatar.jsonp');
     f.setAttribute('id', 'grava-' + h);
+    f.onerror = function (e)
+    {
+      e.target.parentElement.removeChild(e.target);
+
+      if (typeof Gravatar.callbacks[h] != 'undefined' && typeof Gravatar.callbacks[h].cb == 'function')
+      {
+        Gravatar.callbacks[h].cb(0);
+      }
+    };
 
     Gravatar.callbacks[h] =
     {

@@ -10,26 +10,18 @@ class UserPickerModal extends Component
 
   componentDidMount()
   {
-    if (this.props.data) this.callFind();
+    this.usersUpdateReference = this.usersUpdate.bind(this);
+    window.addEventListener('hollo:users:update', this.usersUpdateReference);
   }
 
-  componentWillReceiveProps(nextProps)
+  componentWillUnmount()
   {
-    if (nextProps.data && this.props.data != nextProps.data)
-    {
-      this.callFind();
-    }
+    window.removeEventListener('hollo:users:update', this.usersUpdateReference);
   }
 
-  callFind()
+  usersUpdate()
   {
-    let params = {pageStart: 0, pageLength: 50};
-    if (this.emailFilter.length) params.filters = [{mode: 'email', value: this.emailFilter}];
-
-    ML.api('contact', 'find', params, (users) =>
-    {
-      this.setState({users})
-    })
+    this.setState({users: $.U.filter(this.emailFilter.length ? this.emailFilter : 0)})
   }
 
   filterChanged(filter)
@@ -41,7 +33,7 @@ class UserPickerModal extends Component
       if (this.emailFilter != filter)
       {
         this.emailFilter = filter;
-        this.callFind();
+        this.usersUpdate();
       }
     }, 500);
   }

@@ -35,8 +35,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-transparent">
     <!-- DEV -->
-    <meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src  'self' 'unsafe-inline' *; img-src * data:">
-    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <meta http-equiv="Content-Security-Policy" content="default-src gap://ready file://* ws://* wss://* *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src  'self' 'unsafe-inline' *; img-src * data:">
+    <link rel="stylesheet" type="text/css" href="main.css" />
     <!-- /DEV -->
     <!-- CSS -->
 </head>
@@ -60,36 +60,37 @@
 <script>var APPVER='dev'</script>
 
 <!-- DEV -->
-<script src="/node_modules/preact/dist/preact.min.js"></script>
+<script src="cordova.js"></script>
+<script src="node_modules/preact/dist/preact.min.js"></script>
 <script>const { Component, h, render } = window.preact</script>
 
-<script src="/js/md5.js"></script>
-<script src="/js/core.js"></script>
-<script src="/js/gravatar.js"></script>
-<script src="/js/settings.js"></script>
-<script src="/js/local-config.js"></script>
-<script src="/js/Components/HolloLoaderBig.js"></script>
-<script src="/js/Components/Input.js"></script>
-<script src="/js/Components/Avatar.js"></script>
-<script src="/js/Components/Svg.js"></script>
-<script src="/js/Components/ChatRow.js"></script>
-<script src="/js/Components/BarIcon.js"></script>
-<script src="/js/Components/SearchBar.js"></script>
-<script src="/js/Components/FilePlate.js"></script>
-<script src="/js/Components/Checkbox.js"></script>
-<script src="/js/Components/MessageBody.js"></script>
-<script src="/js/Components/MessageBubble.js"></script>
-<script src="/js/Components/QuickStack.js"></script>
-<script src="/js/Components/Widgets/InvitationWidget.js"></script>
-<script src="/js/Components/Modals/MessageBoxModal.js"></script>
-<script src="/js/Components/Modals/DemoBoxModal.js"></script>
-<script src="/js/Components/Modals/UserPickerModal.js"></script>
-<script src="/js/Components/Modals/CustomBoxModal.js"></script>
-<script src="/js/Pages/LoginPage.js"></script>
-<script src="/js/Pages/ChatsPage.js"></script>
-<script src="/js/Pages/MessagesPage.js"></script>
-<script src="/js/Pages/ProfilePage.js"></script>
-<script src="/js/App.js"></script>
+<script src="js/md5.js"></script>
+<script src="js/core.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/gravatar.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/local-config.js"></script>
+<script src="js/Components/HolloLoaderBig.js"></script>
+<script src="js/Components/Avatar.js"></script>
+<script src="js/Components/Svg.js"></script>
+<script src="js/Components/ChatRow.js"></script>
+<script src="js/Components/BarIcon.js"></script>
+<script src="js/Components/SearchBar.js"></script>
+<script src="js/Components/FilePlate.js"></script>
+<script src="js/Components/Checkbox.js"></script>
+<script src="js/Components/MessageBody.js"></script>
+<script src="js/Components/MessageBubble.js"></script>
+<script src="js/Components/QuickStack.js"></script>
+<script src="js/Components/Widgets/InvitationWidget.js"></script>
+<script src="js/Components/Modals/MessageBoxModal.js"></script>
+<script src="js/Components/Modals/DemoBoxModal.js"></script>
+<script src="js/Components/Modals/UserPickerModal.js"></script>
+<script src="js/Components/Modals/CustomBoxModal.js"></script>
+<script src="js/Pages/LoginPage.js"></script>
+<script src="js/Pages/ChatsPage.js"></script>
+<script src="js/Pages/MessagesPage.js"></script>
+<script src="js/Pages/ProfilePage.js"></script>
+<script src="js/App.js"></script>
 <!-- /DEV -->
 </body>
 <!-- JS -->
