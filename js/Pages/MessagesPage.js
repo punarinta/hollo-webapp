@@ -68,8 +68,8 @@ class MessagesPage extends Component
       else
       {
         this.chat = $.C.get(this.chatId);
-        messages = this.chat.messages.reverse();
-        currentSubject = messages.length ? messages[messages.length - 1].subj : 'New subject';
+        messages = this.chat.messages;
+        currentSubject = messages.length ? messages[0].subj : 'New subject';
       }
 
       this.setState({messages, currentSubject});
@@ -178,7 +178,8 @@ class MessagesPage extends Component
       }
       if (mode == 1)
       {
-        this.base.querySelector('message-bubble:last-child').scrollIntoView(false);
+        let last = this.base.querySelector('message-bubble:last-child');
+        if (last) last.scrollIntoView(false);
         this.scrollTop = this.base.querySelector('ul').scrollTop;
       }
     }, 50 + timeOffset);
@@ -437,7 +438,8 @@ class MessagesPage extends Component
         composerHeight = this.state.compFocus ? this.state.h + 40 : this.state.h,
         sendHeight = this.state.h;
 
-    for (let i in this.state.messages)
+    // render in reversed order
+    for (let i = this.state.messages.length - 1; i >= 0; i--)
     {
       let user = this.props.user,
           message = this.state.messages[i];
