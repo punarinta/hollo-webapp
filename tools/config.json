@@ -60,7 +60,8 @@
       ["animation-fill-mode", [0]],
       ["animation-timing-function", [0]],
       ["animation-delay", [0]],
-      ["animation-duration", [0]]
+      ["animation-duration", [0]],
+      ["overflow-scrolling", [0]]
     ]
   },
   "dist": "../dist",
