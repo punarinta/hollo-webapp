@@ -68,7 +68,7 @@ class MessagesPage extends Component
       else
       {
         this.chat = $.C.get(this.chatId);
-        messages = this.chat.messages;
+        messages = this.chat.messages || [];
         currentSubject = messages.length ? messages[0].subj : 'New subject';
       }
 
