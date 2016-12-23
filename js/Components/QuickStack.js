@@ -80,7 +80,6 @@ class QuickStack extends Component
 
   markRead(current)
   {
-    // TODO: check if this loop is needed at all
     let chat = null;
     for (let i in this.props.chats)
     {
@@ -95,7 +94,7 @@ class QuickStack extends Component
     {
       chat.read = 1;
       ML.api('chat', 'update', {id: chat.id, read: 1});
-      $.C.set(null, chat.id, this.chat);
+      $.C.set(null, chat.id, chat);
     }
 
     this.buttonRead.classList.remove('picked');
