@@ -553,7 +553,7 @@ class MessagesPage extends Component
 
             filePlates.push(h('li', null,
               h(FilePlate, {file, size: 'calc(50vw - 30px)'}),
-              h(BarIcon, {img: 'color/download', onclick: () => window.open('https://' + CFG.apiRoot + '/api/file?method=download&messageId=' + m.id + '&offset=' + j) })
+              h(BarIcon, {img: 'color/download', onclick: () => window.open(CFG.apiRoot + 'file?method=download&messageId=' + m.id + '&offset=' + j) })
             ))
           }
         }
