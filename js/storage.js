@@ -184,7 +184,7 @@ var $ =
 
         if (x > 0) return 1;
         else if (x < 0) return -1;
-        else return b.lastTs - a.lastTs;
+        else return b.lastTs || 0 - a.lastTs || 0;
       });
 
       var jsonString = JSON.stringify($.C.data);
