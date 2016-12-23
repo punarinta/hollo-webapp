@@ -5,12 +5,6 @@ class ChatRow extends Component
     this.swipe = 0;
     this.action = 0;
     this.blockSwipe = 0;
-    this.state.chat = this.props.chat;
-  }
-
-  componentWillReceiveProps(nextProps)
-  {
-    this.setState({chat: nextProps.chat});
   }
 
   touchStart(e)
@@ -93,7 +87,7 @@ class ChatRow extends Component
 
       this.item.classList.add('travel');
 
-      let chat = this.state.chat;
+      let chat = this.props.chat;
 
       switch (this.action)
       {
@@ -129,9 +123,9 @@ class ChatRow extends Component
     }
   }
 
-  render()
+  render(props)
   {
-    let chat = this.state.chat,
+    let chat = props.chat,
         email = chat.users[0].email,
         lastSubj = '', lastMsg = '';
 
@@ -152,13 +146,13 @@ class ChatRow extends Component
           let name = w.att[i][1].length ? w.att[i][1] : w.att[i][0];
           if (w.att[i][2] == 'ACCEPTED')
           {
-            if (this.props.user.email == w.att[i][0]) subject = '✔ ️you accepted this invite';
+            if (props.user.email == w.att[i][0]) subject = '✔ ️you accepted this invite';
             else subject = '✔ ️' + name + ' accepted this invite';
             break;
           }
           else if (w.att[i][2] == 'TENTATIVE')
           {
-            if (this.props.user.email == w.att[i][0]) subject = '✔ ️you accepted this invite';
+            if (props.user.email == w.att[i][0]) subject = '✔ ️you accepted this invite';
             else subject = '❓ ' + name + ' said "maybe" to this invite';
             break;
           }
@@ -183,7 +177,7 @@ class ChatRow extends Component
           ontouchstart: this.touchStart.bind(this),
           ontouchmove: this.touchMove.bind(this),
           ontouchend: this.touchEnd.bind(this),
-          onclick: () => this.props.onclick(this.state.chat)
+          onclick: () => props.onclick(props.chat)
         },
         h('div', {className: 'real'},
           h(Avatar, {chat}),
