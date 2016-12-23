@@ -64,12 +64,12 @@ class LoginPage extends Component
           (err) =>
           {
             ML.emit('busybox');
-            ML.emit('messagebox', {html: 'Error: ' + err});
+            ML.emit('messagebox', {html: 'Error processing Google token: ' + err});
           });
         },
         function (msg)
         {
-          ML.emit('messagebox', {html: 'Error: ' + msg});
+          ML.emit('messagebox', {html: 'Google Services error: ' + msg});
         });
       }
       else
