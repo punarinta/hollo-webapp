@@ -382,7 +382,7 @@ class App extends Component
       case 'chat':
         pages.push(h(ProfilePage, {zIndex: 0, user}));
         pages.push(h(ChatsPage, {zIndex: 10, data: this.state.chatsPageData, user}));
-        pages.push(h(MessagesPage, {zIndex: 20, data: this.state.messagesPageData, user}));
+        pages.push(h(MessagesPage, {zIndex: 20, data: this.state.messagesPageData, user, popped: Math.random()}));
         break;
     }
 
