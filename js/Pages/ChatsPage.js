@@ -8,11 +8,15 @@ class ChatsPage extends Component
     this.state.chats = [];
     this.state.blockSwipe = 0;
     this.state.filterActive = 0;
+    this.displayPerScreen = (screen.height / 72) + 1;
+    this.state.maxDisplay = this.displayPerScreen;
   }
 
   componentDidMount()
   {
+    this.scrollReference = this.scroll.bind(this);
     this.chatUpdateReference = this.chatUpdate.bind(this);
+    this.base.querySelector('ul').addEventListener('scroll', this.scrollReference);
     window.addEventListener('hollo:chat:update', this.chatUpdateReference);
   }
 
@@ -24,6 +28,7 @@ class ChatsPage extends Component
 
   componentWillUnmount()
   {
+    this.base.querySelector('ul').removeEventListener('scroll', this.scrollReference);
     window.removeEventListener('hollo:chat:update', this.chatUpdateReference);
   }
 
@@ -92,7 +97,9 @@ class ChatsPage extends Component
   {
     if (this.state.blockSwipe)
     {
-    /*  if (this.pull == 2)
+      let el = this.base.querySelector('chat-row:first-child');
+
+      if (this.pull == 2 && (!el || el.getBoundingClientRect().top > 0))
       {
         this.ul.classList.add('travel');
         ML.emit('busybox', {mode: 1});
@@ -105,7 +112,7 @@ class ChatsPage extends Component
         {
           this.ul.classList.remove('travel');
         }, 400);
-      }*/
+      }
 
       this.pull = 0;
       this.ul.style.opacity = 0;
@@ -147,6 +154,17 @@ class ChatsPage extends Component
       this.setState({menuModalShown: 0});
       ML.go('chat/' + data.id);
     });
+  }
+
+  scroll()
+  {
+    let el = this.base.querySelector('chat-row:nth-last-child(2)');
+
+    if (el && el.getBoundingClientRect().bottom < screen.height + 50)
+    {
+      this.setState({maxDisplay: this.state.maxDisplay + this.displayPerScreen});
+      mixpanel.track('Chat - get more');
+    }
   }
 
   render()
@@ -196,8 +214,11 @@ class ChatsPage extends Component
         }))
       }
 
+      let count = 0;
       for (let i in this.state.chats)
       {
+        if (count > this.state.maxDisplay) break;
+
         let chat = this.state.chats[i];
         if (chat.muted != muted) continue;  // skip it!
 
@@ -208,7 +229,9 @@ class ChatsPage extends Component
           canSwipe: !this.state.blockSwipe,
           onclick: (chat) => { mixpanel.track('Chat - enter', {id: chat.id}); ML.go('chat/' + chat.id) },
           vw
-        }))
+        }));
+
+        ++count;
       }
 
       if (!this.emailFilter.length || chats.length)
