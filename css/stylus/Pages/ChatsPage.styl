@@ -11,6 +11,9 @@ chats-page
     margin-top 8px
     background-color color-bg-grey
     z-index 1
+    @media screen and (min-width break-tablet)
+      margin-top 56px
+      background-color color-brand
     &.focused
       margin 0 20px
       border-bottom 2px solid color-brand
@@ -43,6 +46,12 @@ chats-page
     display flex
     justify-content center
     align-items center
+    @media screen and (min-width break-tablet)
+      right auto
+      left 210px
+      bottom 16px
+      background-color #fff
+      color color-brand
     bar-icon
       max-width 21px
       margin-right 12px
@@ -61,6 +70,9 @@ chats-page
       margin-top 5px
       display flex
       justify-content center
+      @media screen and (min-width break-tablet)
+        width 512px
+        margin 0 auto
       button
         border-radius 100px
         height 48px
@@ -81,6 +93,8 @@ chats-page
     margin 24px auto 0
     padding-left 12px
     font 300 22px 'Work Sans'
+    @media screen and (min-width break-tablet)
+      width 512px
     div
       flex 10
       text-align center
@@ -96,6 +110,9 @@ chats-page
     margin 0 8px
     overflow-x hidden
     padding-bottom 20px
+    @media screen and (min-width break-tablet)
+      width 512px
+      margin 0 auto
     shadow
       div
         height 70px
@@ -104,6 +121,8 @@ chats-page
         width calc(100vw - 15px)
         background-image linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, .9) 51%, #fff)
     message-bubble
+      @media screen and (min-width break-tablet)
+        width 100%
       .white
         background-color transparent
         padding-left 10px
