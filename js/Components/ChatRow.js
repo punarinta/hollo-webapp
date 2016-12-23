@@ -177,7 +177,8 @@ class ChatRow extends Component
           ontouchstart: this.touchStart.bind(this),
           ontouchmove: this.touchMove.bind(this),
           ontouchend: this.touchEnd.bind(this),
-          onclick: () => props.onclick(props.chat)
+          onclick: () => props.onclick(props.chat),
+          className: this.props.selected ? 'selected' : ''
         },
         h('div', {className: 'real'},
           h(Avatar, {chat}),

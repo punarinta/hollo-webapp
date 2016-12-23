@@ -227,7 +227,13 @@ class ChatsPage extends Component
           user: this.props.user,
           chat,
           canSwipe: !this.state.blockSwipe,
-          onclick: (chat) => { mixpanel.track('Chat - enter', {id: chat.id}); ML.go('chat/' + chat.id) },
+          onclick: (chat) =>
+          {
+            mixpanel.track('Chat - enter', {id: chat.id});
+            this.setState({selectedChatId: chat.id});
+            ML.go('chat/' + chat.id)
+          },
+          selected: this.state.selectedChatId == chat.id,
           vw
         }));
 
