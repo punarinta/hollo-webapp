@@ -138,10 +138,10 @@ class LoginPage extends Component
         h('button', {className: 'google', onClick: this.loginWithGoogle.bind(this)}, 'Sign in with Google'),
         h('div', {className: 'text'}, 'or'),
         h('div', {className: 'input'},
-          h('input', {type: 'email', ref: (i) => this.nameInput = i ? i.base : 0, placeholder: 'Email', autofocus: 'autofocus', onKeyUp: this.emailTyped.bind(this)})
+          h('input', {type: 'email', ref: (i) => this.nameInput = i || 0, placeholder: 'Email', autofocus: 'autofocus', onKeyUp: this.emailTyped.bind(this)})
         ),
         h('div', {className: 'input'},
-          h('input', {type: 'password', ref: (i) => this.passInput = i ? i.base : 0, placeholder: 'Password', onKeyUp: this.passwordTyped.bind(this)})
+          h('input', {type: 'password', ref: (i) => this.passInput = i || 0, placeholder: 'Password', onKeyUp: this.passwordTyped.bind(this)})
         ),
         h('button', {className: 'login', disabled: `${this.state.imapEnabled ? '' : 'disabled'}`, onClick: this.loginWithImap.bind(this)}, 'sign in')
       )
