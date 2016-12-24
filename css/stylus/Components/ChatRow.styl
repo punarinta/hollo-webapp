@@ -9,6 +9,10 @@ chat-row
   cursor pointer
   align-items center
   position relative
+  @media screen and (min-width break-tablet)
+    &:hover
+      .real
+        background-color lighten(color-brand, 4%)
   avatar
     margin margin-large margin-medium margin-large margin-large
     line-height @height
