@@ -39,121 +39,6 @@ chats-page
   ul::-webkit-scrollbar
     display: none
 
-  qs-button
-    position fixed
-    background-color color-brand
-    border-radius 20px
-    color #fff
-    width 133px
-    height 40px
-    bottom 72px
-    right 8px
-    cursor pointer
-    font-size 15px
-    display flex
-    justify-content center
-    align-items center
-    @media screen and (min-width break-tablet)
-      right auto
-      left 210px
-      bottom 16px
-      background-color #fff
-      color color-brand
-    bar-icon
-      max-width 21px
-      margin-right 12px
-  qs-shader
-    display flex
-    position fixed
-    z-index 1
-    top 0
-    left 0
-    width 100vw
-    height 100vh
-    background rgba(color-bg-grey, .8)
-    flex-direction column
-    justify-content center
-    bar
-      margin-top 5px
-      display flex
-      justify-content center
-      @media screen and (min-width break-tablet)
-        width 512px
-        margin 0 auto
-      button
-        border-radius 100px
-        height 48px
-        width 100px
-        @extend $font-clickable
-        &.picked
-          background color-brand
-          color #fff
-  qs-indicator
-    background-color color-brand
-    border-radius 28px
-    color white
-    width calc(100% - 16px)
-    height 56px
-    display flex
-    justify-content center
-    align-items center
-    margin 24px auto 0
-    padding-left 12px
-    font 300 22px 'Work Sans'
-    @media screen and (min-width break-tablet)
-      width 512px
-    div
-      flex 10
-      text-align center
-    bar-icon
-      min-width 56px
-  quick-stack
-    display flex
-    flex-direction column
-    background #fff
-    height 344px
-    border-radius 2px
-    box-shadow 0 2px 4px 0 rgba(0, 0, 0, .12)
-    margin 0 8px
-    overflow-x hidden
-    padding-bottom 20px
-    @media screen and (min-width break-tablet)
-      width 512px
-      margin 0 auto
-    shadow
-      div
-        height 70px
-        position fixed
-        margin-top -50px
-        width calc(100vw - 15px)
-        background-image linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, .9) 51%, #fff)
-    message-bubble
-      @media screen and (min-width break-tablet)
-        width 100%
-      .white
-        background-color transparent
-        padding-left 10px
-      flex 1
-      padding-left 44px
-      .foot, .cap
-        display none
-      &.mine
-        & > div
-          float none
-          margin-left auto
-      p:first-of-type
-        margin-top 0
-      p
-        @extend $font-bread
-    topbar
-      display flex
-      margin 12px 12px 0
-      div
-        display flex
-        align-items center
-        margin-left 12px
-        @extend $font-heading
-
   loader
     width 48px
     height 48px
@@ -174,3 +59,8 @@ chats-page
       transition all .4s ease-in
       inner-loader
         transition all .4s ease-in
+
+
+  .list-hint
+    @media screen and (min-width break-tablet)
+      color #fff
