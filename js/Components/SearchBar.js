@@ -55,7 +55,7 @@ class SearchBar extends Component
           placeholder: props.placeholder
         }),
         h('div', {onclick: this.clear.bind(this), style: {display: this.state.showCross ? 'flex' : 'none'}},
-          h(Svg, {model: 'cross', size: 14, type: 'polygon'})
+          h(Svg, {model: 'cross', size: 14, type: 'polygon', fill: $windowInnerWidth > 768 ? '#fff' : null})
         )
       )
     );
