@@ -1,10 +1,9 @@
 avatar
-  // animation-mixin(fadeInUp)
   border-radius 50%
   display flex
   justify-content center
   align-items center
-  transition border-color .5s
+  transition border-color .4s
   transition-delay .5s
   color #fff
   text-transform uppercase
@@ -12,9 +11,10 @@ avatar
   background-color #e2e3dc
   background-size cover !important
   border-color color-bg-grey
+  padding-top 1px
   @media screen and (min-width break-tablet)
-    background-color rgba(0,0,0,0.2)
+    background-color rgba(0, 0, 0, .2)
   &.unread
     border 3px color-brand solid
     @media screen and (min-width break-tablet)
-      border 3px rgba(255,255,255,0.9) solid
+      border 3px rgba(255, 255, 255, .9) solid
