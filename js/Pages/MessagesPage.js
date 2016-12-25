@@ -27,24 +27,20 @@ class MessagesPage extends Component
 
   componentWillReceiveProps(nextProps)
   {
-  //  if (this.props.data.chatId != nextProps.data.chatId)
-  //  {
-      this.setState({menuModalShown: 0});
-      this.chatId = nextProps.data.chatId;
+    this.setState({menuModalShown: 0});
+    this.chatId = nextProps.data.chatId;
 
-      if (this.chatId != 'me')
+    if (this.chatId != 'me')
+    {
+      let chat = $.C.get(this.chatId);
+      if (chat && !chat.read)
       {
-        let chat = $.C.get(this.chatId);
-        if (!chat.read)
-        {
-          chat.read = 1;
-          ML.api('chat', 'update', {id: chat.id, read: 1});
-          $.C.set(null, this.chatId, chat);
-        }
+        chat.read = 1;
+        ML.api('chat', 'update', {id: chat.id, read: 1});
+        $.C.set(null, this.chatId, chat);
       }
-      this.chatUpdate();
-  //  }
-  //  this.setState({menuModalShown: 0})
+    }
+    this.chatUpdate();
   }
 
   componentWillUnmount()

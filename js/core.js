@@ -30,6 +30,7 @@ var ML =
         }
         else
         {
+          ML.emit('busybox');
           console.log('Status:', status);
           if (status != 401)
           {
@@ -40,12 +41,14 @@ var ML =
       }
       else
       {
+        ML.emit('busybox');
         console.log('Not JSON:', r);
         ML.emit('messagebox', {html: [200, 500].indexOf(status) != -1 ? r : ('HTTP ' + status)});
       }
     };
     r.onerror = function (e)
     {
+      ML.emit('busybox');
       console.log('onerror()', e.error);
       if (error) error(e.error)
     };

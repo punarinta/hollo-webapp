@@ -236,10 +236,13 @@ var $ =
         lastTs = Math.max(lastTs, $.C.data[i].lastTs);
       }
 
+      ML.emit('busybox', 1);
+
       ML.api('chat', 'getAllData', {lastTs: lastTs}, function (json)
       {
         $.U.set(null, json.users);
         $.C.set(me, null, json.chats);
+        ML.emit('busybox');
         if (cb) cb();
       });
     },
