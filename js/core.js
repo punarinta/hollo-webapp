@@ -173,7 +173,7 @@ var ML =
 
   clearName: function (text)
   {
-    return text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ' ').replace(/\s{2,}/g, ' ').split('\\"').join('"')
+    return text.replace(/[,\/#!$%\^&\*;:{}=\-_`~()]/g, ' ').replace(/\s{2,}/g, ' ').split('\\"').join('"')
   },
 
   xname: function (chat)
