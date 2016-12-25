@@ -6,15 +6,15 @@ class MessageBubble extends Component
     this.state.showName = false;
   }
 
-  componentWillMount()
+  /*componentWillMount()
   {
     this.state.message = this.props.message;
-  }
+  }*/
 
-  componentWillReceiveProps(nextProps)
+  /*componentWillReceiveProps(nextProps)
   {
     this.setState({message: nextProps.message});
-  }
+  }*/
 
   toggleName()
   {
@@ -67,15 +67,20 @@ class MessageBubble extends Component
   {
     if (file.type.match('image.*'))
     {
-      ML.emit('demobox', {messageId: this.state.message.id, offset, file})
+      ML.emit('demobox', {messageId: this.props.message.id, offset, file})
     }
+  }
+
+  forward()
+  {
+    console.log('forward', this.props.message)
   }
 
   messageClicked(e)
   {
     if (e.target.classList.contains('fwd'))
     {
-      let message = this.state.message;
+      let message = this.props.message;
       ML.api('message', 'showOriginal', {id: message.id}, data =>
       {
         message.body = data.content;
@@ -83,12 +88,24 @@ class MessageBubble extends Component
         this.setState({message});
       });
     }
+    else
+    {
+      // display context menu
+      let children =
+      [
+        h('ul', null,
+          h('li', {onclick: this.forward.bind(this)}, 'Forward email')
+        ),
+      ];
+
+      ML.emit('custombox', {className: 'context-menu-message', children})
+    }
   }
 
-  render()
+  render(props)
   {
-    let message = this.state.message,
-        mine = message.from.email == this.props.user.email,
+    let message = props.message,
+        mine = message.from.email == props.user.email,
         subject = message.subj,
         body = message.body;
 
@@ -147,7 +164,7 @@ class MessageBubble extends Component
       h('message-bubble', {className: mine ? 'mine' : 'yours'},
         h('div', null,
           h('div', {className: 'white'},
-            subject.length ? h('div', {className: 'cap', onclick: () => { if (this.props.captionClicked) this.props.captionClicked(subject) }},
+            subject.length ? h('div', {className: 'cap', onclick: () => { if (props.captionClicked) props.captionClicked(subject) }},
               subject
             ) : '',
             msgBody,

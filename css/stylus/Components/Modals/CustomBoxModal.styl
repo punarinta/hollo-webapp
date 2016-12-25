@@ -18,3 +18,19 @@ custom-box-modal
     border-radius 2px
     box-shadow 0 2px 4px 0 rgba(0, 0, 0, .12)
     animation-mixin(fadeIn)
+
+.context-menu-message
+  display flex
+  align-items center
+  & > div
+    top auto
+  ul
+    list-style-type none
+    padding 8px 0
+    margin 0
+    justify-content center
+    width 100%
+    li
+      cursor pointer
+      padding 0 16px
+      @extend $font-clickable
