@@ -7,6 +7,8 @@ $mixpanel = '<!-- start Mixpanel --><script type="text/javascript">(function(e,a
 for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
 mixpanel.init("31bad9d76002414acd3b68cc290a03e7");</script><!-- end Mixpanel -->';
 
+$endCode = '';
+
 function prefixify($text = '', $prefixes = [], $prefixed = [])
 {
     $textLines = explode("\n", $text);
@@ -128,12 +130,13 @@ else
 {
     $version = date('d.m.Y H:i');
     $cordova = '';
+    $endCode .= 'onDeviceReady();';
 }
 
 $html = strtr($html, ['> ' => '>', ' <' => '<']);
 $html = str_replace("APPVER='dev'", "APPVER='" . $version . "'", $html);
 $html = str_replace('<!-- CSS -->', '<style>' . file_get_contents("$distDir/$random.css") . '</style>', $html);
-$html = str_replace('<!-- JS -->', $cordova . '<script>' . file_get_contents("$distDir/$random.js") . file_get_contents("$distDir/$random_es6.js") . '</script>' . $mixpanel, $html);
+$html = str_replace('<!-- JS -->', $cordova . '<script>' . file_get_contents("$distDir/$random.js") . file_get_contents("$distDir/$random_es6.js") . $endCode . '</script>' . $mixpanel, $html);
 
 file_put_contents($distDir . '/index.html', $html);
 

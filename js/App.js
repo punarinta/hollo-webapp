@@ -444,12 +444,9 @@ function onDeviceReady()
   render(h(App), document.body);
 }
 
-// (iPhone|iPod|iPad|Android|BlackBerry)
-if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/) && !CFG.local)
-{
-  document.addEventListener('deviceready', onDeviceReady, false);
-}
-else
+document.addEventListener('deviceready', onDeviceReady, false);
+
+if (CFG.local)
 {
   onDeviceReady();
 }
