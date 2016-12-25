@@ -81,7 +81,7 @@ window.get(rootURL)
 try:
     ## Assure that Hollo loads without some tricky initial crash
     waitForElement('login-page', 'Loading login page')
-    log('Path init to /auth/login', window.current_url == rootURL + '/auth/login')
+    log('Path init to /#auth/login', window.current_url == rootURL + '/#auth/login')
 
     if config.production:
         v_version = window.execute_script("return APPVER;")
@@ -93,7 +93,7 @@ try:
     ## Assure that main page is accessible
     element('button.login').click()
     waitForElement('chats-page', 'Loading chats page')
-    log('Path changed to /chats', window.current_url == rootURL + '/chats')
+    log('Path changed to /#chats', window.current_url == rootURL + '/#chats')
 
     ## Test filtering
     ## t.b.d.
@@ -101,14 +101,14 @@ try:
     ## Assure that profile page is accessible
     element('chats-page bottom-bar bar-icon:nth-of-type(1)').click()
     waitForElement('profile-page', 'Loading profile page')
-    log('Path changed to /profile', window.current_url == rootURL + '/profile')
+    log('Path changed to /#profile', window.current_url == rootURL + '/#profile')
 
     ## Get back and try to click the first chat
     element('profile-page bottom-bar bar-icon:nth-of-type(2)').click()
     waitForElement('chats-page', 'Get back to chat list')
     element('chats-page chat-row:nth-of-type(1)').click()
     waitForElement('snackbar', 'Snackbar is present')
-    log('Path changed to /chat/*', '/chat/' in window.current_url)
+    log('Path changed to /#chat/*', '/#chat/' in window.current_url)
 
     ## Check that all menues can be toggled
     element('snackbar > div').click()
