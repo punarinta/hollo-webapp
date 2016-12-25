@@ -1,5 +1,6 @@
 {
- "name": "App",
+ "name": "Hollo",
+ "short_name": "Hollo",
  "icons": [
   {
    "src": "\/android-icon-36x36.png",
@@ -37,5 +38,8 @@
    "type": "image\/png",
    "density": "4.0"
   }
- ]
+ ],
+ "start_url": "/",
+ "display": "standalone",
+ "theme_color": "#7a4df9"
 }
