@@ -280,7 +280,8 @@ class ChatsPage extends Component
           placeholder: 'Search chat or start new',
           onchange: this.filterChanged.bind(this),
           onfocuschange: this.filterFocusChanged.bind(this),
-          className: this.state.filterActive ? 'focused' : ''
+          className: this.state.filterActive ? 'focused' : '',
+          autocolor: true
         }),
         h('loader', null, h('inner-loader')),
         ulContents,

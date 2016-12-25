@@ -11,7 +11,7 @@ class SearchBar extends Component
   componentWillMount()
   {
     this.onchange = this.props.onchange || (() => {});
-    this.onfocuschange = this.props.onfocuschange || (() => {});
+    this.onfocuschange = this.props.onfocuschange;
   }
 
   onKeyUp(e)
@@ -24,13 +24,13 @@ class SearchBar extends Component
   onFocus()
   {
     this.setState({focus: 1, showCross: 1});
-    this.onfocuschange(1);
+    if (this.onfocuschange) this.onfocuschange(1);
   }
 
   onBlur()
   {
     this.setState({focus: 0, showCross: !!this.state.value.length});
-    this.onfocuschange(0);
+    if (this.onfocuschange) this.onfocuschange(0);
   }
 
   clear()
@@ -44,7 +44,7 @@ class SearchBar extends Component
   {
     return (
 
-      h('search-bar', {className: this.props.className},
+      h('search-bar', {className: props.className},
         h('input',
         {
           type: 'email',
@@ -55,7 +55,7 @@ class SearchBar extends Component
           placeholder: props.placeholder
         }),
         h('div', {onclick: this.clear.bind(this), style: {display: this.state.showCross ? 'flex' : 'none'}},
-          h(Svg, {model: 'cross', size: 14, type: 'polygon', fill: $windowInnerWidth > 768 ? '#fff' : null})
+          h(Svg, {model: 'cross', size: 14, type: 'polygon', fill: this.props.autocolor && $windowInnerWidth > 768 ? '#fff' : null})
         )
       )
     );
