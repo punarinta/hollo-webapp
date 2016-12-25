@@ -4,7 +4,6 @@ class MessageBubble extends Component
   {
     super();
     this.state.showName = false;
-    this.canUpdate = true;
   }
 
   componentWillMount()
@@ -14,16 +13,11 @@ class MessageBubble extends Component
 
   componentWillReceiveProps(nextProps)
   {
-    if (JSON.stringify(this.props) != JSON.stringify(nextProps))
-    {
-      this.canUpdate = true;
-    }
     this.setState({message: nextProps.message});
   }
 
   toggleName()
   {
-    this.canUpdate = true;
     this.setState({showName: !this.state.showName});
   }
 
@@ -86,21 +80,13 @@ class MessageBubble extends Component
       {
         message.body = data.content;
         message.type = data.type;
-        this.canUpdate = true;
         this.setState({message});
       });
     }
   }
 
-  shouldComponentUpdate()
-  {
-    return this.canUpdate;
-  }
-
   render()
   {
-    this.canUpdate = false;
-
     let message = this.state.message,
         mine = message.from.email == this.props.user.email,
         subject = message.subj,
