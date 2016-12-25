@@ -27,8 +27,8 @@ class MessagesPage extends Component
 
   componentWillReceiveProps(nextProps)
   {
-    if (this.props.data.chatId != nextProps.data.chatId)
-    {
+  //  if (this.props.data.chatId != nextProps.data.chatId)
+  //  {
       this.setState({menuModalShown: 0});
       this.chatId = nextProps.data.chatId;
 
@@ -42,9 +42,9 @@ class MessagesPage extends Component
           $.C.set(null, this.chatId, chat);
         }
       }
-      this.chatUpdate()
-    }
-    this.setState({menuModalShown: 0})
+      this.chatUpdate();
+  //  }
+  //  this.setState({menuModalShown: 0})
   }
 
   componentWillUnmount()
