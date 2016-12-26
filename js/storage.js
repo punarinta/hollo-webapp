@@ -247,9 +247,9 @@ var $ =
       });
     },
 
-    filter: function (options)
+    filter: function (options = {})
     {
-      var i, j, items = [], takeFrom = $.C.data,
+      var i, j, takeFrom, items = $.C.data,
 
       muted = typeof options.muted == 'undefined' ? null : options.muted,
       read  = typeof options.read  == 'undefined' ? null : options.read,
@@ -257,6 +257,9 @@ var $ =
 
       if (muted !== null)
       {
+        takeFrom = items;
+        items = [];
+
         for (i in takeFrom)
         {
           if (!!takeFrom[i].muted == !!muted)
