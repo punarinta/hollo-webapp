@@ -402,21 +402,25 @@ class MessagesPage extends Component
       id: 0,
       ts: new Date().getTime() / 1000,
       body: msg,
-      from: this.props.user,
+      userId: this.props.user.id,
       files: this.state.files,
-      subject: this.state.currentSubject
+      subj: this.state.currentSubject
     };
 
     messages.push(m);
-    this.setState({files: [], messages, compFocus: 0, currentComposed: '', h: 64});
+
+    this.setState({files: [], compFocus: 0, currentComposed: '', h: 64});
     this.reposition(1);
+
+    this.chat.messages = messages;
+    $.C.set(null, this.chat.id, this.chat);
 
     console.log('Sending:', msg, msgId, m.subj, m.files, this.chat.id);
 
     let statusClass = this.base.querySelector('message-bubble:last-child .status').className;
     statusClass = 'status s1';
 
-    ML.api('message', 'send', {body: msg, messageId: msgId, subject: m.subject, files: m.files, chatId: this.chat.id}, json =>
+    ML.api('message', 'send', {body: msg, messageId: msgId, subject: m.subj, files: m.files, chatId: this.chat.id}, json =>
     {
       // mark it as delivered to mail/DB
       statusClass = 'status s2';
