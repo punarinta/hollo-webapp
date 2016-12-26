@@ -11,17 +11,25 @@ class UserPickerModal extends Component
   componentDidMount()
   {
     this.usersUpdateReference = this.usersUpdate.bind(this);
+    this.chatsUpdateReference = this.chatsUpdate.bind(this);
     window.addEventListener('hollo:users:update', this.usersUpdateReference);
+    window.addEventListener('hollo:chat:update', this.chatsUpdateReference);
   }
 
   componentWillUnmount()
   {
     window.removeEventListener('hollo:users:update', this.usersUpdateReference);
+    window.addEventListener('hollo:chat:update', this.chatsUpdateReference);
   }
 
   usersUpdate()
   {
-    this.setState({users: $.U.filter(this.emailFilter.length ? this.emailFilter : 0)})
+    this.setState({users: $.U.filter(this.emailFilter.length ? this.emailFilter : null)})
+  }
+
+  chatsUpdate()
+  {
+    this.setState({chats: $.C.filter({email: this.emailFilter.length ? this.emailFilter : null})})
   }
 
   filterChanged(filter)
@@ -33,7 +41,7 @@ class UserPickerModal extends Component
       if (this.emailFilter != filter)
       {
         this.emailFilter = filter;
-        this.usersUpdate();
+        this.props.data.chatMode ? this.chatsUpdate() : this.usersUpdate();
       }
     }, 500);
   }
@@ -52,20 +60,36 @@ class UserPickerModal extends Component
     if (typeof this.props.data.onselect == 'function') this.props.data.onselect(user)
   }
 
-  render()
+  render(props)
   {
-    if (!this.props.data) return h('user-picker-modal', {style: {display: 'none'}});
+    if (!props.data) return h('user-picker-modal', {style: {display: 'none'}});
 
-    let userRows = [];
+    let items = [];
 
-    for (let i in this.state.users)
+    if (props.data.chatMode)
     {
-      let user = this.state.users[i];
+      for (let i in this.state.chats)
+      {
+        let chat = this.state.chats[i],
+            name = ML.xname(chat);
 
-      userRows.push(h('li', {onclick: () => this.onSelect(user)},
-        h(Avatar, {size: 32, user}),
-        h('div', null, user.name || user.email)
-      ))
+        items.push(h('li', { onclick: () => this.onSelect(chat) },
+          h(Avatar, {size: 32, chat}),
+          h('div', null, name[0])
+        ))
+      }
+    }
+    else
+    {
+      for (let i in this.state.users)
+      {
+        let user = this.state.users[i];
+
+        items.push(h('li', { onclick: () => this.onSelect(user) },
+          h(Avatar, {size: 32, user}),
+          h('div', null, user.name || user.email)
+        ))
+      }
     }
 
     return h('user-picker-modal', {onclick: this.onBgClick.bind(this)},
@@ -76,7 +100,7 @@ class UserPickerModal extends Component
           onchange: this.filterChanged.bind(this)
         }),
         h('ul', null,
-          userRows
+          items
         )
       )
     )
