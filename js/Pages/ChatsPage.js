@@ -8,7 +8,7 @@ class ChatsPage extends Component
     this.state.chats = [];
     this.state.blockSwipe = 0;
     this.state.filterActive = 0;
-    this.displayPerScreen = (screen.height / 72) + 1;
+    this.displayPerScreen = screen.height / 72 + 1;
     this.state.maxDisplay = this.displayPerScreen;
   }
 
@@ -126,12 +126,14 @@ class ChatsPage extends Component
   {
     clearTimeout(this.filterTimer);
 
+    if (filter == 'debug-logout') ML.go('auth/logout');
+
     this.filterTimer = setTimeout( () =>
     {
-      if (filter == 'debug-logout') ML.go('auth/logout');
       if (this.emailFilter != filter)
       {
         this.emailFilter = filter;
+        this.setState({maxDisplay: this.displayPerScreen});
         this.chatUpdate();
       }
 

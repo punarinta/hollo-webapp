@@ -6,7 +6,7 @@ class UserPickerModal extends Component
     this.filterTimer = null;
     this.emailFilter = '';
     this.state.users = [];
-    this.displayPerScreen = ((screen.height - 160) / 32) + 1;
+    this.displayPerScreen = (screen.height - 160) / 32 + 1;
     this.state.maxDisplay = this.displayPerScreen;
   }
 
@@ -46,6 +46,7 @@ class UserPickerModal extends Component
       if (this.emailFilter != filter)
       {
         this.emailFilter = filter;
+        this.setState({maxDisplay: this.displayPerScreen});
         this.props.data.chatMode ? this.chatsUpdate() : this.usersUpdate();
       }
     }, 500);
