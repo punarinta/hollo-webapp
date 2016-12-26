@@ -247,9 +247,9 @@ var $ =
       });
     },
 
-    filter: function (options = {})
+    filter: function (options)
     {
-      var i, j, takeFrom, items = $.C.data,
+      var i, j, takeFrom, items = $.C.data, options = options || {},
 
       muted = typeof options.muted == 'undefined' ? null : options.muted,
       read  = typeof options.read  == 'undefined' ? null : options.read,
