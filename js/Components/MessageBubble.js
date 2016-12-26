@@ -71,9 +71,26 @@ class MessageBubble extends Component
     }
   }
 
-  forward()
+  forwardTo(chat)
   {
-    console.log('forward', this.props.message)
+    let message = this.props.message;
+
+    ML.api('message', 'forward', {id: message.id, chatId: chat.id}, () =>
+    {
+      if (message.subj && message.subj.length) message.subj = 'FWD: ' + message.subj;
+      else message.subj = 'FWD from chat ' + ML.xname(chat)[0];
+
+      message.ts = Math.round(Date.now() / 1000);
+
+      chat.messages.push(message);
+      $.C.set(null, chat.id, chat);
+      ML.go('chat/' + chat.id);
+    });
+  }
+
+  forwardClicked()
+  {
+    ML.emit('userpicker', { chatMode: 1, onselect: this.forwardTo.bind(this) });
   }
 
   messageClicked(e)
@@ -94,7 +111,7 @@ class MessageBubble extends Component
       let children =
       [
         h('ul', null,
-          h('li', {onclick: this.forward.bind(this)}, 'Forward email')
+          h('li', {onclick: this.forwardClicked.bind(this)}, 'Forward email')
         ),
       ];
 
