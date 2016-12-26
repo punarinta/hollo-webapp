@@ -75,7 +75,7 @@ class MessageBubble extends Component
   {
     let message = this.props.message;
 
-    ML.api('message', 'forward', {id: message.id, chatId: chat.id}, () =>
+    ML.api('message', 'forward', {id: message.id, fromChatId: this.props.chatId, toChatId: chat.id}, () =>
     {
       if (message.subj && message.subj.length) message.subj = 'FWD: ' + message.subj;
       else message.subj = 'FWD from chat ' + ML.xname(chat)[0];
@@ -105,7 +105,7 @@ class MessageBubble extends Component
         this.setState({message});
       });
     }
-    else
+    else if (this.props.chatId)
     {
       // display context menu
       let children =

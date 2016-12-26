@@ -456,6 +456,7 @@ class MessagesPage extends Component
       {
         message,
         user,
+        chatId: this.chat ? this.chat.id : 0,
         captionClicked: (subjectFilter) => this.setState({subjectFilter})
       }))
     }
