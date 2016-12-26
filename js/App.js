@@ -91,13 +91,13 @@ class App extends Component
     (function mwInit(user)
     {
       ML.ws = new WebSocket(CFG.notifierUrl);
-      ML.ws.onerror = function ()
+      ML.ws.onerror = () =>
       {
         // we don't care, just switch IM-mode off
         ML.ws = null
       };
 
-      ML.ws.onopen = function ()
+      ML.ws.onopen = () =>
       {
         ML._wsOpened = 1;
         if (user)
@@ -106,7 +106,7 @@ class App extends Component
         }
       };
 
-      ML.ws.onclose = function ()
+      ML.ws.onclose = () =>
       {
         if (ML._wsOpened)
         {
@@ -117,7 +117,7 @@ class App extends Component
         }
       };
 
-      ML.ws.onmessage = function (event)
+      ML.ws.onmessage = (event) =>
       {
         // this works only if the app is ON
         let data = JSON.parse(event.data);
@@ -139,7 +139,7 @@ class App extends Component
           ML.api('chat', 'getAllData', {chatId: data.chatId}, (json) =>
           {
             $.U.set(null, json.users);
-            $.C.set(this.state.user, null, json.chats);
+            $.C.set(that.state.user, null, json.chats);
           });
         }
       };
