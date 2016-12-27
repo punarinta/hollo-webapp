@@ -81,6 +81,7 @@ class MessageBubble extends Component
       else message.subj = 'FWD from chat ' + ML.xname(chat)[0];
 
       message.ts = Math.round(Date.now() / 1000);
+      // message.body = '[sys:fwd]';
 
       chat.messages.push(message);
       $.C.set(null, chat.id, chat);
@@ -93,25 +94,33 @@ class MessageBubble extends Component
     ML.emit('userpicker', { chatMode: 1, onselect: this.forwardTo.bind(this) });
   }
 
-  messageClicked(e)
+  showOriginalClicked()
   {
-    if (e.target.classList.contains('fwd'))
+    let message = this.props.message;
+    ML.api('message', 'showOriginal', {id: message.id}, data =>
     {
-      let message = this.props.message;
-      ML.api('message', 'showOriginal', {id: message.id}, data =>
-      {
-        message.body = data.content;
-        message.type = data.type;
-        this.setState({message});
-      });
-    }
-    else if (this.props.chatId)
+      message.body = data.content;
+      message.type = data.type;
+      this.setState({message});
+    });
+  }
+
+  showHtmlClicked()
+  {
+
+  }
+
+  messageClicked()
+  {
+    if (this.props.chatId)
     {
       // display context menu
       let children =
       [
         h('ul', null,
-          h('li', {onclick: this.forwardClicked.bind(this)}, 'Forward email')
+          h('li', {onclick: this.forwardClicked.bind(this)}, 'Forward message...'),
+          h('li', {onclick: this.showOriginalClicked.bind(this)}, 'Show original email')/*,
+          h('li', {onclick: this.showHtmlClicked.bind(this)}, 'Show HTML version')*/
         ),
       ];
 
