@@ -644,7 +644,7 @@ class MessagesPage extends Component
             onfocus: (e) => { this.setState({compFocus: 1}); setTimeout(() => e.target.focus(), 50); this.reposition(1, 50) },
             value: this.state.currentComposed
           }),
-          this.state.canSend ? h(BarIcon, {fullHeight: 1, width: 40, img: 'color/send', height: sendHeight, onclick: this.send.bind(this) }) : '',
+          this.state.canSend ? h(BarIcon, {className: 'btn-send', fullHeight: 1, width: 40, img: 'color/send', height: sendHeight, onclick: this.send.bind(this) }) : '',
           uploadedFiles
         )
       )
