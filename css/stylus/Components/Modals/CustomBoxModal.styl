@@ -22,9 +22,12 @@ custom-box-modal
 .context-menu-message
   display flex
   align-items center
+  justify-content center
   & > div
     top auto
     position relative
+    @media screen and (min-width break-tablet)
+      width 512px
   ul
     list-style-type none
     padding 8px 0
