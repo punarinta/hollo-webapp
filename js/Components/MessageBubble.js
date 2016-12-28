@@ -6,16 +6,6 @@ class MessageBubble extends Component
     this.state.showName = false;
   }
 
-  /*componentWillMount()
-  {
-    this.state.message = this.props.message;
-  }*/
-
-  /*componentWillReceiveProps(nextProps)
-  {
-    this.setState({message: nextProps.message});
-  }*/
-
   toggleName()
   {
     this.setState({showName: !this.state.showName});
@@ -33,13 +23,6 @@ class MessageBubble extends Component
       // URLs
       body = body.replace(/(<*\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]>*)/ig, m =>
       {
-        // check YouTube
-      //  let match = m.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
-      /*  if (match && match[2].length == 11)
-        {
-          return `<iframe src="//www.youtube.com/embed/${match[2]}" frameborder="0" allowfullscreen></iframe>`;
-        }*/
-
         let s = m.replace(/\/$/, '').split('//');
         s = (s.length ? s[1] : s[0]).split('/');
         return `<a target="_system" rel="noopener noreferrer" href="${m}">${s.length ? (s[0] + '&hellip;') : s[0]}</a>`;
@@ -94,20 +77,19 @@ class MessageBubble extends Component
     ML.emit('userpicker', { chatMode: 1, onselect: this.forwardTo.bind(this) });
   }
 
-  showOriginalClicked()
+  showOriginalClicked(tryHtml)
   {
     let message = this.props.message;
-    ML.api('message', 'showOriginal', {id: message.id}, data =>
+    ML.api('message', 'showOriginal', {id: message.id, tryHtml}, data =>
     {
-      message.body = data.content;
-      message.type = data.type;
-      this.setState({message});
+      // display this message in a dedicated message viewer
+      let children =
+      [
+        h(MessageBody, {html: data.content})
+      ];
+
+      ML.emit('custombox', {className: 'message-viewer', children})
     });
-  }
-
-  showHtmlClicked()
-  {
-
   }
 
   messageClicked()
@@ -118,9 +100,9 @@ class MessageBubble extends Component
       let children =
       [
         h('ul', null,
-          h('li', {onclick: this.forwardClicked.bind(this)}, 'Forward message...'),
-          h('li', {onclick: this.showOriginalClicked.bind(this)}, 'Show original email')/*,
-          h('li', {onclick: this.showHtmlClicked.bind(this)}, 'Show HTML version')*/
+          h('li', { onclick: this.forwardClicked.bind(this) }, 'Forward message...'),
+          h('li', { onclick: () => this.showOriginalClicked(0) }, 'Show original email'),
+          h('li', { onclick: () => this.showOriginalClicked(1) }, 'Find HTML version')
         ),
       ];
 
