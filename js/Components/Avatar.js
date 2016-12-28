@@ -13,7 +13,7 @@ class Avatar extends Component
   loadGraphics(props)
   {
     let chat = props.chat || {users: [props.user], read: 1},
-        email = chat.users[0].email, size = props.size || '40px';
+        email = chat.users[0] ? chat.users[0].email : '?', size = props.size || '40px';
 
     if (chat.users.length < 2)
     {

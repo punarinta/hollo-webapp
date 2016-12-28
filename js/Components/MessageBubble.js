@@ -80,6 +80,7 @@ class MessageBubble extends Component
   showOriginalClicked(tryHtml)
   {
     let message = this.props.message;
+    ML.emit('busybox', 1);
     ML.api('message', 'showOriginal', {id: message.id, tryHtml}, data =>
     {
       // display this message in a dedicated message viewer
@@ -88,7 +89,9 @@ class MessageBubble extends Component
         h(MessageBody, {html: data.content})
       ];
 
-      ML.emit('custombox', {className: 'message-viewer', children})
+      ML.emit('custombox', {className: 'message-viewer', children});
+
+      ML.emit('busybox');
     });
   }
 
@@ -113,7 +116,7 @@ class MessageBubble extends Component
   render(props)
   {
     let message = props.message,
-        mine = message.from.email == props.user.email,
+        mine = message.from ? message.from.email == props.user.email : 0,
         subject = message.subj,
         body = message.body;
 

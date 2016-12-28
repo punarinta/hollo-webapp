@@ -207,7 +207,11 @@ var ML =
     else
     {
       if (chat.name) name = chat.name;
-      else name = chat.users[0].name ? ML.clearName(chat.users[0].name) : chat.users[0].email.split('@')[0];
+      else
+      {
+        if (chat.users[0]) name = chat.users[0].name ? ML.clearName(chat.users[0].name) : chat.users[0].email.split('@')[0];
+        else name = '?';
+      }
       nc = name.split(' ');
       nc = nc.length == 1 ? nc[0].charAt(0) : (nc[0].charAt(0) + nc[1].charAt(0));
     }
