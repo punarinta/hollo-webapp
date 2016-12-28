@@ -19,6 +19,9 @@ user-picker-modal
     border-radius 2px
     box-shadow 0 2px 4px 0 rgba(0, 0, 0, .12)
     flex-direction column
+    @media screen and (min-width break-tablet)
+      width 512px
+      left calc(50vw - 256px)
   search-bar
     min-height 56px
     input
@@ -33,6 +36,7 @@ user-picker-modal
     display flex
     list-style none
     height 48px
+    cursor pointer
     avatar
       margin 8px
       font-size 14px
@@ -43,3 +47,5 @@ user-picker-modal
       white-space nowrap
       overflow hidden
       margin-right 5px
+  li:hover
+    background-color color-bg-grey
