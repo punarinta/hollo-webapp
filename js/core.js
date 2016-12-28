@@ -21,7 +21,7 @@ var ML =
     r.onload = function ()
     {
       var r = this.response.toString(), status = this.status;
-      if (ML.isJson(r))
+      try
       {
         var json = JSON.parse(r);
         if (status >= 200 && status < 400)
@@ -39,7 +39,7 @@ var ML =
           }
         }
       }
-      else
+      catch (e)
       {
         ML.emit('busybox');
         console.log('Not JSON:', r);
@@ -164,10 +164,10 @@ var ML =
     return 'rgb(' + ncc + ')';
   },
 
-  isJson: function (testable)
+  /*isJson: function (testable)
   {
     return testable && /^[\],:{}\s]*$/.test(testable.replace(/\\["\\\/bfnrtu]/g, '@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').replace(/(?:^|:|,)(?:\s*\[)+/g, ''));
-  },
+  },*/
 
   isEmail: function (email)
   {
