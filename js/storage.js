@@ -107,7 +107,7 @@ var $ =
 
     set: function (me, id, data)
     {
-      var i, j, found, deadLine = Math.floor(Date.now() / 1000) - 6 * 2592000;
+      var i, j, found, deadLine = Math.floor(Date.now() / 1000) - 6 * 2592000;    // 6 months
 
       if (id)
       {
@@ -132,7 +132,7 @@ var $ =
         for (j in $.C.data)
         {
           if (!$.C.data[j]) $.C.data.splice(j, 1);
-          else if ($.C.data[j].id == data[i].id) { $.C.data[j] = data[i]; found = true }
+          else if ($.C.data[j].id == data[i].id) { $.C.data[j] = data[i]; found = true; break }
         }
 
         if (!found) $.C.data.push(data[i])
