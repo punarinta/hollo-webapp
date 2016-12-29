@@ -91,6 +91,9 @@ class UserPickerModal extends Component
         let chat = this.state.chats[i],
             name = ML.xname(chat);
 
+        // set them to 'read' visually
+        chat.read = 1;
+
         items.push(h('li', { onclick: () => this.onSelect(chat) },
           h(Avatar, {size: 32, chat}),
           h('div', null, name[0])
