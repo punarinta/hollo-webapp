@@ -95,9 +95,9 @@ class MessageBubble extends Component
     });
   }
 
-  messageClicked()
+  messageClicked(e)
   {
-    if (this.props.chatId)
+    if (this.props.chatId && e.target.nodeName != 'A')
     {
       // display context menu
       let children =
