@@ -88,6 +88,12 @@ class MessageBubble extends Component
     ML.emit('busybox', 1);
     ML.api('message', 'showOriginal', {id: message.id, tryHtml}, data =>
     {
+      if (!data)
+      {
+        ML.emit('messagebox', {html: 'We are sorry, but this message is absent in your mailbox.'});
+        return
+      }
+
       // display this message in a dedicated message viewer
 
       ML.emit('custombox', {className: 'message-viewer'});
