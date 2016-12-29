@@ -624,7 +624,7 @@ class MessagesPage extends Component
           h(BarIcon, {className: this.state.menuModalShown == 3 ? 'toggled' : '', img: 'color/clip', width: 40, height: 40, onclick: () => this.toggleMenu(3) }),
           h(BarIcon, {className: this.state.menuModalShown == 4 ? 'toggled' : '', img: 'color/more-vert', width: 40, height: 40, onclick: () => this.toggleMenu(4) })
         ),
-        h('ul', null, messages.length ? messages : h('li', {className: 'list-hint'}, listHint) ),
+        h('ul', {className: this.state.subjectFilter ? 'with-filter' : ''}, messages.length ? messages : h('li', {className: 'list-hint'}, listHint) ),
         h('composer', {style: {minHeight: composerHeight + 'px', height: composerHeight + 'px'}},
           h('emojis', {style: {bottom: composerHeight + 8 + 'px'}},
             emojiRows
