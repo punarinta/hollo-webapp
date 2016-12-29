@@ -165,6 +165,11 @@ class ChatRow extends Component
     else
     {
       let d = document.createElement('div');
+      lastMsg = lastMsg.replace(/\*(\w+)\*/gi, m =>
+      {
+        return '<span style="font-style:italic">' + m.replace(/\*/g,'') + '</span>'
+      });
+
       d.innerHTML = lastMsg.replace(/\[sys:fwd\]/g, ' ➡️ ' + lastSubj).replace(/(<([^>]+)>)/ig, '').substring(0, 60).trim();
       lastMsg = d.textContent.trim();
     }
