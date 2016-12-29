@@ -84,14 +84,21 @@ class MessageBubble extends Component
     ML.api('message', 'showOriginal', {id: message.id, tryHtml}, data =>
     {
       // display this message in a dedicated message viewer
-      let children =
-      [
-        h(MessageBody, {html: data.content})
-      ];
 
-      ML.emit('custombox', {className: 'message-viewer', children});
+      ML.emit('custombox', {className: 'message-viewer'});
 
-      ML.emit('busybox');
+      setTimeout(() =>
+      {
+        let f = document.createElement('iframe');
+        f.src = 'about:blank';
+        document.querySelector('.message-viewer>div').appendChild(f);
+
+        f.contentWindow.document.open('text/html', 'replace');
+        f.contentWindow.document.write('<!DOCTYPE html>' + data.content); // <style>body{margin:0}</style>
+        f.contentWindow.document.close();
+
+        ML.emit('busybox');
+      }, 500)
     });
   }
 
