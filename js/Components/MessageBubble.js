@@ -105,7 +105,7 @@ class MessageBubble extends Component
         h('ul', null,
           h('li', { onclick: this.forwardClicked.bind(this) }, 'Forward message...'),
           h('li', { onclick: () => this.showOriginalClicked(0) }, 'Show original email'),
-          h('li', { onclick: () => this.showOriginalClicked(1) }, 'Find HTML version')
+          h('li', { onclick: () => this.showOriginalClicked(1) }, 'Show HTML version')
         ),
       ];
 
