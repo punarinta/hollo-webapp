@@ -77,6 +77,10 @@ class QuickStack extends Component
     let count = qs.length;
     this.setState({qs, count, quickStackShown: count > 0});
     this.buttonSkip.classList.remove('picked');
+    if (!count)
+    {
+      this.count()
+    }
   }
 
   markRead(current)
