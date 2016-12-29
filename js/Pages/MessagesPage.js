@@ -555,7 +555,7 @@ class MessagesPage extends Component
             if ($platform == 1) token = '&token=' + ML.sessionId;
 
             filePlates.push(h('li', null,
-              h(FilePlate, {file, size: $windowInnerWidth > 768 ? 'calc(50vw - 45px)' : 'calc(50vw - 30px)'}),
+              h(FilePlate, {file, size: $windowInnerWidth > 768 ? '160px' : 'calc(50vw - 30px)', full: 1}),
               h(BarIcon, {img: 'color/download', onclick: () => window.open(CFG.apiRoot + 'file?method=download&messageId=' + m.id + '&offset=' + j + token, '_system') })
             ))
           }
