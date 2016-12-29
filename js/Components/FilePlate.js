@@ -1,9 +1,9 @@
 class FilePlate extends Component
 {
-  render()
+  render(props)
   {
-    let file = this.props.file,
-        size = this.props.size || '72px',
+    let file = props.file,
+        size = props.size || '72px',
         nc = file.type.split('/')[1];
 
     let style =
@@ -14,7 +14,7 @@ class FilePlate extends Component
       height: size
     };
 
-    if (nc.length > 6)
+    if (nc && nc.length > 6)
     {
       if (nc.length > 27) nc = nc.substring(0, 27) + '…';
 
@@ -37,7 +37,7 @@ class FilePlate extends Component
 
     return (
 
-      h('file-plate', {style, onclick: () => this.props.onclick(file, this.props.offset)},
+      h('file-plate', {style, onclick: () => props.onclick(file, props.offset)},
         nc
       )
     );
