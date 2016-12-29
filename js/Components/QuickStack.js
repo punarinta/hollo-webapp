@@ -73,6 +73,7 @@ class QuickStack extends Component
   {
     let qs = this.state.qs;
     qs.shift();
+    this.base.querySelector('.white').scrollIntoView();
     let count = qs.length;
     this.setState({qs, count, quickStackShown: count > 0});
     this.buttonSkip.classList.remove('picked');
