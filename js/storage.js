@@ -30,48 +30,59 @@ var $ =
   U:
   {
     data: [],
+    index: [],
 
     get: function (id)
     {
-      for (var i in $.U.data) if ($.U.data[i].id == id) return $.U.data[i];
-      return null;
+      var pos = $.U.index.indexOf(id);
+      if (pos == -1) return null;
+      return $.U.data[pos];
     },
 
     set: function (id, data)
     {
-      var i, j, found;
+      var i, rebuild = false;
       if (id)
       {
-        found = false;
-        if (data._id) data.id = data._id;
-        for (i in $.U.data)
+        var pos = $.U.index.indexOf(data.id);
+        if (pos == -1) { $.U.data.push(data); rebuild = true }
+        else
         {
-          if ($.U.data[i].id == data.id)
-          {
-            found = true;
-            $.U.data[i] = data;
-            break;
-          }
+          if (data._id) { data.id = data._id; delete data._id }
+          $.U.data[pos] = data;
         }
-        if (!found) $.C.data.push(data)
       }
-      else { for (i in data)
+      else
       {
-        if (data[i]._id) { data[i].id = data[i]._id; delete data[i]._id }
-
-        found = false;
-        for (j in $.U.data)
+        var j, found;
+        for (i in data)
         {
-          if (!$.U.data[j]) $.U.data.splice(j, 1);
-          else if ($.U.data[j].id == data[i].id) { $.U.data[j] = data[i]; found = true }
-        }
+          if (data[i]._id) { data[i].id = data[i]._id; delete data[i]._id }
 
-        if (!found) $.U.data.push(data[i])
-      }}
+          found = false;
+          for (j in $.U.data)
+          {
+            if (!$.U.data[j]) $.U.data.splice(j, 1);
+            else if ($.U.data[j].id == data[i].id) { $.U.data[j] = data[i]; found = true }
+          }
+
+          if (!found) { $.U.data.push(data[i]); rebuild = true }
+        }
+      }
+
+      // no sorting used => can skip index rebuilding sometimes
+      if (rebuild)
+      {
+        $.U.index = [];
+        for (i = 0; i < $.U.data.length; i++)
+        {
+          $.U.index.push($.U.data[i].id)
+        }
+      }
 
       var jsonString = JSON.stringify($.U.data);
 
-      console.log('Storage used for users: %s kB', Math.round(jsonString.length / 1024));
+      console.log('Storage used for users: %s kB, index size %s', Math.round(jsonString.length / 1024), $.U.index.length);
       // localStorage.setItem('users', jsonString);
 
       ML.emit('users:update');
@@ -98,45 +109,46 @@ var $ =
   C:
   {
     data: [],
+    index: [],
 
     get: function (id)
     {
-      for (var i in $.C.data) if ($.C.data[i].id == id) return $.C.data[i];
-      return null;
+      var pos = $.C.index.indexOf(id);
+      if (pos == -1) return null;
+      return $.C.data[pos];
     },
 
     set: function (me, id, data)
     {
-      var i, j, found, deadLine = Math.floor(Date.now() / 1000) - 6 * 2592000;    // 6 months
+      var i, j, deadLine = Math.floor(Date.now() / 1000) - 6 * 2592000;    // 6 months
 
       if (id)
       {
-        found = false;
-        if (data._id) data.id = data._id;
-        for (i in $.C.data)
+        var pos = $.C.index.indexOf(id);
+        if (pos == -1) $.C.data.push(data);
+        else
         {
-          if ($.C.data[i].id == data.id)
-          {
-            found = true;
-            $.C.data[i] = data;
-            break;
-          }
+          if (data._id) { data.id = data._id; delete data._id }
+          $.C.data[pos] = data;
         }
-        if (!found) $.C.data.push(data)
       }
-      else { for (i in data)
+      else
       {
-        if (data[i]._id) { data[i].id = data[i]._id; delete data[i]._id }
-
-        found = false;
-        for (j in $.C.data)
+        var found;
+        for (i in data)
         {
-          if (!$.C.data[j]) $.C.data.splice(j, 1);
-          else if ($.C.data[j].id == data[i].id) { $.C.data[j] = data[i]; found = true; break }
-        }
+          if (data[i]._id) { data[i].id = data[i]._id; delete data[i]._id }
 
-        if (!found) $.C.data.push(data[i])
-      }}
+          found = false;
+          for (j in $.C.data)
+          {
+            if (!$.C.data[j]) $.C.data.splice(j, 1);
+            else if ($.C.data[j].id == data[i].id) { $.C.data[j] = data[i]; found = true; break }
+          }
+
+          if (!found) $.C.data.push(data[i])
+        }
+      }
 
       // remove old chats and messages
       for (i in $.C.data)
@@ -187,9 +199,16 @@ var $ =
         else return (b.lastTs || 0) - (a.lastTs || 0);
       });
 
+      // rebuild index
+      $.C.index = [];
+      for (i = 0; i < $.C.data.length; i++)
+      {
+        $.C.index.push($.C.data[i].id)
+      }
+
       var jsonString = JSON.stringify($.C.data);
 
-      console.log('Storage used for chats: %s kB', Math.round(jsonString.length / 1024));
+      console.log('Storage used for chats: %s kB, index size %s', Math.round(jsonString.length / 1024), $.C.index.length);
       // localStorage.setItem('chats', jsonString);
 
       for (i in $.C.data)
