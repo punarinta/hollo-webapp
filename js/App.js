@@ -69,7 +69,11 @@ class App extends Component
             break;
 
           case 'auth/logout':
-            if ($platform == 1) window.plugins.googleplus.disconnect();
+            if ($platform == 1)
+            {
+              window.plugins.googleplus.disconnect();
+              FCMPlugin.unsubscribeFromTopic('user-' + this.state.user.id);
+            }
             ML.api('auth', 'logout', null, () =>
             {
               this.setState({page: 'login', busy: 0});
