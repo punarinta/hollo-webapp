@@ -252,7 +252,7 @@ class MessagesPage extends Component
 
   muteChat()
   {
-    this.chat.muted = !this.chat.muted;
+    this.chat.muted = 1 * !this.chat.muted;
     ML.api('chat', 'update', {id: this.chat.id, muted: this.chat.muted}, () =>
     {
       this.setState({menuModalShown: 0});
@@ -262,7 +262,7 @@ class MessagesPage extends Component
 
   unreadChat()
   {
-    this.chat.read = !this.chat.read;
+    this.chat.read = 1 * !this.chat.read;
     ML.api('chat', 'update', {id: this.chat.id, read: this.chat.read}, () =>
     {
       this.setState({menuModalShown: 0});
