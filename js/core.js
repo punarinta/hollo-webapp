@@ -156,10 +156,10 @@ var ML =
 
   colorHash: function (input)
   {
-    var ncc = parseInt(md5(input).substr(0, 6), 16),
-        b = ncc & 0xFF, g = (ncc >> 8) & 0xFF, r = ncc >> 16;
+    var ncc = ML.djb2(input),
+        b = (ncc & 0xFF) >> 1, g = (ncc & 0xFF00) >> 9, r = (ncc & 0xFF0000) >> 17;
 
-    ncc = [(r >> 1) + 96, (g >> 1) + 96, (b >> 1) + 96].join(',');
+    ncc = [r + 96, g + 96, b + 96].join(',');
     
     return 'rgb(' + ncc + ')';
   },
@@ -235,5 +235,12 @@ var ML =
       x = x.parentElement;
     }
     return x;
+  },
+
+  djb2: function (str)
+  {
+    var i, hash = 5381;
+    for (i = 0; i < str.length; i++) hash = ((hash << 5) + hash) + str.charCodeAt(i)
+    return hash;
   }
 };
