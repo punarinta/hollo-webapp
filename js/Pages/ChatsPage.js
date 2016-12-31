@@ -139,9 +139,8 @@ class ChatsPage extends Component
         this.emailFilter = filter;
         this.setState({maxDisplay: this.displayPerScreen});
         this.chatUpdate();
+        mixpanel.track('Sys - filter', {keyword: filter});
       }
-
-      mixpanel.track('Sys - filter', {keyword: filter});
     }, 500);
   }
 
@@ -152,7 +151,6 @@ class ChatsPage extends Component
 
   addNew()
   {
-    mixpanel.track('Chat - add new');
     ML.api('chat', 'add', {emails: [this.emailFilter]}, data =>
     {
       // add chat to the storage first
@@ -160,6 +158,7 @@ class ChatsPage extends Component
       this.setState({menuModalShown: 0});
       ML.go('chat/' + data.id);
     });
+    mixpanel.track('Chat - add new');
   }
 
   scroll()
@@ -261,9 +260,9 @@ class ChatsPage extends Component
             )
           ),
             this.emailFilter.length ? null : h('bottom-bar', null,
-            h(BarIcon, {className: 'opa-85', caption: 'Profile', svg: 'profile', fill, onclick: () => { mixpanel.track('Sys - profile'); ML.go('profile') } }),
-            h(BarIcon, {className: muted ? 'opa-85' : '', caption: 'Inbox', svg: 'email', fill, onclick: () => { mixpanel.track('Sys - holloed'); ML.go('chats') } } ),
-            h(BarIcon, {className: muted ? '' : 'opa-85', caption: 'Muted', svg: 'muted', fill, onclick: () => { mixpanel.track('Sys - muted'); ML.go('chats', {muted: 1}) } } )
+            h(BarIcon, {className: 'opa-85', caption: 'Profile', svg: 'profile', fill, onclick: () => { ML.go('profile'); mixpanel.track('Sys - profile') } }),
+            h(BarIcon, {className: muted ? 'opa-85' : '', caption: 'Inbox', svg: 'email', fill, onclick: () => { ML.go('chats'); mixpanel.track('Sys - holloed') } } ),
+            h(BarIcon, {className: muted ? '' : 'opa-85', caption: 'Muted', svg: 'muted', fill, onclick: () => { ML.go('chats', {muted: 1}); mixpanel.track('Sys - muted') } } )
           )
         ];
       }

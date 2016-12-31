@@ -78,7 +78,10 @@ class UserPickerModal extends Component
 
   render(props)
   {
-    if (!props.data) return h('user-picker-modal', {style: {display: 'none'}}, h('div', null, h('ul')));
+    if (!props.data)
+    {
+      return h('user-picker-modal', {style: {display: 'none'}}, h('div', null, h('ul')));
+    }
 
     let items = [], count = 0;
 

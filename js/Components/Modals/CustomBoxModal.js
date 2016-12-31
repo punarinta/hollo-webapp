@@ -1,11 +1,14 @@
 class CustomBoxModal extends Component
 {
-  render()
+  render(props)
   {
-    if (!this.props.data) return h('custom-box-modal', {style: {display: 'none'}});
+    if (!props.data)
+    {
+      return h('custom-box-modal', {style: {display: 'none'}})
+    }
 
-    return h('custom-box-modal', {className: this.props.data.className, onclick: this.props.onclose},
-      h('div', null, this.props.data.children)
+    return h('custom-box-modal', {className: props.data.className, onclick: props.onclose},
+      h('div', null, props.data.children)
     );
   }
 }

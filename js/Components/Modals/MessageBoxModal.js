@@ -10,12 +10,15 @@ class MessageBoxModal extends Component
     if (typeof this.props.onclose == 'function') this.props.onclose()
   }
 
-  render()
+  render(props)
   {
-    let data = this.props.data,
-        buttons = [h('button', {className: 'btn ok', onclick: () => this.onClick(1)}, 'OK')];
+    let data = props.data;
+    if (!data)
+    {
+      return h('message-box-modal', {style: {display: 'none'}});
+    }
 
-    if (!data) return h('message-box-modal', {style: {display: 'none'}});
+    let buttons = [h('button', {className: 'btn ok', onclick: () => this.onClick(1)}, 'OK')];
 
     if (data.type == 1)
     {

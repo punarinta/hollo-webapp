@@ -8,11 +8,14 @@ class DemoBoxModal extends Component
     if (this.props.onclose) this.props.onclose()
   }
 
-  render()
+  render(props)
   {
-    let data = this.props.data, url = '', style, nc;
+    let style, nc, url = '', data = props.data;
 
-    if (!data) return h('demo-box-modal', {style: {display: 'none'}});
+    if (!data)
+    {
+      return h('demo-box-modal', {style: {display: 'none'}});
+    }
 
     if (data.file.type.match('image.*'))
     {
@@ -33,9 +36,9 @@ class DemoBoxModal extends Component
       style = {background: ML.colorHash(data.file.type),}
     }
 
-    return h('demo-box-modal', {onclick: this.props.onclose},
+    return h('demo-box-modal', {onclick: props.onclose},
       h('div', null,
-        h('div', {className: 'head', onclick: this.props.onclose},
+        h('div', {className: 'head', onclick: props.onclose},
           h(Svg, {model: 'cross', fill: '#fff', type: 'polygon', size: 14})
         ),
         h('div', {className: 'img', style},
