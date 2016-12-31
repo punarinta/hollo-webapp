@@ -29,6 +29,10 @@ menu-modal
 .menu-files
   width 98%
   left 1%
+  @media screen and (min-width break-tablet)
+    max-width calc(98% - 360px)
+    left auto
+    
   &:before
     right 45px
   ul
@@ -55,6 +59,9 @@ menu-modal
 
 .menu-subjects
   min-width 200px
+  @media screen and (min-width break-tablet)
+    max-width 512px
+    left auto
   &:before
     right 85px
   ul
