@@ -276,6 +276,10 @@ class ChatsPage extends Component
       }
     }
 
+    let sbClasses = [];
+    if (this.emailFilter.length) sbClasses.push('filtered');
+    if (this.state.filterActive) sbClasses.push('focused');
+
     return (
 
       h('chats-page', {style: {zIndex: this.props.zIndex}, ontouchstart: this.touchStart.bind(this), ontouchmove: this.touchMove.bind(this), ontouchend: this.touchEnd.bind(this)},
@@ -285,7 +289,7 @@ class ChatsPage extends Component
           placeholder: 'Search chat or start new',
           onchange: this.filterChanged.bind(this),
           onfocuschange: this.filterFocusChanged.bind(this),
-          className: this.state.filterActive ? 'focused' : '',
+          className: sbClasses.join(' '),
           autocolor: true
         }),
         h('loader', null, h('inner-loader')),
