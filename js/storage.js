@@ -35,8 +35,7 @@ var $ =
     get: function (id)
     {
       var pos = $.U.index.indexOf(id);
-      if (pos == -1) return null;
-      return $.U.data[pos];
+      return pos == -1 ? null : $.U.data[pos]
     },
 
     set: function (id, data)
@@ -114,8 +113,7 @@ var $ =
     get: function (id)
     {
       var pos = $.C.index.indexOf(id);
-      if (pos == -1) return null;
-      return $.C.data[pos];
+      return pos == -1 ? null : $.C.data[pos]
     },
 
     set: function (me, id, data)
