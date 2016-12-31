@@ -131,8 +131,14 @@ class ChatRow extends Component
 
     if (chat.messages && chat.messages[0])
     {
-      lastMsg = chat.messages[0].body || '';
+      lastMsg = chat.messages[0].body;
       lastSubj = chat.messages[0].subj || '';
+
+      if (!lastMsg)
+      {
+        if (chat.messages[0].files) lastMsg = '📄 ' + chat.messages[0].files[0].name
+        else lastMsg = '';
+      }
     }
 
     if (lastMsg !== null && typeof lastMsg === 'object')
