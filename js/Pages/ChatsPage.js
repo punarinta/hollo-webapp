@@ -22,8 +22,12 @@ class ChatsPage extends Component
 
   componentWillReceiveProps(nextProps)
   {
-    this.props = nextProps;
-    this.chatUpdate();
+    if (JSON.stringify(nextProps) !== this.propsString)
+    {
+      this.props = nextProps;
+      this.propsString = JSON.stringify(nextProps);
+      this.chatUpdate();
+    }
   }
 
   componentWillUnmount()
@@ -231,9 +235,9 @@ class ChatsPage extends Component
           canSwipe: !this.state.blockSwipe,
           onclick: (chat) =>
           {
-            mixpanel.track('Chat - enter', {id: chat.id});
             this.setState({selectedChatId: chat.id});
-            ML.go('chat/' + chat.id)
+            ML.go('chat/' + chat.id);
+            mixpanel.track('Chat - enter', {id: chat.id})
           },
           selected: this.state.selectedChatId == chat.id,
           vw

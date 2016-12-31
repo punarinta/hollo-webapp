@@ -7,13 +7,18 @@ class Avatar extends Component
 
   componentWillReceiveProps(nextProps)
   {
-    this.loadGraphics(nextProps);
+    if (JSON.stringify(nextProps) !== this.propsString)
+    {
+      this.loadGraphics(nextProps);
+    }
   }
 
   loadGraphics(props)
   {
     let chat = props.chat || {users: [props.user], read: 1},
         email = chat.users[0] ? chat.users[0].email : '?', size = props.size || '40px';
+
+    this.propsString = JSON.stringify(props);
 
     if (chat.users.length < 2)
     {
