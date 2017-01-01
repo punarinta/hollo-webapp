@@ -8,5 +8,5 @@ var CFG =
   emojisReplace: true,
   colorAvatars: true,
   // showNotes: false,      // false by default => no need to specify here
-  locale: /*navigator.language ||*/ 'en-US'
+  locale: navigator.language || 'en-US'
 };
