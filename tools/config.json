@@ -4,6 +4,7 @@
   "js":
   [
     "js/md5",
+    "js/translation",
     "js/core",
     "js/storage",
     "js/gravatar",

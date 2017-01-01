@@ -6,6 +6,7 @@ var CFG =
   notifierUrl: 'wss://notify.hollo.email:443/',
   redirectUrl: 'https://app.hollo.email/',
   emojisReplace: true,
-  colorAvatars: true
-  // showNotes: false      // false by default => no need to specify here
+  colorAvatars: true,
+  // showNotes: false,      // false by default => no need to specify here
+  locale: 'en_US'
 };

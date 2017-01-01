@@ -58,9 +58,9 @@ class ProfilePage extends Component
         ),
         h('div', {className: 'appver'}, 'ver: ' + APPVER),
         h('bottom-bar', null,
-          h(BarIcon, {caption: 'Profile', svg: 'profile', fill}),
-          h(BarIcon, {className: 'opa-85', caption: 'Inbox', svg: 'email', fill, onclick: () => ML.go('chats')}),
-          h(BarIcon, {className: 'opa-85', caption: 'Muted', svg: 'muted', fill, onclick: () => ML.go('chats', {muted: 1})})
+          h(BarIcon, {caption: _('BTN_PROFILE'), svg: 'profile', fill}),
+          h(BarIcon, {className: 'opa-85', caption: _('BTN_INBOX'), svg: 'email', fill, onclick: () => ML.go('chats')}),
+          h(BarIcon, {className: 'opa-85', caption: _('BTN_MUTED'), svg: 'muted', fill, onclick: () => ML.go('chats', {muted: 1})})
         )
       )
     );

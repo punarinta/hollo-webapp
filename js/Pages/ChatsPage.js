@@ -260,9 +260,9 @@ class ChatsPage extends Component
             )
           ),
             this.emailFilter.length ? null : h('bottom-bar', null,
-            h(BarIcon, {className: 'opa-85', caption: 'Profile', svg: 'profile', fill, onclick: () => { ML.go('profile'); mixpanel.track('Sys - profile') } }),
-            h(BarIcon, {className: muted ? 'opa-85' : '', caption: 'Inbox', svg: 'email', fill, onclick: () => { ML.go('chats'); mixpanel.track('Sys - holloed') } } ),
-            h(BarIcon, {className: muted ? '' : 'opa-85', caption: 'Muted', svg: 'muted', fill, onclick: () => { ML.go('chats', {muted: 1}); mixpanel.track('Sys - muted') } } )
+            h(BarIcon, {className: 'opa-85', caption: _('BTN_PROFILE'), svg: 'profile', fill, onclick: () => { ML.go('profile'); mixpanel.track('Sys - profile') } }),
+            h(BarIcon, {className: muted ? 'opa-85' : '', caption: _('BTN_INBOX'), svg: 'email', fill, onclick: () => { ML.go('chats'); mixpanel.track('Sys - holloed') } } ),
+            h(BarIcon, {className: muted ? '' : 'opa-85', caption: _('BTN_MUTED'), svg: 'muted', fill, onclick: () => { ML.go('chats', {muted: 1}); mixpanel.track('Sys - muted') } } )
           )
         ];
       }
@@ -286,7 +286,7 @@ class ChatsPage extends Component
         h(SearchBar,
         {
           value: '',
-          placeholder: 'Search chat or start new',
+          placeholder: _('HINT_CHAT_SEARCH'),
           onchange: this.filterChanged.bind(this),
           onfocuschange: this.filterFocusChanged.bind(this),
           className: sbClasses.join(' '),
