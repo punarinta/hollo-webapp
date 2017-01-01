@@ -57,7 +57,7 @@ class InvitationWidget extends Component
         ),
         url ? h('div', { className: 'open' },
           h('a', { onclick: this.aClicked.bind(this), target: '_system', href: url },
-            'Open in calendar'
+            _('CAL_OPENLINK')
           )
         ) : ''
       )

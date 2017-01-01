@@ -152,14 +152,14 @@ class ChatRow extends Component
           let name = w.att[i][1].length ? w.att[i][1] : w.att[i][0];
           if (w.att[i][2] == 'ACCEPTED')
           {
-            if (props.user.email == w.att[i][0]) subject = '✔ ️you accepted this invite';
-            else subject = '✔ ️' + name + ' accepted this invite';
+            if (props.user.email == w.att[i][0]) subject = _('CAL_YOU_ACCEPT');
+            else subject = _('CAL_ACCEPT', [name]);
             break;
           }
           else if (w.att[i][2] == 'TENTATIVE')
           {
-            if (props.user.email == w.att[i][0]) subject = '✔ ️you accepted this invite';
-            else subject = '❓ ' + name + ' said "maybe" to this invite';
+            if (props.user.email == w.att[i][0]) subject = _('CAL_YOU_TENT');
+            else subject = _('CAL_TENT', [name]);
             break;
           }
         }

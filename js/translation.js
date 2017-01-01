@@ -38,6 +38,7 @@ $locales['en-US'] =
   HINT_NO_SUBJS     : 'No subjects in this chat',
   HINT_BIG_FILE     : 'Sorry, maximum attachment size is 10MB.',
   HINT_AREYOUSURE   : 'Are you sure?',
+  HINT_CHAT_SEARCH  : 'Search chat or start new',
 
   SYS_SETTINGS      : 'Settings',
   SYS_EMOJIS        : 'Emojis replace words',
@@ -45,7 +46,11 @@ $locales['en-US'] =
   SYS_NOTES         : 'Show local notes',
   SYS_PUSHINFO      : 'Notification will be delivered in ~5 seconds. OK to test mobile push, Cancel to test desktop push.',
 
-  HINT_CHAT_SEARCH  : 'Search chat or start new',
+  CAL_OPENLINK      : 'Open in calendar',
+  CAL_YOU_ACCEPT    : '✔ ️you accepted this invite',
+  CAL_ACCEPT        : '✔ %s accepted this invite',
+  CAL_YOU_TENT      : '✔ ️you accepted this invite',
+  CAL_TENT          : '❓ %s said "maybe" to this invite',
 
   self: 'English (US)'
 };
@@ -86,6 +91,7 @@ $locales['ru-RU'] =
   HINT_NO_SUBJS     : 'В этом чате ещё нет тем',
   HINT_BIG_FILE     : 'К сожалению, невозможно прикрепить файл размером более 10МБ.',
   HINT_AREYOUSURE   : 'Вы уверены?',
+  HINT_CHAT_SEARCH  : 'Найти чат или создать новый',
 
   SYS_SETTINGS      : 'Настройки',
   SYS_EMOJIS        : 'Эмоджи заменяют слова',
@@ -93,7 +99,11 @@ $locales['ru-RU'] =
   SYS_NOTES         : 'Включить заметки',
   SYS_PUSHINFO      : 'Уведомление будет доставлено через ~5 секунд. «OK» — мобильник, «Отменить» — десктоп.',
 
-  HINT_CHAT_SEARCH  : 'Найти чат или создать новый',
+  CAL_OPENLINK      : 'Открыть в календаре',
+  CAL_YOU_ACCEPT    : '✔ Вы сказали "да"',
+  CAL_ACCEPT        : '✔ %s сказал "да"',
+  CAL_YOU_TENT      : '✔ Вы сказали "да"',
+  CAL_TENT          : '❓ %s сказал "может быть"',
 
   self: 'Русский'
 };
