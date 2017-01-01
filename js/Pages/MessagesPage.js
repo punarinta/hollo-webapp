@@ -66,7 +66,7 @@ class MessagesPage extends Component
       {
         this.chat = $.C.get(this.chatId);
         messages = this.chat.messages || [];
-        currentSubject = messages.length ? messages[0].subj : 'New subject';
+        currentSubject = messages.length ? messages[0].subj : _('CAP_NEW_SUBJ');
       }
 
       this.setState({messages, currentSubject});
@@ -201,7 +201,7 @@ class MessagesPage extends Component
     let children =
     [
       h('ul', null, subjectRows),
-      h('button', {onclick: this.newSubject.bind(this)}, 'New Subject')
+      h('button', {onclick: this.newSubject.bind(this)}, _('BTN_ADD_SUBJ'))
     ];
 
     ML.emit('custombox', {className: 'subjects-modal', children})
@@ -273,7 +273,7 @@ class MessagesPage extends Component
   renameChat()
   {
     this.setState({menuModalShown: 0});
-    ML.emit('messagebox', {type: 1, html: 'Enter new name:', input: this.chat.name, cb: (code, name) =>
+    ML.emit('messagebox', {type: 1, html: _('CAP_NEW_NAME'), input: this.chat.name, cb: (code, name) =>
     {
       if (code)
       {
@@ -288,7 +288,7 @@ class MessagesPage extends Component
   leaveChat()
   {
     this.setState({menuModalShown: 0});
-    ML.emit('messagebox', {type: 1, html: 'Are you sure?', cb: (code) =>
+    ML.emit('messagebox', {type: 1, html: _('HINT_AREYOUSURE'), cb: (code) =>
     {
       if (code)
       {
@@ -321,7 +321,7 @@ class MessagesPage extends Component
       {
         if (f.size > 10485760)
         {
-          ML.emit('messagebox', {html: 'Sorry, maximum attachment size is 10MB.'});
+          ML.emit('messagebox', {html: _('HINT_BIG_FILE')});
           return null;
         }
 
@@ -505,7 +505,7 @@ class MessagesPage extends Component
             users
           ),
           h('bar', null,
-            h('button', {onclick: this.addUserStart.bind(this) }, 'Add more')
+            h('button', {onclick: this.addUserStart.bind(this) }, _('BTN_ADD_USERS'))
           )
         )
       )
@@ -526,7 +526,7 @@ class MessagesPage extends Component
       }
       else
       {
-        subjectLines.push(h('li', null, 'No subjects in this chat'))
+        subjectLines.push(h('li', null, _('HINT_NO_SUBJS')))
       }
 
       menuModal = h('div', {className: 'modal-shader'},
@@ -564,7 +564,7 @@ class MessagesPage extends Component
 
       menuModal = h('div', {className: 'modal-shader'},
         h('menu-modal', {className: 'menu-files'},
-          filePlates.length ? h('ul', null, filePlates) : h('div', null, 'No files in this chat')
+          filePlates.length ? h('ul', null, filePlates) : h('div', null, _('HINT_NO_FILES'))
         )
       )
     }
@@ -588,7 +588,7 @@ class MessagesPage extends Component
 
     let filterModal = h('filter-modal', {style: {display: this.state.subjectFilter ? 'flex' : 'none'}},
       h('div', null,
-        h('div', {className: 'caption'}, 'Filtering by subject'),
+        h('div', {className: 'caption'}, _('CAP_SUBJ_FLT')),
         h('div', {className: 'filter'}, this.state.subjectFilter)
       ),
       h(BarIcon, {img: 'color/circled-cross', onclick: () => this.filterMessages(0)})
@@ -606,11 +606,7 @@ class MessagesPage extends Component
       emojiRows.push(h('div', null, emojis))
     }
 
-    let listHint = ['No messages yet', h('br'), 'Or they became too old'];
-    if (this.chat && !this.chat.id)
-    {
-      listHint = ['Feel free to talk to yourself here,', h('br'), 'maybe you need to do something?', h('br'), 'Or write down a shopping list?'];
-    }
+    let listHint = _(this.chat && !this.chat.id ? 'HINT_NO_NOTES' : 'HINT_NO_MSGS');
 
     return (
 
@@ -639,7 +635,7 @@ class MessagesPage extends Component
           {
             ref: (input) => this.cmpText = input,
             rows: 1,
-            placeholder: 'Write a new hollo...',
+            placeholder: _('CAP_WRITE_NEW'),
             onkeyup: this.composerTextChanged.bind(this),
             onfocus: (e) => { this.setState({compFocus: 1}); setTimeout(() => e.target.focus(), 50); this.reposition(1, 50) },
             value: this.state.currentComposed

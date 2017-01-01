@@ -185,7 +185,7 @@ class ChatsPage extends Component
           user: this.props.user,
           chat: {users: [{email, name: email}],
           read: 1,
-          last: {msg:'Create a chat with ' + email}},
+          messages: [{ body: _('CAP_NEW_CHAT', [email]) }]},
           canSwipe: 0,
           onclick: this.addNew.bind(this)
         })
@@ -193,13 +193,7 @@ class ChatsPage extends Component
     }
     else if (this.state.filterActive && !this.emailFilter.length)
     {
-      ulContents = h('div', {className: 'list-hint'},
-        'To start a new',
-        h('br'),
-        'conversation type in',
-        h('br'),
-        'an email address.'
-      )
+      ulContents = h('div', {className: 'list-hint'}, _('HINT_FLT_ON'))
     }
     else
     {
@@ -251,13 +245,7 @@ class ChatsPage extends Component
         ulContents =
         [
           h('ul', null,
-            chats.length ? chats : h('div', {className: 'list-hint', style: {height: 'calc(100vh - 120px)'}},
-              'Welcome to Hollo!',
-              h('br'),
-              'Wait a bit please until',
-              h('br'),
-              'your messages are fetched...'
-            )
+            chats.length ? chats : h('div', {className: 'list-hint', style: {height: 'calc(100vh - 120px)'}}, _('HINT_SYNCING'))
           ),
             this.emailFilter.length ? null : h('bottom-bar', null,
             h(BarIcon, {className: 'opa-85', caption: _('BTN_PROFILE'), svg: 'profile', fill, onclick: () => { ML.go('profile'); mixpanel.track('Sys - profile') } }),
@@ -268,11 +256,7 @@ class ChatsPage extends Component
       }
       else
       {
-        ulContents = h('div', {className: 'list-hint'},
-          'Wanna create a new chat?',
-          h('br'),
-          'Just type in an email!'
-        )
+        ulContents = h('div', {className: 'list-hint'}, _('HINT_NEW_CHAT'))
       }
     }
 
