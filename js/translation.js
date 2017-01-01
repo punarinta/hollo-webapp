@@ -99,7 +99,7 @@ $locales['sv-SE'] =
   HINT_NO_NOTES     : 'Feel free to talk to yourself here,\nmaybe you need to do something?\nOr write down a shopping list?',
   HINT_NO_FILES     : 'No files in this chat',
   HINT_NO_SUBJS     : 'No subjects in this chat',
-  HINT_BIG_FILE     : 'Sorry, maximum attachment size is 10MB.',
+  HINT_BIG_FILE     : 'Sorry, maximum attachment size is 10 MB.',
   HINT_AREYOUSURE   : 'Are you sure?',
   HINT_CHAT_SEARCH  : 'Search chat or start new',
 
@@ -153,11 +153,11 @@ $locales['ru-RU'] =
   HINT_FLT_ON       : 'Чтобы создать новый чат\nвпишите email-адрес',
   HINT_SYNCING      : 'Добро пожаловать в Hollo!\nПодождите немного пока\nидёт синхронизация...',
   HINT_NEW_CHAT     : 'Хотите создать новый чат?\nПросто впишите email-адрес!',
-  HINT_NO_MSGS      : 'В этом чате ещё нет сообщений\nИли они устарели',
+  HINT_NO_MSGS      : 'В этом чате ещё нет сообщений\nили они устарели',
   HINT_NO_NOTES     : 'Оставляйте тут заметки для себя\nНапример, список покупок',
   HINT_NO_FILES     : 'В этом чате ещё нет файлов',
   HINT_NO_SUBJS     : 'В этом чате ещё нет тем',
-  HINT_BIG_FILE     : 'К сожалению, невозможно прикрепить файл размером более 10МБ.',
+  HINT_BIG_FILE     : 'К сожалению, невозможно прикрепить файл размером более 10 МБ.',
   HINT_AREYOUSURE   : 'Вы уверены?',
   HINT_CHAT_SEARCH  : 'Найти чат или создать новый',
 
