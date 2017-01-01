@@ -134,16 +134,16 @@ class LoginPage extends Component
 
       h('login-page', null,
         h('img', {src: 'gfx/color/logo.svg'}),
-        h('div', {className: 'text'}, 'Sign in'),
-        h('button', {className: 'google', onClick: this.loginWithGoogle.bind(this)}, 'Sign in with Google'),
+        h('div', {className: 'text'}, _('CAP_SIGN_IN')),
+        h('button', {className: 'google', onClick: this.loginWithGoogle.bind(this)}, _('BTN_GOOGLE')),
         h('div', {className: 'text'}, 'or'),
         h('div', {className: 'input'},
-          h('input', {type: 'email', ref: (i) => this.nameInput = i || 0, placeholder: 'Email', autofocus: 'autofocus', onKeyUp: this.emailTyped.bind(this)})
+          h('input', {type: 'email', ref: (i) => this.nameInput = i || 0, placeholder: _('CAP_EMAIL'), autofocus: 'autofocus', onKeyUp: this.emailTyped.bind(this)})
         ),
         h('div', {className: 'input'},
-          h('input', {type: 'password', ref: (i) => this.passInput = i || 0, placeholder: 'Password', onKeyUp: this.passwordTyped.bind(this)})
+          h('input', {type: 'password', ref: (i) => this.passInput = i || 0, placeholder: _('CAP_PASSWORD'), onKeyUp: this.passwordTyped.bind(this)})
         ),
-        h('button', {className: 'login', disabled: `${this.state.imapEnabled ? '' : 'disabled'}`, onClick: this.loginWithImap.bind(this)}, 'sign in')
+        h('button', {className: 'login', disabled: `${this.state.imapEnabled ? '' : 'disabled'}`, onClick: this.loginWithImap.bind(this)}, _('BTN_SIGN_IN'))
       )
     );
   }
