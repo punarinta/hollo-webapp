@@ -115,7 +115,7 @@ $locales['sv-SE'] =
   CAL_YOU_TENT      : '✔ ️you accepted this invite',
   CAL_TENT          : '❓ %s said "maybe" to this invite',
 
-  self: 'Swedish'
+  self: 'svenska'
 };
 
 $locales['ru-RU'] =
@@ -173,7 +173,7 @@ $locales['ru-RU'] =
   CAL_YOU_TENT      : '✔ Вы сказали "да"',
   CAL_TENT          : '❓ %s сказал "может быть"',
 
-  self: 'Русский'
+  self: 'Русский язык'
 };
 
 function _ (code, vars)
