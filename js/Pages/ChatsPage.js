@@ -212,7 +212,7 @@ class ChatsPage extends Component
         chats.push(h(ChatRow,
         {
           user: this.props.user,
-          chat: {users: [this.props.user], messages: my, read: 1, name: 'My notes'},
+          chat: {users: [this.props.user], messages: my, read: 1, name: _('CAP_MY_NOTES')},
           canSwipe: 0,
           onclick: (chat) => ML.go('chat/me'),
           vw

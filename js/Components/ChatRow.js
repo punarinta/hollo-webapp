@@ -180,6 +180,13 @@ class ChatRow extends Component
       lastMsg = d.textContent.trim();
     }
 
+    let readCaption = [], text = (chat.read ? _('CHAT_UNREAD') : _('CHAT_READ')).split("\n");
+    for (let i in text)
+    {
+      readCaption.push(text[i]);
+      readCaption.push(h('br'));
+    }
+
     return (
 
       h('chat-row', {
@@ -202,12 +209,10 @@ class ChatRow extends Component
         ),
         h('div', {className: 'shadow'},
           h('div', {style: {opacity: (this.state.mode != -1) - 0}},
-            `${chat.muted ? 'un' : ''}mute`
+            chat.muted ? _('CHAT_UNMUTE') : _('CHAT_MUTE')
           ),
           h('div', {style: {opacity: (this.state.mode != 1) - 0}},
-            'mark',
-            h('br'),
-            `as ${chat.read ? 'un' : ''}read`
+            readCaption
           )
         )
       )

@@ -57,7 +57,7 @@ class MessagesPage extends Component
 
       if (this.chatId == 'me')
       {
-        this.chat = { id: 0, name: 'My notes', read: 1, users: [], muted: 0 };
+        this.chat = { id: 0, name: _('CAP_MY_NOTES'), read: 1, users: [], muted: 0 };
 
         messages = JSON.parse(localStorage.getItem('my-notes')) || [];
         currentSubject = messages.length ? messages[messages.length - 1].subj : '';
@@ -573,11 +573,11 @@ class MessagesPage extends Component
     {
       let lis = this.chat.id ?
       [
-        h('li', {onclick: this.muteChat.bind(this)}, this.chat.muted ? 'Unmute' : 'Mute'),
-        h('li', {onclick: this.unreadChat.bind(this)}, `Mark as ${this.chat.read ? 'un' : ''}read`),
-        this.chat.users.length > 1 ? h('li', {onclick: this.renameChat.bind(this)}, 'Rename chat') : null,
-        h('li', {onclick: this.leaveChat.bind(this)}, 'Leave chat')
-      ] : [h('li', {onclick: this.clearNotes.bind(this)}, 'Clear notes')];
+        h('li', {onclick: this.muteChat.bind(this)}, this.chat.muted ? _('CHAT_UNMUTE') : _('CHAT_MUTE') ),
+        h('li', {onclick: this.unreadChat.bind(this)}, this.chat.read ? _('CHAT_UNREAD') : _('CHAT_READ') ),
+        this.chat.users.length > 1 ? h('li', {onclick: this.renameChat.bind(this)}, _('CHAT_RENAME') ) : null,
+        h('li', {onclick: this.leaveChat.bind(this)}, _('CHAT_LEAVE') )
+      ] : [h('li', {onclick: this.clearNotes.bind(this)}, _('CHAT_CLEAR') )];
 
       menuModal = h('div', {className: 'modal-shader'},
         h('menu-modal', {className: 'menu-more'},
