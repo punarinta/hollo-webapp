@@ -46,7 +46,7 @@ class MessageBubble extends Component
       });
     }
 
-    body = body.replace(/\[sys:fwd\]/g, '<div class="fwd">Forwarded message</div>');
+    body = body.replace(/\[sys:fwd\]/g, '<div class="fwd">' + _('HINT_FORWARDED') + '</div>');
 
     return h(MessageBody, {html: `<p>${body}</p>`, onclick: this.messageClicked.bind(this)});
   }
@@ -90,7 +90,7 @@ class MessageBubble extends Component
     {
       if (!data)
       {
-        ML.emit('messagebox', {html: 'We are sorry, but this message is absent in your mailbox.'});
+        ML.emit('messagebox', {html: _('ERR_NO_ORIG')});
         return
       }
 
@@ -121,9 +121,9 @@ class MessageBubble extends Component
       let children =
       [
         h('ul', null,
-          h('li', { onclick: this.forwardClicked.bind(this) }, 'Forward message...'),
-          h('li', { onclick: () => this.showOriginalClicked(0) }, 'Show original email'),
-          h('li', { onclick: () => this.showOriginalClicked(1) }, 'Show HTML version')
+          h('li', { onclick: this.forwardClicked.bind(this) }, _('MSG_FORWARD')),
+          h('li', { onclick: () => this.showOriginalClicked(0) }, _('MSG_SHOW_ORIG')),
+          h('li', { onclick: () => this.showOriginalClicked(1) }, _('MSG_SHOW_HTML'))
         ),
       ];
 
@@ -153,12 +153,12 @@ class MessageBubble extends Component
           let name = w.att[i][1].length ? w.att[i][1] : w.att[i][0];
           if (w.att[i][2] == 'ACCEPTED')
           {
-            subject = name + ' accepted this invite';
+            subject = _('CAL_ACCEPT', [name]);
             break;
           }
           else if (w.att[i][2] == 'TENTATIVE')
           {
-            subject = name + ' said "maybe" to this invite';
+            subject = _('CAL_TENT', [name]);
             break;
           }
         }

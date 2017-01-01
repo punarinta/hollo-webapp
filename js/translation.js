@@ -24,6 +24,10 @@ $locales['en-US'] =
   CHAT_LEAVE        : 'Leave chat',
   CHAT_CLEAR        : 'Clear notes',
 
+  MSG_FORWARD       : 'Forward message...',
+  MSG_SHOW_ORIG     : 'Show original email',
+  MSG_SHOW_HTML     : 'Show HTML version',
+
   CAP_MY_NOTES      : 'My notes',
   CAP_NEW_CHAT      : 'Create a chat with %s',
   CAP_WRITE_NEW     : 'Write a new hollo...',
@@ -41,9 +45,12 @@ $locales['en-US'] =
   HINT_NO_NOTES     : 'Feel free to talk to yourself here,\nmaybe you need to do something?\nOr write down a shopping list?',
   HINT_NO_FILES     : 'No files in this chat',
   HINT_NO_SUBJS     : 'No subjects in this chat',
-  HINT_BIG_FILE     : 'Sorry, maximum attachment size is 10MB.',
   HINT_AREYOUSURE   : 'Are you sure?',
   HINT_CHAT_SEARCH  : 'Search chat or start new',
+  HINT_FORWARDED    : 'Forwarded message',
+
+  ERR_BIG_FILE      : 'Sorry, maximum attachment size is 10MB.',
+  ERR_NO_ORIG       : 'We are sorry, but this message is absent in your mailbox.',
 
   SYS_SETTINGS      : 'Settings',
   SYS_EMOJIS        : 'Emojis replace words',
@@ -82,6 +89,10 @@ $locales['sv-SE'] =
   CHAT_LEAVE        : 'Leave chat',
   CHAT_CLEAR        : 'Clear notes',
 
+  MSG_FORWARD       : 'Forward message...',
+  MSG_SHOW_ORIG     : 'Show original email',
+  MSG_SHOW_HTML     : 'Show HTML version',
+
   CAP_MY_NOTES      : 'My notes',
   CAP_NEW_CHAT      : 'Create a chat with %s',
   CAP_WRITE_NEW     : 'Write a new hollo...',
@@ -99,9 +110,12 @@ $locales['sv-SE'] =
   HINT_NO_NOTES     : 'Feel free to talk to yourself here,\nmaybe you need to do something?\nOr write down a shopping list?',
   HINT_NO_FILES     : 'No files in this chat',
   HINT_NO_SUBJS     : 'No subjects in this chat',
-  HINT_BIG_FILE     : 'Sorry, maximum attachment size is 10 MB.',
   HINT_AREYOUSURE   : 'Are you sure?',
   HINT_CHAT_SEARCH  : 'Search chat or start new',
+  HINT_FORWARDED    : 'Forwarded message',
+
+  ERR_BIG_FILE      : 'Sorry, maximum attachment size is 10 MB.',
+  ERR_NO_ORIG       : 'We are sorry, but this message is absent in your mailbox.',
 
   SYS_SETTINGS      : 'Settings',
   SYS_EMOJIS        : 'Emojis replace words',
@@ -140,6 +154,10 @@ $locales['ru-RU'] =
   CHAT_LEAVE        : 'Покинуть чат',
   CHAT_CLEAR        : 'Очистить заметки',
 
+  MSG_FORWARD       : 'Переслать сообщение...',
+  MSG_SHOW_ORIG     : 'Показать оригинал',
+  MSG_SHOW_HTML     : 'Показать HTML-версию',
+
   CAP_MY_NOTES      : 'Мои заметки',
   CAP_NEW_CHAT      : 'Создать чат с %s',
   CAP_WRITE_NEW     : 'Напишите что-нибудь...',
@@ -157,9 +175,12 @@ $locales['ru-RU'] =
   HINT_NO_NOTES     : 'Оставляйте тут заметки для себя\nНапример, список покупок',
   HINT_NO_FILES     : 'В этом чате ещё нет файлов',
   HINT_NO_SUBJS     : 'В этом чате ещё нет тем',
-  HINT_BIG_FILE     : 'К сожалению, невозможно прикрепить файл размером более 10 МБ.',
   HINT_AREYOUSURE   : 'Вы уверены?',
   HINT_CHAT_SEARCH  : 'Найти чат или создать новый',
+  HINT_FORWARDED    : 'Пересланое сообщение',
+
+  ERR_BIG_FILE      : 'К сожалению, невозможно прикрепить файл размером более 10 МБ.',
+  ERR_NO_ORIG       : 'К сожалению, это сообщение более не существует в Вашем почтовом ящике.',
 
   SYS_SETTINGS      : 'Настройки',
   SYS_EMOJIS        : 'Эмоджи заменяют слова',

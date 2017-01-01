@@ -321,7 +321,7 @@ class MessagesPage extends Component
       {
         if (f.size > 10485760)
         {
-          ML.emit('messagebox', {html: _('HINT_BIG_FILE')});
+          ML.emit('messagebox', {html: _('ERR_BIG_FILE')});
           return null;
         }
 
