@@ -261,9 +261,10 @@ class App extends Component
       mixpanel.identify(data.user.email);
       mixpanel.people.set(
       {
-        '$email':   data.user.email,
-        '$name':    data.user.name,
-        'hollo_id': data.user.id
+        '$email'  : data.user.email,
+        '$name'   : data.user.name,
+        'hollo_id': data.user.id,
+        'lang'    : CFG.locale
       });
     }
     else
