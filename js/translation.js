@@ -178,7 +178,7 @@ $locales['ru-RU'] =
 
 function _ (code, vars)
 {
-  var text = $locales[CFG.locale][code] != undefined ? $locales[CFG.locale][code] : (typeof $locales['en-US'][code] != 'undefined' ? $locales['en-US'][code] : code);
+  var text = ($locales[CFG.locale] && $locales[CFG.locale][code] != undefined) ? $locales[CFG.locale][code] : (typeof $locales['en-US'][code] != 'undefined' ? $locales['en-US'][code] : code);
 
   if (vars)
   {
