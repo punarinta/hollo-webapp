@@ -74,7 +74,7 @@ class App extends Component
               this.setState({page: 'login', busy: 0});
               if ($platform == 1)
               {
-                window.plugins.googleplus.disconnect();
+                window.plugins.googleplus.logout();
                 FCMPlugin.unsubscribeFromTopic('user-' + this.state.user.id);
               }
             });
