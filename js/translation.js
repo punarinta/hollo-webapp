@@ -2,7 +2,7 @@
 
 var $locales = [];
 
-$locales['en_US'] =
+$locales['en-US'] =
 {
   BTN_PROFILE       : 'Profile',
   BTN_INBOX         : 'Inbox',
@@ -13,7 +13,7 @@ $locales['en_US'] =
   self: 'English (US)'
 };
 
-$locales['ru_RU'] =
+$locales['ru-RU'] =
 {
   BTN_PROFILE : 'Настройки',
   BTN_INBOX   : 'Нужное',
@@ -26,10 +26,5 @@ $locales['ru_RU'] =
 
 function _ (code)
 {
-  if (typeof CFG.locale == 'undefined')
-  {
-    CFG.locale = 'en_US';
-  }
-
-  return $locales[CFG.locale][code] != undefined ? $locales[CFG.locale][code] : (typeof $locales['en_US'][code] != 'undefined' ? $locales['en_US'][code] : '')
+  return $locales[CFG.locale][code] != undefined ? $locales[CFG.locale][code] : (typeof $locales['en-US'][code] != 'undefined' ? $locales['en-US'][code] : '')
 }
