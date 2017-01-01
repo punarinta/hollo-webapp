@@ -18,11 +18,11 @@ class MessageBoxModal extends Component
       return h('message-box-modal', {style: {display: 'none'}});
     }
 
-    let buttons = [h('button', {className: 'btn ok', onclick: () => this.onClick(1)}, 'OK')];
+    let buttons = [h('button', {className: 'btn ok', onclick: () => this.onClick(1)}, _('BTN_OK'))];
 
     if (data.type == 1)
     {
-      buttons.push(h('button', {className: 'btn cancel', onclick: () => this.onClick(0)}, 'Cancel'))
+      buttons.push(h('button', {className: 'btn cancel', onclick: () => this.onClick(0)}, _('BTN_CANCEL')))
     }
 
     return h('message-box-modal', {onclick: (e) => {if (e.target.nodeName.toLowerCase() == 'message-box-modal') this.onClick(0)} },

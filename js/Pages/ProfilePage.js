@@ -24,7 +24,7 @@ class ProfilePage extends Component
 
   testNotifications()
   {
-    ML.emit('messagebox', {html: 'Notification will be delivered in 5 seconds. OK to test mobile push, Cancel to test desktop push.', type: 1, cb: (code) =>
+    ML.emit('messagebox', {html: _('SYS_PUSHINFO'), type: 1, cb: (code) =>
     {
       ML.api('settings', 'testNotification', {mode: code ? 'firebase' : 'im'});
     }})
@@ -48,13 +48,14 @@ class ProfilePage extends Component
             )
           )
         ),
-        h('button', {onclick: () => ML.go('auth/logout')}, 'Logout'),
-        h('button', {onclick: this.testNotifications.bind(this)}, 'Test notifications'),
-        h('div', {className: 'group'}, 'Settings'),
+        h('button', {onclick: () => ML.go('auth/logout')}, _('BTN_LOGOUT')),
+        // TODO: keep this for testers only
+        h('button', {onclick: this.testNotifications.bind(this)}, _('BTN_TESTPUSH')),
+        h('div', {className: 'group'}, _('SYS_SETTINGS')),
         h('ul', null,
-          h(Checkbox, {caption: 'Emojis replace words', checked: CFG.emojisReplace, onchange: this.optEmojiChanged.bind(this)}),
-          h(Checkbox, {caption: 'Colored avatars', checked: CFG.colorAvatars, onchange: this.optAvatarsChanged.bind(this)}),
-          h(Checkbox, {caption: 'Show local notes', checked: CFG.showNotes, onchange: this.optNotesChanged.bind(this)})
+          h(Checkbox, {caption: _('SYS_EMOJIS'), checked: CFG.emojisReplace, onchange: this.optEmojiChanged.bind(this)}),
+          h(Checkbox, {caption: _('SYS_AVATARS'), checked: CFG.colorAvatars, onchange: this.optAvatarsChanged.bind(this)}),
+          h(Checkbox, {caption: _('SYS_NOTES'), checked: CFG.showNotes, onchange: this.optNotesChanged.bind(this)})
         ),
         h('div', {className: 'appver'}, 'ver: ' + APPVER),
         h('bottom-bar', null,
