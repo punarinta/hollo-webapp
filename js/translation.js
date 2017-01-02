@@ -1,5 +1,7 @@
 //  MUST BE IN ES5
 
+// List of locales: http://stackoverflow.com/questions/3191664/list-of-all-locales-and-their-short-codes
+
 var $locales = [];
 
 function _ (code, vars, options)
