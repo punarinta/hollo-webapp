@@ -24,6 +24,12 @@ $locales['en-US'] =
   MSG_SHOW_ORIG     : 'Show original email',
   MSG_SHOW_HTML     : 'Show HTML version',
 
+  QS_N_UNREAD       : '%s unread',
+  QS_N_LEFT         : '%s to go',
+  QS_READ           : 'Read',
+  QS_REPLY          : 'Reply',
+  QS_SKIP           : 'Skip',
+
   CAP_MY_NOTES      : 'My notes',
   CAP_NEW_CHAT      : 'Create a chat with %s',
   CAP_WRITE_NEW     : 'Write a new hollo...',

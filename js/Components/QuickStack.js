@@ -158,7 +158,7 @@ class QuickStack extends Component
 
     let qsButton = h('qs-button', {style: {display: this.state.count > 0 ? 'flex' : 'none'}, onclick: this.show.bind(this) },
       h(BarIcon, {svg: 'qs', fill: $windowInnerWidth > 768 ? null : '#fff', type: 'complex', width: 30}),
-      h('div', null, this.state.count + ' unread')
+      h('div', null, _('QS_N_UNREAD', [this.state.count]) )
     );
 
     if (this.state.quickStackShown && this.state.qs.length)
@@ -199,13 +199,13 @@ class QuickStack extends Component
         ),
         h('qs-indicator', {},
           h(BarIcon, {svg: 'qs', type: 'complex', fill: '#fff', width: 30}),
-          h('div', null, this.state.count + ' to go'),
+          h('div', null, _('QS_N_LEFT', [this.state.count]) ),
           h(BarIcon, {svg: 'cross', fill: '#fff', type: 'complex', width: 14, height: 14, onclick: () => this.setState({quickStackShown: 0}) })
         ),
         h('bar', null,
-          h('button', {ref: (x) => this.buttonRead = x, onclick: () => this.markRead(current)}, 'Read'),
-          h('button', {onclick: () => this.reply(current)}, 'Reply'),
-          h('button', {ref: (x) => this.buttonSkip = x, onclick: () => this.skip() }, 'Skip')
+          h('button', {ref: (x) => this.buttonRead = x, onclick: () => this.markRead(current)}, _('QS_READ') ),
+          h('button', {onclick: () => this.reply(current)}, _('QS_REPLY') ),
+          h('button', {ref: (x) => this.buttonSkip = x, onclick: () => this.skip() }, _('QS_SKIP') )
         )
       )
     }
