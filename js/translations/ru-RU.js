@@ -62,3 +62,5 @@ $locales['ru-RU'] =
 
     self: 'Русский язык'
   };
+
+$locales['be-BY'] = $locales['ru-RU'];

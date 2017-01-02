@@ -52,7 +52,7 @@ $locales['sv-SE'] =
     SYS_EMOJIS        : 'Emoji ersätter ord',
     SYS_AVATARS       : 'Färgglada avatarer',
     SYS_NOTES         : 'Visa mina anteckningar',
-    SYS_PUSHINFO      : 'Notifikation levereras om -5 sekunder. OK för att skicka till mobil, Cancel för att skicka till desktop.',
+    SYS_PUSHINFO      : 'Notifikation levereras om ~5 sekunder. OK för att skicka till mobil, Cancel för att skicka till desktop.',
 
     CAL_OPENLINK      : 'Öppna i kalendern',
     CAL_YOU_ACCEPT    : '✔ du har accepterat inbjudan',
@@ -62,3 +62,5 @@ $locales['sv-SE'] =
 
     self: 'svenska'
   };
+
+$locales['sv-FI'] = $locales['sv-SE'];
