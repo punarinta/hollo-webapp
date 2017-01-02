@@ -574,7 +574,7 @@ class MessagesPage extends Component
       let lis = this.chat.id ?
       [
         h('li', {onclick: this.muteChat.bind(this)}, this.chat.muted ? _('CHAT_UNMUTE') : _('CHAT_MUTE') ),
-        h('li', {onclick: this.unreadChat.bind(this)}, this.chat.read ? _('CHAT_UNREAD') : _('CHAT_READ') ),
+        h('li', {onclick: this.unreadChat.bind(this)}, _(this.chat.read ?'CHAT_UNREAD' : 'CHAT_READ', null, {singleLine:1}) ),
         this.chat.users.length > 1 ? h('li', {onclick: this.renameChat.bind(this)}, _('CHAT_RENAME') ) : null,
         h('li', {onclick: this.leaveChat.bind(this)}, _('CHAT_LEAVE') )
       ] : [h('li', {onclick: this.clearNotes.bind(this)}, _('CHAT_CLEAR') )];

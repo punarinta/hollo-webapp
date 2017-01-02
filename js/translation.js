@@ -197,7 +197,7 @@ $locales['ru-RU'] =
   self: 'Русский язык'
 };
 
-function _ (code, vars)
+function _ (code, vars, options)
 {
   var text = ($locales[CFG.locale] && $locales[CFG.locale][code] != undefined) ? $locales[CFG.locale][code] : (typeof $locales['en-US'][code] != 'undefined' ? $locales['en-US'][code] : code);
 
@@ -211,7 +211,9 @@ function _ (code, vars)
     }
   }
 
-  if (text.indexOf("\n") == -1)
+  if (!options) options = {};
+
+  if (text.indexOf("\n") == -1 || options.singleLine)
   {
     return text
   }
