@@ -24,6 +24,12 @@ $locales['ru-RU'] =
   MSG_SHOW_ORIG     : 'Показать оригинал',
   MSG_SHOW_HTML     : 'Показать HTML-версию',
 
+  QS_N_UNREAD       : '%s новых',
+  QS_N_LEFT         : 'ещё %s',
+  QS_READ           : 'Понял',
+  QS_REPLY          : 'Ответить',
+  QS_SKIP           : 'На потом',
+
   CAP_MY_NOTES      : 'Мои заметки',
   CAP_NEW_CHAT      : 'Создать чат с %s',
   CAP_WRITE_NEW     : 'Напишите что-нибудь...',

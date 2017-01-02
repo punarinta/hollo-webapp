@@ -24,6 +24,12 @@ $locales['sv-SE'] =
   MSG_SHOW_ORIG     : 'Visa originala meddelandet',
   MSG_SHOW_HTML     : 'Visa HTML-versionen',
 
+  QS_N_UNREAD       : '%s oläst',
+  QS_N_LEFT         : '%s kvar',
+  QS_READ           : 'Läst',
+  QS_REPLY          : 'Svara',
+  QS_SKIP           : 'Skippa',
+
   CAP_MY_NOTES      : 'Mina anteckningar',
   CAP_NEW_CHAT      : 'Skapa en chatt med %s',
   CAP_WRITE_NEW     : 'Skriv ett nytt hollo...',
