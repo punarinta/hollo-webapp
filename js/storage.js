@@ -227,14 +227,15 @@ var $ =
 
     remove: function (id)
     {
-      for (var i in $.C.data)
+      var pos = $.C.index.indexOf(id);
+
+      if (pos != -1)
       {
-        if ($.C.data[i].id == id)
-        {
-          $.C.data.splice(i, 1);
-          return true;
-        }
+        $.C.data.splice(pos, 1);
+        $.C.index.splice(pos, 1);
+        return true;
       }
+
       return false;
     },
 
