@@ -20,7 +20,7 @@ menu-modal
     z-index 10
   ul
     list-style-type none
-    padding margin-medium margin-large
+    padding margin-medium 0 margin-medium margin-large
     margin 0
     li
       cursor pointer
@@ -85,11 +85,12 @@ menu-modal
     line-height 1.5
     & > div
       padding-left 12px
-      flex 4
+      overflow hidden
     bar-icon
       min-width 48px
       max-width 48px
       height 80px
+      margin-left auto
   bar
     display flex
   button
