@@ -3,8 +3,11 @@
   "index": "index.html",
   "js":
   [
-    "js/md5",
     "js/translation",
+    "js/translations/en-US",
+    "js/translations/ru-RU",
+    "js/translations/sv-SE",
+    "js/md5",
     "js/core",
     "js/storage",
     "js/gravatar",
