@@ -48,14 +48,25 @@ custom-box-modal
     height calc(100vh - 160px)
 
 .intro-modal
+  & > div
+    align-items center
+    padding-top 16px
   font 14px Roboto, sans-serif
+  line-height 20px
   h1
-    font 300 20px 'WorkSans', sans-serif
+    font 300 20px 'Work Sans', sans-serif
+    margin 8px 0
   button
     width 100%
-    margin-bottom 0
+    margin 48px 0 0
     height 48px
     background color-brand
     color #fff
     &:disabled
       background #e2e2e2
+  svg
+    margin-top 32px
+  hr
+    border 1px solid #f7f7f7
+    width 256px
+    margin 24px 0 8px

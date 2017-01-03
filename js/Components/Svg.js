@@ -37,7 +37,7 @@ class Svg extends Component
 
     if (type == 'path')
     {
-      return h('svg', {fill, width, height, viewBox: `0 0 ${width} ${height}`},
+      return h('svg', {fill, width, height, viewBox: `0 0 ${width} ${height}`, style: props.style},
         h('path', {d: svgPath[props.model]})
       );
     }

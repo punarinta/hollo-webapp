@@ -235,6 +235,27 @@ class App extends Component
     ML.sessionId = data.sessionId;
     localStorage.setItem('sessionId', data.sessionId);
 
+    // show intro modal if necessary
+    console.log('User created at %s', data.user.created);
+    if (0)
+    {
+      let children =
+      [
+        h('h1', null, _('HI_WELCOME')),
+        h('div', null, _('HI_GIMME_5')),
+        h('hr'),
+        h(Svg, {model: 'email', fill: '#212121'}),
+        h('h1', null, 'Inbox'),
+        h('div', null, _('HI_INBOX')),
+        h(Svg, {style: {marginTop: '48px'}, model: 'muted', fill: '#212121'}),
+        h('h1', null, 'Muted'),
+        h('div', null, _('HI_MUTED')),
+
+        h('button', {disabled: 'disabled'}, _('HI_SYNCING'))
+      ];
+      ML.emit('custombox', {className: 'intro-modal', children})
+    }
+
     if ($platform == 1 && window.FCMPlugin)
     {
       FCMPlugin.onNotification
