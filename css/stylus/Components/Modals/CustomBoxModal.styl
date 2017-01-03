@@ -1,34 +1,27 @@
 custom-box-modal
-  display block
-  width 100vw
-  height 100vh
-  z-index 50
-  background rgba(245, 245, 245, .8)
   position fixed
   top 0
   left 0
+  width 100vw
+  height 100vh
+  z-index 50
+  display flex
+  justify-content center
+  align-items center
+  background rgba(245, 245, 245, .8)
   & > div
     display flex
+    flex-direction column
     width calc(100vw - 16px)
-    position fixed
-    left 8px
-    top 72px
     background #fff
     max-height calc(100vh - 160px)
+    @media screen and (min-width break-tablet)
+      max-width 512px
     border-radius 2px
     box-shadow 0 2px 4px 0 rgba(0, 0, 0, .12)
     animation-mixin(fadeIn)
 
 .context-menu-message
-  display flex
-  align-items center
-  justify-content center
-  & > div
-    top auto
-    position relative
-    left 0
-    @media screen and (min-width break-tablet)
-      width 512px
   ul
     list-style-type none
     padding 8px 0
@@ -44,9 +37,25 @@ custom-box-modal
   & > div
     width 100%
     left 0
+    @media screen and (min-width break-tablet)
+      max-width inherit
+      margin 8px
   message-body
     overflow scroll
   iframe
     border 0
     width 100%
     height calc(100vh - 160px)
+
+.intro-modal
+  font 14px Roboto, sans-serif
+  h1
+    font 300 20px 'WorkSans', sans-serif
+  button
+    width 100%
+    margin-bottom 0
+    height 48px
+    background color-brand
+    color #fff
+    &:disabled
+      background #e2e2e2
