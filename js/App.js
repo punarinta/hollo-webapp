@@ -247,7 +247,6 @@ class App extends Component
         msg =>
         {
           console.log('Firebase on!', msg);
-          $firebaseOn = true;
         },
         err => console.log('Firebase error:', err)
       );
@@ -324,6 +323,8 @@ class App extends Component
       // no login — no Firebase
       return
     }
+
+    $firebaseOn = true;
 
     if (e.payload.cmd == 'auth:logout')  ML.go('auth/logout');
     if (e.payload.cmd == 'sys:ping')     ML.emit('messagebox', { html: 'Ping signal received' });
