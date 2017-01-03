@@ -236,24 +236,32 @@ class App extends Component
     localStorage.setItem('sessionId', data.sessionId);
 
     // show intro modal if necessary
-    console.log('User created at %s', data.user.created);
-    if (0)
+    if (Math.floor(Date.now() / 1000) < data.user.created + 60)
     {
       let children =
       [
-        h('h1', null, _('HI_WELCOME')),
-        h('div', null, _('HI_GIMME_5')),
-        h('hr'),
-        h(Svg, {model: 'email', fill: '#212121'}),
-        h('h1', null, 'Inbox'),
-        h('div', null, _('HI_INBOX')),
-        h(Svg, {style: {marginTop: '48px'}, model: 'muted', fill: '#212121'}),
-        h('h1', null, 'Muted'),
-        h('div', null, _('HI_MUTED')),
-
+        h('div', {onclick: (e) => {e.stopPropagation()}},
+          h('h1', null, _('HI_WELCOME')),
+          h('div', null, _('HI_GIMME_5')),
+          h('hr'),
+          h(Svg, {model: 'email', fill: '#212121'}),
+          h('h1', null, 'Inbox'),
+          h('div', null, _('HI_INBOX')),
+          h(Svg, {style: {marginTop: '48px'}, model: 'muted', fill: '#212121'}),
+          h('h1', null, 'Muted'),
+          h('div', null, _('HI_MUTED'))
+        ),
         h('button', {disabled: 'disabled'}, _('HI_SYNCING'))
       ];
-      ML.emit('custombox', {className: 'intro-modal', children})
+      ML.emit('custombox', {className: 'intro-modal', children});
+
+      setTimeout(() =>
+      {
+        // activate the button
+        let button = document.querySelector('.intro-modal button');
+        button.innerText = _('HI_SYNCED');
+        button.removeAttribute('disabled')
+      }, 5000)
     }
 
     if ($platform == 1 && window.FCMPlugin)
