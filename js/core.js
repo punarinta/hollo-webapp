@@ -24,26 +24,28 @@ var ML =
       try
       {
         var json = JSON.parse(r);
-        if (status >= 200 && status < 400)
-        {
-          if (callback) callback(json.data);
-        }
-        else
-        {
-          ML.emit('busybox');
-          console.log('Status:', status);
-          if (status != 401)
-          {
-            if (failure) failure(json.errMsg);
-            else ML.emit('messagebox', {html: json.errMsg});
-          }
-        }
       }
       catch (e)
       {
         ML.emit('busybox');
         console.log('Not JSON:', r);
         ML.emit('messagebox', {html: [200, 500].indexOf(status) != -1 ? r : ('HTTP ' + status)});
+        return;
+      }
+
+      if (status >= 200 && status < 400)
+      {
+        if (callback) callback(json.data);
+      }
+      else
+      {
+        ML.emit('busybox');
+        console.log('Status:', status);
+        if (status != 401)
+        {
+          if (failure) failure(json.errMsg);
+          else ML.emit('messagebox', {html: json.errMsg});
+        }
       }
     };
     r.onerror = function (e)
