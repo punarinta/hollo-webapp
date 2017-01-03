@@ -12,6 +12,13 @@ $locales['en-US'] =
   BTN_SIGN_IN       : 'sign in',
   BTN_GOOGLE        : 'Sign in with Google',
 
+  HI_WELCOME        : 'Welcome to Hollo',
+  HI_GIMME_5        : 'Give us few seconds to set up your account',
+  HI_INBOX          : 'Emails from people, important stuff',
+  HI_MUTED          : 'Emails from robots, or others that\nyou don’t want notifications about.',
+  HI_SYNCING        : 'Syncing your emails',
+  HI_SYNCED         : 'Let’s go!',
+
   CHAT_MUTE         : 'Mute',
   CHAT_UNMUTE       : 'Unmute',
   CHAT_READ         : 'Mark as\nread',
