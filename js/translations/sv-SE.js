@@ -12,6 +12,13 @@ $locales['sv-SE'] =
   BTN_SIGN_IN       : 'logga in',
   BTN_GOOGLE        : 'Logga in med Google',
 
+  HI_WELCOME        : 'Välkommen till Hollo',
+  HI_GIMME_5        : 'Ge oss några sekunder för att hämta dina mail',
+  HI_INBOX          : 'Email från riktiga människor, det viktiga alltså.',
+  HI_MUTED          : 'Email från robotar eller spam\nsom du inte vill bli störd av.',
+  HI_SYNCING        : 'Synkroniserar dina mail',
+  HI_SYNCED         : 'Nu kör vi!',
+
   CHAT_MUTE         : 'Ljudlös',
   CHAT_UNMUTE       : 'Ljud',
   CHAT_READ         : 'Markera\nsom läst',

@@ -12,6 +12,13 @@ $locales['fr-FR'] =
   BTN_SIGN_IN       : 'connectez-vous ',
   BTN_GOOGLE        : 'connectez-vous avec Google',
 
+  HI_WELCOME        : 'Bienvenue à Hollo',
+  HI_GIMME_5        : 'Donnez-nous quelques secondes pour configurer votre compte',
+  HI_INBOX          : 'E-mails provenants de personnes,\nimportants a savoir.',
+  HI_MUTED          : 'E-mails provenants de robots, ou d\'autres\ndont vous ne souhaitez pas\nrecevoir les notifications.',
+  HI_SYNCING        : 'Synchronisation de vos e-mails',
+  HI_SYNCED         : 'Allons-y!',
+
   CHAT_MUTE         : 'Silencieux',
   CHAT_UNMUTE       : 'Activé',
   CHAT_READ         : 'Marquer\ncomme lu',
@@ -23,6 +30,12 @@ $locales['fr-FR'] =
   MSG_FORWARD       : 'Transférer...',
   MSG_SHOW_ORIG     : 'Afficher l\'email original',
   MSG_SHOW_HTML     : 'Afficher la version HTML',
+
+  QS_N_UNREAD       : '%s non lu',
+  QS_N_LEFT         : '%s restant',
+  QS_READ           : 'Lu',
+  QS_REPLY          : 'Répondre',
+  QS_SKIP           : 'Ignorer',
 
   CAP_MY_NOTES      : 'Mes notes',
   CAP_NEW_CHAT      : 'Créer un chat avec %s',
