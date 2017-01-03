@@ -14,7 +14,7 @@ $locales['en-US'] =
 
   HI_WELCOME        : 'Welcome to Hollo',
   HI_GIMME_5        : 'Give us few seconds to set up your account',
-  HI_INBOX          : 'Emails from people, important stuff',
+  HI_INBOX          : 'Emails from people, important stuff.',
   HI_MUTED          : 'Emails from robots, or others that\nyou don’t want notifications about.',
   HI_SYNCING        : 'Syncing your emails',
   HI_SYNCED         : 'Let’s go!',
