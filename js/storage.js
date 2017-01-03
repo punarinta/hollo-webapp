@@ -214,8 +214,9 @@ var $ =
         if (me) for (j in $.C.data[i].users)
         {
           var u = $.C.data[i].users[j].id == me.id ? me : $.U.get($.C.data[i].users[j].id);
-          $.C.data[i].users[j].name = u.name;
-          $.C.data[i].users[j].email = u.email;
+
+          $.C.data[i].users[j].name = u ? u.name : '?';
+          $.C.data[i].users[j].email = u ? u.email : '?';
         }
       }
 
