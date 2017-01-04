@@ -217,6 +217,10 @@ class MessagesPage extends Component
   inputSubject(e)
   {
     this.setState({currentSubject: e.target.value});
+    if (e.keyCode == 13)
+    {
+      this.base.querySelector('composer textarea').focus()
+    }
   }
 
   addUserStart()
