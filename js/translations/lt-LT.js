@@ -14,13 +14,13 @@ $locales['en-US'] =
 
   HI_WELCOME        : 'Sveiki atvykę į Hollo',
   HI_GIMME_5        : 'Prašome kelių sekundžių konfiguoroti paskyrą',
-  HI_INBOX          : 'Emails from people, important stuff.',
+  //HI_INBOX          : 'Emails from people, important stuff.',
   HI_MUTED          : 'Emails from robots, or others that\nyou don’t want notifications about.',
   HI_SYNCING        : 'Syncing your emails',
-  HI_SYNCED         : 'Let’s go!',
+  HI_SYNCED         : 'Varom!',
 
-  CHAT_MUTE         : 'Mute',
-  CHAT_UNMUTE       : 'Unmute',
+  //CHAT_MUTE         : 'Mute',
+  //CHAT_UNMUTE       : 'Unmute',
   CHAT_READ         : 'Mark as\nread',
   CHAT_UNREAD       : 'Mark as\nunread',
   CHAT_RENAME       : 'Rename chat',
