@@ -77,3 +77,4 @@ $locales['ru-RU'] =
 };
 
 $locales['be-BY'] = $locales['ru-RU'];
+$locales['uk-UA'] = $locales['ru-RU'];
