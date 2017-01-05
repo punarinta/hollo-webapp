@@ -1,3 +1,5 @@
+// Interslavic can be pretty easily understood by those having at least one Slavic language as a native one
+
 $locales['mzs-X'] =
 {
 
