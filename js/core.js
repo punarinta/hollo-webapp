@@ -96,7 +96,7 @@ var ML =
     // noinspection JSBitwiseOperatorUsage
     if (mode & 1)
     {
-      if (td.getTime() - date.getTime() < 24 * 3600 && td.getDate() == date.getDate()) pfx = 'today';
+      if (td.getTime() - date.getTime() < 24 * 3600000 && td.getDate() == date.getDate()) pfx = _('CAP_TODAY');
       else pfx = day.substr(-2) + '.' + month.substr(-2) + '.' + year;
       pfx += ' '
     }

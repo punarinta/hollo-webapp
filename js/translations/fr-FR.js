@@ -46,6 +46,7 @@ $locales['fr-FR'] =
   CAP_SIGN_IN       : 'Connexion',
   CAP_EMAIL         : 'Email',
   CAP_PASSWORD      : 'Mot de passe',
+  CAP_TODAY         : 'aujourd\'hui',
 
   HINT_FLT_ON       : 'Pour lancer une nouv,\nsaisissez une adresse e-mail.',
   HINT_SYNCING      : 'Bienvenue sur Hollo!\nVeuillez attendre jusqu\'à ce que\nvos messages se téléchargent',

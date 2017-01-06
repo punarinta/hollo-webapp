@@ -46,6 +46,7 @@ $locales['ru-RU'] =
   CAP_SIGN_IN       : 'Вход',
   CAP_EMAIL         : 'емэйл-адрес',
   CAP_PASSWORD      : 'пароль',
+  CAP_TODAY         : 'сегодня',
 
   HINT_FLT_ON       : 'Чтобы создать новый чат\nвпишите email-адрес',
   HINT_SYNCING      : 'Добро пожаловать в Hollo!\nПодождите немного пока\nидёт синхронизация...',

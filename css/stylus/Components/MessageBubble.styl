@@ -3,12 +3,6 @@ message-bubble
   overflow-x hidden
   overflow-y auto
   width calc(100vw - 10px)
-  /*animation-mixin(fadeInUp)
-  opacity 0
-  animation-delay 1s
-  for num in (1..12) // Makes content show up in read order
-    &:nth-last-of-type({num})
-      animation-delay num * 0.05s*/
   @media screen and (min-width break-tablet)
     width calc(100vw - 10px - 360px)
   & > div
@@ -37,7 +31,7 @@ message-bubble
       margin 6px 21px 0
       font-size 10px
       color rgba(0,0,0,0.3)
-      font-family Roboto
+      font-family Roboto, sans-serif
       .status
         font-size 12px
         display inline-block
