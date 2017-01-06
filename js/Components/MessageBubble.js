@@ -188,6 +188,24 @@ class MessageBubble extends Component
       )
     }
 
+    let messageStatus = 2;
+    for (let i in props.users) if (message.from)
+    {
+      if (props.users.length == 1 && message.from.id != props.user.id)
+      {
+        messageStatus = 0;
+        break;
+      }
+      if (props.users[i].id != message.from.id)
+      {
+        if (props.users[i].read || (props.users[i].trk && props.users[i].trk > message.ts))
+        {
+          messageStatus = 3;
+          break;
+        }
+      }
+    }
+
     return (
 
       h('message-bubble', {className: mine ? 'mine' : 'yours'},
@@ -202,7 +220,7 @@ class MessageBubble extends Component
           h('div', {className: 'foot'},
             h(Avatar, {chat: virtualChat, size: '32px', onclick: this.toggleName.bind(this)}),
             h('div', {className: 'info'},
-              h('span', {className: 'status s2'}),
+              h('span', {className: 'status s' + messageStatus}),
               this.state.showName ? h('span', {className: 'name'}, ML.xname(virtualChat)[0]) : h('span', {className: 'ts'}, ML.ts(message.ts))
             )
           )
