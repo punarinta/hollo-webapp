@@ -612,6 +612,8 @@ class MessagesPage extends Component
 
     let listHint = _(this.chat && !this.chat.id ? 'HINT_NO_NOTES' : 'HINT_NO_MSGS');
 
+    if (name) document.title = name;
+
     return (
 
       h('messages-page', {style: {zIndex: this.props.zIndex}},
