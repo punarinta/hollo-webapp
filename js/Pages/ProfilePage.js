@@ -30,9 +30,64 @@ class ProfilePage extends Component
     }})
   }
 
+  // ======================
+
+  holloCrewMenu()
+  {
+    let children =
+    [
+      h('ul', null,
+        h('li', { onclick: this.showEmailDiscovery.bind(this) }, 'Email discovery')
+      ),
+    ];
+
+    ML.emit('custombox', {className: 'context-menu-message', children})
+  }
+
+  showEmailDiscovery()
+  {
+    let children =
+    [
+      h(SearchBar, {placeholder: 'Input a name', onchange: this.filterChanged.bind(this)}),
+      h('ul', {className: 'discovered-emails', style: {overflowY: 'scroll'}}),
+      h('button', {onclick: () => ML.emit('custombox')}, 'Close')
+    ];
+
+    setTimeout(() => ML.emit('custombox', {className: 'context-menu-message', children, onclick: () => {} }), 50)
+  }
+
+  filterChanged(filter)
+  {
+    clearTimeout(this.filterTimer);
+
+    this.filterTimer = setTimeout( () =>
+    {
+      if (this.emailFilter != filter && filter.length >= 3)
+      {
+        this.emailFilter = filter;
+        ML.api('sys', 'discover', {token: filter}, function (users)
+        {
+          let i, html = '';
+          for (i in users)
+          {
+            html += '<li style="white-space: nowrap">' + users[i].email + '</li>'
+          }
+          document.querySelector('.discovered-emails').innerHTML = html;
+        });
+      }
+    }, 500);
+  }
+
+  // ======================
+
   render()
   {
-    let user = this.props.user, fill = '#fff';
+    let user = this.props.user, fill = '#fff', devButton = '';
+
+    if (user.roles & 2)
+    {
+      devButton = h('button', {onclick: this.holloCrewMenu.bind(this)}, 'Hollo crew menu')
+    }
 
     return (
 
@@ -51,6 +106,7 @@ class ProfilePage extends Component
         h('button', {onclick: () => ML.go('auth/logout')}, _('BTN_LOGOUT')),
         // TODO: keep this for testers only
         h('button', {onclick: this.testNotifications.bind(this)}, _('BTN_TESTPUSH')),
+        devButton,
         h('div', {className: 'group'}, _('SYS_SETTINGS')),
         h('ul', null,
           h(Checkbox, {caption: _('SYS_EMOJIS'), checked: CFG.emojisReplace, onchange: this.optEmojiChanged.bind(this)}),
