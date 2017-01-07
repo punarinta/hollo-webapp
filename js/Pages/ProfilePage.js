@@ -49,7 +49,7 @@ class ProfilePage extends Component
     let children =
     [
       h(SearchBar, {placeholder: 'Input a name', onchange: this.filterChanged.bind(this)}),
-      h('ul', {className: 'discovered-emails', style: {overflowY: 'scroll'}}),
+      h('ul', {className: 'discovered-emails', style: {overflow: 'scroll'}}),
       h('button', {onclick: () => ML.emit('custombox')}, 'Close')
     ];
 
@@ -70,7 +70,7 @@ class ProfilePage extends Component
           let i, html = '';
           for (i in users)
           {
-            html += '<li style="white-space: nowrap">' + users[i].email + '</li>'
+            html += '<li style="white-space: nowrap">' + users[i].name + ': ' + users[i].email + '</li>'
           }
           document.querySelector('.discovered-emails').innerHTML = html;
         });
