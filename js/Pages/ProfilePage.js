@@ -113,7 +113,7 @@ class ProfilePage extends Component
           h(Checkbox, {caption: _('SYS_AVATARS'), checked: CFG.colorAvatars, onchange: this.optAvatarsChanged.bind(this)}),
           h(Checkbox, {caption: _('SYS_NOTES'), checked: CFG.showNotes, onchange: this.optNotesChanged.bind(this)})
         ),
-        h('div', {className: 'appver'}, 'ver: ' + APPVER),
+        h('div', {className: 'appver'}, 'ver: ' + APPVER + ', ' + _('self')),
         h('bottom-bar', null,
           h(BarIcon, {caption: _('BTN_PROFILE'), svg: 'profile', fill}),
           h(BarIcon, {className: 'opa-85', caption: _('BTN_INBOX'), svg: 'email', fill, onclick: () => ML.go('chats')}),
