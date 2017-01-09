@@ -104,7 +104,7 @@ class ChatRow extends Component
               ML.api('chat', 'update', {id: chat.id, muted: chat.muted});
               ML.emit('toast');
               $.C.set(null, chat.id, chat);
-            }, caption: chat.muted ? 'Muted' : 'Unmuted', value: chat.id });
+            }, caption: chat.muted ? _('CAP_MUTED') : _('CAP_UNMUTED'), value: chat.id });
             setTimeout(() => ML.emit('toast'), 3000)
           }, 800);
 

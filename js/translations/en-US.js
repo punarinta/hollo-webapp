@@ -47,6 +47,8 @@ $locales['en-US'] =
   CAP_EMAIL         : 'Email',
   CAP_PASSWORD      : 'Password',
   CAP_TODAY         : 'today',
+  CAP_MUTED         : 'Muted',
+  CAP_UNMUTED       : 'Unmuted',
 
   HINT_FLT_ON       : 'To start a new\nconversation type in\nan email address.',
   HINT_SYNCING      : 'Welcome to Hollo!\nWait a bit please until\nyour messages are fetched...',
