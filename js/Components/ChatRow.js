@@ -98,6 +98,14 @@ class ChatRow extends Component
           setTimeout( () =>
           {
             $.C.set(null, chat.id, chat);
+            ML.emit('toast', { action: () =>
+            {
+              chat.muted = !chat.muted - 0;
+              ML.api('chat', 'update', {id: chat.id, muted: chat.muted});
+              ML.emit('toast');
+              $.C.set(null, chat.id, chat);
+            }, caption: chat.muted ? 'Muted' : 'Unmuted', value: chat.id });
+            setTimeout(() => ML.emit('toast'), 3000)
           }, 800);
 
           this.item.style.transform = `translateX(${this.props.vw}px)`;
