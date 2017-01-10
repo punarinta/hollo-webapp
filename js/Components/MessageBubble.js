@@ -145,7 +145,7 @@ class MessageBubble extends Component
       this.base.querySelector('.white').innerHTML = '';
       this.base.querySelector('.white').appendChild(f);
       f.contentWindow.document.open('text/html', 'replace');
-      f.contentWindow.document.write('<!DOCTYPE html>' + data.content);
+      f.contentWindow.document.write('<!DOCTYPE html><style>::-webkit-scrollbar{display:none}</style>' + data.content);
       f.contentWindow.document.close();
       this.setState({htmlMode: 1})
     });
