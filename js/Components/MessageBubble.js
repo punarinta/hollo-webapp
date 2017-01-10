@@ -138,14 +138,18 @@ class MessageBubble extends Component
 
     ML.api('message', 'showOriginal', {id, tryHtml: 1}, data =>
     {
-      if (!data) return;
+      if (!data)
+      {
+        this.setState({htmlMode: 0});
+        return;
+      }
 
       let f = document.createElement('iframe');
       f.src = 'about:blank';
       this.base.querySelector('.white').innerHTML = '';
       this.base.querySelector('.white').appendChild(f);
       f.contentWindow.document.open('text/html', 'replace');
-      f.contentWindow.document.write('<!DOCTYPE html><style>::-webkit-scrollbar{display:none}</style>' + data.content);
+      f.contentWindow.document.write('<!DOCTYPE html><style>::-webkit-scrollbar{display:none}*{font-family:sans-serif}</style>' + data.content);
       f.contentWindow.document.close();
       this.setState({htmlMode: 1})
     });
@@ -233,6 +237,7 @@ class MessageBubble extends Component
       this.tryHtml(message.id);
       if (this.state.htmlMode) className += ' html-mode'
     }
+    else this.state.htmlMode = 0;
 
     return (
 
