@@ -131,6 +131,26 @@ class MessageBubble extends Component
     }
   }
 
+  tryHtml(id)
+  {
+    if (id == this.htmlId) return;
+    this.htmlId = id;
+
+    ML.api('message', 'showOriginal', {id, tryHtml: 1}, data =>
+    {
+      if (!data) return;
+
+      let f = document.createElement('iframe');
+      f.src = 'about:blank';
+      this.base.querySelector('.white').innerHTML = '';
+      this.base.querySelector('.white').appendChild(f);
+      f.contentWindow.document.open('text/html', 'replace');
+      f.contentWindow.document.write('<!DOCTYPE html>' + data.content);
+      f.contentWindow.document.close();
+      this.setState({htmlMode: 1})
+    });
+  }
+
   render(props)
   {
     let message = props.message,
@@ -206,15 +226,23 @@ class MessageBubble extends Component
       }
     }
 
+    let className = mine ? 'mine' : 'yours';
+
+    if (props.html)
+    {
+      this.tryHtml(message.id);
+      if (this.state.htmlMode) className = 'html-mode'
+    }
+
     return (
 
-      h('message-bubble', {className: mine ? 'mine' : 'yours'},
+      h('message-bubble', {className},
         h('div', null,
           h('div', {className: 'white'},
             subject.length ? h('div', {className: 'cap', onclick: () => { if (props.captionClicked) props.captionClicked(subject) }},
               subject
             ) : '',
-            msgBody,
+            this.state.htmlMode ? '' : msgBody,
             filesBody
           ),
           h('div', {className: 'foot'},

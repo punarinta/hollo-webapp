@@ -456,13 +456,16 @@ class MessagesPage extends Component
         if (message.subj != this.state.subjectFilter) continue;
       }
 
+      let chat = this.chat || {};
+
       messages.push(h(MessageBubble,
       {
         message,
         user,
-        users: this.chat ? this.chat.users : [],
-        chatId: this.chat ? this.chat.id : 0,
-        captionClicked: (subjectFilter) => this.setState({subjectFilter})
+        users: this.chat.users || [],
+        chatId: this.chat.id || 0,
+        captionClicked: (subjectFilter) => this.setState({subjectFilter}),
+        html: this.chat.muted || 0
       }))
     }
 

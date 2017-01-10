@@ -194,7 +194,7 @@ class QuickStack extends Component
             h(Avatar, {user: fakeUser, size: 32}),
             h('div', null, ML.xname({users:[fakeUser]})[0])
           ),
-          h(MessageBubble, {message, user: this.props.user}),
+          h(MessageBubble, {message, user: this.props.user, html: 1}),
           h('shadow', null, h('div'))
         ),
         h('qs-indicator', {},
