@@ -377,16 +377,16 @@ class MessagesPage extends Component
       return;
     }
 
+    let m =
+    {
+      ts: new Date().getTime() / 1000,
+      body: msg,
+      userId: this.props.user.id,
+      subj: this.state.currentSubject
+    };
+
     if (!this.chat.id)
     {
-      let m =
-      {
-        ts: new Date().getTime() / 1000,
-        body: msg,
-        userId: this.props.user.id,
-        subj: this.state.currentSubject
-      };
-
       messages.push(m);
       messages = messages.slice(Math.max(0, messages.length - 10));
       localStorage.setItem('my-notes', JSON.stringify(messages));
@@ -401,15 +401,8 @@ class MessagesPage extends Component
       msgId = (this.state.messages[i].id - 0) || msgId
     }
 
-    let m =
-    {
-      id: 0,
-      ts: new Date().getTime() / 1000,
-      body: msg,
-      userId: this.props.user.id,
-      files: this.state.files,
-      subj: this.state.currentSubject
-    };
+    m.id = 0;
+    m.files = this.state.files;
 
     messages.push(m);
 
