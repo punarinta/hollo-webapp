@@ -47,6 +47,9 @@ $locales['fi-FI'] =
   CAP_EMAIL         : 'Sähköpostiosoite',
   CAP_PASSWORD      : 'Salasana',
   CAP_TODAY         : 'tänään',
+  CAP_MUTED         : 'Siirretty hiljaisiin',
+  CAP_UNMUTED       : 'Siirretty käteviin',
+  CAP_UNDO          : 'peruuta',
 
   HINT_FLT_ON       : 'Kirjoita sähköpostiosoite\nuuden keskustelun aloittaaksesi.',
   HINT_SYNCING      : 'Tervetuloa Holloon\nOdota vähän kun sinun viestit haetaan...',

@@ -47,6 +47,9 @@ $locales['sv-SE'] =
   CAP_EMAIL         : 'E-post',
   CAP_PASSWORD      : 'Lösenord',
   CAP_TODAY         : 'idag',
+  //CAP_MUTED         : 'Muted',
+  //CAP_UNMUTED       : 'Unmuted',
+  CAP_UNDO          : 'ångra',
 
   HINT_FLT_ON       : 'För att påbörja en ny chatt\nskriv in en email adress.',
   HINT_SYNCING      : 'Välkommen till Hollo!\nVar god och vänta tills\ndina meddelande hämtas...',

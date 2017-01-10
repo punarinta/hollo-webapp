@@ -49,6 +49,9 @@ $locales['mzs-X'] =
   CAP_EMAIL         : 'E-poštovy adres',
   CAP_PASSWORD      : 'Parola',
   CAP_TODAY         : 'dneś',
+  CAP_MUTED         : 'Prěměšćeno v nevažne',
+  CAP_UNMUTED       : 'Prěměšćeno v važne',
+  CAP_UNDO          : 'vråtiti',
 
   HINT_FLT_ON       : 'Že by načęti novy čat\nnapišite e-poštovy adres.',
   HINT_SYNCING      : 'Vitajte v Hollo!\nPočěkajte poki ide\nsinhronizacija...',

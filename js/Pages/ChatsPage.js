@@ -281,7 +281,7 @@ class ChatsPage extends Component
       toaster =
       [
         h('caption', null, this.state.toast.caption),
-        h('button', {onclick: this.state.toast.action}, 'undo')
+        h('button', {onclick: this.state.toast.action}, _('CAP_UNDO'))
       ]
     }
 
