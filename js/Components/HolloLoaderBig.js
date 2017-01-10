@@ -7,15 +7,12 @@ class HolloLoaderBig extends Component
 
     const items = [1,2,3,4,5].map( () =>
     (
-      h('span', {style: style})
+      h('span', {style})
     ));
 
     return (
 
-      h(
-        'hollo-loader-big', null,
-        items
-      )
+      h('hollo-loader-big', null, items)
     );
   }
 }
