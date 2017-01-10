@@ -231,7 +231,7 @@ class MessageBubble extends Component
     if (props.html)
     {
       this.tryHtml(message.id);
-      if (this.state.htmlMode) className = 'html-mode'
+      if (this.state.htmlMode) className += ' html-mode'
     }
 
     return (
