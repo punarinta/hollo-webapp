@@ -6,6 +6,7 @@ var ML =
   _loaded: [],
   ws: null,
   _wsOpened: 0,
+  sysMuids: [],
 
   api: function (endpoint, method, data, callback, error, failure)
   {
