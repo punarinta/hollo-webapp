@@ -127,6 +127,13 @@ class App extends Component
         let data = JSON.parse(event.data);
         console.log('IM', data);
 
+        if (data.uid)
+        {
+          if (ML.sysMuids.length > 32) ML.sysMuids.shift();
+          if (ML.sysMuids.indexOf(data.uid) != -1) return;
+          ML.sysMuids.push(data.uid);
+        }
+
         if (data.cmd == 'sys:ping')
         {
           if (!that.notification('Ping signal received'))
@@ -136,7 +143,7 @@ class App extends Component
         }
 
         // Firebase messaging is on, so skip duplicate activities
-        if ($firebaseOn) return;
+        // if ($firebaseOn) return;
 
         if (data.cmd == 'chat:update')
         {
@@ -353,7 +360,15 @@ class App extends Component
       return
     }
 
-    $firebaseOn = true;
+    // $firebaseOn = true;
+
+    if (e.payload.uid)
+    {
+      if (ML.sysMuids.length > 32) ML.sysMuids.shift();
+      // if the user taps the notification it means the app was in the bg and did not get data via IM
+      if (ML.sysMuids.indexOf(e.payload.uid) != -1 && !e.payload.wasTapped) return;
+      ML.sysMuids.push(e.payload.uid);
+    }
 
     if (e.payload.cmd == 'auth:logout')  ML.go('auth/logout');
     if (e.payload.cmd == 'sys:ping')     ML.emit('messagebox', { html: 'Ping signal received' });
@@ -438,8 +453,8 @@ class App extends Component
 // setup global vars
 var $windowInnerWidth = 360,
     $maintenance = 0, //!ML.getQueryVar('debug'),
-    $platform = 0,
-    $firebaseOn = false;
+    $platform = 0/*,
+    $firebaseOn = false*/;
 
 function onDeviceReady()
 {
