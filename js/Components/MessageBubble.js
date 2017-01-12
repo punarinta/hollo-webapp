@@ -115,16 +115,22 @@ class MessageBubble extends Component
 
   messageClicked(e)
   {
-    if (this.props.chatId && e.target.nodeName != 'A')
+    if (e.target.nodeName != 'A')
     {
+      let list = this.props.chatId ?
+      [
+        h('li', { onclick: this.forwardClicked.bind(this) }, _('MSG_FORWARD')),
+        h('li', { onclick: () => this.showOriginalClicked(0) }, _('MSG_SHOW_ORIG')),
+        h('li', { onclick: () => this.showOriginalClicked(1) }, _('MSG_SHOW_HTML'))
+      ] :
+      [
+        h('li', { onclick: this.forwardClicked.bind(this) }, 'It\'s done'),
+      ];
+
       // display context menu
       let children =
       [
-        h('ul', null,
-          h('li', { onclick: this.forwardClicked.bind(this) }, _('MSG_FORWARD')),
-          h('li', { onclick: () => this.showOriginalClicked(0) }, _('MSG_SHOW_ORIG')),
-          h('li', { onclick: () => this.showOriginalClicked(1) }, _('MSG_SHOW_HTML'))
-        ),
+        h('ul', null, list),
       ];
 
       ML.emit('custombox', {className: 'context-menu-message', children})
@@ -239,6 +245,32 @@ class MessageBubble extends Component
     }
     else this.state.htmlMode = 0;
 
+    let icons = null;
+    if (props.chatId)
+    {
+      icons = h(Avatar, {chat: virtualChat, size: '32px', onclick: this.toggleName.bind(this)});
+    }
+    else
+    {
+      icons =
+      [
+        h('round', {onclick: () =>
+        {
+          // delete message by its timestamp
+          let notes = JSON.parse(localStorage.getItem('my-notes'));
+          for (let i in notes) if (notes[i].ts == message.ts)
+          {
+             notes.splice(i, 1);
+             break;
+          }
+          localStorage.setItem('my-notes', JSON.stringify(notes));
+          ML.emit('chat:update');
+        }}, '✔️️')
+      ];
+
+      messageStatus = 0;
+    }
+
     return (
 
       h('message-bubble', {className},
@@ -251,7 +283,7 @@ class MessageBubble extends Component
             filesBody
           ),
           h('div', {className: 'foot'},
-            h(Avatar, {chat: virtualChat, size: '32px', onclick: this.toggleName.bind(this)}),
+            icons,
             h('div', {className: 'info'},
               h('span', {className: 'status s' + messageStatus}),
               this.state.showName ? h('span', {className: 'name'}, ML.xname(virtualChat)[0]) : h('span', {className: 'ts'}, ML.ts(message.ts))
