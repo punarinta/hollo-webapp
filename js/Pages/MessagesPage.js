@@ -455,10 +455,10 @@ class MessagesPage extends Component
       {
         message,
         user,
-        users: this.chat.users || [],
-        chatId: this.chat.id || 0,
+        users: chat.users || [],
+        chatId: chat.id || 0,
         captionClicked: (subjectFilter) => this.setState({subjectFilter}),
-        html: this.chat.muted || 0
+        html: chat.muted || 0
       }))
     }
 
