@@ -277,7 +277,7 @@ class MessagesPage extends Component
   renameChat()
   {
     this.setState({menuModalShown: 0});
-    ML.emit('messagebox', {type: 1, html: _('CAP_NEW_NAME'), input: this.chat.name, cb: (code, name) =>
+    ML.emit('messagebox', {type: 1, html: _('CAP_NEW_NAME'), input: this.chat.name || '', cb: (code, name) =>
     {
       if (code)
       {
