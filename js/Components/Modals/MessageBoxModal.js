@@ -2,12 +2,13 @@ class MessageBoxModal extends Component
 {
   onClick(code)
   {
-    let payload = null;
+    let payload = null, p = this.props;
 
-    if (typeof this.props.data.input != 'undefined') payload = this.base.querySelector('input').value;
+    if (typeof p.data.input != 'undefined') payload = this.base.querySelector('input').value;
+    else if (typeof p.data.text != 'undefined') payload = this.base.querySelector('textarea').value;
 
-    if (typeof this.props.data.cb == 'function') this.props.data.cb(code, payload);
-    if (typeof this.props.onclose == 'function') this.props.onclose()
+    if (typeof p.data.cb == 'function') p.data.cb(code, payload);
+    if (typeof p.onclose == 'function') p.onclose()
   }
 
   render(props)
@@ -27,13 +28,17 @@ class MessageBoxModal extends Component
 
     return h('message-box-modal', {onclick: (e) => {if (e.target.nodeName.toLowerCase() == 'message-box-modal') this.onClick(0)} },
       h('div', null,
-        h(MessageBody, {html: data.html}),
+        data.html ? h(MessageBody, {html: data.html}) : '',
         typeof data.input == 'undefined' ? '' : h('input',
         {
           value: data.input,
           type: 'text',
           autofocus: 'autofocus'
         }),
+        typeof data.text == 'undefined' ? '' : h('textarea',
+        {
+          autofocus: 'autofocus'
+        }, data.text),
         h('div', {className: 'foot'},
           buttons
         )

@@ -124,7 +124,13 @@ class MessageBubble extends Component
         h('li', { onclick: () => this.showOriginalClicked(1) }, _('MSG_SHOW_HTML'))
       ] :
       [
-        h('li', { onclick: this.forwardClicked.bind(this) }, 'It\'s done'),
+        h('li', { onclick: () =>
+        {
+          ML.emit('messagebox', {type: 1, text: this.props.message.body, cb: (code, body) =>
+          {
+            if (code) this.updateNote(body);
+          }});
+        }}, 'Edit'),
       ];
 
       // display context menu
@@ -159,6 +165,20 @@ class MessageBubble extends Component
       f.contentWindow.document.close();
       this.setState({htmlMode: 1})
     });
+  }
+
+  updateNote(body)
+  {
+    let notes = JSON.parse(localStorage.getItem('my-notes'));
+
+    for (let i in notes) if (notes[i].ts == this.props.message.ts)
+    {
+      if (!body || !body.length) notes.splice(i, 1);
+      else notes[i].body = body;
+      break;
+    }
+    localStorage.setItem('my-notes', JSON.stringify(notes));
+    ML.emit('chat:update');
   }
 
   render(props)
@@ -254,18 +274,7 @@ class MessageBubble extends Component
     {
       icons =
       [
-        h('round', {onclick: () =>
-        {
-          // delete message by its timestamp
-          let notes = JSON.parse(localStorage.getItem('my-notes'));
-          for (let i in notes) if (notes[i].ts == message.ts)
-          {
-             notes.splice(i, 1);
-             break;
-          }
-          localStorage.setItem('my-notes', JSON.stringify(notes));
-          ML.emit('chat:update');
-        }}, '✔️️')
+        h('round', { onclick: () => this.updateNote() }, '✔️️')
       ];
 
       messageStatus = 0;
