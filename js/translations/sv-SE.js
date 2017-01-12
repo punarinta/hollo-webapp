@@ -30,6 +30,7 @@ $locales['sv-SE'] =
   MSG_FORWARD       : 'Vidarebefodra...',
   MSG_SHOW_ORIG     : 'Visa originala meddelandet',
   MSG_SHOW_HTML     : 'Visa HTML-versionen',
+  MSG_EDIT          : 'Redigera',
 
   QS_N_UNREAD       : '%s oläst',
   QS_N_LEFT         : '%s kvar',

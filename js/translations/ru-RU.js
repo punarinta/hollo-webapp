@@ -30,6 +30,7 @@ $locales['ru-RU'] =
   MSG_FORWARD       : 'Переслать сообщение...',
   MSG_SHOW_ORIG     : 'Показать оригинал',
   MSG_SHOW_HTML     : 'Показать HTML-версию',
+  MSG_EDIT          : 'Редактировать',
 
   QS_N_UNREAD       : '%s новых',
   QS_N_LEFT         : 'ещё %s',

@@ -32,6 +32,7 @@ $locales['mzs-X'] =
   MSG_FORWARD       : 'Prěslati poslanje...',
   MSG_SHOW_ORIG     : 'Pokazati pŕvonačaľnų formų',
   MSG_SHOW_HTML     : 'Pokazati HTML-versijų',
+  MSG_EDIT          : 'Izměniti',
 
   QS_N_UNREAD       : '%s novyh',
   QS_N_LEFT         : 'ješče %s',

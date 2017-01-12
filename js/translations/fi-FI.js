@@ -30,6 +30,7 @@ $locales['fi-FI'] =
   MSG_FORWARD       : 'Lähetä edelleen...',
   MSG_SHOW_ORIG     : 'Näytä alkuperäisteos',
   MSG_SHOW_HTML     : 'Näytä HTML-versio',
+  MSG_EDIT          : 'Muokkaa',
 
   QS_N_UNREAD       : '%s uutta',
   QS_N_LEFT         : '%s lisää',
