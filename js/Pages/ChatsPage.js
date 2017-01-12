@@ -294,7 +294,7 @@ class ChatsPage extends Component
           placeholder: _('HINT_CHAT_SEARCH'),
           onchange: this.filterChanged.bind(this),
           onfocuschange: this.filterFocusChanged.bind(this),
-          className: sbClasses.join(' '),
+          className: /*sbClasses.join(' ')*/'filtered',
           autocolor: true
         }),
         h('loader', null, h('inner-loader')),
