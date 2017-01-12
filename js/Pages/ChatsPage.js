@@ -271,7 +271,7 @@ class ChatsPage extends Component
     }
 
     let sbClasses = [];
-    if (this.emailFilter.length) sbClasses.push('filtered');
+    // if (this.emailFilter.length) sbClasses.push('filtered');
     if (this.state.filterActive) sbClasses.push('focused');
 
     let toaster = '';
@@ -294,7 +294,7 @@ class ChatsPage extends Component
           placeholder: _('HINT_CHAT_SEARCH'),
           onchange: this.filterChanged.bind(this),
           onfocuschange: this.filterFocusChanged.bind(this),
-          className: /*sbClasses.join(' ')*/'filtered',
+          className: sbClasses.join(' '),
           autocolor: true
         }),
         h('loader', null, h('inner-loader')),
