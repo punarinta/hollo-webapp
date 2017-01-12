@@ -63,7 +63,8 @@ class MessageBubble extends Component
   {
     let message = this.props.message;
 
-    ML.api('message', 'forward', {id: message.id, fromChatId: this.props.chatId, toChatId: chat.id}, () =>
+    // 'fromChatId' ID may be 0, then notes are assumed
+    ML.api('message', 'forward', {id: message.id, fromChatId: this.props.chatId, toChatId: chat.id, body: message.body}, () =>
     {
       if (message.subj && message.subj.length) message.subj = 'FWD: ' + message.subj;
       else message.subj = 'FWD from chat ' + ML.xname(chat)[0];
@@ -130,7 +131,8 @@ class MessageBubble extends Component
           {
             if (code) this.updateNote(body);
           }});
-        }}, 'Edit'),
+        }}, _('MSG_EDIT')),
+        h('li', { onclick: this.forwardClicked.bind(this) }, _('MSG_FORWARD')),
       ];
 
       // display context menu

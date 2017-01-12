@@ -30,6 +30,7 @@ $locales['en-US'] =
   MSG_FORWARD       : 'Forward message...',
   MSG_SHOW_ORIG     : 'Show original email',
   MSG_SHOW_HTML     : 'Show HTML version',
+  MSG_EDIT          : 'Edit',
 
   QS_N_UNREAD       : '%s unread',
   QS_N_LEFT         : '%s to go',
