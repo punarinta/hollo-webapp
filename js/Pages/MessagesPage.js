@@ -611,6 +611,12 @@ class MessagesPage extends Component
 
     if (name) document.title = name;
 
+    let uploadButton = this.chatId == 'me' ? '' :
+    [
+      h(BarIcon, {img: 'color/clip', width: 40, height: 40}),
+      h('input', {className: 'uploader', type: 'file', multiple: 'multiple', onchange: this.uploadFiles.bind(this)})
+    ];
+
     return (
 
       h('messages-page', {style: {zIndex: this.props.zIndex}},
@@ -631,8 +637,7 @@ class MessagesPage extends Component
           this.state.compFocus ? h('bar', null,
             h(BarIcon, {img: 'color/subj', width: 40, height: 40, onclick: this.showSubjects.bind(this)}),
             h('input', {className: 'subj', type: 'text', value: this.state.currentSubject, onkeyup: this.inputSubject.bind(this), onclick: this.showSubjects.bind(this)}),
-            h(BarIcon, {img: 'color/clip', width: 40, height: 40}),
-            h('input', {className: 'uploader', type: 'file', multiple: 'multiple', onchange: this.uploadFiles.bind(this)})
+            uploadButton
           ) : '',
           h('textarea',
           {
