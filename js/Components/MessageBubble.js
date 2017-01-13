@@ -49,6 +49,10 @@ class MessageBubble extends Component
 
     if (type == 'note')
     {
+      body = body.replace(/^(\*\s).*$/gm, m =>
+      {
+        return m.replace(/^(\*\s)/, '• ')
+      });
       body = body.replace(/\n/g, '<br>');
     }
     else if (type != 'text/html')
