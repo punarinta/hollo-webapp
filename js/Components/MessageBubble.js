@@ -191,7 +191,7 @@ class MessageBubble extends Component
 
     ML.api('message', 'showOriginal', {id: message.id, tryHtml: 1}, data =>
     {
-      this.setState({htmlForm: data ? ('<!DOCTYPE html><link rel="stylesheet" type="text/css" href="/css/external.css">' + data.content) : 0})
+      this.setState({htmlForm: data ? ('<!DOCTYPE html><link rel="stylesheet" type="text/css" href="https://app.hollo.email/css/external.css">' + data.content) : 0})
     });
   }
 
