@@ -453,11 +453,11 @@ var $windowInnerWidth = 360,
 
 function onDeviceReady()
 {
-  if (window.StatusBar)
+  /*if (window.StatusBar)
   {
     StatusBar.hide();
     StatusBar.backgroundColorByHexString('e2e2e2');
-  }
+  }*/
 
   document.body.innerHTML = '';
 
