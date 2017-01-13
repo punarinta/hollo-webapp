@@ -17,10 +17,8 @@ class ChatsPage extends Component
   {
     this.scrollReference = this.scroll.bind(this);
     this.chatUpdateReference = this.chatUpdate.bind(this);
-    this.toastReference = this.toast.bind(this);
     this.base.querySelector('ul').addEventListener('scroll', this.scrollReference);
     window.addEventListener('hollo:chat:update', this.chatUpdateReference);
-    window.addEventListener('hollo:toast', this.toastReference);
   }
 
   componentWillReceiveProps(nextProps)
@@ -47,13 +45,6 @@ class ChatsPage extends Component
       email: this.emailFilter.length ? this.emailFilter : null
     })});
     ML.emit('qs:count');
-  }
-
-  toast(e)
-  {
-    //if (['mute', 'unmute'].indexOf(e.payload.action))
-    console.log(e);
-    this.setState({toast: e.payload})
   }
 
   touchStart(e)
@@ -274,17 +265,6 @@ class ChatsPage extends Component
     // if (this.emailFilter.length) sbClasses.push('filtered');
     if (this.state.filterActive) sbClasses.push('focused');
 
-    let toaster = '';
-
-    if (this.state.toast)
-    {
-      toaster =
-      [
-        h('caption', null, this.state.toast.caption),
-        h('button', {onclick: this.state.toast.action}, _('CAP_UNDO'))
-      ]
-    }
-
     return (
 
       h('chats-page', {style: {zIndex: this.props.zIndex}, ontouchstart: this.touchStart.bind(this), ontouchmove: this.touchMove.bind(this), ontouchend: this.touchEnd.bind(this)},
@@ -299,8 +279,7 @@ class ChatsPage extends Component
         }),
         h('loader', null, h('inner-loader')),
         ulContents,
-        h(QuickStack, {chats: this.state.chats, muted, user: this.props.user}),
-        h('toast', {style: {height: this.state.toast ? '48px' : 0}}, toaster)
+        h(QuickStack, {chats: this.state.chats, muted, user: this.props.user})
       )
     );
   }

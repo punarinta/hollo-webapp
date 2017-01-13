@@ -23,6 +23,7 @@
     "js/Components/Svg",
     "js/Components/ChatRow",
     "js/Components/BarIcon",
+    "js/Components/Toaster",
     "js/Components/SearchBar",
     "js/Components/FilePlate",
     "js/Components/Checkbox",

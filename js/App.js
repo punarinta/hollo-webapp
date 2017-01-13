@@ -142,9 +142,6 @@ class App extends Component
           }
         }
 
-        // Firebase messaging is on, so skip duplicate activities
-        // if ($firebaseOn) return;
-
         if (data.cmd == 'chat:update')
         {
           ML.api('chat', 'getAllData', {chatId: data.chatId}, (json) =>
@@ -360,8 +357,6 @@ class App extends Component
       return
     }
 
-    // $firebaseOn = true;
-
     if (e.payload.uid)
     {
       if (ML.sysMuids.length > 32) ML.sysMuids.shift();
@@ -408,7 +403,8 @@ class App extends Component
       h(DemoBoxModal,    {data: this.state.demoBox,    onclose: () => this.setState({demoBox: null})    }),
       h(MessageBoxModal, {data: this.state.messageBox, onclose: () => this.setState({messageBox: null}) }),
       h(UserPickerModal, {data: this.state.userPicker, onclose: () => this.setState({userPicker: null}) }),
-      h(CustomBoxModal,  {data: this.state.customBox,  onclose: () => this.setState({customBox: null})  })
+      h(CustomBoxModal,  {data: this.state.customBox,  onclose: () => this.setState({customBox: null})  }),
+      h(Toaster)
     ];
 
     switch (this.state.page)
@@ -453,8 +449,7 @@ class App extends Component
 // setup global vars
 var $windowInnerWidth = 360,
     $maintenance = 0, //!ML.getQueryVar('debug'),
-    $platform = 0/*,
-    $firebaseOn = false*/;
+    $platform = 0;
 
 function onDeviceReady()
 {

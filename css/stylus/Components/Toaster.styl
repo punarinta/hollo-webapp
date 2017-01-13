@@ -1,0 +1,26 @@
+toaster
+  transition height 0.3s linear
+  background-color #323232
+  color #fff
+  font 14px Roboto, sans-serif
+  width 100vw
+  height 48px
+  display flex
+  position fixed
+  bottom 56px
+  z-index 50
+  @media screen and (min-width break-tablet)
+    bottom 0 !important // it's always 0 for wide screens
+    width 568px
+    border-radius 2px
+    left calc(50vw - 234px)
+  button
+    text-transform uppercase
+    font bold 14px Roboto, sans-serif
+    background #323232
+    height 48px
+    margin 0 0 0 auto
+    width 96px
+  caption
+    line-height 48px
+    margin-left 16px
