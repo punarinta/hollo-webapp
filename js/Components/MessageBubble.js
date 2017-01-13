@@ -17,8 +17,8 @@ class MessageBubble extends Component
   {
     if (this.props.html && this.state.htmlForm)
     {
-      this.base.querySelector('.white').innerHTML = '';
-      this.base.querySelector('.white').appendChild(this.f);
+      this.base.querySelector('.msg').innerHTML = '';
+      this.base.querySelector('.msg').appendChild(this.f);
       this.f.contentWindow.document.open('text/html', 'replace');
       this.f.contentWindow.document.write(this.state.htmlForm);
       this.f.contentWindow.document.close();
@@ -333,7 +333,7 @@ class MessageBubble extends Component
             subject.length ? h('div', {className: 'cap', onclick: () => { if (props.captionClicked) props.captionClicked(subject) }},
               subject
             ) : '',
-            this.state.htmlForm ? '' : msgBody,
+            msgBody,
             filesBody
           ),
           h('div', {className: 'foot'},
