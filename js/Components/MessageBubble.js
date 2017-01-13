@@ -47,7 +47,11 @@ class MessageBubble extends Component
     body = body.replace('/mailto:/g', '');
     body = body.replace(/ -- /g, ' — ');
 
-    if (type != 'text/html')
+    if (type == 'note')
+    {
+      body = body.replace(/\n/g, '<br>');
+    }
+    else if (type != 'text/html')
     {
       // URLs
       body = body.replace(/(<*\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]>*)/ig, m =>
@@ -156,6 +160,8 @@ class MessageBubble extends Component
       [
         h('li', { onclick: () =>
         {
+          console.log(this.props.message.body)
+
           ML.emit('messagebox', {type: 1, text: this.props.message.body, cb: (code, body) =>
           {
             if (code) this.updateNote(body);
@@ -246,7 +252,7 @@ class MessageBubble extends Component
     }
     else
     {
-      body = this.clearBody(body, message.type)
+      body = this.clearBody(body, props.chatId ? message.type : 'note')
     }
 
     let filesBody = '',
