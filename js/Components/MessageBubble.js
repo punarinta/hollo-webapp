@@ -160,8 +160,6 @@ class MessageBubble extends Component
       [
         h('li', { onclick: () =>
         {
-          console.log(this.props.message.body)
-
           ML.emit('messagebox', {type: 1, text: this.props.message.body, cb: (code, body) =>
           {
             if (code) this.updateNote(body);

@@ -11,6 +11,26 @@ class MessageBoxModal extends Component
     if (typeof p.onclose == 'function') p.onclose()
   }
 
+  componentDidUpdate()
+  {
+    let data = this.props.data, f = null;
+    if (data)
+    {
+      if (data.input)
+      {
+        f = this.base.querySelector('input');
+        f.focus();
+        f.value = data.input;
+      }
+      if (data.text)
+      {
+        f = this.base.querySelector('textarea');
+        f.focus();
+        f.value = data.text;
+      }
+    }
+  }
+
   render(props)
   {
     let data = props.data;
@@ -32,13 +52,9 @@ class MessageBoxModal extends Component
         typeof data.input == 'undefined' ? '' : h('input',
         {
           value: data.input,
-          type: 'text',
-          autofocus: 'autofocus'
+          type: 'text'
         }),
-        typeof data.text == 'undefined' ? '' : h('textarea',
-        {
-          autofocus: 'autofocus'
-        }, data.text),
+        typeof data.text == 'undefined' ? '' : h('textarea', null, data.text),
         h('div', {className: 'foot'},
           buttons
         )
