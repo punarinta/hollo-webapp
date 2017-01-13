@@ -304,7 +304,22 @@ class MessageBubble extends Component
     {
       icons =
       [
-        h('round', { onclick: () => this.updateNote() }, '✔️️')
+        h('round', { onclick: () =>
+        {
+          ML.emit('toast', { defaultAction: () =>
+          {
+            this.updateNote()
+          },
+          undo: () =>
+          {
+            this.base.style.display = 'block'
+          },
+          caption: 'Done', bottom: '56px' });
+
+          // temporarily hide note
+          this.base.style.display = 'none'
+
+        } }, '✔️️')
       ];
 
       messageStatus = 0;
