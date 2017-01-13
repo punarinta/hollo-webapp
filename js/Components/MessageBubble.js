@@ -6,6 +6,35 @@ class MessageBubble extends Component
     this.state.showName = false;
   }
 
+  componentWillMount()
+  {
+    this.f = document.createElement('iframe');
+    this.f.src = 'about:blank';
+    this.tryHtml(this.props)
+  }
+
+  componentDidUpdate()
+  {
+    if (this.props.html && this.state.htmlForm)
+    {
+      this.base.querySelector('.white').innerHTML = '';
+      this.base.querySelector('.white').appendChild(this.f);
+      this.f.contentWindow.document.open('text/html', 'replace');
+      this.f.contentWindow.document.write(this.state.htmlForm);
+      this.f.contentWindow.document.close();
+    }
+    else
+    {
+      let frame = this.base.querySelector('iframe');
+      if (frame) frame.parentNode.removeChild(frame)
+    }
+  }
+
+  componentWillReceiveProps(props)
+  {
+    this.tryHtml(props)
+  }
+
   toggleName()
   {
     this.setState({showName: !this.state.showName});
@@ -145,27 +174,24 @@ class MessageBubble extends Component
     }
   }
 
-  tryHtml(id)
+  tryHtml(props)
   {
-    if (id == this.htmlId) return;
-    this.htmlId = id;
-
-    ML.api('message', 'showOriginal', {id, tryHtml: 1}, data =>
+    let message = props.message;
+    if (!message || !props.html)
     {
-      if (!data)
-      {
-        this.setState({htmlMode: 0});
-        return;
-      }
+      this.setState({htmlForm: 0});
+      return;
+    }
+    if (message.id == this.htmlId)
+    {
+      return;
+    }
 
-      let f = document.createElement('iframe');
-      f.src = 'about:blank';
-      this.base.querySelector('.white').innerHTML = '';
-      this.base.querySelector('.white').appendChild(f);
-      f.contentWindow.document.open('text/html', 'replace');
-      f.contentWindow.document.write('<!DOCTYPE html><style>::-webkit-scrollbar{display:none}*{font-family:sans-serif}</style>' + data.content);
-      f.contentWindow.document.close();
-      this.setState({htmlMode: 1})
+    this.htmlId = message.id;
+
+    ML.api('message', 'showOriginal', {id: message.id, tryHtml: 1}, data =>
+    {
+      this.setState({htmlForm: data ? ('<!DOCTYPE html><link rel="stylesheet" type="text/css" href="/css/external.css">' + data.content) : 0})
     });
   }
 
@@ -185,6 +211,8 @@ class MessageBubble extends Component
 
   render(props)
   {
+    console.log(this.state.htmlForm)
+
     let message = props.message,
         mine = message.from ? message.from.email == props.user.email : 0,
         subject = message.subj,
@@ -259,13 +287,7 @@ class MessageBubble extends Component
     }
 
     let className = mine ? 'mine' : 'yours';
-
-    if (props.html)
-    {
-      this.tryHtml(message.id);
-      if (this.state.htmlMode) className += ' html-mode'
-    }
-    else this.state.htmlMode = 0;
+    if (this.state.htmlForm) className += ' html-mode';
 
     let icons = null;
     if (props.chatId)
@@ -290,7 +312,7 @@ class MessageBubble extends Component
             subject.length ? h('div', {className: 'cap', onclick: () => { if (props.captionClicked) props.captionClicked(subject) }},
               subject
             ) : '',
-            this.state.htmlMode ? '' : msgBody,
+            this.state.htmlForm ? '' : msgBody,
             filesBody
           ),
           h('div', {className: 'foot'},
