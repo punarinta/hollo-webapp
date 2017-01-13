@@ -211,8 +211,6 @@ class MessageBubble extends Component
 
   render(props)
   {
-    console.log(this.state.htmlForm)
-
     let message = props.message,
         mine = message.from ? message.from.email == props.user.email : 0,
         subject = message.subj,
