@@ -11,10 +11,10 @@ class Toaster extends Component
 
     if (e.payload)
     {
-      setTimeout(() =>
+      this.timer = setTimeout(() =>
       {
         ML.emit('toast');
-        if (e.payload.do) e.payload.do();    // run default action
+        if (e.payload.defaultAction) e.payload.defaultAction();    // run default action
       }, 3000)
     }
   }
@@ -32,7 +32,12 @@ class Toaster extends Component
         toast ?
         [
           h('caption', null, toast.caption),
-          h('button', { onclick: () => {toast.undo(); ML.emit('toast') } }, _('CAP_UNDO'))
+          h('button', { onclick: () =>
+          {
+            clearTimeout(this.timer);
+            if (toast.undo) toast.undo();
+            ML.emit('toast')
+          }}, _('CAP_UNDO'))
         ] : ''
       )
     )
