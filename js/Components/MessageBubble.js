@@ -314,7 +314,7 @@ class MessageBubble extends Component
           {
             this.base.style.display = 'block'
           },
-          caption: 'Done', bottom: '56px' });
+          caption: _('CAP_DONE'), bottom: '56px' });
 
           // temporarily hide note
           this.base.style.display = 'none'
