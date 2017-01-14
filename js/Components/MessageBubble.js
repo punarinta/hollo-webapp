@@ -250,7 +250,8 @@ class MessageBubble extends Component
         }
       }
 
-      body = h(InvitationWidget, {data: w})
+      body = h(InvitationWidget, {data: w});
+      this.state.htmlForm = 0;
     }
     else
     {
