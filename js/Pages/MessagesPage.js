@@ -626,7 +626,7 @@ class MessagesPage extends Component
           $windowInnerWidth > 768 ? null : h(BarIcon, {img: 'color/arrow-back', onclick: () => ML.go('chats', {muted: this.chat ? this.chat.muted : 0} ) }),
           h('div', {className: 'name' + (this.state.menuModalShown == 1 ? ' toggled' : ''), onclick: () => this.toggleMenu(1) }, name),
           h(BarIcon, {className: this.state.menuModalShown == 2 ? 'toggled' : '', img: 'color/subjs', width: 40, height: 40, onclick: () => this.toggleMenu(2) }),
-          h(BarIcon, {className: this.state.menuModalShown == 3 ? 'toggled' : '', img: 'color/clip', width: 40, height: 40, onclick: () => this.toggleMenu(3) }),
+          this.chatId == 'me' ? '' : h(BarIcon, {className: this.state.menuModalShown == 3 ? 'toggled' : '', img: 'color/clip', width: 40, height: 40, onclick: () => this.toggleMenu(3) }),
           h(BarIcon, {className: this.state.menuModalShown == 4 ? 'toggled' : '', img: 'color/more-vert', width: 40, height: 40, onclick: () => this.toggleMenu(4) })
         ),
         h('ul', {className: this.state.subjectFilter ? 'with-filter' : ''}, messages.length ? messages : h('li', {className: 'list-hint'}, listHint) ),
