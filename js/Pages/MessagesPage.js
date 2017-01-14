@@ -20,8 +20,10 @@ class MessagesPage extends Component
   {
     this.tryBlurringRef = this.tryBlurring.bind(this);
     this.chatUpdateReference = this.chatUpdate.bind(this);
+    this.chatAttachReference = this.chatAttach.bind(this);
     this.base.addEventListener('click', this.tryBlurringRef);
     window.addEventListener('hollo:chat:update', this.chatUpdateReference);
+    window.addEventListener('hollo:chat:attach', this.chatAttachReference);
     ML.load('modules/emojis');
   }
 
@@ -47,6 +49,7 @@ class MessagesPage extends Component
   {
     this.base.removeEventListener('click', this.tryBlurringRef);
     window.removeEventListener('hollo:chat:update', this.chatUpdateReference);
+    window.removeEventListener('hollo:chat:attach', this.chatAttachReference);
   }
 
   chatUpdate()
@@ -72,6 +75,14 @@ class MessagesPage extends Component
       this.setState({messages, currentSubject});
       this.reposition(1)
     }
+  }
+
+  chatAttach(e)
+  {
+    let files = this.state.files;
+    files.push(e.payload);
+    console.log('Attach:', e.payload);
+    this.setState({files});
   }
 
   composerTextChanged(e)
@@ -331,17 +342,13 @@ class MessagesPage extends Component
 
         return (e) =>
         {
-          let files = this.state.files;
-
-          files.push(
+          ML.emit('chat:attach',
           {
             name: f.name,
             type: f.type,
             size: f.size,
             b64:  e.target.result // we need to store this to be able to send
           });
-
-          this.setState({files});
 
           mixpanel.track('Composer - file attached');
         };
@@ -474,8 +481,8 @@ class MessagesPage extends Component
       }
 
       uploadedFiles = h('div', {className: 'files'}, filePlates);
-      composerHeight += 76;
-      sendHeight += 76;
+      composerHeight += 80;
+      sendHeight += 80;
       this.state.canSend = 1;
     }
 

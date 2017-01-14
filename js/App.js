@@ -288,6 +288,17 @@ class App extends Component
       FCMPlugin.subscribeToTopic('user-' + data.user.id);
     }
 
+    if ($platform == 1 && window.plugins.intent) window.plugins.intent.setNewIntentHandler( intent =>
+    {
+      console.log('Intent:', intent);
+      if (intent.action.indexOf('SEND') != -1)
+      {
+        this.lastIntent = intent;
+        // pick a chat first
+        ML.emit('userpicker', { chatMode: 1, onselect: this.intentSendTo.bind(this) });
+      }
+    });
+
     if (typeof mixpanel != 'undefined' && !mixpanel.off)
     {
       mixpanel.identify(data.user.email);
@@ -347,6 +358,38 @@ class App extends Component
 
     // load all user chats
     $.C.load(data.user);
+  }
+
+  intentSendTo(chat)
+  {
+    ML.go('chat/' + chat.id);
+
+    let raw = new XMLHttpRequest();
+
+    // only support 1 file for now
+    raw.open('GET', this.lastIntent.clipItems[0].uri);
+    raw.onreadystatechange = () =>
+    {
+      if (raw.readyState === 4)
+      {
+        let reader = new FileReader();
+        reader.onload = (e) =>
+        {
+          // TODO: try to get name
+          let b64s = e.target.result.split(';');
+          ML.emit('chat:attach',
+          {
+            name: 'attachment',
+            type: this.lastIntent.type,
+            size: raw.responseText.length,
+            b64:  b64s[0] + this.lastIntent.type + ';' + b64s[1]
+          })
+        };
+        reader.readAsDataURL(new Blob([raw.responseText]));
+      }
+    };
+
+    setTimeout(() => raw.send(null), 100)
   }
 
   firebaseListener(e)
@@ -475,15 +518,6 @@ function onDeviceReady()
   if (window.cordova)
   {
     $platform = 1;
-
-    if (window.plugins.intent) window.plugins.intent.setNewIntentHandler( intent =>
-    {
-      console.log('Intent:', intent);
-      if (intent.action.indexOf('SEND') != -1)
-      {
-        ML.emit('messagebox', {html: 'Sending files feature will be fully supported in the next version. Stay tuned!'});
-      }
-    });
   }
 
   render(h(App), document.body);
