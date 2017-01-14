@@ -142,7 +142,7 @@ class ChatRow extends Component
 
       if (!lastMsg)
       {
-        if (chat.messages[0].files) lastMsg = '📄 ' + chat.messages[0].files[0].name
+        if (chat.messages[0].files) lastMsg = '📄 ' + chat.messages[0].files[0].name;
         else lastMsg = '';
       }
     }
@@ -184,6 +184,7 @@ class ChatRow extends Component
 
       d.innerHTML = lastMsg.replace(/\[sys:fwd\]/g, ' ➡️ ' + lastSubj).replace(/(<([^>]+)>)/ig, '').substring(0, 60).trim();
       lastMsg = d.textContent.trim();
+      if (!chat.id) lastMsg = lastMsg.split("\n")[0]
     }
 
     return (
