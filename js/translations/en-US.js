@@ -61,7 +61,7 @@ $locales['en-US'] =
   HINT_NO_FILES     : 'No files in this chat',
   HINT_NO_SUBJS     : 'No subjects in this chat',
   HINT_AREYOUSURE   : 'Are you sure?',
-  HINT_CHAT_SEARCH  : 'Search chat or start new',
+  HINT_CHAT_SEARCH  : 'Create a new chat or search',
   HINT_FORWARDED    : 'Forwarded message',
 
   ERR_BIG_FILE      : 'Sorry, maximum attachment size is 10MB.',
