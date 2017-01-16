@@ -406,6 +406,7 @@ class MessagesPage extends Component
     }
 
     m.id = 0;
+    m.userId = this.props.user.id;
     m.files = this.state.files;
 
     messages.push(m);
