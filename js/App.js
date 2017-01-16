@@ -33,6 +33,7 @@ class App extends Component
     window.addEventListener('hollo:busybox', (e) => this.setState({busy: e.payload}) );
     window.addEventListener('hollo:inituser', this.initUser.bind(this));
     window.addEventListener('hollo:firebase', this.firebaseListener.bind(this));
+    window.addEventListener('hollo:notes:update', this.updateNotes.bind(this));
 
     window.addEventListener('resize', () =>
     {
@@ -230,6 +231,11 @@ class App extends Component
     }
 
     return false;
+  }
+
+  updateNotes(e)
+  {
+    this.setState({notes: e.payload})
   }
 
   initUser(e)

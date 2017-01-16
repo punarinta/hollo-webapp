@@ -62,7 +62,7 @@ class MessagesPage extends Component
       {
         this.chat = { id: 0, name: _('CAP_MY_NOTES'), read: 1, users: [], muted: 0 };
 
-        messages = JSON.parse(localStorage.getItem('my-notes')) || [];
+        messages = this.props.user ? this.props.user.notes || [] : [];
         currentSubject = messages.length ? messages[messages.length - 1].subj : '';
       }
       else
@@ -87,15 +87,18 @@ class MessagesPage extends Component
 
   composerTextChanged(e)
   {
+    if (e.keyCode == 13 && e.ctrlKey) { this.send(); return }
+
+    // this 4-line magic below needs to be in this damn order!
     let t = e.target;
     t.style.height = 'auto';
     let h = t.scrollHeight + 3;
     t.style.height = h + 'px';
+
     h = Math.min(parseInt(h, 10), window.innerHeight * .3);
     let state = {canSend: !!t.value.trim().length, currentComposed: t.value};
 
     if (h != this.state.h) state.h = h;
-    if (e.keyCode == 13 && e.ctrlKey) { this.send(); return }
 
     // process emojis
     if (/[^a-zA-Z0-9-_]/.test(t.value.slice(-1)) && e.keyCode > 31)
@@ -317,12 +320,6 @@ class MessagesPage extends Component
     }})
   }
 
-  clearNotes()
-  {
-    localStorage.removeItem('my-notes');
-    this.setState({messages: [], menuModalShown: 0})
-  }
-
   uploadFiles(e)
   {
     let i, f, files = e.target.files;
@@ -396,8 +393,8 @@ class MessagesPage extends Component
     {
       messages.unshift(m);
       messages = messages.slice(0, 12);
-      localStorage.setItem('my-notes', JSON.stringify(messages));
-      this.setState({files: [], messages, compFocus: 0, currentComposed: '', h: 64, canSend: 0});
+      ML.emit('notes:update', messages);
+      this.setState({files: [], /*messages,*/ compFocus: 0, currentComposed: '', h: 64, canSend: 0});
       this.reposition(1);
       return
     }
@@ -448,6 +445,8 @@ class MessagesPage extends Component
     {
       let user = this.props.user,
           message = this.state.messages[i];
+
+      user.notes = null;
 
       message.from = message.userId == user.id ? user : $.U.get(message.userId);
 
@@ -585,7 +584,7 @@ class MessagesPage extends Component
         h('li', {onclick: this.unreadChat.bind(this)}, _(this.chat.read ?'CHAT_UNREAD' : 'CHAT_READ', null, {singleLine:1}) ),
         this.chat.users.length > 1 ? h('li', {onclick: this.renameChat.bind(this)}, _('CHAT_RENAME') ) : null,
         h('li', {onclick: this.leaveChat.bind(this)}, _('CHAT_LEAVE') )
-      ] : [h('li', {onclick: this.clearNotes.bind(this)}, _('CHAT_CLEAR') )];
+      ] : [h('li', {onclick: () => ML.emit('notes:update', []) }, _('CHAT_CLEAR') )];
 
       menuModal = h('div', {className: 'modal-shader'},
         h('menu-modal', {className: 'menu-more'},
