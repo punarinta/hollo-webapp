@@ -18,10 +18,15 @@ class MessageBubble extends Component
     if (this.props.html && this.state.htmlForm)
     {
       this.base.querySelector('.msg').innerHTML = '';
+      this.f.style.height = 0;
       this.base.querySelector('.msg').appendChild(this.f);
       this.f.contentWindow.document.open('text/html', 'replace');
       this.f.contentWindow.document.write(this.state.htmlForm);
       this.f.contentWindow.document.close();
+
+      this.f.style.overflow = 'hidden';
+      this.f.scrolling = 'no';
+      this.f.style.height = this.f.contentWindow.document.body.scrollHeight + 'px';
     }
     else
     {
