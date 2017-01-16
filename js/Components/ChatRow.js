@@ -199,7 +199,7 @@ class ChatRow extends Component
         h('div', {className: 'real'},
           h(Avatar, {chat}),
           h('div', {className: 'info'},
-            h('div', {className: 'name'},
+            h('div', {className: 'name', style: CFG.colorAvatars ? '' : {color: 'rgba(0,0,0,.78)'}},
               ML.xname(chat)[0]
             ),
             h('div', {className: 'email'},
