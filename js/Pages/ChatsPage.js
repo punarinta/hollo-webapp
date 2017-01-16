@@ -203,11 +203,11 @@ class ChatsPage extends Component
       // self-chat
       if (CFG.showNotes && !this.props.data.muted)
       {
-        let user = this.props.user, my = user.notes || [];
+        let user = this.props.user, my = this.props.notes || [];
         chats.push(h(ChatRow,
         {
           user,
-          chat: {users: [{id:user.id, email:user.email}], messages: my, read: 1, name: _('CAP_MY_NOTES')},
+          chat: {users: [user], messages: my, read: 1, name: _('CAP_MY_NOTES')},
           canSwipe: 0,
           onclick: (chat) => ML.go('chat/me'),
           vw

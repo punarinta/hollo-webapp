@@ -235,7 +235,9 @@ class App extends Component
 
   updateNotes(e)
   {
-    this.setState({notes: e.payload})
+    let notes = e.payload;
+    this.setState({notes});
+    ML.api('settings', 'update', {notes});
   }
 
   initUser(e)
@@ -360,7 +362,9 @@ class App extends Component
       if (typeof flags.showNotes != 'undefined') CFG.showNotes = flags.showNotes;
     }
 
-    this.setState({user: data.user});
+    let notes = data.user.notes;
+    data.user.notes = null;
+    this.setState({user: data.user, notes });
 
     // load all user chats
     $.C.load(data.user);
@@ -447,7 +451,7 @@ class App extends Component
     }
 
     // place here the logic of page switching
-    let user = this.state.user, pages =
+    let user = this.state.user, notes = this.state.notes, pages =
     [
       h(DemoBoxModal,    {data: this.state.demoBox,    onclose: () => this.setState({demoBox: null})    }),
       h(MessageBoxModal, {data: this.state.messageBox, onclose: () => this.setState({messageBox: null}) }),
@@ -470,14 +474,14 @@ class App extends Component
 
       case 'chats':
         pages.push(h(ProfilePage, {zIndex: 0, user}));
-        pages.push(h(ChatsPage, {zIndex: 20, data: this.state.chatsPageData, user}));
-        pages.push(h(MessagesPage, {zIndex: 10, data: this.state.messagesPageData, user}));
+        pages.push(h(ChatsPage, {zIndex: 20, data: this.state.chatsPageData, user, notes}));
+        pages.push(h(MessagesPage, {zIndex: 10, data: this.state.messagesPageData, user, notes}));
         break;
 
       case 'chat':
         pages.push(h(ProfilePage, {zIndex: 0, user}));
-        pages.push(h(ChatsPage, {zIndex: 10, data: this.state.chatsPageData, user}));
-        pages.push(h(MessagesPage, {zIndex: 20, data: this.state.messagesPageData, user, popped: Math.random()}));
+        pages.push(h(ChatsPage, {zIndex: 10, data: this.state.chatsPageData, user, notes}));
+        pages.push(h(MessagesPage, {zIndex: 20, data: this.state.messagesPageData, user, notes, popped: Math.random()}));
         break;
     }
 

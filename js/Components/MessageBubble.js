@@ -205,16 +205,15 @@ class MessageBubble extends Component
 
   updateNote(body)
   {
-    let notes = JSON.parse(localStorage.getItem('my-notes'));
+    let i, notes = this.props.notes;
 
-    for (let i in notes) if (notes[i].ts == this.props.message.ts)
+    for (i in notes) if (notes[i].ts == this.props.message.ts)
     {
       if (!body || !body.length) notes.splice(i, 1);
       else notes[i].body = body;
       break;
     }
-    localStorage.setItem('my-notes', JSON.stringify(notes));
-    ML.emit('chat:update');
+    ML.emit('notes:update', notes)
   }
 
   render(props)
@@ -223,6 +222,8 @@ class MessageBubble extends Component
         mine = message.from ? message.from.email == props.user.email : 0,
         subject = message.subj,
         body = message.body;
+
+    if (!props.chatId) mine = 'mine';
 
     let virtualChat = {users:[message.from], read:1};
 

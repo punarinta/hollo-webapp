@@ -62,7 +62,7 @@ class MessagesPage extends Component
       {
         this.chat = { id: 0, name: _('CAP_MY_NOTES'), read: 1, users: [], muted: 0 };
 
-        messages = this.props.user ? this.props.user.notes || [] : [];
+        messages = this.props.notes || [];
         currentSubject = messages.length ? messages[messages.length - 1].subj : '';
       }
       else
@@ -385,16 +385,16 @@ class MessagesPage extends Component
     {
       ts: new Date().getTime() / 1000,
       body: msg,
-      userId: this.props.user.id,
       subj: this.state.currentSubject
     };
 
     if (!this.chat.id)
     {
-      messages.unshift(m);
-      messages = messages.slice(0, 12);
-      ML.emit('notes:update', messages);
-      this.setState({files: [], /*messages,*/ compFocus: 0, currentComposed: '', h: 64, canSend: 0});
+      let notes = this.props.notes;
+      notes.unshift(m);
+      notes = notes.slice(0, 12);
+      ML.emit('notes:update', notes);
+      this.setState({files: [], compFocus: 0, currentComposed: '', h: 64, canSend: 0});
       this.reposition(1);
       return
     }
@@ -444,9 +444,8 @@ class MessagesPage extends Component
     for (let i = this.state.messages.length - 1; i >= 0; i--)
     {
       let user = this.props.user,
+          notes = this.props.notes,
           message = this.state.messages[i];
-
-      user.notes = null;
 
       message.from = message.userId == user.id ? user : $.U.get(message.userId);
 
@@ -461,6 +460,7 @@ class MessagesPage extends Component
       {
         message,
         user,
+        notes,
         users: chat.users || [],
         chatId: chat.id || 0,
         captionClicked: (subjectFilter) => this.setState({subjectFilter}),
@@ -584,7 +584,7 @@ class MessagesPage extends Component
         h('li', {onclick: this.unreadChat.bind(this)}, _(this.chat.read ?'CHAT_UNREAD' : 'CHAT_READ', null, {singleLine:1}) ),
         this.chat.users.length > 1 ? h('li', {onclick: this.renameChat.bind(this)}, _('CHAT_RENAME') ) : null,
         h('li', {onclick: this.leaveChat.bind(this)}, _('CHAT_LEAVE') )
-      ] : [h('li', {onclick: () => ML.emit('notes:update', []) }, _('CHAT_CLEAR') )];
+      ] : [h('li', { onclick: () => ML.emit('notes:update', []) }, _('CHAT_CLEAR') )];
 
       menuModal = h('div', {className: 'modal-shader'},
         h('menu-modal', {className: 'menu-more'},
