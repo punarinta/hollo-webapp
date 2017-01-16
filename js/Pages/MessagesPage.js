@@ -651,7 +651,7 @@ class MessagesPage extends Component
             rows: 1,
             placeholder: _('CAP_WRITE_NEW'),
             onkeyup: this.composerTextChanged.bind(this),
-            onfocus: (e) => { this.setState({compFocus: 1}); setTimeout(() => e.target.focus(), 50); this.reposition(1, 50) },
+            onfocus: (e) => { this.setState({compFocus: 1}); setTimeout(() => e.target.focus(), 50); this.reposition(1, $platform == 1 ? 200 : 50) },
             value: this.state.currentComposed
           }),
           this.state.canSend ? h(BarIcon, {className: 'btn-send', fullHeight: 1, width: 40, img: 'color/send', height: sendHeight, onclick: this.send.bind(this) }) : '',
