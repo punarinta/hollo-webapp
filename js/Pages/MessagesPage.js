@@ -540,7 +540,7 @@ class MessagesPage extends Component
       menuModal = h('div', {className: 'modal-shader'},
         h('menu-modal', {className: 'menu-subjects'},
           h('ul', null,
-            subjectLines
+            subjectLines.reverse()
           )
         )
       )
