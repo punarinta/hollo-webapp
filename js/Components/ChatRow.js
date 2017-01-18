@@ -69,7 +69,7 @@ class ChatRow extends Component
 
   touchEnd(e)
   {
-    if (!this.props.canSwipe)
+    if (!this.props.chat.id)
     {
       e.preventDefault();
       this.props.onclick(this.props.chat);
