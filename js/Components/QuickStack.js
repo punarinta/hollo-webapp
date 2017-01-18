@@ -135,7 +135,7 @@ class QuickStack extends Component
       this.buttonSkip.classList.remove('picked')
     }
 
-    if (this.swiping) this.ul.style.transform = `rotate(${distX/70}deg) translate(${distX}px)`;
+    if (this.swiping) this.ul.style.transform = `rotate(${distX/50}deg) translate(${distX}px)`;
     e.stopPropagation()
   }
 
