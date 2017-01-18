@@ -110,8 +110,17 @@ quick-stack
   topbar
     display flex
     margin 12px
-    div
+    & > div
       display flex
       align-items center
       margin-left 12px
       @extend $font-heading
+
+  dragme
+    width 0
+    div
+      position fixed
+      height 344px
+      width 100vw
+      @media screen and (min-width break-tablet)
+        max-width 512px

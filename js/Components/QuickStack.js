@@ -32,6 +32,7 @@ class QuickStack extends Component
     this.startY = t.pageY;
     this.ul = this.base.querySelector('quick-stack');
     this.ul.style.willChange = 'transform';
+    this.lastDistY = 0;
     e.stopPropagation()
   }
 
@@ -109,7 +110,8 @@ class QuickStack extends Component
 
   touchMove(e)
   {
-    let distX = e.changedTouches[0].pageX - this.startX;
+    let distX = e.changedTouches[0].pageX - this.startX,
+        distY = e.changedTouches[0].pageY - this.startY;
 
     if (Math.abs(distX) > 32)
     {
@@ -136,6 +138,9 @@ class QuickStack extends Component
     }
 
     if (this.swiping) this.ul.style.transform = `rotate(${distX/50}deg) translate(${distX}px)`;
+    else this.base.querySelector('message-bubble').scrollTop += this.lastDistY - distY;
+
+    this.lastDistY = distY;
     e.stopPropagation()
   }
 
@@ -149,6 +154,11 @@ class QuickStack extends Component
 
     if (distX > 100) this.skip();
     else if (distX < -100) this.markRead(this.state.qs[0]);
+  }
+
+  draggerScroll(e)
+  {
+    this.base.querySelector('message-bubble').scrollTop += e.deltaY;
   }
 
   render(props)
@@ -190,6 +200,7 @@ class QuickStack extends Component
       quickStackModal = h('qs-shader', {onclick: (e) => {if (e.target.nodeName.toLowerCase() == 'qs-shader') this.setState({quickStackShown: 0})} },
         h('quick-stack', { ontouchstart: this.touchStart.bind(this), ontouchmove: this.touchMove.bind(this), ontouchend: this.touchEnd.bind(this) },
           h('topbar', null,
+            h('dragme', null, h('div', {onwheel: this.draggerScroll.bind(this) })),
             h(Avatar, {user: fakeUser, size: 32}),
             h('div', null, ML.xname({users:[fakeUser]})[0])
           ),
