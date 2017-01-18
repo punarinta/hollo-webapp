@@ -109,8 +109,7 @@ class QuickStack extends Component
 
   touchMove(e)
   {
-    let distX = e.changedTouches[0].pageX - this.startX,
-        distY = e.changedTouches[0].pageY - this.startY;
+    let distX = e.changedTouches[0].pageX - this.startX;
 
     if (Math.abs(distX) > 32)
     {
@@ -136,7 +135,7 @@ class QuickStack extends Component
       this.buttonSkip.classList.remove('picked')
     }
 
-    if (this.swiping) this.ul.style.transform = `translate(${distX}px, ${distY}px)`;
+    if (this.swiping) this.ul.style.transform = `rotate(${distX/70}deg) translate(${distX}px)`;
     e.stopPropagation()
   }
 
