@@ -54,6 +54,13 @@ class MessageBubble extends Component
 
     if (type == 'note')
     {
+      body = body.replace(/(<*\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]>*)/ig, m =>
+      {
+        let s = m.replace(/\/$/, '').split('//');
+        s = (s.length ? s[1] : s[0]).split('/');
+        return `<a target="_system" rel="noopener noreferrer" href="${m}">${s.length ? (s[0] + '&hellip;') : s[0]}</a>`;
+      });
+
       body = body.replace(/^(\*\s).*$/gm, m =>
       {
         return m.replace(/^(\*\s)/, '• ')
