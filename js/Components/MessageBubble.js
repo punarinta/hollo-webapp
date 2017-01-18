@@ -56,9 +56,16 @@ class MessageBubble extends Component
     {
       body = body.replace(/(<*\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]>*)/ig, m =>
       {
-        let s = m.replace(/\/$/, '').split('//');
-        s = (s.length ? s[1] : s[0]).split('/');
-        return `<a target="_system" rel="noopener noreferrer" href="${m}">${s.length ? (s[0] + '&hellip;') : s[0]}</a>`;
+        let cap = m;
+
+        if ($windowInnerWidth < 768)
+        {
+          let s = m.replace(/\/$/, '').split('//');
+          s = (s.length ? s[1] : s[0]).split('/');
+          cap = s.length ? (s[0] + '&hellip;') : s[0];
+        }
+
+        return `<a target="_system" rel="noopener noreferrer" href="${m}">${cap}</a>`;
       });
 
       body = body.replace(/^(\*\s).*$/gm, m =>
