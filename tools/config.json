@@ -68,6 +68,7 @@
       ["animation-timing-function", [0]],
       ["animation-delay", [0]],
       ["animation-duration", [0]],
+      ["backface-visibility", [0]],
       ["overflow-scrolling", [0]]
     ]
   },
