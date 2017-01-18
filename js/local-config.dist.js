@@ -13,3 +13,6 @@ CFG.notifierUrl = 'ws://localhost:1488/';
 
 // set to 'true' to be able to use faked user agent modes
 CFG.local = false;
+
+// CSS applied to the HTML sandbox
+CFG.frameCss = 'https://app.hollo.dev/css/external.css';

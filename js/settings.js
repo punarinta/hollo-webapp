@@ -4,6 +4,7 @@ var CFG =
 {
   apiRoot: 'https://app.hollo.email/api/',
   notifierUrl: 'wss://notify.hollo.email:443/',
+  frameCss: 'https://app.hollo.email/css/external.css',
   redirectUrl: 'https://app.hollo.email/',
   emojisReplace: true,
   colorAvatars: true,

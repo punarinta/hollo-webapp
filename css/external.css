@@ -1,2 +1,2 @@
 ::-webkit-scrollbar {display:none}
-* {font:14px sans-serif; line-height: 150%}
+* {font:14px sans-serif; line-height: 150%; max-width: 100%}
