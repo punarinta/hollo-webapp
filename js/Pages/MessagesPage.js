@@ -42,7 +42,7 @@ class MessagesPage extends Component
         $.C.set(null, this.chatId, chat);
       }
     }
-    this.chatUpdate();
+    this.chatUpdate(nextProps);
   }
 
   componentWillUnmount()
@@ -52,7 +52,7 @@ class MessagesPage extends Component
     window.removeEventListener('hollo:chat:attach', this.chatAttachReference);
   }
 
-  chatUpdate()
+  chatUpdate(props)
   {
     if (this.chatId)
     {
@@ -62,7 +62,7 @@ class MessagesPage extends Component
       {
         this.chat = { id: 0, name: _('CAP_MY_NOTES'), read: 1, users: [], muted: 0 };
 
-        messages = this.props.notes || [];
+        messages = props.notes || [];
         currentSubject = messages.length ? messages[messages.length - 1].subj : '';
       }
       else
@@ -432,7 +432,7 @@ class MessagesPage extends Component
     mixpanel.track('Composer - message sent');
   }
 
-  render()
+  render(props)
   {
     let messages = [],
         menuModal = h('div', {className: 'modal-shader', style: {display: 'none'}}),
@@ -444,8 +444,8 @@ class MessagesPage extends Component
     // render in reversed order
     for (let i = this.state.messages.length - 1; i >= 0; i--)
     {
-      let user = this.props.user,
-          notes = this.props.notes,
+      let user = props.user,
+          notes = props.notes,
           message = this.state.messages[i];
 
       message.from = message.userId == user.id ? user : $.U.get(message.userId);
@@ -585,7 +585,12 @@ class MessagesPage extends Component
         h('li', {onclick: this.unreadChat.bind(this)}, _(this.chat.read ?'CHAT_UNREAD' : 'CHAT_READ', null, {singleLine:1}) ),
         this.chat.users.length > 1 ? h('li', {onclick: this.renameChat.bind(this)}, _('CHAT_RENAME') ) : null,
         h('li', {onclick: this.leaveChat.bind(this)}, _('CHAT_LEAVE') )
-      ] : [h('li', { onclick: () => ML.emit('notes:update', []) }, _('CHAT_CLEAR') )];
+      ]
+      :
+      [
+        h('li', { onclick: () => ML.emit('notes:update', []) }, _('CHAT_CLEAR') ),
+        h('li', { onclick: () => ML.emit('user:sync') }, _('CHAT_SYNCNOTES') )
+      ];
 
       menuModal = h('div', {className: 'modal-shader'},
         h('menu-modal', {className: 'menu-more'},
@@ -626,7 +631,7 @@ class MessagesPage extends Component
 
     return (
 
-      h('messages-page', {style: {zIndex: this.props.zIndex}},
+      h('messages-page', {style: {zIndex: props.zIndex}},
         filterModal,
         menuModal,
         h('snackbar', null,

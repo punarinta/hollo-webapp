@@ -34,6 +34,7 @@ class App extends Component
     window.addEventListener('hollo:inituser', this.initUser.bind(this));
     window.addEventListener('hollo:firebase', this.firebaseListener.bind(this));
     window.addEventListener('hollo:notes:update', this.updateNotes.bind(this));
+    window.addEventListener('hollo:user:sync', this.syncUser.bind(this));
 
     window.addEventListener('resize', () =>
     {
@@ -368,6 +369,16 @@ class App extends Component
 
     // load all user chats
     $.C.load(data.user);
+  }
+
+  syncUser()
+  {
+    ML.api('auth', 'sync', null, data =>
+    {
+      let notes = data.user.notes;
+      data.user.notes = null;
+      this.setState({user: data.user, notes});
+    });
   }
 
   intentSendTo(chat)

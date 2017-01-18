@@ -26,6 +26,7 @@ $locales['en-US'] =
   CHAT_RENAME       : 'Rename chat',
   CHAT_LEAVE        : 'Leave chat',
   CHAT_CLEAR        : 'Clear notes',
+  CHAT_SYNCNOTES    : 'Sync notes',
 
   MSG_FORWARD       : 'Forward message...',
   MSG_SHOW_ORIG     : 'Show original email',

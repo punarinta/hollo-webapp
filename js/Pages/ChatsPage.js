@@ -127,20 +127,20 @@ class ChatsPage extends Component
     }
   }
 
-  filterChanged(filter)
+  filterChanged(keyword)
   {
     clearTimeout(this.filterTimer);
 
-    if (filter == 'debug-logout') ML.go('auth/logout');
+    if (keyword == 'debug-logout') ML.go('auth/logout');
 
     this.filterTimer = setTimeout( () =>
     {
-      if (this.emailFilter != filter)
+      if (this.emailFilter != keyword)
       {
-        this.emailFilter = filter;
+        this.emailFilter = keyword;
         this.setState({maxDisplay: this.displayPerScreen});
         this.chatUpdate();
-        mixpanel.track('Sys - filter', {keyword: filter});
+        mixpanel.track('Sys - filter', {keyword});
       }
     }, 500);
   }
@@ -173,9 +173,9 @@ class ChatsPage extends Component
     }
   }
 
-  render()
+  render(props)
   {
-    let ulContents = '', muted = this.props.data ? this.props.data.muted : 0;
+    let ulContents = '', muted = props.data ? props.data.muted : 0;
 
     if (ML.isEmail(this.emailFilter))
     {
@@ -183,7 +183,7 @@ class ChatsPage extends Component
       ulContents = h('ul', null,
         h(ChatRow,
         {
-          user: this.props.user,
+          user: props.user,
           chat: {users: [{email, name: email}],
           read: 1,
           messages: [{ body: _('CAP_NEW_CHAT', [email]) }]},
@@ -201,9 +201,9 @@ class ChatsPage extends Component
       let chats = [], vw = $windowInnerWidth > 768 ? 360 : $windowInnerWidth;
 
       // self-chat
-      if (CFG.showNotes && !this.props.data.muted)
+      if (CFG.showNotes && !props.data.muted)
       {
-        let user = this.props.user, my = this.props.notes || [];
+        let user = this.props.user, my = props.notes || [];
         chats.push(h(ChatRow,
         {
           user,
@@ -224,7 +224,7 @@ class ChatsPage extends Component
 
         chats.push(h(ChatRow,
         {
-          user: this.props.user,
+          user: props.user,
           chat,
           canSwipe: !this.state.blockSwipe,
           onclick: (chat) =>
@@ -267,7 +267,7 @@ class ChatsPage extends Component
 
     return (
 
-      h('chats-page', {style: {zIndex: this.props.zIndex}, ontouchstart: this.touchStart.bind(this), ontouchmove: this.touchMove.bind(this), ontouchend: this.touchEnd.bind(this)},
+      h('chats-page', {style: {zIndex: props.zIndex}, ontouchstart: this.touchStart.bind(this), ontouchmove: this.touchMove.bind(this), ontouchend: this.touchEnd.bind(this)},
         h(SearchBar,
         {
           value: '',
@@ -279,7 +279,7 @@ class ChatsPage extends Component
         }),
         h('loader', null, h('inner-loader')),
         ulContents,
-        h(QuickStack, {chats: this.state.chats, muted, user: this.props.user})
+        h(QuickStack, {chats: this.state.chats, muted, user: props.user})
       )
     );
   }
