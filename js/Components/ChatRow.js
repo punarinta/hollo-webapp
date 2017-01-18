@@ -67,8 +67,14 @@ class ChatRow extends Component
     }
   }
 
-  touchEnd()
+  touchEnd(e)
   {
+    if (!this.props.canSwipe)
+    {
+      e.preventDefault();
+      this.props.onclick(this.props.chat);
+    }
+
     this.blockSwipe = 0;
 
     if (this.swipe)
