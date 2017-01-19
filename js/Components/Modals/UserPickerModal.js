@@ -12,19 +12,15 @@ class UserPickerModal extends Component
 
   componentDidMount()
   {
-    this.scrollReference = this.scroll.bind(this);
-    this.usersUpdateReference = this.usersUpdate.bind(this);
-    this.chatsUpdateReference = this.chatsUpdate.bind(this);
-    this.base.querySelector('ul').addEventListener('scroll', this.scrollReference);
-    window.addEventListener('hollo:users:update', this.usersUpdateReference);
-    window.addEventListener('hollo:chat:update', this.chatsUpdateReference);
+    this.base.querySelector('ul').addEventListener('scroll', this.scroll.bind(this));
+    window.addEventListener('keyup', this.onKeyUp.bind(this));
+    window.addEventListener('hollo:users:update', this.usersUpdate.bind(this));
+    window.addEventListener('hollo:chat:update', this.chatsUpdate.bind(this));
   }
 
-  componentWillUnmount()
+  onKeyUp(e)
   {
-    this.base.querySelector('ul').removeEventListener('scroll', this.scrollReference);
-    window.removeEventListener('hollo:users:update', this.usersUpdateReference);
-    window.addEventListener('hollo:chat:update', this.chatsUpdateReference);
+    if (this.props.data && e.keyCode == 27) ML.emit('userpicker')
   }
 
   usersUpdate()
