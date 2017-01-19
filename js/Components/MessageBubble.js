@@ -329,6 +329,7 @@ class MessageBubble extends Component
         {
           ML.emit('toast', { defaultAction: () =>
           {
+            this.base.style.display = 'block';
             this.updateNote()
           },
           undo: () =>
