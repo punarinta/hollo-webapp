@@ -619,7 +619,7 @@ class MessagesPage extends Component
       emojiRows.push(h('div', null, emojis))
     }
 
-    let listHint = _(this.chat && !this.chat.id ? 'HINT_NO_NOTES' : 'HINT_NO_MSGS');
+    let listHint = _(this.chatId ? (this.chat && !this.chat.id ? 'HINT_NO_NOTES' : 'HINT_NO_MSGS') : 'HINT_PICK_CHAT');
 
     if (name) document.title = name;
 
@@ -642,7 +642,7 @@ class MessagesPage extends Component
           h(BarIcon, {className: this.state.menuModalShown == 4 ? 'toggled' : '', img: 'color/more-vert', width: 40, height: 40, onclick: () => this.toggleMenu(4) })
         ),
         h('ul', {className: this.state.subjectFilter ? 'with-filter' : ''}, messages.length ? messages : h('li', {className: 'list-hint'}, listHint) ),
-        h('composer', {style: {minHeight: composerHeight + 'px', height: composerHeight + 'px'}},
+        this.chatId ? h('composer', {style: {minHeight: composerHeight + 'px', height: composerHeight + 'px'}},
           h('emojis', {style: {bottom: composerHeight + 8 + 'px'}},
             emojiRows
           ),
@@ -662,7 +662,7 @@ class MessagesPage extends Component
           }),
           this.state.canSend ? h(BarIcon, {className: 'btn-send', fullHeight: 1, width: 40, img: 'color/send', height: sendHeight, onclick: this.send.bind(this) }) : '',
           uploadedFiles
-        )
+        ) : ''
       )
     );
   }

@@ -26,6 +26,7 @@ $locales['ru-RU'] =
   CHAT_RENAME       : 'Переименовать чат',
   CHAT_LEAVE        : 'Покинуть чат',
   CHAT_CLEAR        : 'Очистить заметки',
+  CHAT_SYNCNOTES    : 'Синхронизировать',
 
   MSG_FORWARD       : 'Переслать сообщение...',
   MSG_SHOW_ORIG     : 'Показать оригинал',
@@ -63,6 +64,7 @@ $locales['ru-RU'] =
   HINT_AREYOUSURE   : 'Вы уверены?',
   HINT_CHAT_SEARCH  : 'Найти чат или создать новый',
   HINT_FORWARDED    : 'Пересланое сообщение',
+  HINT_PICK_CHAT    : 'Pick a chat',
 
   ERR_BIG_FILE      : 'К сожалению, невозможно прикрепить файл размером более 10 МБ.',
   ERR_NO_ORIG       : 'К сожалению, это сообщение более не существует в Вашем почтовом ящике.',

@@ -28,6 +28,7 @@ $locales['mzs-X'] =
   CHAT_RENAME       : 'Prěimenovati čat',
   CHAT_LEAVE        : 'Ostaviti čat',
   CHAT_CLEAR        : 'Izčistiti zapiski',
+  CHAT_SYNCNOTES    : 'Sinhronizovati',
 
   MSG_FORWARD       : 'Prěslati poslanje...',
   MSG_SHOW_ORIG     : 'Pokazati pŕvonačaľnų formų',
@@ -53,6 +54,7 @@ $locales['mzs-X'] =
   CAP_MUTED         : 'Prěměšćeno v nevažne',
   CAP_UNMUTED       : 'Prěměšćeno v važne',
   CAP_UNDO          : 'vråtiti',
+  CAP_DONE          : 'Gotovo',
 
   HINT_FLT_ON       : 'Že by načęti novy čat\nnapišite e-poštovy adres.',
   HINT_SYNCING      : 'Vitajte v Hollo!\nPočěkajte poki ide\nsinhronizacija...',
@@ -64,6 +66,7 @@ $locales['mzs-X'] =
   HINT_AREYOUSURE   : 'Uvěrjeni?',
   HINT_CHAT_SEARCH  : 'Najdti čat ili stvoriti novy',
   HINT_FORWARDED    : 'Prěslano poslanje',
+  HINT_PICK_CHAT    : 'Izberite čat',
 
   ERR_BIG_FILE      : 'Žaľ, ale nemožno dodati fail vęče 10 MB.',
   ERR_NO_ORIG       : 'Žaľ, ale se poslanje už ne istnuje.',

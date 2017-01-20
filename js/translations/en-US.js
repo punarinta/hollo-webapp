@@ -64,6 +64,7 @@ $locales['en-US'] =
   HINT_AREYOUSURE   : 'Are you sure?',
   HINT_CHAT_SEARCH  : 'Create a new chat or search',
   HINT_FORWARDED    : 'Forwarded message',
+  HINT_PICK_CHAT    : 'Pick a chat',
 
   ERR_BIG_FILE      : 'Sorry, maximum attachment size is 10MB.',
   ERR_NO_ORIG       : 'We are sorry, but this message is absent in your mailbox.',
