@@ -31,7 +31,7 @@ class DemoBoxModal extends Component
     {
       if (data.messageId)
       {
-        url = `/api/file?method=download&messageId=${data.messageId}&offset=${data.offset}`
+        url = CFG.apiRoot + `file?method=download&messageId=${data.messageId}&offset=` + data.offset
       }
       else if (data.file)
       {
