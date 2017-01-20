@@ -27,6 +27,11 @@ class MessageBubble extends Component
       this.f.style.overflow = 'hidden';
       this.f.scrolling = 'no';
       this.f.style.height = this.f.contentWindow.document.body.scrollHeight + 'px';
+      setTimeout(() =>
+      {
+        // necessary for dynamic content
+        this.f.style.height = this.f.contentWindow.document.body.scrollHeight + 'px';
+      }, 200)
     }
     else
     {
