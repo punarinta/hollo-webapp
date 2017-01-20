@@ -216,6 +216,8 @@ class MessageBubble extends Component
 
     this.htmlId = message.id;
 
+    this.setState({htmlForm: 'Loading HTML...'});
+
     ML.api('message', 'showOriginal', {id: message.id, tryHtml: 1}, data =>
     {
       this.setState({htmlForm: data ? ('<!DOCTYPE html><link rel="stylesheet" type="text/css" href="' + CFG.frameCss + '">' + data.content) : 0})
