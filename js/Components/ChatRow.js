@@ -205,7 +205,7 @@ class ChatRow extends Component
         h('div', {className: 'real'},
           h(Avatar, {chat}),
           h('div', {className: 'info'},
-            h('div', {className: 'name', style: CFG.colorAvatars ? '' : {color: 'rgba(0,0,0,.78)'}},
+            h('div', {className: 'name', style: CFG.colorAvatars ? '' : {opacity: '.9'}},
               ML.xname(chat)[0]
             ),
             h('div', {className: 'email'},
