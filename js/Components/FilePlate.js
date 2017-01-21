@@ -1,5 +1,35 @@
 class FilePlate extends Component
 {
+  componentDidMount()
+  {
+    this.getPreview(this.props)
+  }
+
+  componentWillReceiveProps(props)
+  {
+    this.getPreview(props)
+  }
+
+  getPreview(props)
+  {
+    let previewable =
+    [
+      'image/png',
+      'image/gif',
+      'image/jpeg',
+    ];
+
+    if (props.file && props.file.url && previewable.indexOf(props.file.type) != -1)
+    {
+      let im = new Image;
+      im.src = props.file.url;
+      im.onload = () =>
+      {
+        this.setState({thumbnail: props.file.url})
+      };
+    }
+  }
+
   render(props)
   {
     let file = props.file,
@@ -51,6 +81,11 @@ class FilePlate extends Component
         style.background = `url("data:${file.b64}")`;
         nc = '';
       }
+    }
+
+    if (this.state.thumbnail)
+    {
+      style.background = `url("${this.state.thumbnail}")`;
     }
 
     return (

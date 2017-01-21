@@ -292,8 +292,9 @@ class MessageBubble extends Component
     {
       let files = [];
 
-      for (let i in message.files)
+      for (let i = 0; i < message.files.length; i++)
       {
+        if (props.chatId) message.files[i].url = `https://s3.eu-central-1.amazonaws.com/cached-t/${this.props.chatId}/${message.id}/${i}`;
         files.push(h(FilePlate, {file: message.files[i], offset: i, onclick: this.previewFile.bind(this)}));
       }
 
