@@ -86,6 +86,7 @@ class FilePlate extends Component
     if (this.state.thumbnail)
     {
       style.background = `url("${this.state.thumbnail}")`;
+      nc = '';
     }
 
     return (
