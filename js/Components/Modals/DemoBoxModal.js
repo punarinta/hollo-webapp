@@ -20,11 +20,11 @@ class DemoBoxModal extends Component
 
   render(props)
   {
-    let style, nc, url = '', data = props.data;
+    let nc, url = '', data = props.data, style = {display: 'none'};
 
     if (!data)
     {
-      return h('demo-box-modal', {style: {display: 'none'}});
+      return h('demo-box-modal', {style});
     }
 
     if (data.file.type.match('image.*'))
