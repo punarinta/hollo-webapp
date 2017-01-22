@@ -16,7 +16,13 @@ class FilePlate extends Component
     [
       'image/png',
       'image/gif',
+      'image/jpg',
       'image/jpeg',
+      'application/pdf',
+      'image/svg+xml',
+      'text/html',
+      'image/tiff',
+      'image/bmp',
     ];
 
     if (props.file && props.file.url && previewable.indexOf(props.file.type) != -1)
