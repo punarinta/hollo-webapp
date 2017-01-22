@@ -242,7 +242,7 @@ var $ =
 
     load: function (me)
     {
-      $.C.data = JSON.parse(localStorage.getItem('chats')) || [];
+    //  $.C.data = JSON.parse(localStorage.getItem('chats')) || [];
       $.C.sync(me);
     },
 
