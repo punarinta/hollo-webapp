@@ -107,11 +107,8 @@ class ChatsPage extends Component
       if (this.pull == 2 && (!el || el.getBoundingClientRect().top > 0))
       {
         this.ul.classList.add('travel');
-        ML.emit('busybox', {mode: 1});
-        $.C.sync(this.props.user, () =>
-        {
-          ML.emit('busybox');
-        });
+
+        $.C.sync(this.props.user);
 
         setTimeout( () =>
         {
