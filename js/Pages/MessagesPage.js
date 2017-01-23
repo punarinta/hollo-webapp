@@ -320,6 +320,14 @@ class MessagesPage extends Component
     }})
   }
 
+  clearNotes()
+  {
+    ML.emit('messagebox', {type: 1, html: _('HINT_AREYOUSURE'), cb: (code) =>
+    {
+      if (code) ML.emit('notes:update', [])
+    }})
+  }
+
   uploadFiles(e)
   {
     let i, f, files = e.target.files;
@@ -588,7 +596,7 @@ class MessagesPage extends Component
       ]
       :
       [
-        h('li', { onclick: () => ML.emit('notes:update', []) }, _('CHAT_CLEAR') ),
+        h('li', { onclick: this.clearNotes.bind(this) }, _('CHAT_CLEAR') ),
         h('li', { onclick: () => ML.emit('user:sync') }, _('CHAT_SYNCNOTES') )
       ];
 
