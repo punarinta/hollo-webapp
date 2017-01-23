@@ -187,7 +187,7 @@ class App extends Component
       });
     }
     // use GET for better start performance
-    else ML.api('auth?method=status', 0, {}, data =>
+    else ML.api('auth?method=status&sync=1', 0, {}, data =>
     {
       if (data.user)
       {
