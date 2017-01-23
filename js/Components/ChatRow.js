@@ -153,7 +153,11 @@ class ChatRow extends Component
       }
     }
 
-    if (lastMsg !== null && typeof lastMsg === 'object')
+    if (!chat.id && chat.messages.length)
+    {
+      lastMsg = '🗒️ × ' + chat.messages.length;
+    }
+    else if (lastMsg !== null && typeof lastMsg === 'object')
     {
       let w = lastMsg.widget, subject = w.title;
 
@@ -190,7 +194,6 @@ class ChatRow extends Component
 
       d.innerHTML = lastMsg.replace(/\[sys:fwd\]/g, ' ➡️ ' + lastSubj).replace(/(<([^>]+)>)/ig, '').substring(0, 60).trim();
       lastMsg = d.textContent.trim();
-      if (!chat.id) lastMsg = lastMsg.split("\n")[0]
     }
 
     return (
