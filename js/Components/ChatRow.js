@@ -148,7 +148,7 @@ class ChatRow extends Component
 
       if (!lastMsg)
       {
-        if (chat.messages[0].files) lastMsg = '📄 ' + chat.messages[0].files[0].name;
+        if (chat.messages[0].files) lastMsg = '📎 ' + chat.messages[0].files[0].name;
         else lastMsg = '';
       }
     }
