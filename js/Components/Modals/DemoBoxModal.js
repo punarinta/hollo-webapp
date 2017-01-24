@@ -3,7 +3,7 @@ class DemoBoxModal extends Component
   componentDidMount()
   {
     window.addEventListener('keyup', this.onKeyUp.bind(this));
-    window.addEventListener('hollo:demobox', (e) => this.setState({data: e.payload, shown: !!e.payload}) );
+    window.addEventListener('hollo:demobox', (e) => this.setState({data: e.payload}) );
   }
 
   onKeyUp(e)

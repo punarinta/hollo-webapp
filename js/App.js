@@ -9,7 +9,6 @@ class App extends Component
     this.state.pagePayload = null;
     this.state.currentDemo = null;
     this.state.widthMode = $windowInnerWidth > 768;
-    this.state.messageBox = null;
     this.state.customBox = null;
     this.state.userPicker = null;
     this.state.user = null;
@@ -25,7 +24,6 @@ class App extends Component
 
     if (window.Notification) Notification.requestPermission();
 
-    window.addEventListener('hollo:messagebox', (e) => this.setState({messageBox: e.payload}) );
     window.addEventListener('hollo:custombox', (e) => this.setState({customBox: e.payload}) );
     window.addEventListener('hollo:userpicker', (e) => this.setState({userPicker: e.payload}) );
     window.addEventListener('hollo:busybox', (e) => this.setState({busy: e.payload}) );
@@ -463,7 +461,7 @@ class App extends Component
     let user = this.state.user, notes = this.state.notes, pages =
     [
       h(DemoBoxModal),
-      h(MessageBoxModal, {data: this.state.messageBox, onclose: () => this.setState({messageBox: null}) }),
+      h(MessageBoxModal),
       h(UserPickerModal, {data: this.state.userPicker, onclose: () => this.setState({userPicker: null}) }),
       h(CustomBoxModal,  {data: this.state.customBox,  onclose: () => this.setState({customBox: null})  }),
       h(Toaster)

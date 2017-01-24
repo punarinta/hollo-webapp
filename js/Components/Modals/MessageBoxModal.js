@@ -3,31 +3,38 @@ class MessageBoxModal extends Component
   componentDidMount()
   {
     window.addEventListener('keyup', this.onKeyUp.bind(this));
+    window.addEventListener('hollo:messagebox', (e) => this.setState({data: e.payload}) );
   }
 
   onKeyUp(e)
   {
-    if (this.props.data)
+    if (this.state.data)
     {
-      if (e.keyCode == 27) { this.onClick(0); ML.emit('messagebox') }
+      if (e.keyCode == 27) { this.onClick(0); this.close() }
       if (e.keyCode == 13) this.onClick(1)
     }
   }
 
   onClick(code)
   {
-    let payload = null, p = this.props;
+    let payload = null, data = this.state.data;
 
-    if (typeof p.data.input != 'undefined') payload = this.base.querySelector('input').value;
-    else if (typeof p.data.text != 'undefined') payload = this.base.querySelector('textarea').value;
+    if (typeof data.input != 'undefined') payload = this.base.querySelector('input').value;
+    else if (typeof data.text != 'undefined') payload = this.base.querySelector('textarea').value;
 
-    if (typeof p.data.cb == 'function') p.data.cb(code, payload);
-    if (typeof p.onclose == 'function') p.onclose()
+    if (typeof data.cb == 'function') data.cb(code, payload);
+    this.close();
+  }
+
+  close()
+  {
+    this.setState({data: 0})
   }
 
   componentDidUpdate()
   {
-    let data = this.props.data, f = null;
+    let data = this.state.data, f = null;
+
     if (data)
     {
       if (typeof data.input == 'string')
@@ -45,15 +52,16 @@ class MessageBoxModal extends Component
     }
   }
 
-  render(props)
+  render()
   {
-    let data = props.data;
+    let data = this.state.data;
+
     if (!data)
     {
       return h('message-box-modal', {style: {display: 'none'}});
     }
 
-    let buttons = [h('button', {className: 'btn ok', onclick: () => this.onClick(1)}, _('BTN_OK'))];
+    let buttons = [ h('button', {className: 'btn ok', onclick: () => this.onClick(1)}, _('BTN_OK')) ];
 
     if (data.type == 1)
     {
