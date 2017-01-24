@@ -3,22 +3,30 @@ class CustomBoxModal extends Component
   componentDidMount()
   {
     window.addEventListener('keyup', this.onKeyUp.bind(this));
+    window.addEventListener('hollo:custombox', (e) => this.setState({data: e.payload}) );
   }
 
   onKeyUp(e)
   {
-    if (this.props.data && e.keyCode == 27) ML.emit('custombox')
+    if (this.state.data && e.keyCode == 27) this.close()
   }
 
-  render(props)
+  close()
   {
-    if (!props.data)
+    this.setState({data: 0})
+  }
+
+  render()
+  {
+    let data = this.state.data;
+
+    if (!data)
     {
       return h('custom-box-modal', {style: {display: 'none'}})
     }
 
-    return h('custom-box-modal', {className: props.data.className, onclick: props.data.onclick ? props.data.onclick : props.onclose},
-      h('div', null, props.data.children)
+    return h('custom-box-modal', {className: data.className, onclick: data.onclick ? data.onclick : this.close.bind(this)},
+      h('div', null, data.children)
     );
   }
 }
