@@ -338,7 +338,7 @@ class MessagesPage extends Component
         {
           let m = this.state.messages[i];
 
-          if (m.body && m.body.indexOf && m.body.indexOf(name) != -1)
+          if (m.body && m.body.indexOf && m.body.toLowerCase().indexOf(name.toLowerCase()) != -1)
           {
             setTimeout(() => this.base.querySelector('.id-' + m.id).scrollIntoView(), 100)
           }
