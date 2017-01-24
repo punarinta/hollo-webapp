@@ -27,6 +27,7 @@ $locales['ru-RU'] =
   CHAT_LEAVE        : 'Покинуть чат',
   CHAT_CLEAR        : 'Очистить заметки',
   CHAT_SYNCNOTES    : 'Синхронизировать',
+  CHAT_SEARCH       : 'Искать текст',
 
   MSG_FORWARD       : 'Переслать сообщение...',
   MSG_SHOW_ORIG     : 'Показать оригинал',

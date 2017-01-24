@@ -355,6 +355,8 @@ class MessageBubble extends Component
       messageStatus = 0;
     }
 
+    className += ' id-' + message.id;
+
     return (
 
       h('message-bubble', {className},

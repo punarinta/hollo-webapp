@@ -328,6 +328,26 @@ class MessagesPage extends Component
     }})
   }
 
+  search()
+  {
+    ML.emit('messagebox', {type: 1, html: ' ', input: '', cb: (code, name) =>
+    {
+      if (code && name.trim().length)
+      {
+        for (let i in this.state.messages.reverse())
+        {
+          let m = this.state.messages[i];
+
+          if (m.body && m.body.indexOf && m.body.indexOf(name) != -1)
+          {
+            setTimeout(() => this.base.querySelector('.id-' + m.id).scrollIntoView(), 100)
+          }
+        }
+      }
+    }});
+    mixpanel.track('Chat - search');
+  }
+
   uploadFiles(e)
   {
     let i, f, files = e.target.files;
@@ -589,15 +609,17 @@ class MessagesPage extends Component
     {
       let lis = this.chat.id ?
       [
-        h('li', {onclick: this.muteChat.bind(this)}, this.chat.muted ? _('CHAT_UNMUTE') : _('CHAT_MUTE') ),
-        h('li', {onclick: this.unreadChat.bind(this)}, _(this.chat.read ?'CHAT_UNREAD' : 'CHAT_READ', null, {singleLine:1}) ),
+        h('li', { onclick: this.muteChat.bind(this) }, this.chat.muted ? _('CHAT_UNMUTE') : _('CHAT_MUTE') ),
+        h('li', { onclick: this.unreadChat.bind(this) }, _(this.chat.read ?'CHAT_UNREAD' : 'CHAT_READ', null, {singleLine:1}) ),
         this.chat.users.length > 1 ? h('li', {onclick: this.renameChat.bind(this)}, _('CHAT_RENAME') ) : null,
-        h('li', {onclick: this.leaveChat.bind(this)}, _('CHAT_LEAVE') )
+        h('li', { onclick: this.leaveChat.bind(this) }, _('CHAT_LEAVE') ),
+        h('li', { onclick: this.search.bind(this) }, _('CHAT_SEARCH') )
       ]
       :
       [
         h('li', { onclick: this.clearNotes.bind(this) }, _('CHAT_CLEAR') ),
-        h('li', { onclick: () => ML.emit('user:sync') }, _('CHAT_SYNCNOTES') )
+        h('li', { onclick: () => ML.emit('user:sync') }, _('CHAT_SYNCNOTES') ),
+        h('li', { onclick: this.search.bind(this) }, _('CHAT_SEARCH') )
       ];
 
       menuModal = h('div', {className: 'modal-shader'},

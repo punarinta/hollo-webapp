@@ -29,6 +29,7 @@ $locales['mzs-X'] =
   CHAT_LEAVE        : 'Ostaviti čat',
   CHAT_CLEAR        : 'Izčistiti zapiski',
   CHAT_SYNCNOTES    : 'Sinhronizovati',
+  CHAT_SEARCH       : 'Iskati tekst',
 
   MSG_FORWARD       : 'Prěslati poslanje...',
   MSG_SHOW_ORIG     : 'Pokazati pŕvonačaľnų formų',
