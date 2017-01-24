@@ -7,7 +7,11 @@ class MessageBoxModal extends Component
 
   onKeyUp(e)
   {
-    if (this.props.data && e.keyCode == 27) ML.emit('messagebox')
+    if (this.props.data)
+    {
+      if (e.keyCode == 27) { this.onClick(0); ML.emit('messagebox') }
+      if (e.keyCode == 13) this.onClick(1)
+    }
   }
 
   onClick(code)
