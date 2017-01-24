@@ -3,24 +3,30 @@ class DemoBoxModal extends Component
   componentDidMount()
   {
     window.addEventListener('keyup', this.onKeyUp.bind(this));
+    window.addEventListener('hollo:demobox', (e) => this.setState({data: e.payload, shown: !!e.payload}) );
   }
 
   onKeyUp(e)
   {
-    if (this.props.data && e.keyCode == 27) ML.emit('demobox')
+    if (this.state.data && e.keyCode == 27) ML.emit('demobox')
   }
 
   deleteClicked()
   {
-    let data = this.props.data;
+    let data = this.state.data;
 
     if (data.ondelete) data.ondelete(data.file);
-    if (this.props.onclose) this.props.onclose()
+    this.close();
   }
 
-  render(props)
+  close()
   {
-    let nc, url = '', data = props.data, style = {display: 'none'};
+    this.setState({data: 0})
+  }
+
+  render()
+  {
+    let nc, url = '', data = this.state.data, style = {display: 'none'};
 
     if (!data)
     {
@@ -46,9 +52,9 @@ class DemoBoxModal extends Component
       style = {background: ML.colorHash(data.file.type),}
     }
 
-    return h('demo-box-modal', {onclick: props.onclose},
+    return h('demo-box-modal', { onclick: this.close.bind(this) },
       h('div', null,
-        h('div', {className: 'head', onclick: props.onclose},
+        h('div', {className: 'head', onclick: this.close.bind(this) },
           h(Svg, {model: 'cross', fill: '#fff', type: 'polygon', size: 14})
         ),
         h('div', {className: 'img', style},

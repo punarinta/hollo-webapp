@@ -26,7 +26,6 @@ class App extends Component
 
     if (window.Notification) Notification.requestPermission();
 
-    window.addEventListener('hollo:demobox', (e) => this.setState({demoBox: e.payload}) );
     window.addEventListener('hollo:messagebox', (e) => this.setState({messageBox: e.payload}) );
     window.addEventListener('hollo:custombox', (e) => this.setState({customBox: e.payload}) );
     window.addEventListener('hollo:userpicker', (e) => this.setState({userPicker: e.payload}) );
@@ -464,7 +463,7 @@ class App extends Component
     // place here the logic of page switching
     let user = this.state.user, notes = this.state.notes, pages =
     [
-      h(DemoBoxModal,    {data: this.state.demoBox,    onclose: () => this.setState({demoBox: null})    }),
+      h(DemoBoxModal),
       h(MessageBoxModal, {data: this.state.messageBox, onclose: () => this.setState({messageBox: null}) }),
       h(UserPickerModal, {data: this.state.userPicker, onclose: () => this.setState({userPicker: null}) }),
       h(CustomBoxModal,  {data: this.state.customBox,  onclose: () => this.setState({customBox: null})  }),
