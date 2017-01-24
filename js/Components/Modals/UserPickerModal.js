@@ -16,11 +16,17 @@ class UserPickerModal extends Component
     window.addEventListener('keyup', this.onKeyUp.bind(this));
     window.addEventListener('hollo:users:update', this.usersUpdate.bind(this));
     window.addEventListener('hollo:chat:update', this.chatsUpdate.bind(this));
+    window.addEventListener('hollo:userpicker', (e) => this.setState({data: e.payload}) );
   }
 
   onKeyUp(e)
   {
-    if (this.props.data && e.keyCode == 27) ML.emit('userpicker')
+    if (this.state.data && e.keyCode == 27) this.close();
+  }
+
+  close()
+  {
+    this.setState({data: 0})
   }
 
   usersUpdate()
@@ -43,7 +49,7 @@ class UserPickerModal extends Component
       {
         this.emailFilter = filter;
         this.setState({maxDisplay: this.displayPerScreen});
-        this.props.data.chatMode ? this.chatsUpdate() : this.usersUpdate();
+        this.state.data.chatMode ? this.chatsUpdate() : this.usersUpdate();
       }
     }, 500);
   }
@@ -52,14 +58,14 @@ class UserPickerModal extends Component
   {
     if (e.target.nodeName.toLowerCase() == 'user-picker-modal')
     {
-      this.props.onclose()
+      this.close();
     }
   }
 
   onSelect(user)
   {
-    this.props.onclose();
-    if (typeof this.props.data.onselect == 'function') this.props.data.onselect(user)
+    if (typeof this.state.data.onselect == 'function') this.state.data.onselect(user);
+    this.close()
   }
 
   scroll()
@@ -72,16 +78,18 @@ class UserPickerModal extends Component
     }
   }
 
-  render(props)
+  render()
   {
-    if (!props.data)
+    let data = this.state.data;
+
+    if (!data)
     {
       return h('user-picker-modal', {style: {display: 'none'}}, h('div', null, h('ul')));
     }
 
     let items = [], count = 0;
 
-    if (props.data.chatMode)
+    if (data.chatMode)
     {
       for (let i in this.state.chats)
       {
@@ -118,16 +126,16 @@ class UserPickerModal extends Component
       }
     }
 
-    return h('user-picker-modal', {onclick: this.onBgClick.bind(this)},
-      h('div', null,
-        h(SearchBar,
+    return h
+    (
+      'user-picker-modal', { onclick: this.onBgClick.bind(this) },
+      h(
+        'div', null, h(SearchBar,
         {
           placeholder: 'Search for contact',
           onchange: this.filterChanged.bind(this)
         }),
-        h('ul', null,
-          items
-        )
+        h('ul', null, items)
       )
     )
   }

@@ -9,7 +9,6 @@ class App extends Component
     this.state.pagePayload = null;
     this.state.currentDemo = null;
     this.state.widthMode = $windowInnerWidth > 768;
-    this.state.userPicker = null;
     this.state.user = null;
     this.state.busy = 0;
   }
@@ -23,7 +22,6 @@ class App extends Component
 
     if (window.Notification) Notification.requestPermission();
 
-    window.addEventListener('hollo:userpicker', (e) => this.setState({userPicker: e.payload}) );
     window.addEventListener('hollo:busybox', (e) => this.setState({busy: e.payload}) );
     window.addEventListener('hollo:inituser', this.initUser.bind(this));
     window.addEventListener('hollo:firebase', this.firebaseListener.bind(this));
@@ -458,11 +456,7 @@ class App extends Component
     // place here the logic of page switching
     let user = this.state.user, notes = this.state.notes, pages =
     [
-      h(DemoBoxModal),
-      h(MessageBoxModal),
-      h(UserPickerModal, {data: this.state.userPicker, onclose: () => this.setState({userPicker: null}) }),
-      h(CustomBoxModal),
-      h(Toaster)
+      h(DemoBoxModal), h(MessageBoxModal), h(UserPickerModal), h(CustomBoxModal), h(Toaster)
     ];
 
     switch (this.state.page)
