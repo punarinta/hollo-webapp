@@ -8,7 +8,7 @@ class DemoBoxModal extends Component
 
   onKeyUp(e)
   {
-    if (this.state.data && e.keyCode == 27) ML.emit('demobox')
+    if (this.state.data && e.keyCode == 27) this.close();
   }
 
   deleteClicked()
