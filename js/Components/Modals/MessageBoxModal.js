@@ -30,13 +30,13 @@ class MessageBoxModal extends Component
     let data = this.props.data, f = null;
     if (data)
     {
-      if (data.input)
+      if (typeof data.input == 'string')
       {
-        f = this.base.querySelector('input');
+        f = document.querySelector('message-box-modal input');
         f.focus();
         f.value = data.input;
       }
-      if (data.text)
+      if (typeof data.text == 'string')
       {
         f = this.base.querySelector('textarea');
         f.focus();
