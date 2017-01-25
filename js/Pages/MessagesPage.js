@@ -19,21 +19,14 @@ class MessagesPage extends Component
   componentDidMount()
   {
     this.tryBlurringRef = this.tryBlurring.bind(this);
+    this.resizeRef = this.resize.bind(this);
     this.chatUpdateReference = this.chatUpdate.bind(this);
     this.chatAttachReference = this.chatAttach.bind(this);
     this.base.addEventListener('click', this.tryBlurringRef);
+    window.addEventListener('resize', this.resizeRef);
     window.addEventListener('hollo:chat:update', this.chatUpdateReference);
     window.addEventListener('hollo:chat:attach', this.chatAttachReference);
     ML.load('modules/emojis');
-
-    window.addEventListener('resize', () =>
-    {
-      clearTimeout(this.resizeTimer);
-      this.resizeTimer = setTimeout(() =>
-      {
-        this.reposition(1)
-      }, 250);
-    });
   }
 
   componentWillReceiveProps(nextProps)
@@ -57,6 +50,7 @@ class MessagesPage extends Component
   componentWillUnmount()
   {
     this.base.removeEventListener('click', this.tryBlurringRef);
+    window.removeEventListener('resize', this.resizeRef);
     window.removeEventListener('hollo:chat:update', this.chatUpdateReference);
     window.removeEventListener('hollo:chat:attach', this.chatAttachReference);
   }
@@ -64,6 +58,12 @@ class MessagesPage extends Component
   componentDidUpdate()
   {
     this.reposition()
+  }
+
+  resize()
+  {
+    clearTimeout(this.resizeTimer);
+    this.resizeTimer = setTimeout(() => this.reposition(1), 250);
   }
 
   reposition($immediate = 0)
