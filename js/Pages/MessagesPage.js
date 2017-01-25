@@ -52,6 +52,15 @@ class MessagesPage extends Component
     window.removeEventListener('hollo:chat:attach', this.chatAttachReference);
   }
 
+  componentDidUpdate()
+  {
+    if (this.state.messages.length) setTimeout( () =>
+    {
+      let last = this.base.querySelector('message-bubble:last-child');
+      if (last) last.scrollIntoView(false);
+    }, $platform == 1 ? 100 : 20);
+  }
+
   chatUpdate(props)
   {
     if (this.chatId)
@@ -73,7 +82,6 @@ class MessagesPage extends Component
       }
 
       this.setState({messages, currentSubject});
-      this.reposition(1)
     }
   }
 
@@ -175,25 +183,6 @@ class MessagesPage extends Component
   filterMessages(subjectFilter)
   {
     this.setState({menuModalShown: 0, subjectFilter});
-    if (!subjectFilter) this.reposition(1)
-  }
-
-  reposition(mode = 0, timeOffset = 0)
-  {
-    // modes: 0 - keep ul's scrollTop, 1 - scroll down
-    if (this.state.messages.length) setTimeout( () =>
-    {
-      if (mode == 0 && this.base)
-      {
-        this.base.querySelector('ul').scrollTop = this.scrollTop;
-      }
-      if (mode == 1)
-      {
-        let last = this.base.querySelector('message-bubble:last-child');
-        if (last) last.scrollIntoView(false);
-        this.scrollTop = this.base.querySelector('ul').scrollTop;
-      }
-    }, 50 + timeOffset);
   }
 
   toggleMenu(menuId = 0)
@@ -423,7 +412,6 @@ class MessagesPage extends Component
       notes = notes.slice(0, 12);
       ML.emit('notes:update', notes);
       this.setState({files: [], compFocus: 0, currentComposed: '', h: 64, canSend: 0});
-      this.reposition(1);
       return
     }
 
@@ -440,7 +428,6 @@ class MessagesPage extends Component
     messages.push(m);
 
     this.setState({files: [], compFocus: 0, currentComposed: '', h: 64});
-    this.reposition(1);
 
     this.chat.messages = messages;
     $.C.set(null, this.chat.id, this.chat);
@@ -689,7 +676,7 @@ class MessagesPage extends Component
             rows: 1,
             placeholder: _('CAP_WRITE_NEW'),
             onkeyup: this.composerTextChanged.bind(this),
-            onfocus: (e) => { this.setState({compFocus: 1}); setTimeout(() => e.target.focus(), 50); this.reposition(1, $platform == 1 ? 200 : 50) },
+            onfocus: () => this.setState({compFocus: 1}),
             value: this.state.currentComposed
           }),
           this.state.canSend ? h(BarIcon, {className: 'btn-send', fullHeight: 1, width: 40, img: 'color/send', height: sendHeight, onclick: this.send.bind(this) }) : '',
