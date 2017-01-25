@@ -36,8 +36,7 @@ class SearchBar extends Component
   clear()
   {
     this.setState({value: '', showCross: 0});
-    // fukken bug fix
-    setTimeout(() => this.onchange(''), 50)
+    this.onchange('')
   }
 
   render(props)

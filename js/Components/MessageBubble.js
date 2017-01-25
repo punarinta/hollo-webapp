@@ -31,7 +31,7 @@ class MessageBubble extends Component
       {
         // necessary for dynamic content
         this.f.style.height = this.f.contentWindow.document.body.scrollHeight + 'px';
-      }, 200)
+      }, 250)
     }
     else
     {

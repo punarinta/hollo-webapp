@@ -447,13 +447,16 @@ class MessagesPage extends Component
 
     console.log('Sending:', msg, msgId, m.subj, m.files, this.chat.id);
 
-    let statusClass = this.base.querySelector('message-bubble:last-child .status').className;
-    statusClass = 'status s1';
+    // the message is not there yet
+    setTimeout(() =>
+    {
+      this.base.querySelector('message-bubble:last-child .status').className = 'status s1';
+    }, 100);
 
-    ML.api('message', 'send', {body: msg, messageId: msgId, subject: m.subj, files: m.files, chatId: this.chat.id}, json =>
+    ML.api('message', 'send', { body: msg, messageId: msgId, subject: m.subj, files: m.files, chatId: this.chat.id }, json =>
     {
       // mark it as delivered to mail/DB
-      statusClass = 'status s2';
+      this.base.querySelector('message-bubble:last-child .status').className = 'status s2';
       console.log('message/send()', json);
     });
 

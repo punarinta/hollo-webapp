@@ -69,7 +69,11 @@ class ChatRow extends Component
 
   touchEnd(e)
   {
-    if (!this.props.chat.id)
+    let t = e.changedTouches[0],
+        distX = t.pageX - this.startX,
+        distY = t.pageY - this.startY;
+
+    if (!this.props.chat.id && distX < 16 && distY < 16)
     {
       e.preventDefault();
       this.props.onclick(this.props.chat);

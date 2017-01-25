@@ -79,7 +79,8 @@ class ChatsPage extends Component
       {
         this.ul.style.opacity = distY/300;
         this.ulin.style.transform = `rotate(${distY/1.1}deg)`;
-        this.ul.style.transform = `translateY(${distY*0.3}px)`
+        this.ul.style.transform = `translateY(${distY*0.3}px)`;
+        this.ul.style.display = 'block'
       }
       e.preventDefault()
     }
@@ -92,7 +93,7 @@ class ChatsPage extends Component
         this.setState({blockSwipe: true});
       }
 
-      if (distY > 80) this.pull = 2;
+      if (distY > 128) this.pull = 2;
       else if (distY > 48) this.pull = 1;
     }
     e.stopPropagation();
@@ -113,6 +114,7 @@ class ChatsPage extends Component
         setTimeout( () =>
         {
           this.ul.classList.remove('travel');
+          this.ul.style.display = 'none'
         }, 400);
       }
 
@@ -152,9 +154,10 @@ class ChatsPage extends Component
     ML.api('chat', 'add', {emails: [this.emailFilter]}, data =>
     {
       // add chat to the storage first
-      $.C.set(this.props.user, data.id, data);
+      $.U.set(null, data.users);
+      $.C.set(this.props.user, data.chat.id, data.chat);
       this.setState({menuModalShown: 0});
-      ML.go('chat/' + data.id);
+      ML.go('chat/' + data.chat.id);
     });
     mixpanel.track('Chat - add new');
   }
@@ -181,7 +184,7 @@ class ChatsPage extends Component
         h(ChatRow,
         {
           user: props.user,
-          chat: {users: [{email, name: email}],
+          chat: {id: 'new', users: [{email, name: email}],
           read: 1,
           messages: [{ body: _('CAP_NEW_CHAT', [email]) }]},
           canSwipe: 0,
@@ -259,7 +262,7 @@ class ChatsPage extends Component
     }
 
     let sbClasses = [];
-    // if (this.emailFilter.length) sbClasses.push('filtered');
+
     if (this.state.filterActive) sbClasses.push('focused');
 
     return (
