@@ -25,6 +25,15 @@ class MessagesPage extends Component
     window.addEventListener('hollo:chat:update', this.chatUpdateReference);
     window.addEventListener('hollo:chat:attach', this.chatAttachReference);
     ML.load('modules/emojis');
+
+    window.addEventListener('resize', () =>
+    {
+      clearTimeout(this.resizeTimer);
+      this.resizeTimer = setTimeout(() =>
+      {
+        this.reposition(1)
+      }, 250);
+    });
   }
 
   componentWillReceiveProps(nextProps)
@@ -54,11 +63,21 @@ class MessagesPage extends Component
 
   componentDidUpdate()
   {
-    if (this.state.messages.length) setTimeout( () =>
+    this.reposition()
+  }
+
+  reposition($immediate = 0)
+  {
+    if (!this.state.messages.length) return;
+
+    let r = () =>
     {
       let last = this.base.querySelector('message-bubble:last-child');
       if (last) last.scrollIntoView(false);
-    }, $platform == 1 ? 100 : 20);
+    };
+
+    if ($immediate) r();
+    else setTimeout( r, $platform == 1 ? 100 : 20);
   }
 
   chatUpdate(props)
