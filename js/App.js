@@ -208,16 +208,16 @@ class App extends Component
     {
       let icon = 'https://app.hollo.email/favicon/notification.png';
 
-      if (navigator.serviceWorker && $platform)
+      if (navigator.serviceWorker && $platform == 1)
       {
-        navigator.serviceWorker.register('modules/null.js').then(function (registration)
+        navigator.serviceWorker.register('modules/null.js').then( (registration) =>
         {
           registration.showNotification(message, {icon});
         })
       }
       else
       {
-        new Notification('Good news everyone!', {image: icon, icon});
+        new Notification(message, {image: icon, icon});
       }
 
       return true;
