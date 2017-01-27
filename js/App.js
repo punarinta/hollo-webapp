@@ -217,7 +217,14 @@ class App extends Component
       }
       else
       {
-        new Notification(message, {image: icon, icon});
+        let n = new Notification(message, {image: icon, icon});
+      /*  n.onclick = (e) =>
+        {
+          e.preventDefault(); // prevent the browser from focusing the Notification's tab
+          window.open('http://www.mozilla.org', '_blank');
+          n.close()
+          console.log(1, e)
+        };*/
       }
 
       return true;
