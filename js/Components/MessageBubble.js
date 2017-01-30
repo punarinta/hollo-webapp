@@ -225,7 +225,8 @@ class MessageBubble extends Component
 
     ML.api('message', 'showOriginal', {id: message.id, tryHtml: 1}, data =>
     {
-      this.setState({htmlForm: data ? ('<!DOCTYPE html><link rel="stylesheet" type="text/css" href="' + CFG.frameCss + '">' + data.content) : 0})
+      if (data) this.setState({htmlForm: data ? ('<!DOCTYPE html><link rel="stylesheet" type="text/css" href="' + CFG.frameCss + '">' + data.content) : 0})
+      else ML.emit('messagebox', {html: _('ERR_NO_ORIG')});
     });
   }
 
