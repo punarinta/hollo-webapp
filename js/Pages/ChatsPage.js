@@ -242,16 +242,15 @@ class ChatsPage extends Component
 
       if (!this.emailFilter.length || chats.length)
       {
-        let fill = '#fff';
         ulContents =
         [
           h('ul', null,
             chats.length ? chats : h('div', {className: 'list-hint', style: {height: 'calc(100vh - 120px)'}}, _('HINT_SYNCING'))
           ),
             this.emailFilter.length ? null : h('bottom-bar', null,
-            h(BarIcon, {className: 'opa-85', caption: _('BTN_PROFILE'), svg: 'profile', fill, onclick: () => { ML.go('profile'); mixpanel.track('Sys - profile') } }),
-            h(BarIcon, {className: muted ? 'opa-85' : '', caption: _('BTN_INBOX'), svg: 'email', fill, onclick: () => { ML.go('chats'); mixpanel.track('Sys - holloed') } } ),
-            h(BarIcon, {className: muted ? '' : 'opa-85', caption: _('BTN_MUTED'), svg: 'muted', fill, onclick: () => { ML.go('chats', {muted: 1}); mixpanel.track('Sys - muted') } } )
+            h(BarIcon, { svg: 'profile', fill: '#b2b2b2', onclick: () => { ML.go('profile'); mixpanel.track('Sys - profile') } }),
+            h(BarIcon, { svg: 'msg', fill: muted ? '#b2b2b2' : '#7a4df9', onclick: () => { ML.go('chats'); mixpanel.track('Sys - holloed') } } ),
+            h(BarIcon, { svg: 'email', fill: muted ? '#7a4df9' : '#b2b2b2', onclick: () => { ML.go('chats', {muted: 1}); mixpanel.track('Sys - muted') } } )
           )
         ];
       }

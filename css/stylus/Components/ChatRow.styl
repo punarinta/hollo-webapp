@@ -17,16 +17,16 @@ chat-row
   @media screen and (min-width break-tablet)
     &:hover
       .real
-        background-color lighten(color-brand, 4%)
+        background-color darken(#fff, 4%)
   avatar
     margin margin-large margin-medium margin-large margin-large
     line-height @height
-  &>div
+  & > div
     display flex
     background color-bg-grey
     width 100%
     @media screen and (min-width break-tablet)
-      background color-brand
+      background #fff
     &.travel
       transition all .4s ease-in
   .name
@@ -38,7 +38,6 @@ chat-row
     font-weight 400
     font-size 18px
     @media screen and (min-width break-tablet)
-      color color-font-white
       width calc(360px - 90px)
     &:first-letter
       text-transform capitalize
@@ -49,7 +48,6 @@ chat-row
     color #808080
     @extend $font-bread-2
     @media screen and (min-width break-tablet)
-      color color-font-hint-white
       width calc(360px - 90px)
   .info
     padding-top 14px

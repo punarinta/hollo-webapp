@@ -3,17 +3,19 @@ bottom-bar
   min-height 56px
   margin-top auto
   display flex
-  background-color color-brand
+  background-color #fff
   color #fff
   font-family 'Work Sans', sans-serif
   z-index 1
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
   @media screen and (min-width break-tablet)
     position absolute
+    box-shadow none
     width 100%
     top 0
     left 0
     bar-icon:hover
-      background-color lighten(color-brand, 4%)
+      background-color darken(#fff, 4%)
       svg
         transform scale(1.15)
         transition transform .1s

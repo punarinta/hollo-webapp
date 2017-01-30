@@ -82,7 +82,7 @@ class ProfilePage extends Component
 
   render()
   {
-    let user = this.props.user, fill = '#fff', devButton = '';
+    let user = this.props.user, devButton = '';
 
     if (user.roles & 2)
     {
@@ -115,9 +115,9 @@ class ProfilePage extends Component
         ),
         h('div', {className: 'appver'}, 'ver: ' + APPVER + ', ' + _('self')),
         h('bottom-bar', null,
-          h(BarIcon, {caption: _('BTN_PROFILE'), svg: 'profile', fill}),
-          h(BarIcon, {className: 'opa-85', caption: _('BTN_INBOX'), svg: 'email', fill, onclick: () => ML.go('chats')}),
-          h(BarIcon, {className: 'opa-85', caption: _('BTN_MUTED'), svg: 'muted', fill, onclick: () => ML.go('chats', {muted: 1})})
+          h(BarIcon, {svg: 'profile'}),
+          h(BarIcon, {svg: 'msg', fill: '#b2b2b2', onclick: () => ML.go('chats')}),
+          h(BarIcon, {svg: 'email', fill: '#b2b2b2', onclick: () => ML.go('chats', {muted: 1})})
         )
       )
     );

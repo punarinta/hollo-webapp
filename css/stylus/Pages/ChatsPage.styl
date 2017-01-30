@@ -7,26 +7,23 @@ chats-page
   position fixed
   @media screen and (min-width break-tablet)
     width 360px
-    background-color color-brand
-  search-bar
     background-color #fff
+  search-bar
     margin-left 12px
     margin-right 12px
-    border-radius 8px
-    box-shadow 0 1px 3px 0 rgba(0, 0, 0, .08)
+    // background-color #fff
+    // border-radius 8px
+    // box-shadow 0 1px 3px 0 rgba(0, 0, 0, .08)
     margin-top 8px
     z-index 1
     input
       background-image url('gfx/color/search2.svg')
     @media screen and (min-width break-tablet)
       margin-top 56px
-      background-color color-brand
       box-shadow none
+      background-color #fff
       &.focused
         margin-top 0
-      input
-        background-image url('gfx/white/search.svg')
-        color #fff
   ul
     padding 0
     margin 0
@@ -38,7 +35,7 @@ chats-page
     @media screen and (min-width break-tablet)
       .selected
         .real
-          background-color darken(color-brand, 4%)
+          background-color darken(#fff, 4%)
 
   loader
     width 48px
