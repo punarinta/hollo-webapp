@@ -259,7 +259,7 @@ class MessagesPage extends Component
     ML.api('chat', 'add', {emails}, data =>
     {
       this.setState({menuModalShown: 0});
-      ML.go('chat/' + data.id);
+      ML.go('chat/' + data.chat.id);
     });
   }
 
@@ -272,7 +272,7 @@ class MessagesPage extends Component
     ML.api('chat', 'add', {emails}, data =>
     {
       this.setState({menuModalShown: 0});
-      ML.go('chat/' + data.id);
+      ML.go('chat/' + data.chat.id);
     });
   }
 
