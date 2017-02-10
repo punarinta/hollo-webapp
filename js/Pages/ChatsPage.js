@@ -49,6 +49,7 @@ class ChatsPage extends Component
 
   touchStart(e)
   {
+    if (props.data && props.data.muted == 2) return;
     let t = e.changedTouches[0];
     this.pull = 0;
     this.swiping = 0;
@@ -292,7 +293,7 @@ class ChatsPage extends Component
           height: 24,
           fill: '#e2e2e2',
           onclick: () => { ML.go('profile'); mixpanel.track('Sys - profile') }
-          }),
+        }),
         h('loader', null, h('inner-loader')),
         ulContents,
         h(QuickStack, {chats: this.state.chats, muted, user: props.user})
