@@ -238,13 +238,14 @@ class ChatsPage extends Component
             vw
           }));
 
-      /*  else
-          chats.push(h(Maga,
-          {
-
-          }));*/
-
         ++count;
+      }
+
+      if (muted == 2)
+      {
+        chats.push(h(Maga, {type: 'a'}));
+        chats.push(h(Maga, {type: 'b'}));
+        chats.push(h(Maga, {type: 'c'}));
       }
 
       if (!this.emailFilter.length || chats.length)

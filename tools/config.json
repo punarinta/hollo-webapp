@@ -21,6 +21,7 @@
     "js/Components/Avatar",
     "js/Components/Svg",
     "js/Components/ChatRow",
+    "js/Components/Maga",
     "js/Components/BarIcon",
     "js/Components/Toaster",
     "js/Components/SearchBar",
