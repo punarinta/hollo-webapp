@@ -222,20 +222,27 @@ class ChatsPage extends Component
         let chat = this.state.chats[i];
         if (chat.muted != muted) continue;  // skip it!
 
-        chats.push(h(ChatRow,
-        {
-          user: props.user,
-          chat,
-          canSwipe: !this.state.blockSwipe,
-          onclick: (chat) =>
+        if (muted < 2)
+          chats.push(h(ChatRow,
           {
-            this.setState({selectedChatId: chat.id});
-            ML.go('chat/' + chat.id);
-            mixpanel.track('Chat - enter', {id: chat.id})
-          },
-          selected: this.state.selectedChatId == chat.id,
-          vw
-        }));
+            user: props.user,
+            chat,
+            canSwipe: !this.state.blockSwipe,
+            onclick: (chat) =>
+            {
+              this.setState({selectedChatId: chat.id});
+              ML.go('chat/' + chat.id);
+              mixpanel.track('Chat - enter', {id: chat.id})
+            },
+            selected: this.state.selectedChatId == chat.id,
+            vw
+          }));
+
+      /*  else
+          chats.push(h(Maga,
+          {
+
+          }));*/
 
         ++count;
       }
@@ -245,12 +252,12 @@ class ChatsPage extends Component
         ulContents =
         [
           h('ul', null,
-            chats.length ? chats : h('div', {className: 'list-hint', style: {height: 'calc(100vh - 120px)'}}, _('HINT_SYNCING'))
+            chats.length ? chats : h('div', {className: 'list-hint', style: {height: 'calc(100vh - 120px)'}}, muted == 2 ? _('HINT_NO_MSGS') : _('HINT_SYNCING'))
           ),
             this.emailFilter.length ? null : h('bottom-bar', null,
-            h(BarIcon, { svg: 'profile', fill: '#b2b2b2', onclick: () => { ML.go('profile'); mixpanel.track('Sys - profile') } }),
-            h(BarIcon, { svg: 'msg', fill: muted ? '#b2b2b2' : '#7a4df9', onclick: () => { ML.go('chats'); mixpanel.track('Sys - holloed') } } ),
-            h(BarIcon, { svg: 'email', fill: muted ? '#7a4df9' : '#b2b2b2', onclick: () => { ML.go('chats', {muted: 1}); mixpanel.track('Sys - muted') } } )
+            h(BarIcon, { svg: 'email', fill: muted == 1 ? '#7a4df9' : '#b2b2b2', height: 22, onclick: () => { ML.go('chats', {muted: 1}); mixpanel.track('Sys - muted') } } ),
+            h(BarIcon, { svg: 'msg', fill: muted == 0 ? '#7a4df9' : '#b2b2b2', className: 'msg', onclick: () => { ML.go('chats'); mixpanel.track('Sys - holloed') } } ),
+            h(BarIcon, { svg: 'maga', fill: muted == 2 ? '#7a4df9' : '#b2b2b2', height: 18, onclick: () => { ML.go('chats', {muted: 2}); mixpanel.track('Sys - maga') } } )
           )
         ];
       }
@@ -260,9 +267,9 @@ class ChatsPage extends Component
       }
     }
 
-    let sbClasses = [];
+    let seacrhFocused = [];
 
-    if (this.state.filterActive) sbClasses.push('focused');
+    if (this.state.filterActive) seacrhFocused = 'focused';
 
     return (
 
@@ -273,9 +280,18 @@ class ChatsPage extends Component
           placeholder: _('HINT_CHAT_SEARCH'),
           onchange: this.filterChanged.bind(this),
           onfocuschange: this.filterFocusChanged.bind(this),
-          className: sbClasses.join(' '),
-          autocolor: true
+          className: seacrhFocused
         }),
+        h(BarIcon,
+        {
+          svg: 'gear',
+          type: 'complex',
+          className: 'gear ' + seacrhFocused,
+          width: 24,
+          height: 24,
+          fill: '#e2e2e2',
+          onclick: () => { ML.go('profile'); mixpanel.track('Sys - profile') }
+          }),
         h('loader', null, h('inner-loader')),
         ulContents,
         h(QuickStack, {chats: this.state.chats, muted, user: props.user})

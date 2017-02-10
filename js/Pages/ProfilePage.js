@@ -115,9 +115,9 @@ class ProfilePage extends Component
         ),
         h('div', {className: 'appver'}, 'ver: ' + APPVER + ', ' + _('self')),
         h('bottom-bar', null,
-          h(BarIcon, {svg: 'profile'}),
-          h(BarIcon, {svg: 'msg', fill: '#b2b2b2', onclick: () => ML.go('chats')}),
-          h(BarIcon, {svg: 'email', fill: '#b2b2b2', onclick: () => ML.go('chats', {muted: 1})})
+          h(BarIcon, { svg: 'email', fill: '#b2b2b2', height: 22, onclick: () => { ML.go('chats', {muted: 1}); mixpanel.track('Sys - muted') } } ),
+          h(BarIcon, { svg: 'msg', fill: '#b2b2b2', className: 'msg', onclick: () => { ML.go('chats'); mixpanel.track('Sys - holloed') } } ),
+          h(BarIcon, { svg: 'maga', fill: '#b2b2b2', height: 18, onclick: () => { ML.go('chats', {muted: 2}); mixpanel.track('Sys - maga') } } )
         )
       )
     );

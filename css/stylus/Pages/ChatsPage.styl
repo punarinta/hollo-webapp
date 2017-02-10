@@ -8,12 +8,22 @@ chats-page
   @media screen and (min-width break-tablet)
     width 360px
     background-color #fff
+  .gear
+    position fixed
+    right 10px
+    top 24px
+    z-index 2
+    width 48px
+    @media screen and (min-width break-tablet)
+      left 306px
+      top 72px
+    svg
+      min-height 24px
+  .gear.focused
+    display none
   search-bar
     margin-left 12px
     margin-right 12px
-    // background-color #fff
-    // border-radius 8px
-    // box-shadow 0 1px 3px 0 rgba(0, 0, 0, .08)
     margin-top 8px
     z-index 1
     input
