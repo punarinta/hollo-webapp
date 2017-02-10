@@ -89,10 +89,8 @@ class ChatRow extends Component
       setTimeout( () =>
       {
         this.item.classList.remove('travel');
-        this.item.style.position = 'static';
-        this.shadow.style.display = 'none';
-        this.shadow.style.opacity = 0;
-        this.item.style.transform = 'translateX(0)';
+        this.item.style = null;
+        this.shadow.style = null;
       }, 400);
 
       this.item.classList.add('travel');
