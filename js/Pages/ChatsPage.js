@@ -41,7 +41,7 @@ class ChatsPage extends Component
   {
     this.setState({chats: $.C.filter(
     {
-      muted: !!(this.props.data ? this.props.data.muted : 0),
+      muted: this.props.data ? this.props.data.muted : 0,
       email: this.emailFilter.length ? this.emailFilter : null
     })});
     ML.emit('qs:count');
@@ -49,7 +49,7 @@ class ChatsPage extends Component
 
   touchStart(e)
   {
-    if (props.data && props.data.muted == 2) return;
+    if (this.props.data && this.props.data.muted == 2) return;
     let t = e.changedTouches[0];
     this.pull = 0;
     this.swiping = 0;

@@ -281,7 +281,7 @@ var $ =
 
         for (i in takeFrom)
         {
-          if (!!takeFrom[i].muted == !!muted)
+          if (takeFrom[i].muted == muted)
           {
             items.push(takeFrom[i]);
           }
